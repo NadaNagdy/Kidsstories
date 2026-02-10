@@ -71,8 +71,8 @@ def create_pdf(child_name, value, story_text):
     pdf.multi_cell(0, 10, story_text)
     
     # Save
-    filename = f"{child_name}_{value}.pdf"
-    file_path = os.path.join(os.getcwd(), filename)
+    # Save to /tmp for Vercel (read-only filesystem)
+    file_path = f"/tmp/{child_name}_{value}.pdf"
     pdf.output(file_path)
     
     return file_path

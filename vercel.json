@@ -1,0 +1,8 @@
+{
+    "rewrites": [
+        {
+            "source": "/(.*)",
+            "destination": "/kids-story-bot/main.py"
+        }
+    ]
+}
