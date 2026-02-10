@@ -1,14 +1,14 @@
 {
     "builds": [
         {
-            "src": "kids-story-bot/main.py",
+            "src": "main.py",
             "use": "@vercel/python"
         }
     ],
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "kids-story-bot/main.py"
+            "dest": "main.py"
         }
     ]
 }
