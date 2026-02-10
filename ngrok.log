@@ -12,3 +12,72 @@ t=2026-02-10T15:05:07+0200 lvl=info msg="tunnel session started" obj=tunnels.ses
 t=2026-02-10T15:05:14+0200 lvl=eror msg="heartbeat timeout, terminating session" obj=tunnels.session obj=csess id=6cf73a62f217 clientid=17e2fae8ab25de959eb9fe048765b1b0
 t=2026-02-10T15:08:09+0200 lvl=info msg="join connections" obj=join id=93ec295470f4 l=127.0.0.1:8000 r=[2a03:2880:15ff:73::]:60362
 t=2026-02-10T15:15:29+0200 lvl=info msg="join connections" obj=join id=7e46bf9d6769 l=127.0.0.1:8000 r=[2a03:2880:22ff:47::]:56240
+t=2026-02-10T16:25:36+0200 lvl=eror msg="heartbeat timeout, terminating session" obj=tunnels.session obj=csess id=5695fd6f0edb clientid=17e2fae8ab25de959eb9fe048765b1b0
+t=2026-02-10T16:25:36+0200 lvl=eror msg="session closed, starting reconnect loop" obj=tunnels.session obj=csess id=14e517fe853b err="session closed"
+t=2026-02-10T16:25:37+0200 lvl=info msg="client session established" obj=tunnels.session
+t=2026-02-10T16:25:37+0200 lvl=info msg="tunnel session started" obj=tunnels.session
+t=2026-02-10T17:18:12+0200 lvl=eror msg="session closed, starting reconnect loop" obj=tunnels.session obj=csess id=14e517fe853b err="read tcp 192.168.100.15:59981->3.125.234.140:443: read: connection reset by peer"
+t=2026-02-10T17:18:13+0200 lvl=info msg="client session established" obj=tunnels.session
+t=2026-02-10T17:18:13+0200 lvl=info msg="tunnel session started" obj=tunnels.session
+t=2026-02-10T17:18:27+0200 lvl=eror msg="heartbeat timeout, terminating session" obj=tunnels.session obj=csess id=da8e8de1aaa8 clientid=17e2fae8ab25de959eb9fe048765b1b0
+t=2026-02-10T17:49:28+0200 lvl=eror msg="session closed, starting reconnect loop" obj=tunnels.session obj=csess id=14e517fe853b err="read EOF from remote peer"
+t=2026-02-10T17:49:28+0200 lvl=eror msg="heartbeat timeout, terminating session" obj=tunnels.session obj=csess id=676033dbae07 clientid=17e2fae8ab25de959eb9fe048765b1b0
+t=2026-02-10T17:49:29+0200 lvl=info msg="client session established" obj=tunnels.session
+t=2026-02-10T17:49:29+0200 lvl=info msg="tunnel session started" obj=tunnels.session
+t=2026-02-10T18:28:33+0200 lvl=eror msg="session closed, starting reconnect loop" obj=tunnels.session obj=csess id=14e517fe853b err="read tcp 192.168.100.15:61059->3.123.83.158:443: read: connection reset by peer"
+t=2026-02-10T18:28:34+0200 lvl=info msg="client session established" obj=tunnels.session
+t=2026-02-10T18:28:34+0200 lvl=info msg="tunnel session started" obj=tunnels.session
+t=2026-02-10T18:28:48+0200 lvl=eror msg="heartbeat timeout, terminating session" obj=tunnels.session obj=csess id=e12580ffa8eb clientid=17e2fae8ab25de959eb9fe048765b1b0
+t=2026-02-10T18:42:39+0200 lvl=eror msg="session closed, starting reconnect loop" obj=tunnels.session obj=csess id=14e517fe853b err="read tcp 192.168.100.15:61253->3.125.92.105:443: read: connection reset by peer"
+t=2026-02-10T18:42:39+0200 lvl=info msg="client session established" obj=tunnels.session
+t=2026-02-10T18:42:39+0200 lvl=info msg="tunnel session started" obj=tunnels.session
+t=2026-02-10T18:42:54+0200 lvl=eror msg="heartbeat timeout, terminating session" obj=tunnels.session obj=csess id=07c8d854bccf clientid=17e2fae8ab25de959eb9fe048765b1b0
+t=2026-02-10T19:17:16+0200 lvl=eror msg="session closed, starting reconnect loop" obj=tunnels.session obj=csess id=14e517fe853b err="read tcp 192.168.100.15:61274->3.123.83.158:443: read: connection reset by peer"
+t=2026-02-10T19:17:17+0200 lvl=info msg="client session established" obj=tunnels.session
+t=2026-02-10T19:17:17+0200 lvl=info msg="tunnel session started" obj=tunnels.session
+t=2026-02-10T19:40:00+0200 lvl=eror msg="session closed, starting reconnect loop" obj=tunnels.session obj=csess id=14e517fe853b err="read tcp 192.168.100.15:61448->52.28.187.147:443: read: connection reset by peer"
+t=2026-02-10T19:40:01+0200 lvl=info msg="client session established" obj=tunnels.session
+t=2026-02-10T19:40:01+0200 lvl=info msg="tunnel session started" obj=tunnels.session
+t=2026-02-10T19:45:21+0200 lvl=eror msg="heartbeat timeout, terminating session" obj=tunnels.session obj=csess id=22154bc9b9c7 clientid=17e2fae8ab25de959eb9fe048765b1b0
+t=2026-02-10T19:46:24+0200 lvl=eror msg="session closed, starting reconnect loop" obj=tunnels.session obj=csess id=14e517fe853b err="read tcp 192.168.100.15:61469->3.123.177.80:443: read: connection reset by peer"
+t=2026-02-10T19:46:25+0200 lvl=info msg="client session established" obj=tunnels.session
+t=2026-02-10T19:46:25+0200 lvl=info msg="tunnel session started" obj=tunnels.session
+t=2026-02-10T19:46:29+0200 lvl=eror msg="heartbeat timeout, terminating session" obj=tunnels.session obj=csess id=0134319bec94 clientid=17e2fae8ab25de959eb9fe048765b1b0
+t=2026-02-10T19:54:25+0200 lvl=eror msg="session closed, starting reconnect loop" obj=tunnels.session obj=csess id=14e517fe853b err="read tcp 192.168.100.15:61488->3.122.29.226:443: read: connection reset by peer"
+t=2026-02-10T19:54:26+0200 lvl=info msg="client session established" obj=tunnels.session
+t=2026-02-10T19:54:26+0200 lvl=info msg="tunnel session started" obj=tunnels.session
+t=2026-02-10T20:02:45+0200 lvl=eror msg="session closed, starting reconnect loop" obj=tunnels.session obj=csess id=14e517fe853b err="read tcp 192.168.100.15:61507->3.125.92.105:443: read: connection reset by peer"
+t=2026-02-10T20:02:46+0200 lvl=info msg="client session established" obj=tunnels.session
+t=2026-02-10T20:02:46+0200 lvl=info msg="tunnel session started" obj=tunnels.session
+t=2026-02-10T20:02:48+0200 lvl=eror msg="heartbeat timeout, terminating session" obj=tunnels.session obj=csess id=b40a7cb97831 clientid=17e2fae8ab25de959eb9fe048765b1b0
+t=2026-02-10T20:12:11+0200 lvl=eror msg="session closed, starting reconnect loop" obj=tunnels.session obj=csess id=14e517fe853b err="read tcp 192.168.100.15:61524->3.125.234.140:443: read: connection reset by peer"
+t=2026-02-10T20:28:03+0200 lvl=eror msg="heartbeat timeout, terminating session" obj=tunnels.session obj=csess id=a385239e0e87 clientid=17e2fae8ab25de959eb9fe048765b1b0
+t=2026-02-10T20:42:48+0200 lvl=eror msg="failed to reconnect session" obj=tunnels.session err="session closed"
+t=2026-02-10T20:42:49+0200 lvl=info msg="client session established" obj=tunnels.session
+t=2026-02-10T20:42:49+0200 lvl=info msg="tunnel session started" obj=tunnels.session
+t=2026-02-10T20:42:51+0200 lvl=eror msg="heartbeat timeout, terminating session" obj=tunnels.session obj=csess id=29cbd45044d4 clientid=17e2fae8ab25de959eb9fe048765b1b0
+t=2026-02-10T21:01:36+0200 lvl=eror msg="heartbeat timeout, terminating session" obj=tunnels.session obj=csess id=7472938a5e3d clientid=17e2fae8ab25de959eb9fe048765b1b0
+t=2026-02-10T21:03:47+0200 lvl=eror msg="session closed, starting reconnect loop" obj=tunnels.session obj=csess id=14e517fe853b err="read tcp 192.168.100.15:61578->3.125.234.140:443: read: connection reset by peer"
+t=2026-02-10T21:03:48+0200 lvl=info msg="client session established" obj=tunnels.session
+t=2026-02-10T21:03:48+0200 lvl=info msg="tunnel session started" obj=tunnels.session
+t=2026-02-10T21:12:59+0200 lvl=eror msg="session closed, starting reconnect loop" obj=tunnels.session obj=csess id=14e517fe853b err="read tcp 192.168.100.15:61603->52.28.187.147:443: read: connection reset by peer"
+t=2026-02-10T21:12:59+0200 lvl=info msg="client session established" obj=tunnels.session
+t=2026-02-10T21:12:59+0200 lvl=info msg="tunnel session started" obj=tunnels.session
+t=2026-02-10T21:25:28+0200 lvl=eror msg="heartbeat timeout, terminating session" obj=tunnels.session obj=csess id=bba147ad1f41 clientid=17e2fae8ab25de959eb9fe048765b1b0
+t=2026-02-10T21:25:34+0200 lvl=eror msg="session closed, starting reconnect loop" obj=tunnels.session obj=csess id=14e517fe853b err="read tcp 192.168.100.15:61623->3.125.92.105:443: read: connection reset by peer"
+t=2026-02-10T21:25:35+0200 lvl=info msg="client session established" obj=tunnels.session
+t=2026-02-10T21:25:35+0200 lvl=info msg="tunnel session started" obj=tunnels.session
+t=2026-02-10T21:25:38+0200 lvl=eror msg="heartbeat timeout, terminating session" obj=tunnels.session obj=csess id=97d1415264dd clientid=17e2fae8ab25de959eb9fe048765b1b0
+t=2026-02-10T21:25:48+0200 lvl=eror msg="heartbeat timeout, terminating session" obj=tunnels.session obj=csess id=8fed46fa01aa clientid=17e2fae8ab25de959eb9fe048765b1b0
+t=2026-02-10T21:40:12+0200 lvl=eror msg="session closed, starting reconnect loop" obj=tunnels.session obj=csess id=14e517fe853b err="read tcp 192.168.100.15:61655->3.123.83.158:443: read: connection reset by peer"
+t=2026-02-10T21:40:13+0200 lvl=info msg="client session established" obj=tunnels.session
+t=2026-02-10T21:40:13+0200 lvl=info msg="tunnel session started" obj=tunnels.session
+t=2026-02-10T21:40:27+0200 lvl=eror msg="heartbeat timeout, terminating session" obj=tunnels.session obj=csess id=c8a29248bf6b clientid=17e2fae8ab25de959eb9fe048765b1b0
+t=2026-02-10T21:55:48+0200 lvl=eror msg="session closed, starting reconnect loop" obj=tunnels.session obj=csess id=14e517fe853b err="read EOF from remote peer"
+t=2026-02-10T21:55:49+0200 lvl=info msg="client session established" obj=tunnels.session
+t=2026-02-10T21:55:49+0200 lvl=info msg="tunnel session started" obj=tunnels.session
+t=2026-02-10T21:56:08+0200 lvl=eror msg="heartbeat timeout, terminating session" obj=tunnels.session obj=csess id=715aaff74951 clientid=17e2fae8ab25de959eb9fe048765b1b0
+t=2026-02-10T22:06:28+0200 lvl=eror msg="heartbeat timeout, terminating session" obj=tunnels.session obj=csess id=028529a78277 clientid=17e2fae8ab25de959eb9fe048765b1b0
+t=2026-02-10T22:06:28+0200 lvl=eror msg="session closed, starting reconnect loop" obj=tunnels.session obj=csess id=14e517fe853b err="session closed"
+t=2026-02-10T22:06:30+0200 lvl=info msg="client session established" obj=tunnels.session
+t=2026-02-10T22:06:30+0200 lvl=info msg="tunnel session started" obj=tunnels.session
