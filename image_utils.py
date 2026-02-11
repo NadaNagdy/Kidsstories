@@ -11,13 +11,19 @@ def overlay_text_on_image(image_url, text, output_path):
     """
     try:
         print(f"DEBUG: Overlaying text: {text[:20]}...")
-        # Download image
-        response = requests.get(image_url, timeout=15)
-        if response.status_code != 200:
-            print(f"Error: Failed to download image from {image_url}. Status: {response.status_code}")
-            return None
-            
-        img = Image.open(BytesIO(response.content)).convert("RGBA")
+        # Download image or decode base64
+        if image_url.startswith('data:'):
+            import base64
+            # Extract base64 part
+            header, encoded = image_url.split(",", 1)
+            image_data = base64.b64decode(encoded)
+            img = Image.open(BytesIO(image_data)).convert("RGBA")
+        else:
+            response = requests.get(image_url, timeout=15)
+            if response.status_code != 200:
+                print(f"Error: Failed to download image from {image_url}. Status: {response.status_code}")
+                return None
+            img = Image.open(BytesIO(response.content)).convert("RGBA")
         overlay = Image.new('RGBA', img.size, (0,0,0,0))
         draw = ImageDraw.Draw(overlay)
         
