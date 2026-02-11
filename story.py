@@ -7,7 +7,7 @@ def generate_story(child_name, value, age_group):
     templates = {
         "1-2": {
             "style": "صور كبيرة، كلمات بسيطة، تكرار.",
-            "content": f"""
+            "content": """
 هذا {child_name}. (صورة طفل يبتسم)
 {child_name} يحب اللعب.
 {child_name} يشارك اللعبة.
@@ -17,7 +17,7 @@ def generate_story(child_name, value, age_group):
         },
         "2-3": {
             "style": "روتين يومي، جمل قصيرة.",
-            "content": f"""
+            "content": """
 استيقظ {child_name} من النوم. "صباح الخير!".
 غسل {child_name} وجهه.
 أكل {child_name} فطوره اللذيذ.
@@ -30,7 +30,7 @@ def generate_story(child_name, value, age_group):
         },
         "3-4": {
             "style": "مغامرة بسيطة، أسئلة تفاعلية.",
-            "content": f"""
+            "content": """
 كان يا ما كان، أرنب صغير اسمه {child_name}.
 كان {child_name} يقفز في الحديقة.
 ماذا وجد {child_name}؟ وجد جزرة كبيرة!
@@ -43,7 +43,7 @@ def generate_story(child_name, value, age_group):
         },
         "4-5": {
             "style": "أحداث متسلسلة، القرار الصحيح.",
-            "content": f"""
+            "content": """
 في يوم مشمس، كان {child_name} يلعب بالكرة.
 ركل {child_name} الكرة بقوة... طرااااخ!
 انكسرت زهرية ماما المفضلة.
@@ -55,7 +55,7 @@ def generate_story(child_name, value, age_group):
         },
         "5-6": {
             "style": "مغامرة، حل مشكلة.",
-            "content": f"""
+            "content": """
 البطل الخارق {child_name} يستعد لمهمة جديدة!
 هناك قطة عالقة فوق الشجرة.
 لبس {child_name} رداءه الأحمر.
@@ -69,7 +69,7 @@ def generate_story(child_name, value, age_group):
         },
         "6-7": {
             "style": "مغامرة واضحة، تفكير.",
-            "content": f"""
+            "content": """
 في مدرسة {child_name}، حدث شيء غريب.
 اختفى قلم المعلمة المفضل!
 بدأ الجميع يتبادلون الاتهامات.
@@ -82,7 +82,7 @@ def generate_story(child_name, value, age_group):
         },
         "7-8": {
             "style": "قصة مع تحديات، حبكة.",
-            "content": f"""
+            "content": """
 كان {child_name} يحلم دائماً بالفوز في مسابقة الجري.
 تدرب بجد كل يوم، وركض مسافات طويلة.
 وفي يوم السباق، كان {child_name} في المقدمة!
@@ -95,7 +95,7 @@ def generate_story(child_name, value, age_group):
         },
         "8-9": {
             "style": "مغامرة، صراع أخلاقي، تفاصيل.",
-            "content": f"""
+            "content": """
 في قرية {child_name} الهادئة، كان هناك نهر جميل.
 لاحظ {child_name} أن النهر بدأ يتلوث بسبب مصنع قريب.
 كان صاحب المصنع رجلاً قوياً وغنياً.
@@ -108,7 +108,7 @@ def generate_story(child_name, value, age_group):
         },
         "9-10": {
             "style": "قصة طويلة، تعدد مواقف، قيادة.",
-            "content": f"""
+            "content": """
 تم اختيار {child_name} قائداً لفريق الكشافة في رحلة الغابة.
 واجه الفريق مصاعب كثيرة: أمطار غزيرة، وضياع الخريطة.
 شعر الفريق بالخوف والغضب.
@@ -120,7 +120,7 @@ def generate_story(child_name, value, age_group):
         },
         "10-12": {
             "style": "قصة معقدة، قضايا مجتمعية، 50+ صفحة (ملخص).",
-            "content": f"""
+            "content": """
 (هذه مقدمة لقصة طويلة ومفصلة تناسب عمر 10-12 سنة)
 في عالم المستقبل، حيث تتحكم التكنولوجيا في كل شيء، اكتشف {child_name} ثغرة خطيرة.
 كان النظام الرقمي يظلم فئة من الناس.
@@ -133,7 +133,7 @@ def generate_story(child_name, value, age_group):
         },
         "default": {
              "style": "عام.",
-             "content": f"""
+             "content": """
 كان يا ما كان، في قديم الزمان، كان هناك بطل اسمه {child_name}.
 كان {child_name} يواجه تحديات كثيرة في حياته اليومية.
 وفي كل مرة، كان يستخدم {value} ليتغلب على المصاعب.
@@ -144,8 +144,7 @@ def generate_story(child_name, value, age_group):
 
     story_data = templates.get(age_group, templates["default"])
     
-    # If it's a dict (structured), return content. If string (legacy), return it.
+    # If it's a dict (structured), return content formatted with actual values
     if isinstance(story_data, dict):
-        return story_data["content"]
-    return story_data
-
+        return story_data["content"].format(child_name=child_name, value=value)
+    return story_data.format(child_name=child_name, value=value)
