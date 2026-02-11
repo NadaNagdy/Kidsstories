@@ -5,7 +5,8 @@ from openai import OpenAI
 
 # Initialize OpenRouter client
 # Note: Using OPENROUTER_API_KEY if available, else falling back to OPENAI_API_KEY
-api_key = os.getenv("OPENROUTER_API_KEY") or os.getenv("OPENAI_API_KEY")
+api_key = os.getenv("OPENROUTER_API_KEY") or os.getenv("OPENAI_API_KEY") or "not_set"
+
 client = OpenAI(
     base_url="https://openrouter.ai/api/v1",
     api_key=api_key
