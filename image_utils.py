@@ -49,7 +49,7 @@ def overlay_text_on_image(image_url, text, output_path):
         for path in font_paths:
             if os.path.exists(path):
                 try:
-                    font = ImageFont.truetype(path, 35) # Slightly smaller for multiline
+                    font = ImageFont.truetype(path, 50) # Increased from 35 for mobile readability
                     print(f"DEBUG: Loaded font: {path}")
                     break
                 except Exception as e:
@@ -113,7 +113,7 @@ def create_cover_page(image_url, top_text, bottom_text, output_path):
         # Load font
         base_dir = os.path.dirname(os.path.abspath(__file__))
         font_path = os.path.join(base_dir, "fonts", "Amiri-Regular.ttf")
-        font = ImageFont.truetype(font_path, 50) if os.path.exists(font_path) else ImageFont.load_default()
+        font = ImageFont.truetype(font_path, 70) if os.path.exists(font_path) else ImageFont.load_default() # Increased from 50
         
         width, height = img.size
         padding = 20
