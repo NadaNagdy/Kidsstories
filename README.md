@@ -9,15 +9,15 @@ A Facebook Messenger Chatbot that generates personalized children's stories and 
 -   **Photo Reception**: Receives a photo of the child (stored temporarily in memory).
 -   **Interactive Quick Replies**: Asks the user to choose a moral value for the story.
 -   **Story Generation**: Creates a short story based on the child's name and selected value.
--   **PDF Creation**: Generates a PDF of the story.
--   **File Delivery**: Sends the PDF back to the user via Messenger.
+-   **Storyboard Generation**: Automates the creation of 6-panel educational storyboards from a child's photo.
+-   **Model Optimization**: Uses Gemini 2.0 Flash Lite & Flash 001 via OpenRouter for the best quality at the lowest cost.
 
 ## Setup
 
 1.  **Clone the repository**:
     ```bash
     git clone <repository_url>
-    cd kids-story-bot
+    cd Kidsstories
     ```
 
 2.  **Install dependencies**:
@@ -26,8 +26,9 @@ A Facebook Messenger Chatbot that generates personalized children's stories and 
     ```
 
 3.  **Environment Variables**:
-    You need to set up the following environment variables (or hardcode them for testing, but NOT recommended for production):
-    -   `VERIFY_TOKEN`: A string you define for Facebook Webhook verification.
+    Set the following environment variables:
+    -   `OPENROUTER_API_KEY`: Found in your OpenRouter.ai dashboard.
+    -   `VERIFY_TOKEN`: Defined for Facebook Webhook verification.
     -   `PAGE_ACCESS_TOKEN`: The access token for your Facebook Page.
 
 4.  **Run the Server**:
