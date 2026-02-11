@@ -50,24 +50,24 @@
     "3-4": {
         "pages": [
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, smiling and holding a ball, 'Hero of Honesty' written in the background, living room with a beautiful colorful vase",
-                "text": "كان يا ما كان.. فيه فازة جميلة أوي ماما بتحبها. {child_name} كان بيلعب بالكورة.. هوب!"
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, playing with a fast toy airplane in the living room, 'Vroom!' motion effects",
+                "text": "كان يا ما كان.. بطلنا معاه طيارة سريعة.. وززززززز! وفجأة.. خبطت في الحيطة!"
             },
             {
-                "prompt": "Professional 3D Pixar style, a ball hitting the vase, the vase falling and shattering into small pieces, 'Crash!', motion blur",
-                "text": "الكورة خبطت في الفازة.. كررراش! الفازة وقعت واتكسرت حتت صغيرة. يا خبر!"
+                "prompt": "Professional 3D Pixar style, a toy airplane with a broken wing on the floor, child character wearing a striped sweatshirt looking sad and worried",
+                "text": "يا خبر! الجناح اتكسر. بطلنا زعل.. أقول لماما إيه؟ أخبيها تحت الكنبة؟"
             },
             {
-                "prompt": "Professional 3D Pixar style, mother standing and asking 'Who broke the vase?', child character wearing a striped sweatshirt, looking at the floor and thinking",
-                "text": "ماما جت سألت: مين كسر الفازة؟ {child_name} فكر.. يقول مش أنا؟ ولا يقول الحق؟"
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, standing with a straight back, looking into mother's eyes honestly, hand on chest",
+                "text": "بطلنا وقف ضهره مفرود وقال الحق: أنا يا ماما.. كنت بلعب غصب عني اتكسرت.. أنا آسف."
             },
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, standing with a straight back, looking at mother bravely and honestly",
-                "text": "البطل وقف ضهره مفرود وقال: أنا يا ماما.. أنا اللي خبطتها غصب عني.. أنا قولت الحق!"
+                "prompt": "Professional 3D Pixar style, mother smiling warmly, holding some 'Magic Glue', child character wearing a striped sweatshirt watching happily",
+                "text": "ماما قالت: عشان إنت صادق وبطل، هنصلحها سوا باللزق السحري."
             },
             {
-                "prompt": "Professional 3D Pixar style, mother hugging the child warmly, both are smiling and cleaning up toys together, warm atmosphere",
-                "text": "ماما حضنته أوي: أنا فرحانة بيك عشان إنت صادق! إنت بطل الصدق! وساعدته يلم اللعب."
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, flying the repaired toy airplane, huge smile, living room setting",
+                "text": "الطيارة طارت تاني! بطلنا اتعلم إن الصدق هو اللي بيصلح كل حاجة."
             }
         ]
     },

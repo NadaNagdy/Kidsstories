@@ -50,24 +50,24 @@
     "3-4": {
         "pages": [
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, smiling bravely, next to a huge lion with soft fur, 'Hero of Courage' written on the side, beautiful forest background with a large tree",
-                "text": "كان يا ما كان.. فيه أسد كبيييير. الأسد نايم.. ششششش."
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, standing in front of a large playground tunnel, slightly dark inside, mysterious but fun atmosphere",
+                "text": "كان يا ما كان.. فيه نفق كبييير وضلمة. بطلنا خاف شوية؟ ممكن.. بس هو شجاع!"
             },
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, walking slowly and carefully towards a sad awake lion, lion is pointing at its paw with a small thorn",
-                "text": "جه {child_name} البطل.. لقى الأسد بيعيط: آي يا رجلي.. آي. فيه شوكة صغيرة بتوجعه."
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, taking a brave first step into the dark tunnel, arm outstretched, determined look",
+                "text": "مشي تاتا تاتا.. وقال بصوت قوي: أنا مش خايف! أنا بطل المستكشفين!"
             },
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, standing in front of the giant lion, wiping the lion's tears with a small hand, the lion looks scared but comforted",
-                "text": "الأسد كان خايف، لكن {child_name} قاله: متخافش يا ملك الغابة، أنا بطل وشجاع وهساعدك!"
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, inside the tunnel, finding a bright colorful ball, 'Surprise!' expression, glowing eyes",
+                "text": "لقى إيه؟ كورة جميلة كانت مستخبية! الضلمة طلعت مش وحشة، دي طلعت مكان للمفاجآت."
             },
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, holding the lion's massive paw, pulling out the thorn with effort, the thorn is flying out, lion is starting to smile",
-                "text": "بإيده الصغننة، شد الشوكة.. تشب! الشوكة طلعت والوجع طار! والأسد ضحك."
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, running out of the other side of the tunnel, 'Woooii!', bright sunlight outside",
+                "text": "خرج من الناحية التانية وجري بسرعة.. وووووي! أنا عديت النفق لوحدي!"
             },
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, riding on the giant lion's back, both are happy, forest animals are clapping in the background",
-                "text": "الأسد فرح وقال: شكراً يا {child_name}! إنت قلبك كبيييير وشجاع. ولفوا الغابة كلها مبسوطين."
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, hugging mother while holding a colorful ball up, celebratory garden park setting",
+                "text": "ماما سقفت وقالت: برافو يا بطل الشجاعة! بطلنا مبقاش يخاف من الضلمة تاني."
             }
         ]
     },

@@ -50,24 +50,24 @@
     "3-4": {
         "pages": [
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, holding hands with father and mother, 'Hero of Cooperation' written in the background, father trying to push a giant heavy toy box, face red with effort",
-                "text": "كان يا ما كان.. فيه صندوق لعب كبيييير وتقييييل. بابا بيزقه: هووووب.. جامد!.. مش بيتحرك!"
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, trying to open a large sealed jar of colorful clay, 'Heave-ho!' effort, bright room",
+                "text": "بطلنا عاوز يلعب بالصلصال، بس العلبة مقفولة أوي.. يا هيلة هيلة.. مش بتفتح!"
             },
             {
-                "prompt": "Professional 3D Pixar style, mother joining father to help push the giant heavy toy box, both pushing with all their might",
-                "text": "ماما جت تساعد بابا: يلا يا بابا.. هوووب!.. برضه الصندوق تقيل ومش بيتحرك."
+                "prompt": "Professional 3D Pixar style, father helping the child character wearing a striped sweatshirt to pull the lid, both straining, funny effort faces",
+                "text": "بابا جه يساعد: يلا يا بطل.. زق معايا! برضه العلبة مش راضية تفتح."
             },
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, rolling up sleeves, ready to help with a big smile",
-                "text": "مين جه يساعد؟ البطل {child_name}! جري وقال: أنا جاي أساعد! إحنا فريق واحد!"
+                "prompt": "Professional 3D Pixar style, mother joining father and the child character wearing a striped sweatshirt, all three pulling together in a line, 'One.. Two.. Three.. Pull!'",
+                "text": "ماما جت كمان ومسكت فيهم.. واحد.. اتنين.. تلاتة.. شِدددد!"
             },
             {
-                "prompt": "Professional 3D Pixar style, father, mother, and child character (wearing a striped sweatshirt) forming a line and pushing the box together, strong motion effects, box is starting to slide",
-                "text": "كلنا مع بعض: واحد.. اتنين.. تلاتة.. زُق! كرررررر.. الصندوق اتحرك!"
+                "prompt": "Professional 3D Pixar style, the jar lid popping off, colorful clay spilling out, everyone laughing and surprised, action shot",
+                "text": "بببببببببب! العلبة اتفتحت وكلنا فرحنا بالصلصال الملون."
             },
             {
-                "prompt": "Professional 3D Pixar style, all three clapping for each other, toy box in its correct place, happy celebratory scene",
-                "text": "بابا وماما سقفوا وقالوا: شكراً يا بطل! لما تعاونا كلنا, قدرنا نحرك الصندوق الكبير!"
+                "prompt": "Professional 3D Pixar style, father, mother, and child character wearing a striped sweatshirt sitting at a table, making cool shapes with clay, peaceful happy scene",
+                "text": "بطلنا قال: شكراً يا فريق التعاون! إيد لوحدها متسقفش، بس إيدينا سوا بتفتح المستحيل."
             }
         ]
     },

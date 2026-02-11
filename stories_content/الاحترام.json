@@ -1,4 +1,12 @@
 {
+    "1-2": {
+        "pages": [
+            {
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, standing politely in front of a small slide, a cute teddy bear already on the stairs, 'My Turn Next' expression",
+                "text": "بطلنا المؤدب بيستنى دوره. واحد وراه دبدوب، وهو هادي."
+            }
+        ]
+    },
     "2-3": {
         "pages": [
             {
@@ -26,24 +34,24 @@
     "3-4": {
         "pages": [
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, standing in front of a giant red slide in a beautiful park, 'Hero of Respect' written in the background",
-                "text": "كان يا ما كان.. فيه زحليقة كبيرة وجميلة. {child_name} كان نفسه يتزحلق وووووي."
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, standing in a small line at a bathroom sink, a little girl is in front washing her hands, delicious food smell drifting from the kitchen",
+                "text": "بطلنا مستعجل وعاوز يغسل إيده بسرعة عشان الأكل ريحته حلوة."
             },
             {
-                "prompt": "Professional 3D Pixar style, a small cute teddy bear standing on the ladder of the slide, ready to go down, child character wearing a striped sweatshirt watching from below",
-                "text": "فيه دبدوب واقف على السلم، ده دوره. {child_name} كان مستعجل أوي!"
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, standing calmly and waiting for the girl to finish, no pushing, very respectful behavior",
+                "text": "بطلنا وقف مكانه باحترام. ميزقش أصحابه أبداً.. هو بطل مؤدب."
             },
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, standing still with hands on their chest, waiting calmly and looking at the teddy bear politely",
-                "text": "البطل {child_name} وقف مكانه، وحط إيده على صدره وقال: ممكن يا دبدوب.. من فضلك.. أركب بعدك؟"
+                "prompt": "Professional 3D Pixar style, the little girl stepping aside and saying 'Go ahead', child character wearing a striped sweatshirt smiling and nodding back",
+                "text": "البنوتة قالت: شكراً إنك استنيت. بطلنا رد: العفو يا صديقتي."
             },
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, sliding down with great joy, 'Woooii!', teddy bear watching with a smile",
-                "text": "الدبدوب قاله: اتفضل يا بطل عشان إنت مؤدب. {child_name} اتزحلق وفرح أوي وووووي."
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, washing hands with lots of soapy bubbles, careful and thorough",
+                "text": "غسل إيده بالراحة واستخدم الكلمات السحرية: من فضلك و شكراً."
             },
             {
-                "prompt": "Professional 3D Pixar style, child character and teddy bear shaking hands/greeting each other, everyone is happy and clapping",
-                "text": "وهو نازل، قال للدبدوب: شكراً يا صاحبي! والكل قال: يا سلام على {child_name}.. بطل الاحترام!"
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt sitting at a dinner table, mother kissing child's forehead, warm lighting",
+                "text": "ماما قالت: يا سلام على أخلاق الأبطال! إنت بطل الاحترام يا حبيبي."
             }
         ]
     },
