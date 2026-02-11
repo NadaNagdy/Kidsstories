@@ -51,14 +51,15 @@ def generate_storybook_page(character_description, page_prompt):
     Generates a storybook page ensuring character consistency using the description.
     """
     try:
-        # Define the consistent style prompt
-        style_prompt = "Soft watercolor and colored pencil textures, gentle pastel color palette (soft yellows, blues, pinks), clean white background, hand-drawn, cute, and friendly aesthetic, high-quality children's book illustration."
-        
-        # Combining the page-specific prompt with the consistent character description and style
+        # Define the new high-quality prompt template
         full_prompt = (
-            f"{style_prompt} Scene: {page_prompt}. "
-            f"The main character is the SAME child in every page: {character_description}. "
-            f"Ensure character consistency and facial features match exactly."
+            f"A high-quality 3D digital illustration in a modern animation style of {character_description}. "
+            f"The character is shown in this scene: {page_prompt}. "
+            f"The scene is illuminated by soft, cinematic lighting, creating a heartwarming and magical vibe. "
+            f"The colors are vibrant pastels, featuring soft textures and cinematic depth of field. "
+            f"CRITICAL: The main character must look EXACTLY like the description provided (Face, Hair, Clothing). "
+            f"Do not change the character's look or clothing. "
+            f"Ensure the name of the child is conceptually represented as the hero."
         )
         
         # OpenRouter image generation via Chat Completions
