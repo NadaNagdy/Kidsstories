@@ -96,6 +96,9 @@ def start_processing(sender_id, messaging_event, background_tasks):
             handle_age_selection(sender_id, payload)
         elif current_step == "waiting_for_value":
             handle_value_selection(sender_id, payload, background_tasks)
+        elif current_step == "waiting_for_payment":
+            if payload == "PAY_25_EGP":
+                handle_payment_success(sender_id, background_tasks)
         return
 
     # Check for Attachments (Image)
@@ -186,14 +189,38 @@ def handle_age_selection(sender_id, age_group):
 
 def handle_value_selection(sender_id, value, background_tasks):
     send_text_message(sender_id, f"📖 جاري كتابة قصة عن {value}... لحظات فقط!")
-    background_tasks.add_task(process_story_generation, sender_id, value)
+    # Start with preview mode (first page only)
+    background_tasks.add_task(process_story_generation, sender_id, value, is_preview=True)
+
+def handle_payment_success(sender_id, background_tasks):
+    send_text_message(sender_id, "✅ تم استلام الدفع بنجاح! شكراً لك.")
+    send_text_message(sender_id, "🚀 جاري إكمال باقي صفحات القصة وتحضير الكتاب...")
+    
+    # Retrieve saved state to continue
+    value = user_state[sender_id].get("selected_value")
+    if value:
+        background_tasks.add_task(process_story_generation, sender_id, value, is_preview=False)
+    else:
+        send_text_message(sender_id, "عذراً، حدث خطأ. الرجاء البدء من جديد.")
+
+def handle_payment_success(sender_id, background_tasks):
+    send_text_message(sender_id, "✅ تم استلام الدفع بنجاح! شكراً لك.")
+    send_text_message(sender_id, "🚀 جاري إكمال باقي صفحات القصة وتحضير الكتاب...")
+    
+    # Retrieve saved state to continue
+    value = user_state[sender_id].get("selected_value")
+    if value:
+        background_tasks.add_task(process_story_generation, sender_id, value, is_preview=False)
+    else:
+        send_text_message(sender_id, "عذراً، حدث خطأ. الرجاء البدء من جديد.")
 
 import json
 from image_utils import overlay_text_on_image
 from openai_service import create_character_reference, generate_storybook_page
 
-def process_story_generation(sender_id, value):
+def process_story_generation(sender_id, value, is_preview=False):
     try:
+        user_state[sender_id]["selected_value"] = value
         child_name = user_state[sender_id].get("child_name", "بطلنا")
         photo_url = user_state[sender_id].get("photo_url")
         age_group = user_state[sender_id].get("age_group", "2-3")
@@ -230,22 +257,42 @@ def process_story_generation(sender_id, value):
         pages = story_data["pages"]
         generated_images = []
         
-        # 3. Generate Cover Page
-        send_text_message(sender_id, "🎨 جاري تصميم غلاف القصة المميز...")
-        cover_prompt = f"A beautiful circular artistic frame cover featuring the hero: {char_desc}. Soft watercolor and colored pencil textures, clean white background, surrounded by small thematic elements."
-        cover_ai_url = generate_storybook_page(char_desc, cover_prompt)
+        generated_images = []
         
-        if cover_ai_url:
-            from image_utils import create_cover_page
-            cover_temp_path = f"/tmp/cover_{sender_id}.png"
-            title_text = f"بطل الـ{value}"
-            # Swap child_name and title_text based on new requirement (Top: Title, Bottom: Name)
-            cover_path = create_cover_page(cover_ai_url, title_text, child_name, cover_temp_path)
-            if cover_path:
-                generated_images.append(cover_path)
-        
+        # Determine range of pages to generate
+        if is_preview:
+            # Generate Cover Only
+            send_text_message(sender_id, "🖼️ جاري تجهيز معاينة الغلاف...")
+            
+            # Generate Cover Page
+            cover_prompt = f"A beautiful circular artistic frame cover featuring the hero: {char_desc}. Soft watercolor and colored pencil textures, clean white background, surrounded by small thematic elements."
+            cover_ai_url = generate_storybook_page(char_desc, cover_prompt)
+            
+            if cover_ai_url:
+                from image_utils import create_cover_page
+                cover_temp_path = f"/tmp/cover_{sender_id}.png"
+                title_text = f"بطل الـ{value}"
+                # Swap child_name and title_text based on new requirement (Top: Title, Bottom: Name)
+                cover_path = create_cover_page(cover_ai_url, title_text, child_name, cover_temp_path)
+                if cover_path:
+                    generated_images.append(cover_path)
+                    send_file(sender_id, cover_path)
+            
+            user_state[sender_id]["step"] = "waiting_for_payment"
+            # In a real app, this would be a webview button or link
+            send_quick_replies(sender_id, "🔒 لإكمال القصة والحصول على الكتاب PDF، يرجى دفع رسوم رمزية (25 جنيه).", ["PAY_25_EGP"])
+            return
+
+        else:
+            # Resume from page 1 (since cover is 0)
+            send_text_message(sender_id, "📚 جاري إكمال القصة...")
+            start_page = 0 
+            end_page = len(pages)
+
         # 4. Generate story pages in a loop
-        for i, page in enumerate(pages):
+        for i in range(start_page, end_page):
+            if i >= len(pages): break
+            page = pages[i]
             send_text_message(sender_id, f"🎨 جاري رسم الصفحة {i+1} من {len(pages)}...")
             
             # Generate Background + Character
@@ -259,10 +306,38 @@ def process_story_generation(sender_id, value):
                 
                 if result_path:
                     generated_images.append(temp_img_path)
+                    
+                    # If preview mode, send the image immediately
+                    if is_preview:
+                        send_file(sender_id, temp_img_path)
                 else:
                     logger.error(f"Failed to overlay text for page {i+1}")
             else:
                 logger.error(f"Failed to generate image for page {i+1}")
+        
+        if is_preview:
+            user_state[sender_id]["step"] = "waiting_for_payment"
+            # In a real app, this would be a webview button or link
+            send_quick_replies(sender_id, "🔒 لإكمال القصة والحصول على الكتاب PDF، يرجى دفع رسوم رمزية (25 جنيه).", ["Pay 25 EGP"])
+            return
+
+        # If not preview, retrieve existing images (mock logic for now since tmp clears)
+        # In a real app, you'd store these in S3/Cloudinary.
+        # Check if page 0 exists from preview step
+        page_0_path = f"/tmp/page_{sender_id}_0.png"
+        if os.path.exists(page_0_path):
+            generated_images.insert(0, page_0_path)
+            
+        # Also need to add cover if it exists (assuming it was made during preview or persistent)
+        cover_path = f"/tmp/cover_{sender_id}.png"
+        if os.path.exists(cover_path):
+            # Check if cover is already in list (it might be added by previous cover logic if I didn't change it)
+            # The previous cover logic (lines 249-262) runs every time process_story_generation is called?
+            # Wait, line 249-262 is BEFORE this loop.
+            # I should wrap 249-262 in `if is_preview:` or handle it carefully.
+            # Actually, let's just make sure we don't duplicate.
+            if cover_path not in generated_images:
+                generated_images.insert(0, cover_path)
         
         if not generated_images:
             send_text_message(sender_id, "عذراً، حدث خطأ أثناء إنشاء صفحات القصة.")
