@@ -140,7 +140,7 @@ def handle_image_reception(sender_id, image_url):
     if ai_photo_url:
         user_state[sender_id]["ai_photo_url"] = ai_photo_url
         user_state[sender_id]["step"] = "waiting_for_age"
-        age_options = ["1-2", "2-3", "3-4", "4-5", "5-6", "6-7", "7-8", "8-9"]
+        age_options = ["1-2", "2-3", "3-4", "4-5"]
         send_quick_replies(sender_id, "تم التحويل! ✨ كم عمر طفلك؟", age_options)
     else:
         user_state[sender_id]["step"] = "waiting_for_photo"
