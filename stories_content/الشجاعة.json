@@ -27,23 +27,28 @@
         "pages": [
             {
                 "prompt": "Professional 3D Pixar style, a giant sleeping lion with a huge fluffy mane, peaceful garden background",
-                "text": "كان يا ما كان.. فيه أسد كبيييير. الأسد نايم.. ششششش."
+                "text": "كان يا ما كان.. فيه أسد كبيييير. الأسد نايم.. ششششش.",
+                "static_image": "story_assets/courage/courage_storyboard_panel_2_1770828531839.png"
             },
             {
                 "prompt": "Professional 3D Pixar style, child character walking on tiptoes in a garden, giant lion lying down with a thorn in its paw, child looks curious",
-                "text": "جه {child_name} الشجاع.. مشي تاتا تاتا.. لقى الأسد زعلان وبينادي: آي يا رجلي.. آي."
+                "text": "جه {child_name} الشجاع.. مشي تاتا تاتا.. لقى الأسد زعلان وبينادي: آي يا رجلي.. آي.",
+                "static_image": "story_assets/courage/courage_storyboard_panel_3_final_retry_1770828640589.png"
             },
             {
                 "prompt": "Professional 3D Pixar style, child character comforting the giant lion, holding its big paw, lion looks scared but relieved",
-                "text": "{child_name} قاله: متخافش يا أسد، أنا بطل وشجاع! والأسد كان خايف ومغمض عينه."
+                "text": "{child_name} قاله: متخافش يا أسد، أنا بطل وشجاع! والأسد كان خايف ومغمض عينه.",
+                "static_image": "story_assets/courage/courage_storyboard_panel_4_retry_1770828593585.png"
             },
             {
                 "prompt": "Professional 3D Pixar style, child character pulling a large thorn from a lion's paw, the thorn is flying in the air, action shot",
-                "text": "بإيده الصغننة، شد الشوكة.. تشب! الشوكة طلعت والوجع طار!"
+                "text": "بإيده الصغننة، شد الشوكة.. تشب! الشوكة طلعت والوجع طار!",
+                "static_image": "story_assets/courage/courage_storyboard_panel_5_1770828547968.png"
             },
             {
                 "prompt": "Professional 3D Pixar style, child character riding on the back of the happy giant lion, both are laughing and roaming a beautiful garden",
-                "text": "الأسد فرح وقال: شكراً يا {child_name} يا بطل! وشاله ولفوا الحديقة وهم مبسوطين."
+                "text": "الأسد فرح وقال: شكراً يا {child_name} يا بطل! وشاله ولفوا الحديقة وهم مبسوطين.",
+                "static_image": "story_assets/courage/courage_storyboard_panel_6_1770828565056.png"
             }
         ]
     },
