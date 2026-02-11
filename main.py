@@ -157,26 +157,75 @@ def handle_value_selection(sender_id, value, background_tasks):
     send_text_message(sender_id, f"📖 جاري كتابة قصة عن {value}... لحظات فقط!")
     background_tasks.add_task(process_story_generation, sender_id, value)
 
+import json
+from image_utils import overlay_text_on_image
+from openai_service import create_character_reference, generate_storybook_page
+
+with open("stories_config.json", "r", encoding="utf-8") as f:
+    STORIES_CONFIG = json.load(f)
+
 def process_story_generation(sender_id, value):
     try:
         child_name = user_state[sender_id].get("child_name", "بطلنا")
-        age_group = user_state[sender_id].get("age_group", "4-5")
+        photo_url = user_state[sender_id].get("photo_url")
         
-        # 1. Generate Story
-        story_text = generate_story(child_name, value, age_group)
+        # 1. Create a consistent character description from the photo
+        send_text_message(sender_id, "🔍 جاري تحليل ملامح بطلنا الصغير لضمان ظهور الشخصية بشكل متناسق في كل الصفحات...")
+        char_desc = create_character_reference(photo_url)
         
-        # 2. Create PDF
-        pdf_path = create_pdf(child_name, value, story_text)
+        # 2. Get the story config for the selected value
+        # We'll use "1-5" as default age range for now as per config
+        story_data = STORIES_CONFIG.get(value, {}).get("1-5")
+        if not story_data:
+            send_text_message(sender_id, "عذراً، هذه القصة غير متوفرة حالياً.")
+            return
+
+        pages = story_data["pages"]
+        generated_images = []
         
-        # 3. Send PDF
+        # 3. Generate pages in a loop
+        for i, page in enumerate(pages):
+            send_text_message(sender_id, f"🎨 جاري رسم الصفحة {i+1} من {len(pages)}...")
+            
+            # Generate Background + Character
+            ai_image_url = generate_storybook_page(char_desc, page["prompt"])
+            
+            if ai_image_url:
+                # Overlay Text
+                page_text = page["text"].format(child_name=child_name)
+                temp_img_path = f"/tmp/page_{sender_id}_{i}.png"
+                overlay_text_on_image(ai_image_url, page_text, temp_img_path)
+                generated_images.append(temp_img_path)
+            else:
+                logger.error(f"Failed to generate image for page {i+1}")
+        
+        if not generated_images:
+            send_text_message(sender_id, "عذراً، حدث خطأ أثناء إنشاء صفحات القصة.")
+            return
+
+        # 4. Create PDF from images
+        send_text_message(sender_id, "📚 جاري تجميع الصفحات في الكتاب النهائي...")
+        pdf_name = f"story_{sender_id}.pdf"
+        pdf_path = f"/tmp/{pdf_name}"
+        create_pdf(generated_images, pdf_path)
+        
+        # 5. Send PDF
         send_file(sender_id, pdf_path)
         
-        # 4. Cleanup / Reset
-        send_text_message(sender_id, "أتمنى أن تعجبكم القصة! 📚✨\nأرسل 'Start' لعمل قصة جديدة.")
+        # 6. Cleanup
+        send_text_message(sender_id, f"أتمنى أن تعجبكم قصة {value}! 📚✨\nأرسل 'Start' لعمل قصة جديدة.")
         user_state[sender_id] = {"step": "start"}
+        
+        # Optional: Remove temp files
+        for img_path in generated_images:
+            try: os.remove(img_path)
+            except: pass
+        try: os.remove(pdf_path)
+        except: pass
+
     except Exception as e:
-        logger.error(f"Error generating story: {e}")
-        send_text_message(sender_id, "عذراً، حدث خطأ أثناء توليد القصة. حاول مرة أخرى.")
+        logger.error(f"Error in process_story_generation: {e}")
+        send_text_message(sender_id, "عذراً، حدث خطأ غير متوقع. جاري العمل على إصلاحه!")
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
