@@ -22,7 +22,7 @@ PAGE_ACCESS_TOKEN = os.getenv("PAGE_ACCESS_TOKEN")
 
 # Startup Banner (AFTER variables are defined)
 logger.info("=" * 60)
-logger.info("🚀 KIDS STORY BOT v5 - RAILWAY DEPLOYMENT 🚀")
+logger.info("🚀 KIDS STORY BOT v5.1 - BASE64 FIX 🚀")
 logger.info("=" * 60)
 logger.info(f"VERIFY_TOKEN: {VERIFY_TOKEN}")
 logger.info(f"PAGE_ACCESS_TOKEN: {'SET' if PAGE_ACCESS_TOKEN else 'MISSING!!!'}")
@@ -136,6 +136,7 @@ def download_image_as_base64(url):
     try:
         response = requests.get(url, timeout=10)
         if response.status_code == 200:
+            logger.info(f"Successfully downloaded and encoded image from {url[:50]}...")
             return base64.b64encode(response.content).decode("utf-8")
         else:
             logger.error(f"Failed to download image from {url}. Status: {response.status_code}")
