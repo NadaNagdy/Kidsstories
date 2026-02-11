@@ -71,7 +71,7 @@ def generate_storybook_page(character_description, page_prompt):
         }
         
         payload = {
-            "model": "google/gemini-2.0-flash-001", # New standard for cheap/fast image generation
+            "model": "google/gemini-2.5-flash-image", # Correct model for image output modality
             "messages": [
                 {
                     "role": "user",
