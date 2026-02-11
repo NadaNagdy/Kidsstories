@@ -3,8 +3,13 @@ import base64
 import requests
 from openai import OpenAI
 
-# Initialize client
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+# Initialize OpenRouter client
+# Note: Using OPENROUTER_API_KEY if available, else falling back to OPENAI_API_KEY
+api_key = os.getenv("OPENROUTER_API_KEY") or os.getenv("OPENAI_API_KEY")
+client = OpenAI(
+    base_url="https://openrouter.ai/api/v1",
+    api_key=api_key
+)
 
 def create_character_reference(image_data, is_url=True):
     """
@@ -17,9 +22,9 @@ def create_character_reference(image_data, is_url=True):
         else:
             image_content = {"url": f"data:image/jpeg;base64,{image_data}"}
 
-        # Using Vision capabilities to describe the child
+        # Using a high-quality vision model from OpenRouter
         response = client.chat.completions.create(
-            model="gpt-4o-mini", # Using mini vision for cost efficiency
+            model="google/gemini-2.5-flash", # Confirmed in the list
             messages=[
                 {
                     "role": "user",
@@ -29,7 +34,11 @@ def create_character_reference(image_data, is_url=True):
                     ],
                 }
             ],
-            max_tokens=150
+            max_tokens=150,
+            extra_headers={
+                "HTTP-Referer": "https://kidsstories.railway.app",
+                "X-Title": "Kids Story Bot"
+            }
         )
         return response.choices[0].message.content
     except Exception as e:
@@ -51,21 +60,67 @@ def generate_storybook_page(character_description, page_prompt):
             f"Ensure character consistency and facial features match exactly."
         )
         
-        response = client.images.generate(
-            model="dall-e-3", 
-            prompt=full_prompt,
-            n=1,
-            size="1024x1024"
-        )
-        return response.data[0].url
+        # OpenRouter image generation via Chat Completions
+        url = "https://openrouter.ai/api/v1/chat/completions"
+        headers = {
+            "Authorization": f"Bearer {api_key}",
+            "HTTP-Referer": "https://kidsstories.railway.app",
+            "X-Title": "Kids Story Bot",
+            "Content-Type": "application/json"
+        }
+        
+        payload = {
+            "model": "google/gemini-2.5-flash-image", # Using confirmed image model
+            "messages": [
+                {
+                    "role": "user",
+                    "content": full_prompt
+                }
+            ],
+            "modalities": ["image"]
+        }
+        
+        response = requests.post(url, headers=headers, json=payload)
+        response.raise_for_status()
+        data = response.json()
+        
+        # DEBUG: print data to understand structure
+        # print(f"DEBUG Image Data: {data}")
+        
+        # OpenRouter returns image URL in the messages content for image models
+        # or in a special 'images' field in choices[0]
+        try:
+            # Check for images in message (common structure)
+            message = data['choices'][0]['message']
+            if 'images' in message and message['images']:
+                img_data = message['images'][0]
+                if isinstance(img_data, dict) and 'image_url' in img_data:
+                    return img_data['image_url']['url']
+                return img_data
+            
+            # Check for top-level images array
+            if 'images' in data['choices'][0]:
+                return data['choices'][0]['images'][0]
+        except (KeyError, IndexError):
+            pass
+
+        content = data['choices'][0]['message']['content']
+        
+        import re
+        url_match = re.search(r'https://\S+', content)
+        if url_match:
+            return url_match.group(0).rstrip(')')
+        
+        return content # Fallback (might be empty but it's what we have)
     except Exception as e:
         print(f"Error generating page: {e}")
+        if 'response' in locals():
+            print(f"Response content: {response.text}")
         return None
 
 def transform_photo_to_character(image_data, is_url=False):
     """
     Legacy function for single-image transformation.
-    Defaulting to is_url=False because we now download images in main.py.
     """
     char_desc = create_character_reference(image_data, is_url=is_url)
     return generate_storybook_page(char_desc, "A professional character portrait")
