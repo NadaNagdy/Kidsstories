@@ -19,15 +19,24 @@ def overlay_text_on_image(image_url, text, output_path):
         reshaped_text = arabic_reshaper.reshape(text)
         bidi_text = get_display(reshaped_text)
         
-        # Load font (Need a .ttf file that supports Arabic)
-        # For now, we'll try to find a system font or use a placeholder
-        font_path = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf" # Example path
-        if not os.path.exists(font_path):
-            font_path = "/Library/Fonts/Arial.ttf" # Mac path
-            
-        try:
-            font = ImageFont.truetype(font_path, 40)
-        except:
+        # Load font (Need a .ttf/.ttc file that supports Arabic)
+        font_paths = [
+            "/System/Library/Fonts/GeezaPro.ttc",
+            "/System/Library/Fonts/SFArabic.ttf",
+            "/System/Library/Fonts/Supplemental/Arial Unicode.ttf",
+            "/Library/Fonts/Arial Unicode.ttf"
+        ]
+        
+        font = None
+        for path in font_paths:
+            if os.path.exists(path):
+                try:
+                    font = ImageFont.truetype(path, 40)
+                    break
+                except:
+                    continue
+        
+        if not font:
             font = ImageFont.load_default()
             
         # Draw semi-transparent background for text readability

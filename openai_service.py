@@ -24,7 +24,7 @@ def create_character_reference(image_data, is_url=True):
                 {
                     "role": "user",
                     "content": [
-                        {"type": "text", "text": "Describe this child's appearance in detail for a 3D Pixar-style character generation. Mention hair color, style, skin tone, and eye shape. IMPORTANT: The character MUST be wearing a striped sweatshirt. Be concise."},
+                        {"type": "text", "text": "Describe this child's appearance for a storybook illustration. Include: hair (color/style), skin tone, and eye features. IMPORTANT: The character MUST be wearing a striped sweatshirt. This description will be used to keep the character consistent across pages. Be concise."},
                         {"type": "image_url", "image_url": image_content}
                     ],
                 }
@@ -41,10 +41,18 @@ def generate_storybook_page(character_description, page_prompt):
     Generates a storybook page ensuring character consistency using the description.
     """
     try:
-        # Combining the page-specific prompt with the consistent character description
-        full_prompt = f"{page_prompt}. The main character is: {character_description}. High-quality 3D render, Pixar style, consistent lighting."
+        # Define the consistent style prompt
+        style_prompt = "Classic children's book illustration style, soft watercolor and colored pencil textures, hand-drawn look, gentle pastel color palette, clean white background, cute and friendly character design, simple shapes, expressive and happy faces, soft outlines, reminiscent of nursery storybooks."
+        
+        # Combining the page-specific prompt with the consistent character description and style
+        full_prompt = (
+            f"{style_prompt} Scene: {page_prompt}. "
+            f"The main character is the SAME child in every page: {character_description}. "
+            f"Ensure character consistency and facial features match exactly."
+        )
+        
         response = client.images.generate(
-            model="dall-e-3", # Corrected model name
+            model="dall-e-3", 
             prompt=full_prompt,
             n=1,
             size="1024x1024"
