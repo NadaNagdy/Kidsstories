@@ -3,3 +3,5 @@ uvicorn
 requests
 fpdf
 python-multipart
+arabic-reshaper
+python-bidi
