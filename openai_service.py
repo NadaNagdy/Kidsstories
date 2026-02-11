@@ -25,7 +25,7 @@ def create_character_reference(image_data, is_url=True):
 
         # Using a high-quality vision model from OpenRouter
         response = client.chat.completions.create(
-            model="google/gemini-2.5-flash", # Confirmed in the list
+            model="google/gemini-2.0-flash-lite-001", # Cheapest high-quality 2.0 vision model
             messages=[
                 {
                     "role": "user",
@@ -71,7 +71,7 @@ def generate_storybook_page(character_description, page_prompt):
         }
         
         payload = {
-            "model": "google/gemini-2.5-flash-image", # Using confirmed image model
+            "model": "google/gemini-2.0-flash-001", # New standard for cheap/fast image generation
             "messages": [
                 {
                     "role": "user",
