@@ -11,7 +11,7 @@ from pdf_utils import create_pdf
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-logger.info("🚀 STARTING NEW DEPLOYMENT (v3) - FORCE UPDATE 🚀")
+logger.info("🚀 STARTING NEW DEPLOYMENT (v4) - LOGGING FIX 🚀")
 
 app = FastAPI()
 

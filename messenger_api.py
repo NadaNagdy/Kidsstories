@@ -1,13 +1,20 @@
 import requests
 import os
 import json
+import logging
 
-PAGE_ACCESS_TOKEN = os.getenv("PAGE_ACCESS_TOKEN", "EAAMnq3oO86EBQsVinU1y5IEymoUYCF8NOsSUEsdt6IxrLJ1HVpB9F23VZAjKg6VrZBDM0Pg5CBOmwsC2ejeT3QYgyhIKFXGVdaEv4Tmtu7ScFNh04H23V5ZAtaveWZAXZCUxxmEFC8KVQQX8S0FylRUa8ZBbMJKKAWg0BRal7AkftZBZCh6rlE2SjGjgNpn35pQQarCOTci5I2ZBvbCPnrLyyxz0Q4h78rWhZAgeL3a7EJVbUf41cPZAOtZBpw4ZD")
+logger = logging.getLogger(__name__)
+
+PAGE_ACCESS_TOKEN = os.getenv("PAGE_ACCESS_TOKEN")
 
 def call_send_api(sender_id, message_data):
     """
     Sends response messages via the Send API.
     """
+    if not PAGE_ACCESS_TOKEN:
+        logger.error("PAGE_ACCESS_TOKEN is missing!")
+        return
+
     params = {
         "access_token": PAGE_ACCESS_TOKEN
     }
@@ -19,10 +26,15 @@ def call_send_api(sender_id, message_data):
         "message": message_data
     }
     
-    r = requests.post("https://graph.facebook.com/v15.0/me/messages", params=params, headers=headers, json=payload)
-    
-    if r.status_code != 200:
-        print(f"Error sending message: {r.status_code}, {r.text}")
+    try:
+        r = requests.post("https://graph.facebook.com/v15.0/me/messages", params=params, headers=headers, json=payload)
+        
+        if r.status_code != 200:
+            logger.error(f"Error sending message: {r.status_code}, {r.text}")
+        else:
+            logger.info(f"Message sent to {sender_id}")
+    except Exception as e:
+        logger.error(f"Exception sending message: {e}")
 
 def send_text_message(sender_id, text):
     """
