@@ -52,8 +52,8 @@ def overlay_text_on_image(image_url, text, output_path):
         rect_x1 = width - margin
         rect_y1 = height - margin
         
-        draw.rectangle([rect_x0, rect_y0, rect_x1, rect_y1], fill=(0, 0, 0, 128))
-        draw.text((width//2 - text_width//2, rect_y0 + 10), bidi_text, font=font, fill=(255, 255, 255))
+        draw.rectangle([rect_x0, rect_y0, rect_x1, rect_y1], fill=(255, 255, 255, 180))
+        draw.text((width//2 - text_width//2, rect_y0 + 10), bidi_text, font=font, fill=(0, 0, 0))
         
         img.save(output_path)
         return output_path
