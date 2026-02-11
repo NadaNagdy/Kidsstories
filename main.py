@@ -103,7 +103,7 @@ def start_processing(sender_id, messaging_event, background_tasks):
         for attachment in message["attachments"]:
             if attachment["type"] == "image":
                 image_url = attachment["payload"]["url"]
-                handle_image_reception(sender_id, image_url)
+                handle_image_reception(sender_id, image_url, background_tasks)
                 return
 
     # Check for Text
@@ -145,33 +145,37 @@ def download_image_as_base64(url):
         logger.error(f"Error downloading image: {e}")
         return None
 
-def handle_image_reception(sender_id, image_url):
+def handle_image_reception(sender_id, image_url, background_tasks):
     user_state[sender_id]["step"] = "processing_ai"
     user_state[sender_id]["photo_url"] = image_url
     
     send_text_message(sender_id, "🎨 جاري تحويل صورتك لشخصية كرتونية رائعة... لحظات!")
     
-    # Download image and convert to base64
-    base64_image = download_image_as_base64(image_url)
-    
-    if base64_image:
-        # Pass base64 to transform_photo_to_character
-        # Note: transform_photo_to_character calls create_character_reference which we updated
-        # But wait, transform_photo_to_character in openai_service.py still uses is_url=True by default?
-        # Actually create_character_reference defaults is_url=True.
-        # Let's check transform_photo_to_character again.
-        ai_photo_url = transform_photo_to_character(base64_image) # This will fail if transform_photo_to_character doesn't pass is_url=False
-    else:
-        ai_photo_url = None
-    
-    if ai_photo_url:
-        user_state[sender_id]["ai_photo_url"] = ai_photo_url
-        user_state[sender_id]["step"] = "waiting_for_age"
-        age_options = ["1-2", "2-3", "3-4", "4-5"]
-        send_quick_replies(sender_id, "تم التحويل! ✨ كم عمر طفلك؟", age_options)
-    else:
+    # Move heavy processing to background to prevent Messenger timeout
+    background_tasks.add_task(process_image_ai, sender_id, image_url)
+
+def process_image_ai(sender_id, image_url):
+    try:
+        # Download image and convert to base64
+        base64_image = download_image_as_base64(image_url)
+        
+        if base64_image:
+            ai_photo_url = transform_photo_to_character(base64_image)
+        else:
+            ai_photo_url = None
+        
+        if ai_photo_url:
+            user_state[sender_id]["ai_photo_url"] = ai_photo_url
+            user_state[sender_id]["step"] = "waiting_for_age"
+            age_options = ["1-2", "2-3", "3-4", "4-5"]
+            send_quick_replies(sender_id, "تم التحويل! ✨ كم عمر طفلك؟", age_options)
+        else:
+            user_state[sender_id]["step"] = "waiting_for_photo"
+            send_text_message(sender_id, "عذراً، لم نتمكن من معالجة الصورة. يرجى محاولة إرسال صورة أخرى واضحة ومباشرة للوجه. (تنبيه: الصور لا تُحفظ لضمان خصوصيتكم).")
+    except Exception as e:
+        logger.error(f"Error in process_image_ai: {e}")
         user_state[sender_id]["step"] = "waiting_for_photo"
-        send_text_message(sender_id, "عذراً، لم نتمكن من معالجة الصورة. يرجى محاولة إرسال صورة أخرى واضحة ومباشرة للوجه. (تنبيه: الصور لا تُحفظ لضمان خصوصيتكم).")
+        send_text_message(sender_id, "عذراً، حدث خطأ فني أثناء معالجة الصورة. يرجى المحاولة مرة أخرى.")
 
 def handle_age_selection(sender_id, age_group):
     user_state[sender_id]["step"] = "waiting_for_value"
