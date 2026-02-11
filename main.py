@@ -123,7 +123,7 @@ def handle_text_reception(sender_id, text):
         user_state[sender_id]["child_name"] = text
         user_state[sender_id]["step"] = "waiting_for_photo"
         send_text_message(sender_id, f"تشرفنا يا {text}! 😊")
-        send_text_message(sender_id, "📸 أرسلي الآن صورة بطلنا الصغير لنحولها لشخصية في القصة.")
+        send_text_message(sender_id, "📸 أرسلي الآن صورة واضحة ومباشرة لوجه بطلنا الصغير لنحولها لشخصية في القصة. (نحن نحترم خصوصيتكم: الصور لا تُحفظ ويتم استخدامها فقط لإنشاء شخصية القصة).")
     elif text.lower() == "start":
         send_welcome_message(sender_id)
     else:
@@ -171,7 +171,7 @@ def handle_image_reception(sender_id, image_url):
         send_quick_replies(sender_id, "تم التحويل! ✨ كم عمر طفلك؟", age_options)
     else:
         user_state[sender_id]["step"] = "waiting_for_photo"
-        send_text_message(sender_id, "عذراً، حدث خطأ في تحويل الصورة. يرجى محاولة إرسال صورة أخرى.")
+        send_text_message(sender_id, "عذراً، لم نتمكن من معالجة الصورة. يرجى محاولة إرسال صورة أخرى واضحة ومباشرة للوجه. (تنبيه: الصور لا تُحفظ لضمان خصوصيتكم).")
 
 def handle_age_selection(sender_id, age_group):
     user_state[sender_id]["step"] = "waiting_for_value"
