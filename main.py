@@ -121,7 +121,7 @@ def handle_image_reception(sender_id, image_url):
     user_state[sender_id]["photo_url"] = image_url
     user_state[sender_id]["child_name"] = "بطلنا الصغير" # Placeholder
     
-    age_options = ["1-2", "2-3", "3-4", "4-5", "5-6", "6-7", "7-8", "8-9", "9-10", "10-12"]
+    age_options = ["1-2", "2-3", "3-4", "4-5", "5-6", "6-7", "7-8", "8-9"]
     send_quick_replies(sender_id, "كم عمر طفلك؟ (بالسنوات)", age_options)
 
 def handle_age_selection(sender_id, age_group):
