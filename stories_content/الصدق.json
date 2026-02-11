@@ -50,24 +50,28 @@
     "3-4": {
         "pages": [
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, playing with a fast toy airplane in the living room, 'Vroom!' motion effects",
-                "text": "كان يا ما كان.. بطلنا معاه طيارة سريعة.. وززززززز! وفجأة.. خبطت في الحيطة!"
+                "prompt": "Cover Page: The toddler stands heroically in the foreground, pointing to a mended vase on a nearby table. Mood is hopeful, encouraging, and celebratory. White background, simple shapes.",
+                "text": "بطل في الصدق\n{child_name}"
             },
             {
-                "prompt": "Professional 3D Pixar style, a toy airplane with a broken wing on the floor, child character wearing a striped sweatshirt looking sad and worried",
-                "text": "يا خبر! الجناح اتكسر. بطلنا زعل.. أقول لماما إيه؟ أخبيها تحت الكنبة؟"
+                "prompt": "Panel 2: The toddler is joyfully kicking a ball inside the living room, near a table with a colorful, cheerful vase. The vase is bright and attractive. Toddler is mid-action, full of innocent energy.",
+                "text": "كان يا ما كان.. فيه فازة جميلة أوي ماما بتحبها. {child_name} كان بيلعب كورة.. 'هوب!'."
             },
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, standing with a straight back, looking into mother's eyes honestly, hand on chest",
-                "text": "بطلنا وقف ضهره مفرود وقال الحق: أنا يا ماما.. كنت بلعب غصب عني اتكسرت.. أنا آسف."
+                "prompt": "Panel 3: The ball hits the vase, which is falling and shattering on the floor with colorful shards. The toddler stands nearby, wide-eyed, hands covering mouth, looking surprised and worried.",
+                "text": "الكورة خبطت في الفازة.. 'كررراش!'. الفازة وقعت واتكسرت. يا خبر! أعمل إيه دلوقتي؟"
             },
             {
-                "prompt": "Professional 3D Pixar style, mother smiling warmly, holding some 'Magic Glue', child character wearing a striped sweatshirt watching happily",
-                "text": "ماما قالت: عشان إنت صادق وبطل، هنصلحها سوا باللزق السحري."
+                "prompt": "Panel 4: The mother (gentle, smiling, warm pastel clothing) enters. The toddler is thinking with a finger on chin, glancing at the mother and a toy cat in the background.",
+                "text": "ماما جت سألت: 'مين كسر الفازة؟'. بطلنا فكر.. ممكن أقول القطة؟ لا، أنا بطل."
             },
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, flying the repaired toy airplane, huge smile, living room setting",
-                "text": "الطيارة طارت تاني! بطلنا اتعلم إن الصدق هو اللي بيصلح كل حاجة."
+                "prompt": "Panel 5: The toddler stands tall and honest, facing the mother with open hands, looking up sincerely. The mother (gentle, distinct) listens with compassion.",
+                "text": "بطلنا وقف ضهره مفرود وقال: 'أنا يا ماما.. أنا اللي خبطتها غصب عني.. أنا آسف'."
+            },
+            {
+                "prompt": "Panel 6: The mother hugs the toddler tightly, both smiling warmly. Background shows them cleaning up the remains safely with a broom. Warm, happy conclusion.",
+                "text": "ماما حضنته وقالت: 'الفازة تتصلح، بس صدقك هو الأغلى عندي! إنت بطل الصدق يا حبيبي'."
             }
         ]
     },
