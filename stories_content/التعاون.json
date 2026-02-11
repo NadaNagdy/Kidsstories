@@ -1,4 +1,28 @@
 {
+    "1-2": {
+        "pages": [
+            {
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, holding a red toy block, a cute teddy bear sitting nearby with a yellow block, 'Let's Do It Together!' written in the background",
+                "text": "بطلنا عاوز يبني برج كبيييير!"
+            },
+            {
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, placing a block on the floor, teddy bear placing a yellow block on top of it, 'We are a Team!' expression",
+                "text": "واحد ليا.. وواحد ليك. إحنا فريق!"
+            },
+            {
+                "prompt": "Professional 3D Pixar style, the toy tower growing taller, child character and teddy bear both holding blocks together and smiling",
+                "text": "سوا.. سوا.. البرج بقى عالي!"
+            },
+            {
+                "prompt": "Professional 3D Pixar style, the toy tower falling down, blocks scattered, child character and teddy bear both laughing happily, 'Boom!' effect",
+                "text": "بوم! وقع؟ مش مهم.. يلا نبني تاني سوا."
+            },
+            {
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, hugging the teddy bear, tall tower successfully built in the background, heartfelt scene",
+                "text": "التعاون حلو.. شكراً يا صاحبي!"
+            }
+        ]
+    },
     "2-3": {
         "pages": [
             {
@@ -43,7 +67,7 @@
             },
             {
                 "prompt": "Professional 3D Pixar style, all three clapping for each other, toy box in its correct place, happy celebratory scene",
-                "text": "بابا وماما سقفوا وقالوا: شكراً يا بطل! لما تعاونا كلنا، قدرنا نحرك الصندوق الكبير!"
+                "text": "بابا وماما سقفوا وقالوا: شكراً يا بطل! لما تعاونا كلنا, قدرنا نحرك الصندوق الكبير!"
             }
         ]
     },

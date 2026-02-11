@@ -1,4 +1,28 @@
 {
+    "1-2": {
+        "pages": [
+            {
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, playing in a room, next to a glass of water on a table, 'Hero of Truth' written in the background",
+                "text": "المية دلقت.. طش! الهدوم مبلولة!"
+            },
+            {
+                "prompt": "Professional 3D Pixar style, mother standing and asking the child 'Who did this?', child character wearing a striped sweatshirt looking thoughtful",
+                "text": "ماما سألت: مين؟ بطلنا فكر.."
+            },
+            {
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, pointing at themselves with a tiny finger, looking at mother honestly",
+                "text": "بطلنا قال: أنا! هو مش خايف، هو صادق."
+            },
+            {
+                "prompt": "Professional 3D Pixar style, mother wiping the spilled water and smiling warmly at the child character wearing a striped sweatshirt, 'Bravo!' expression",
+                "text": "ماما قالت: برافو! إنت بطل عشان قلت الحق"
+            },
+            {
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt and mother playing together happily, laughter, warm living room setting",
+                "text": "بطلنا فرحان.. الصدق جميل يا أبطال."
+            }
+        ]
+    },
     "2-3": {
         "pages": [
             {

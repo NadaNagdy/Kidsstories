@@ -1,4 +1,28 @@
 {
+    "1-2": {
+        "pages": [
+            {
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, standing in front of a small colorful slide, 'I Can Do It!' written child-style in the background, backyard setting",
+                "text": "السلم عالي.. وبطلنا خايف؟ لا!"
+            },
+            {
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, placing one hand on the first step of a small slide and lifting a foot, 'One.. Two!' motion effect",
+                "text": "تاتا تاتا.. واحد.. اتنين! أنا شجاع."
+            },
+            {
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, climbing the small ladder while laughing, mother clapping in the background, sunny garden",
+                "text": "بطلنا بيقول: أنا أقدر.. أنا أقدر!"
+            },
+            {
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, sitting at the top of a small slide, looking down with a huge proud smile",
+                "text": "هييييه! أنا فوق! أنا بطل شجاع."
+            },
+            {
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, sliding down the small slide with joy, 'Woooii!', mother kissing the child's cheek in the background",
+                "text": "وووووي! شاطر يا بطل.. إنت شجاع أوي!"
+            }
+        ]
+    },
     "2-3": {
         "pages": [
             {
