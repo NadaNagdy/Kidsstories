@@ -1,0 +1,26 @@
+{
+    "2-3": {
+        "pages": [
+            {
+                "prompt": "Professional 3D Pixar style, child character playing with a ball in a garden, a small cute sheep standing nearby saying baa",
+                "text": "كان يا ما كان.. فيه شجر كتير وخروف بيقول ماء ماء. {child_name} كان بيلعب بالكورة."
+            },
+            {
+                "prompt": "Professional 3D Pixar style, a ball hitting a beautiful flower vase, the vase is breaking and falling to the ground",
+                "text": "الكورة طارت.. بوم! خبطت في الزرع ووقعته على الأرض. يا خبر!"
+            },
+            {
+                "prompt": "Professional 3D Pixar style, a mother standing and asking who did this, child character looking at the broken plant, sheep hiding behind a tree",
+                "text": "ماما جت وسألت: مين عمل كده؟ الخروف جري واستخبى ورا الشجرة."
+            },
+            {
+                "prompt": "Professional 3D Pixar style, child character raising their hand bravely, holding the ball, looking at mother with a brave smile",
+                "text": "{child_name} البطل فكر.. وقال بصوت شجاع: أنا يا ماما.. أنا قولت الحق!"
+            },
+            {
+                "prompt": "Professional 3D Pixar style, mother hugging the child warmly, a large heart or a checkmark in the background, warm colors",
+                "text": "ماما حضنته أوي: يا روحي يا بطل! عشان إنت صادق، أنا مش زعلانة.. إنت بطل الصدق!"
+            }
+        ]
+    }
+}

@@ -1,0 +1,26 @@
+{
+    "2-3": {
+        "pages": [
+            {
+                "prompt": "Professional 3D Pixar style, a giant funny-looking carrot half out of the ground, an old grandfather trying to pull it, looking funny",
+                "text": "كان يا ما كان.. فيه جزرة كبيييييرة أوي في الأرض. جدو جه يشدها: يا هيلة هيلة.. مش راضية!"
+            },
+            {
+                "prompt": "Professional 3D Pixar style, grandmother holding onto grandfather, both pulling a giant carrot, faces red from effort",
+                "text": "تيتا جت تمسك في جدو: يا هيلة هيلة.. يا هيلة هيلة.. برضه الجزرة مش راضية تطلع!"
+            },
+            {
+                "prompt": "Professional 3D Pixar style, child character arriving and holding onto grandmother, smiling at the camera, ready to help",
+                "text": "مين جه يساعد؟ البطل {child_name}! مسك في تيتا وقال: أنا هساعدكم يا جدو."
+            },
+            {
+                "prompt": "Professional 3D Pixar style, grandfather, grandmother and child character all pulling together, strong motion lines, effort",
+                "text": "كلنا مع بعض: واحد.. اتنين.. تلاتة.. شِددد!"
+            },
+            {
+                "prompt": "Professional 3D Pixar style, giant carrot flying in the air, everyone clapping and happy, celebratory atmosphere",
+                "text": "تراااااخ! الجزرة طلعت. جدو قال: شكراً يا {child_name}! لولا تعاونك ماكانتش طلعت!"
+            }
+        ]
+    }
+}

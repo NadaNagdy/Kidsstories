@@ -161,23 +161,33 @@ import json
 from image_utils import overlay_text_on_image
 from openai_service import create_character_reference, generate_storybook_page
 
-with open("stories_config.json", "r", encoding="utf-8") as f:
-    STORIES_CONFIG = json.load(f)
-
 def process_story_generation(sender_id, value):
     try:
         child_name = user_state[sender_id].get("child_name", "بطلنا")
         photo_url = user_state[sender_id].get("photo_url")
+        age_group = user_state[sender_id].get("age_group", "2-3")
         
         # 1. Create a consistent character description from the photo
         send_text_message(sender_id, "🔍 جاري تحليل ملامح بطلنا الصغير لضمان ظهور الشخصية بشكل متناسق في كل الصفحات...")
         char_desc = create_character_reference(photo_url)
         
-        # 2. Get the story config for the selected value
-        # We'll use "1-5" as default age range for now as per config
-        story_data = STORIES_CONFIG.get(value, {}).get("1-5")
+        # 2. Load story config from category-specific file
+        try:
+            config_path = f"stories_content/{value}.json"
+            with open(config_path, "r", encoding="utf-8") as f:
+                story_config = json.load(f)
+        except Exception as e:
+            logger.error(f"Failed to load story config for {value}: {e}")
+            send_text_message(sender_id, f"عذراً، قصة {value} غير متوفرة حالياً.")
+            return
+
+        story_data = story_config.get(age_group)
         if not story_data:
-            send_text_message(sender_id, "عذراً، هذه القصة غير متوفرة حالياً.")
+            # Fallback to 2-3 if age not found
+            story_data = story_config.get("2-3")
+            
+        if not story_data:
+            send_text_message(sender_id, "عذراً، هذه القصة غير متوفرة لهذا العمر.")
             return
 
         pages = story_data["pages"]

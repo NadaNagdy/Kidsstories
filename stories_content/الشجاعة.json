@@ -1,0 +1,26 @@
+{
+    "2-3": {
+        "pages": [
+            {
+                "prompt": "Professional 3D Pixar style, a giant sleeping lion with a huge fluffy mane, peaceful garden background",
+                "text": "كان يا ما كان.. فيه أسد كبيييير. الأسد نايم.. ششششش."
+            },
+            {
+                "prompt": "Professional 3D Pixar style, child character walking on tiptoes in a garden, giant lion lying down with a thorn in its paw, child looks curious",
+                "text": "جه {child_name} الشجاع.. مشي تاتا تاتا.. لقى الأسد زعلان وبينادي: آي يا رجلي.. آي."
+            },
+            {
+                "prompt": "Professional 3D Pixar style, child character comforting the giant lion, holding its big paw, lion looks scared but relieved",
+                "text": "{child_name} قاله: متخافش يا أسد، أنا بطل وشجاع! والأسد كان خايف ومغمض عينه."
+            },
+            {
+                "prompt": "Professional 3D Pixar style, child character pulling a large thorn from a lion's paw, the thorn is flying in the air, action shot",
+                "text": "بإيده الصغننة، شد الشوكة.. تشب! الشوكة طلعت والوجع طار!"
+            },
+            {
+                "prompt": "Professional 3D Pixar style, child character riding on the back of the happy giant lion, both are laughing and roaming a beautiful garden",
+                "text": "الأسد فرح وقال: شكراً يا {child_name} يا بطل! وشاله ولفوا الحديقة وهم مبسوطين."
+            }
+        ]
+    }
+}

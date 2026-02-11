@@ -1,0 +1,26 @@
+{
+    "2-3": {
+        "pages": [
+            {
+                "prompt": "Professional 3D Pixar style, a cute small rabbit sitting with a very sweet-looking carrot, child character looking at the carrot longingly",
+                "text": "كان يا ما كان.. أرنوب صغنن معاه جزرة سكرة. {child_name} كان نفسه يدوق حتة."
+            },
+            {
+                "prompt": "Professional 3D Pixar style, child character standing politely in front of the rabbit, hand outstretched gently, respectful gesture",
+                "text": "{child_name} المؤدب مخدهاش بسرعة. قال الكلمة السحرية: ممكن يا أرنوب.. من فضلك؟"
+            },
+            {
+                "prompt": "Professional 3D Pixar style, rabbit giving a piece of the carrot to the happy child character, both smiling, friendly atmosphere",
+                "text": "الأرنوب فرح أوي وقاله: طبعاً يا بطل عشان إنت مؤدب! وإداه حتة كبيرة."
+            },
+            {
+                "prompt": "Professional 3D Pixar style, child character eating carrot and nodding respectfully, looking at the rabbit with gratitude",
+                "text": "{child_name} أخدها وقال الكلمة السحرية التانية: شكراً يا أرنوب."
+            },
+            {
+                "prompt": "Professional 3D Pixar style, multiple forest animals clapping for the child character, child looks happy and respected",
+                "text": "كلنا سقفنا وقلنا: يا سلام على {child_name}.. بيحترم أصحابه وكلامه زي السكر."
+            }
+        ]
+    }
+}
