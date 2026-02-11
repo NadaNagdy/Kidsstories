@@ -3,6 +3,8 @@ from fastapi.responses import PlainTextResponse
 import os
 import uvicorn
 import logging
+import requests
+import base64
 from messenger_api import send_text_message, send_quick_replies, send_file
 from story import generate_story
 from pdf_utils import create_pdf
@@ -127,15 +129,39 @@ def handle_text_reception(sender_id, text):
     else:
         send_text_message(sender_id, "مرحباً! أرسل 'Start' للبدء من جديد.")
 
+def download_image_as_base64(url):
+    """
+    Downloads an image from a URL and returns it as a base64 encoded string.
+    """
+    try:
+        response = requests.get(url, timeout=10)
+        if response.status_code == 200:
+            return base64.b64encode(response.content).decode("utf-8")
+        else:
+            logger.error(f"Failed to download image from {url}. Status: {response.status_code}")
+            return None
+    except Exception as e:
+        logger.error(f"Error downloading image: {e}")
+        return None
+
 def handle_image_reception(sender_id, image_url):
     user_state[sender_id]["step"] = "processing_ai"
     user_state[sender_id]["photo_url"] = image_url
     
     send_text_message(sender_id, "🎨 جاري تحويل صورتك لشخصية كرتونية رائعة... لحظات!")
     
-    # In a real app, you might want to do this in BackgroundTasks to avoid webhook timeout
-    # but for now we'll update the state.
-    ai_photo_url = transform_photo_to_character(image_url)
+    # Download image and convert to base64
+    base64_image = download_image_as_base64(image_url)
+    
+    if base64_image:
+        # Pass base64 to transform_photo_to_character
+        # Note: transform_photo_to_character calls create_character_reference which we updated
+        # But wait, transform_photo_to_character in openai_service.py still uses is_url=True by default?
+        # Actually create_character_reference defaults is_url=True.
+        # Let's check transform_photo_to_character again.
+        ai_photo_url = transform_photo_to_character(base64_image) # This will fail if transform_photo_to_character doesn't pass is_url=False
+    else:
+        ai_photo_url = None
     
     if ai_photo_url:
         user_state[sender_id]["ai_photo_url"] = ai_photo_url
@@ -169,7 +195,13 @@ def process_story_generation(sender_id, value):
         
         # 1. Create a consistent character description from the photo
         send_text_message(sender_id, "🔍 جاري تحليل ملامح بطلنا الصغير لضمان ظهور الشخصية بشكل متناسق في كل الصفحات...")
-        char_desc = create_character_reference(photo_url)
+        
+        # Download image and convert to base64 for vision processing
+        base64_image = download_image_as_base64(photo_url)
+        if base64_image:
+            char_desc = create_character_reference(base64_image, is_url=False)
+        else:
+            char_desc = "A cute child character, Pixar style"
         
         # 2. Load story config from category-specific file
         try:
