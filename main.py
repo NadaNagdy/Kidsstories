@@ -6,6 +6,7 @@ import logging
 from messenger_api import send_text_message, send_quick_replies, send_file
 from story import generate_story
 from pdf_utils import create_pdf
+from openai_service import transform_photo_to_character
 
 # Configure Logging
 logging.basicConfig(level=logging.INFO)
@@ -104,25 +105,46 @@ def start_processing(sender_id, messaging_event, background_tasks):
                 return
 
     # Check for Text
-    text = message.get("text", "").lower()
+    text = message.get("text", "")
+    if text:
+        handle_text_reception(sender_id, text)
+
+def send_welcome_message(sender_id):
+    user_state[sender_id] = {"step": "waiting_for_name"}
+    send_text_message(sender_id, "👋 أهلاً بك في بوت قصص الأطفال الذكية!")
+    send_text_message(sender_id, "ما اسم بطل القصة أو بطلتنا الصغيرة؟")
+
+def handle_text_reception(sender_id, text):
+    current_step = user_state[sender_id].get("step")
     
-    if text == "start" or user_state.get(sender_id, {}).get("step") == "start":
+    if current_step == "waiting_for_name":
+        user_state[sender_id]["child_name"] = text
+        user_state[sender_id]["step"] = "waiting_for_photo"
+        send_text_message(sender_id, f"تشرفنا يا {text}! 😊")
+        send_text_message(sender_id, "📸 أرسلي الآن صورة بطلنا الصغير لنحولها لشخصية في القصة.")
+    elif text.lower() == "start":
         send_welcome_message(sender_id)
     else:
         send_text_message(sender_id, "مرحباً! أرسل 'Start' للبدء من جديد.")
 
-def send_welcome_message(sender_id):
-    user_state[sender_id] = {"step": "waiting_for_photo"}
-    send_text_message(sender_id, "👋 أهلاً بك في بوت قصص الأطفال الذكية!")
-    send_text_message(sender_id, "📸 من فضلك أرسلي صورة طفلك لكي نبدأ.")
-
 def handle_image_reception(sender_id, image_url):
-    user_state[sender_id]["step"] = "waiting_for_age"
+    user_state[sender_id]["step"] = "processing_ai"
     user_state[sender_id]["photo_url"] = image_url
-    user_state[sender_id]["child_name"] = "بطلنا الصغير" # Placeholder
     
-    age_options = ["1-2", "2-3", "3-4", "4-5", "5-6", "6-7", "7-8", "8-9"]
-    send_quick_replies(sender_id, "كم عمر طفلك؟ (بالسنوات)", age_options)
+    send_text_message(sender_id, "🎨 جاري تحويل صورتك لشخصية كرتونية رائعة... لحظات!")
+    
+    # In a real app, you might want to do this in BackgroundTasks to avoid webhook timeout
+    # but for now we'll update the state.
+    ai_photo_url = transform_photo_to_character(image_url)
+    
+    if ai_photo_url:
+        user_state[sender_id]["ai_photo_url"] = ai_photo_url
+        user_state[sender_id]["step"] = "waiting_for_age"
+        age_options = ["1-2", "2-3", "3-4", "4-5", "5-6", "6-7", "7-8", "8-9"]
+        send_quick_replies(sender_id, "تم التحويل! ✨ كم عمر طفلك؟", age_options)
+    else:
+        user_state[sender_id]["step"] = "waiting_for_photo"
+        send_text_message(sender_id, "عذراً، حدث خطأ في تحويل الصورة. يرجى محاولة إرسال صورة أخرى.")
 
 def handle_age_selection(sender_id, age_group):
     user_state[sender_id]["step"] = "waiting_for_value"

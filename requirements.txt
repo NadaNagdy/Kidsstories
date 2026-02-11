@@ -5,3 +5,5 @@ fpdf
 python-multipart
 arabic-reshaper
 python-bidi
+openai
+Pillow
