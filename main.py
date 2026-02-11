@@ -1,4 +1,5 @@
-from fastapi import FastAPI, Request, BackgroundTasks
+from fastapi import FastAPI, Request, BackgroundTasks, HTTPException
+from fastapi.responses import PlainTextResponse
 import os
 import uvicorn
 import logging
@@ -36,11 +37,11 @@ def verify_webhook(request: Request):
     if mode and token:
         if mode == "subscribe" and token == VERIFY_TOKEN:
             logger.info("WEBHOOK_VERIFIED")
-            return int(challenge)
+            return PlainTextResponse(content=challenge, status_code=200)
         else:
-            logger.error("Verification token mismatch")
-            return "Verification token mismatch", 403
-    return "Hello World", 200
+            logger.error(f"Verification mismatch. Received: {token}, Expected: {VERIFY_TOKEN}")
+            raise HTTPException(status_code=403, detail="Verification token mismatch")
+    return PlainTextResponse(content="Hello World", status_code=200)
 
 @app.post("/webhook")
 async def webhook_handler(request: Request, background_tasks: BackgroundTasks):
