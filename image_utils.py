@@ -19,12 +19,11 @@ def overlay_text_on_image(image_url, text, output_path):
         reshaped_text = arabic_reshaper.reshape(text)
         bidi_text = get_display(reshaped_text)
         
-        # Load font (Need a .ttf/.ttc file that supports Arabic)
+        # Load font (Bundled version for consistency across platforms)
         font_paths = [
+            os.path.join(os.getcwd(), "fonts/Amiri-Regular.ttf"),
             "/System/Library/Fonts/GeezaPro.ttc",
-            "/System/Library/Fonts/SFArabic.ttf",
-            "/System/Library/Fonts/Supplemental/Arial Unicode.ttf",
-            "/Library/Fonts/Arial Unicode.ttf"
+            "/System/Library/Fonts/SFArabic.ttf"
         ]
         
         font = None
@@ -33,10 +32,12 @@ def overlay_text_on_image(image_url, text, output_path):
                 try:
                     font = ImageFont.truetype(path, 40)
                     break
-                except:
+                except Exception as e:
+                    print(f"Error loading font {path}: {e}")
                     continue
         
         if not font:
+            print("Warning: Falling back to default font (Arabic will likely not render)")
             font = ImageFont.load_default()
             
         # Draw semi-transparent background for text readability
