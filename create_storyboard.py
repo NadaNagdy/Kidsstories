@@ -11,90 +11,75 @@ def get_base64_image(image_path):
         return base64.b64encode(image_file.read()).decode('utf-8')
 
 # Style Configuration
-STYLE_DESC = "Warm, nostalgic crayon-style illustration, friendly rounded cartoon style, slightly exaggerated expressive eyes, glowing smiles, bold childlike crayon colors, visible grain, textured strokes, layered shading, slightly uneven hand-drawn outlines, handcrafted look, soft blending, warm tones"
+STYLE_DESC = "Classic, soft watercolor and colored pencil illustration style, friendly hand-drawn feel, gentle pastel colors, clean white background, soft outlines"
 
-def create_storyboard(child_name="بطلنا", photo_path=None):
+def create_storyboard(child_name="بطلنا", value="الشجاعة", photo_path=None):
     os.makedirs("storyboard_output", exist_ok=True)
     
-    # Character Reference
+    # 1. Character Reference
     if photo_path and os.path.exists(photo_path):
         print(f"Creating character reference from {photo_path}...")
-        base64_image = get_base64_image(photo_path)
-        character_desc = create_character_reference(base64_image, is_url=False)
+        base64_photo = get_base64_image(photo_path)
+        character_desc = create_character_reference(base64_photo, is_url=False)
     else:
         print("Using default character description...")
         character_desc = "a toddler with dark hair, a small cute face, wearing a simple white tank top"
+        base64_photo = None
 
-    # Storyboard Content with dynamic name
-    panels_data = [
-        {
-            "id": 1,
-            "prompt": f"The toddler stands bravely and proudly next to a friendly, large, fluffy lion lying down calmly on a white background. Title text 'Batal Al Shajaa' (بطل الشجاعة) is subtly integrated. Top left panel.",
-            "text": "بطل الشجاعة"
-        },
-        {
-            "id": 2,
-            "prompt": "A big, fluffy-maned lion sleeping peacefully under a large tree in a green forest clearing. Top middle panel.",
-            "text": "كان يا ما كان.. في الغابة أسد كبير نائم.. ششش"
-        },
-        {
-            "id": 3,
-            "prompt": f"The lion is sitting up, looking sad and crying, holding one paw up. The toddler {child_name} approaches with a concerned and empathetic look. Top right panel.",
-            "text": f"اقتربت {child_name}.. الأسد يبكي: 'آي يا قدمي!' شوكة كبيرة تؤلمه."
-        },
-        {
-            "id": 4,
-            "prompt": f"The toddler {child_name} stands very close to the lion, holding its big paw gently with both hands, looking into its eyes with a brave and comforting smile. Bottom left panel.",
-            "text": f"{child_name} قالت بشجاعة: 'لا تخف يا أسد، سأساعدك!'"
-        },
-        {
-            "id": 5,
-            "prompt": f"The toddler {child_name} is pulling a sharp thorn out of the lion's paw with determination. A small visual text effect bubbles 'POP' nearby. Bottom middle panel.",
-            "text": f"سحبت {child_name} الشوكة بقوة.. 'بوب!' زال الألم!"
-        },
-        {
-            "id": 6,
-            "prompt": f"The toddler {child_name} is sitting happily on the lion's back as the lion walks through a beautiful garden. Bottom right panel.",
-            "text": f"الأسد فرح وقال: 'شكراً يا {child_name} الشجاعة!' وأصبحا صديقين."
-        }
+    # Specialized Panel 1: Cover
+    from image_utils import create_grid_cover_panel, create_story_panel
+    
+    generated_paths = []
+    
+    # Panel 1: Cover
+    print("Generating Panel 1 (Cover)...")
+    cover_path = "storyboard_output/panel_1.png"
+    if base64_photo:
+        create_grid_cover_panel(base64_photo, child_name, value, cover_path)
+        generated_paths.append(cover_path)
+    else:
+        # fallback placeholder
+        print("No photo provided for cover panel!")
+        generated_paths.append(None)
+
+    # Panels 2-6: Story Scenes
+    # We'll use some generic story content for testing/default
+    scenes = [
+        {"prompt": "The child is looking at a tall slide.", "text": "السلم عالي.. وبطلنا خايف؟"},
+        {"prompt": "The child climbs the first step.", "text": "تاتا تاتا.. بطلنا بدأ يطلع!"},
+        {"prompt": "The child is halfway up, smiling.", "text": "أنا أقدر.. أنا شجاع أوي!"},
+        {"prompt": "The child is at the top, proud.", "text": "هييييه! أنا فوق!"},
+        {"prompt": "The child slides down with joy.", "text": "وووووي! برافو يا بطل!"}
     ]
 
-    panel_images = []
-
-    print(f"Generating panels for {child_name}...")
-    for panel in panels_data:
-        print(f"Generating Panel {panel['id']}...")
-        # Add style and character to the prompt
-        img_url = generate_storybook_page(character_desc, panel['prompt'])
-        
+    for i, scene in enumerate(scenes, 2):
+        print(f"Generating Panel {i}...")
+        img_url = generate_storybook_page(character_desc, scene['prompt'])
         if img_url:
-            output_path = f"storyboard_output/panel_{panel['id']}.png"
-            # Overlay text
-            final_panel_path = overlay_text_on_image(img_url, panel['text'], output_path)
-            if final_panel_path:
-                panel_images.append(Image.open(final_panel_path))
-            else:
-                print(f"Failed to overlay text on panel {panel['id']}")
+            p_path = f"storyboard_output/panel_{i}.png"
+            create_story_panel(img_url, scene['text'], p_path)
+            generated_paths.append(p_path)
         else:
-            print(f"Failed to generate panel {panel['id']}")
+            generated_paths.append(None)
 
-    if len(panel_images) == 6:
-        print("Assembling storyboard grid...")
-        width, height = 1024, 1024
-        grid = Image.new('RGB', (width * 3, height * 2), (255, 255, 255))
+    # Grid Assembly: 3 rows x 2 columns
+    if any(generated_paths):
+        print("Assembling 3-row x 2-column storyboard grid...")
+        pw, ph = 1024, 1024
+        grid = Image.new('RGB', (pw * 2, ph * 3), (255, 255, 255))
         
-        for i, img in enumerate(panel_images):
-            col = i % 3
-            row = i // 3
-            grid.paste(img, (col * width, row * height))
+        for i, path in enumerate(generated_paths):
+            if path and os.path.exists(path):
+                img = Image.open(path)
+                col = i % 2
+                row = i // 2
+                grid.paste(img, (col * pw, row * ph))
         
         final_path = f"storyboard_output/storyboard_{child_name}.png"
         grid.save(final_path)
         print(f"Storyboard saved to {final_path}")
         return final_path
-    else:
-        print(f"Only generated {len(panel_images)} panels. Grid assembly skipped.")
-        return None
+    return None
 
 if __name__ == "__main__":
     import sys

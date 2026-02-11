@@ -232,14 +232,15 @@ def process_story_generation(sender_id, value):
         
         # 3. Generate Cover Page
         send_text_message(sender_id, "🎨 جاري تصميم غلاف القصة المميز...")
-        cover_prompt = f"A beautiful book cover featuring: {char_desc}. Warm nostalgic crayon style."
+        cover_prompt = f"A beautiful circular artistic frame cover featuring the hero: {char_desc}. Soft watercolor and colored pencil textures, clean white background, surrounded by small thematic elements."
         cover_ai_url = generate_storybook_page(char_desc, cover_prompt)
         
         if cover_ai_url:
             from image_utils import create_cover_page
             cover_temp_path = f"/tmp/cover_{sender_id}.png"
-            bottom_text = f"بطل في {value}"
-            cover_path = create_cover_page(cover_ai_url, child_name, bottom_text, cover_temp_path)
+            title_text = f"بطل {value}"
+            # Swap child_name and title_text based on new requirement (Top: Title, Bottom: Name)
+            cover_path = create_cover_page(cover_ai_url, title_text, child_name, cover_temp_path)
             if cover_path:
                 generated_images.append(cover_path)
         

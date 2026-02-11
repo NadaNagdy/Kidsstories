@@ -52,7 +52,7 @@ def generate_storybook_page(character_description, page_prompt):
     """
     try:
         # Define the consistent style prompt
-        style_prompt = "Warm, nostalgic crayon-style illustration, friendly rounded cartoon style, slightly exaggerated expressive eyes, glowing smiles, bold childlike crayon colors, visible grain, textured strokes, layered shading, slightly uneven hand-drawn outlines, handcrafted look, soft blending, warm tones."
+        style_prompt = "Soft watercolor and colored pencil textures, gentle pastel color palette (soft yellows, blues, pinks), clean white background, hand-drawn, cute, and friendly aesthetic, high-quality children's book illustration."
         
         # Combining the page-specific prompt with the consistent character description and style
         full_prompt = (
