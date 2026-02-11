@@ -50,27 +50,27 @@
     "3-4": {
         "pages": [
             {
-                "prompt": "Cover Page: The toddler stands heroically in the foreground, pointing to a mended vase on a nearby table. Mood is hopeful, encouraging, and celebratory. White background, simple shapes.",
+                "prompt": "Panel 1 (Book Cover): Toddler stands heroically in the foreground, pointing to a mended vase on a nearby table. Title 'بطل في الصدق' is written clearly at the top in playful Arabic script. [Name] appears in a gentle pastel arc banner around toddler's head. Simple watercolor style, clean white background.",
                 "text": "بطل في الصدق\n{child_name}"
             },
             {
-                "prompt": "Panel 2: The toddler is joyfully kicking a ball inside the living room, near a table with a colorful, cheerful vase. The vase is bright and attractive. Toddler is mid-action, full of innocent energy.",
+                "prompt": "Panel 2: Toddler joyfully kicking a soft ball in a cozy room, near a table with a colorful, cheerful vase. Toddler is mid-action, full of innocent energy. Proportions: Toddler is hip-height to where the mother would stand. Watercolor and colored pencil style, soft pastel palette.",
                 "text": "كان يا ما كان.. فيه فازة جميلة أوي ماما بتحبها. {child_name} كان بيلعب كورة.. 'هوب!'."
             },
             {
-                "prompt": "Panel 3: The ball hits the vase, which is falling and shattering on the floor with colorful shards. The toddler stands nearby, wide-eyed, hands covering mouth, looking surprised and worried.",
+                "prompt": "Panel 3: The soft colored ball has just struck the table, sending the colorful vase tumbling mid-air and shattering on the floor. Toddler (1/2 height of table) stands nearby in shock, wide-eyed, hands to cheeks. Watercolor style, white background, emotional focus.",
                 "text": "الكورة خبطت في الفازة.. 'كررراش!'. الفازة وقعت واتكسرت. يا خبر! أعمل إيه دلوقتي؟"
             },
             {
-                "prompt": "Panel 4: The mother (gentle, smiling, warm pastel clothing) enters. The toddler is thinking with a finger on chin, glancing at the mother and a toy cat in the background.",
+                "prompt": "Panel 4: Mother (gentle, concerned, warm pastel clothing) enters. Toddler is thinking with finger on chin, glancing towards a toy cat in background. Proportions: Toddler hip-height to mother. Watercolor style, simple shapes, clear outlines.",
                 "text": "ماما جت سألت: 'مين كسر الفازة؟'. بطلنا فكر.. ممكن أقول القطة؟ لا، أنا بطل."
             },
             {
-                "prompt": "Panel 5: The toddler stands tall and honest, facing the mother with open hands, looking up sincerely. The mother (gentle, distinct) listens with compassion.",
+                "prompt": "Panel 5: Toddler stands tall, back straight, facing the mother with open hands, looking up sincerely. Mother listens with visible compassion and warmth. Toddler is exactly half the height of the mother. Watercolor style, focus on sincerity.",
                 "text": "بطلنا وقف ضهره مفرود وقال: 'أنا يا ماما.. أنا اللي خبطتها غصب عني.. أنا آسف'."
             },
             {
-                "prompt": "Panel 6: The mother hugs the toddler tightly, both smiling warmly. Background shows them cleaning up the remains safely with a broom. Warm, happy conclusion.",
+                "prompt": "Panel 6: Mother hugs toddler tightly, both smiling warmly. They are safely cleaning the remains with a broom in a sunlit room. Proportions: Toddler is small and embraced by the large mother. Warm, happy conclusion, watercolor style.",
                 "text": "ماما حضنته وقالت: 'الفازة تتصلح، بس صدقك هو الأغلى عندي! إنت بطل الصدق يا حبيبي'."
             }
         ]
