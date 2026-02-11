@@ -22,5 +22,29 @@
                 "text": "ماما حضنته أوي: يا روحي يا بطل! عشان إنت صادق، أنا مش زعلانة.. إنت بطل الصدق!"
             }
         ]
+    },
+    "3-4": {
+        "pages": [
+            {
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, smiling and holding a ball, 'Hero of Honesty' written in the background, living room with a beautiful colorful vase",
+                "text": "كان يا ما كان.. فيه فازة جميلة أوي ماما بتحبها. {child_name} كان بيلعب بالكورة.. هوب!"
+            },
+            {
+                "prompt": "Professional 3D Pixar style, a ball hitting the vase, the vase falling and shattering into small pieces, 'Crash!', motion blur",
+                "text": "الكورة خبطت في الفازة.. كررراش! الفازة وقعت واتكسرت حتت صغيرة. يا خبر!"
+            },
+            {
+                "prompt": "Professional 3D Pixar style, mother standing and asking 'Who broke the vase?', child character wearing a striped sweatshirt, looking at the floor and thinking",
+                "text": "ماما جت سألت: مين كسر الفازة؟ {child_name} فكر.. يقول مش أنا؟ ولا يقول الحق؟"
+            },
+            {
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, standing with a straight back, looking at mother bravely and honestly",
+                "text": "البطل وقف ضهره مفرود وقال: أنا يا ماما.. أنا اللي خبطتها غصب عني.. أنا قولت الحق!"
+            },
+            {
+                "prompt": "Professional 3D Pixar style, mother hugging the child warmly, both are smiling and cleaning up toys together, warm atmosphere",
+                "text": "ماما حضنته أوي: أنا فرحانة بيك عشان إنت صادق! إنت بطل الصدق! وساعدته يلم اللعب."
+            }
+        ]
     }
 }

@@ -22,5 +22,29 @@
                 "text": "كلنا سقفنا وقلنا: يا سلام على {child_name}.. بيحترم أصحابه وكلامه زي السكر."
             }
         ]
+    },
+    "3-4": {
+        "pages": [
+            {
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, standing in front of a giant red slide in a beautiful park, 'Hero of Respect' written in the background",
+                "text": "كان يا ما كان.. فيه زحليقة كبيرة وجميلة. {child_name} كان نفسه يتزحلق وووووي."
+            },
+            {
+                "prompt": "Professional 3D Pixar style, a small cute teddy bear standing on the ladder of the slide, ready to go down, child character wearing a striped sweatshirt watching from below",
+                "text": "فيه دبدوب واقف على السلم، ده دوره. {child_name} كان مستعجل أوي!"
+            },
+            {
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, standing still with hands on their chest, waiting calmly and looking at the teddy bear politely",
+                "text": "البطل {child_name} وقف مكانه، وحط إيده على صدره وقال: ممكن يا دبدوب.. من فضلك.. أركب بعدك؟"
+            },
+            {
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, sliding down with great joy, 'Woooii!', teddy bear watching with a smile",
+                "text": "الدبدوب قاله: اتفضل يا بطل عشان إنت مؤدب. {child_name} اتزحلق وفرح أوي وووووي."
+            },
+            {
+                "prompt": "Professional 3D Pixar style, child character and teddy bear shaking hands/greeting each other, everyone is happy and clapping",
+                "text": "وهو نازل، قال للدبدوب: شكراً يا صاحبي! والكل قال: يا سلام على {child_name}.. بطل الاحترام!"
+            }
+        ]
     }
 }

@@ -16,7 +16,7 @@ def create_character_reference(image_url):
                 {
                     "role": "user",
                     "content": [
-                        {"type": "text", "text": "Describe this child's appearance in detail for a 3D Pixar-style character generation. Mention hair color, style, skin tone, eye shape, and clothing colors. Be concise."},
+                        {"type": "text", "text": "Describe this child's appearance in detail for a 3D Pixar-style character generation. Mention hair color, style, skin tone, and eye shape. IMPORTANT: The character MUST be wearing a striped sweatshirt. Be concise."},
                         {"type": "image_url", "image_url": {"url": image_url}}
                     ],
                 }
