@@ -94,3 +94,56 @@ def overlay_text_on_image(image_url, text, output_path):
         import traceback
         traceback.print_exc()
         return None
+
+def create_cover_page(image_url, top_text, bottom_text, output_path):
+    """
+    Creates a cover page with text at the top and bottom.
+    """
+    try:
+        # Download image or decode base64 (reuse download logic)
+        img_temp_path = output_path + ".base.png"
+        img_path = overlay_text_on_image(image_url, "", img_temp_path) # Get pure image
+        
+        if not img_path: return None
+        
+        img = Image.open(img_path).convert("RGBA")
+        overlay = Image.new('RGBA', img.size, (0,0,0,0))
+        draw = ImageDraw.Draw(overlay)
+        
+        # Load font
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        font_path = os.path.join(base_dir, "fonts", "Amiri-Regular.ttf")
+        font = ImageFont.truetype(font_path, 50) if os.path.exists(font_path) else ImageFont.load_default()
+        
+        width, height = img.size
+        padding = 20
+        margin = 40
+        
+        # Prepare Top Text (Child's Name)
+        reshaped_top = get_display(arabic_reshaper.reshape(top_text))
+        top_bbox = draw.textbbox((0, 0), reshaped_top, font=font)
+        top_w = top_bbox[2] - top_bbox[0]
+        top_h = top_bbox[3] - top_bbox[1]
+        
+        # Draw Top Background + Text
+        draw.rectangle([margin, margin, width-margin, margin+top_h+(padding*2)], fill=(255, 255, 255, 220))
+        draw.text(((width - top_w)//2, margin+padding), reshaped_top, font=font, fill=(0,0,0))
+        
+        # Prepare Bottom Text ("Hero in [Value]")
+        reshaped_bottom = get_display(arabic_reshaper.reshape(bottom_text))
+        bot_bbox = draw.textbbox((0, 0), reshaped_bottom, font=font)
+        bot_w = bot_bbox[2] - bot_bbox[0]
+        bot_h = bot_bbox[3] - bot_bbox[1]
+        
+        # Draw Bottom Background + Text
+        draw.rectangle([margin, height-margin-bot_h-(padding*2), width-margin, height-margin], fill=(255, 255, 255, 220))
+        draw.text(((width - bot_w)//2, height-margin-bot_h-padding), reshaped_bottom, font=font, fill=(0,0,0))
+        
+        # Composite and save
+        out = Image.alpha_composite(img, overlay).convert("RGB")
+        out.save(output_path)
+        if os.path.exists(img_temp_path): os.remove(img_temp_path)
+        return output_path
+    except Exception as e:
+        print(f"Error creating cover: {e}")
+        return None

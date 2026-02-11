@@ -230,7 +230,20 @@ def process_story_generation(sender_id, value):
         pages = story_data["pages"]
         generated_images = []
         
-        # 3. Generate pages in a loop
+        # 3. Generate Cover Page
+        send_text_message(sender_id, "🎨 جاري تصميم غلاف القصة المميز...")
+        cover_prompt = f"A beautiful book cover featuring: {char_desc}. Warm nostalgic crayon style."
+        cover_ai_url = generate_storybook_page(char_desc, cover_prompt)
+        
+        if cover_ai_url:
+            from image_utils import create_cover_page
+            cover_temp_path = f"/tmp/cover_{sender_id}.png"
+            bottom_text = f"بطل في {value}"
+            cover_path = create_cover_page(cover_ai_url, child_name, bottom_text, cover_temp_path)
+            if cover_path:
+                generated_images.append(cover_path)
+        
+        # 4. Generate story pages in a loop
         for i, page in enumerate(pages):
             send_text_message(sender_id, f"🎨 جاري رسم الصفحة {i+1} من {len(pages)}...")
             
@@ -239,7 +252,7 @@ def process_story_generation(sender_id, value):
             
             if ai_image_url:
                 # Overlay Text
-                page_text = page["text"].format(child_name=child_name)
+                page_text = page["text"].replace("{child_name}", child_name)
                 temp_img_path = f"/tmp/page_{sender_id}_{i}.png"
                 result_path = overlay_text_on_image(ai_image_url, page_text, temp_img_path)
                 
@@ -254,16 +267,16 @@ def process_story_generation(sender_id, value):
             send_text_message(sender_id, "عذراً، حدث خطأ أثناء إنشاء صفحات القصة.")
             return
 
-        # 4. Create PDF from images
+        # 5. Create PDF from images
         send_text_message(sender_id, "📚 جاري تجميع الصفحات في الكتاب النهائي...")
         pdf_name = f"story_{sender_id}.pdf"
         pdf_path = f"/tmp/{pdf_name}"
         create_pdf(generated_images, pdf_path)
         
-        # 5. Send PDF
+        # 6. Send PDF
         send_file(sender_id, pdf_path)
         
-        # 6. Cleanup
+        # 7. Cleanup
         send_text_message(sender_id, f"أتمنى أن تعجبكم قصة {value}! 📚✨\nأرسل 'Start' لعمل قصة جديدة.")
         user_state[sender_id] = {"step": "start"}
         
