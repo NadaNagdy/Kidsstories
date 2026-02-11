@@ -11,7 +11,7 @@ def get_base64_image(image_path):
         return base64.b64encode(image_file.read()).decode('utf-8')
 
 # Style Configuration
-STYLE_DESC = "Classic children's book illustration, soft watercolor and colored pencil textures, hand-drawn look, gentle pastel color palette, clean white background, expressive faces, soft pencil outlines"
+STYLE_DESC = "Warm, nostalgic crayon-style illustration, friendly rounded cartoon style, slightly exaggerated expressive eyes, glowing smiles, bold childlike crayon colors, visible grain, textured strokes, layered shading, slightly uneven hand-drawn outlines, handcrafted look, soft blending, warm tones"
 
 def create_storyboard(child_name="بطلنا", photo_path=None):
     os.makedirs("storyboard_output", exist_ok=True)
