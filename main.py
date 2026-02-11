@@ -11,17 +11,19 @@ from pdf_utils import create_pdf
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-logger.info("=" * 60)
-logger.info("🚀 KIDS STORY BOT v5 - RAILWAY DEPLOYMENT 🚀")
-logger.info("=" * 60)
-logger.info(f"VERIFY_TOKEN: {VERIFY_TOKEN}")
-logger.info(f"PAGE_ACCESS_TOKEN: {'SET' if PAGE_ACCESS_TOKEN else 'MISSING!!!'}")
-
 app = FastAPI()
 
 # Environment variables
 VERIFY_TOKEN = os.getenv("VERIFY_TOKEN", "my_verify_token")
 PAGE_ACCESS_TOKEN = os.getenv("PAGE_ACCESS_TOKEN")
+
+# Startup Banner (AFTER variables are defined)
+logger.info("=" * 60)
+logger.info("🚀 KIDS STORY BOT v5 - RAILWAY DEPLOYMENT 🚀")
+logger.info("=" * 60)
+logger.info(f"VERIFY_TOKEN: {VERIFY_TOKEN}")
+logger.info(f"PAGE_ACCESS_TOKEN: {'SET' if PAGE_ACCESS_TOKEN else 'MISSING!!!'}")
+logger.info("=" * 60)
 
 # Simple in-memory state management
 user_state = {}
