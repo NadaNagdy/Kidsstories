@@ -11,7 +11,11 @@ from pdf_utils import create_pdf
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-logger.info("🚀 STARTING NEW DEPLOYMENT (v4) - LOGGING FIX 🚀")
+logger.info("=" * 60)
+logger.info("🚀 KIDS STORY BOT v5 - RAILWAY DEPLOYMENT 🚀")
+logger.info("=" * 60)
+logger.info(f"VERIFY_TOKEN: {VERIFY_TOKEN}")
+logger.info(f"PAGE_ACCESS_TOKEN: {'SET' if PAGE_ACCESS_TOKEN else 'MISSING!!!'}")
 
 app = FastAPI()
 
