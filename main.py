@@ -237,8 +237,12 @@ def process_story_generation(sender_id, value):
                 # Overlay Text
                 page_text = page["text"].format(child_name=child_name)
                 temp_img_path = f"/tmp/page_{sender_id}_{i}.png"
-                overlay_text_on_image(ai_image_url, page_text, temp_img_path)
-                generated_images.append(temp_img_path)
+                result_path = overlay_text_on_image(ai_image_url, page_text, temp_img_path)
+                
+                if result_path:
+                    generated_images.append(temp_img_path)
+                else:
+                    logger.error(f"Failed to overlay text for page {i+1}")
             else:
                 logger.error(f"Failed to generate image for page {i+1}")
         
