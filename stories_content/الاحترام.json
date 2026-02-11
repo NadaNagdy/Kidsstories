@@ -46,5 +46,29 @@
                 "text": "وهو نازل، قال للدبدوب: شكراً يا صاحبي! والكل قال: يا سلام على {child_name}.. بطل الاحترام!"
             }
         ]
+    },
+    "4-5": {
+        "pages": [
+            {
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, kneeling down politely to gently touch a tiny beetle on a leaf, 'Friend of the Weak' written in nature, macro-style garden setting",
+                "text": "بطلنا كان بيلعب ولقى خنفساء صغننة ماشية في طريقه. كان ممكن يدوس عليها، بس هو وقف واحترمها وسابها تمشي."
+            },
+            {
+                "prompt": "Professional 3D Pixar style, a tiny beetle on a leaf looking up at the large child character wearing a striped sweatshirt, child is smiling kindly, tiny speech bubble with a 'thank you' icon",
+                "text": "الخنفساء قالت له: شكراً يا بطل، هييجي يوم وأرد لك الجميل. بطلنا ابتسم وقال: العفو، إنتي صاحبتي."
+            },
+            {
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, crawling on a rug, looking for a lost toy under a dark sofa, look of frustration and focused search",
+                "text": "بعد يومين، بطلنا كان بيدور على لعبته الضايعة تحت الكنبة ومش شايف حاجة خالص في الضلمة."
+            },
+            {
+                "prompt": "Professional 3D Pixar style, tiny glow-in-the-dark butterflies and the beetle leading the way under the dark sofa, glowing like tiny lanterns, child character wearing a striped sweatshirt looking amazed",
+                "text": "الخنفساء جابت أصحابها المنورين ودخلوا تحت الكنبة ونوروا المكان لبطلنا."
+            },
+            {
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, happily holding a small lost toy, the beetle and shiny insects are around, warm celebratory garden/home scene",
+                "text": "بطلنا لقى لعبته وفرح أوي وقاله: شكراً يا أصحابي! اتعلم إن احترام الصغير بيجيب خير كبير."
+            }
+        ]
     }
 }

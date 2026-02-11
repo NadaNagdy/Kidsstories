@@ -46,5 +46,29 @@
                 "text": "الأسد فرح وقال: شكراً يا {child_name}! إنت قلبك كبيييير وشجاع. ولفوا الغابة كلها مبسوطين."
             }
         ]
+    },
+    "4-5": {
+        "pages": [
+            {
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, holding a flashlight with a strong smile, 'Conqueror of Darkness' written in the background, mysterious but not scary bedroom setup",
+                "text": "بطلنا كان بيخاف من الضلام اللي بيستخبى ورا الباب وبالليل. كان بيفتكر إن الضلام وحش كبيييير."
+            },
+            {
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, holding a bright flashlight, stepping bravely into a dimly lit room, friendly night atmosphere",
+                "text": "في ليلة، الضلام نادى عليه بصوت واطي: تعال يا بطل.. أنا مش وحش. بطلنا مسك كشافه وقرر يكون شجاع."
+            },
+            {
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, shining a flashlight behind a door, finding lost toys and a favorite sock, looking surprised and happy",
+                "text": "بطلنا دخل ورا الباب بالكشاف، لقى إن الضلام مجرد مكان مستخبي فيه لعبته الضايعة وشرابه المفضل."
+            },
+            {
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, looking out the window at the beautiful starry night and moon, the darkness looks peaceful",
+                "text": "الضلام قاله: أنا اللي بخليك تنام وترتاح، وبخلي النجوم تنور. بطلنا مبقاش خايف وطفى الكشاف."
+            },
+            {
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, sleeping peacefully in a cozy bed, smiling in sleep, guardian angel style atmosphere",
+                "text": "بطلنا نام في سريره وهو مطمن، وقال: أنا شجاع والضلام بقى صاحبي."
+            }
+        ]
     }
 }

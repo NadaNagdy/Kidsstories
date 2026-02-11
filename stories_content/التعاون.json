@@ -46,5 +46,29 @@
                 "text": "بابا وماما سقفوا وقالوا: شكراً يا بطل! لما تعاونا كلنا، قدرنا نحرك الصندوق الكبير!"
             }
         ]
+    },
+    "4-5": {
+        "pages": [
+            {
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, standing in front of a giant cooking pot on a campfire, holding a clean gray stone, 'Secret of the Magic Soup' written in the sky, friends gathered around",
+                "text": "بطلنا كان جعان هو وأصحابه ومفيش أكل. جاب حلة مية وحط فيها حجرة نظيفة وقال: أنا هعمل شوربة حجارة طعمها يجنن!"
+            },
+            {
+                "prompt": "Professional 3D Pixar style, a friend giving a bright orange carrot to the child character wearing a striped sweatshirt, both smiling, steam rising from the pot",
+                "text": "صاحبه سأله: ممكن أساعد؟ بطلنا قال: يا ريت لو معاك جزرة. صاحبه جاب جزرة وحطها."
+            },
+            {
+                "prompt": "Professional 3D Pixar style, multiple friends arriving with different vegetables (potatoes, tomatoes), child character wearing a striped sweatshirt putting them into the large pot",
+                "text": "صاحبتهم التانية جابت بطاطس، والتالت جاب طماطم. كل واحد بدأ يحط حاجة صغننة من عنده في الحلة."
+            },
+            {
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt stirring the large pot with a wooden spoon, delicious steam clouds, friends watching excitedly",
+                "text": "الحلة بقت مليانة خضار وريحتها تحفة! بطلنا فضل يقلبها وكلهم بيساعدوا سوا بفرحة."
+            },
+            {
+                "prompt": "Professional 3D Pixar style, everyone sitting around the pot, holding wooden bowls of soup, laughing and eating together, warm firelight",
+                "text": "في الآخر، الحجرة طلعت شوربة حقيقية تكفي الكل! بطلنا قال: شفتوا؟ التعاون خلى الحجرة تبقى أحلى عشاء في العالم."
+            }
+        ]
     }
 }

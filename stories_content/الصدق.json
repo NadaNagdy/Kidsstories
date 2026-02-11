@@ -46,5 +46,29 @@
                 "text": "ماما حضنته أوي: أنا فرحانة بيك عشان إنت صادق! إنت بطل الصدق! وساعدته يلم اللعب."
             }
         ]
+    },
+    "4-5": {
+        "pages": [
+            {
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, holding an empty flower pot with only soil, 'The Honest Hero' written in the background, ancient Chinese city setting",
+                "text": "الملك أدى لكل أطفال المدينة بذور وقال: اللي هيزرع أجمل وردة هيكون هو البطل. بطلنا أخد البذرة وزرعها وسقاها كل يوم."
+            },
+            {
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, looking sad at an empty pot with soil, other children in the background with huge colorful flowers, garden setting",
+                "text": "كل الأطفال ورداتهم طلعت أوي تجنن، لكن إناء بطلنا فضل فاضي. بطلنا كان حزين بس فضل يسقيها."
+            },
+            {
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, standing in a grand palace hall, holding only the empty pot, looking nervous but brave, a wise king in the distance",
+                "text": "جه يوم المسابقة، كل الأطفال معاهم ورد، وبطلنا راح بالإناء الفاضي وهو خايف بس قال: لازم أقول الحقيقة."
+            },
+            {
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, talking to the King, pointing to the empty pot, speaking bravely",
+                "text": "الملك سأل بطلنا: فين وردتك؟ بطلنا رد بشجاعة: أنا زرعتها وسقيتها بس م طلعتش، أنا آسف."
+            },
+            {
+                "prompt": "Professional 3D Pixar style, the King laughing and putting a crown on the child character wearing a striped sweatshirt, celebration scene, other children looking surprised",
+                "text": "الملك ضحك وقال: إنت البطل! لأن البذور كانت مطبوخة ومستحيل تطلع ورد، والكل كذب إلا إنت!"
+            }
+        ]
     }
 }
