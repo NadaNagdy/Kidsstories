@@ -30,12 +30,12 @@ def create_character_reference(image_data, is_url=True):
                 {
                     "role": "user",
                     "content": [
-                        {"type": "text", "text": "Describe this child's appearance for a storybook illustration. Include: hair (color/style), skin tone, and eye features. IMPORTANT: The character MUST be wearing a striped sweatshirt. This description will be used to keep the character consistent across pages. Be concise."},
+                        {"type": "text", "text": "Analyze this child's photo in EXTREME DETAIL for a storybook illustration. Describe EXACTLY: 1) Face shape and structure, 2) Eye color, shape, and expression, 3) Eyebrow shape and thickness, 4) Nose shape, 5) Mouth and smile characteristics, 6) Hair color, texture, length, and exact style, 7) Skin tone (be very specific), 8) Any distinctive features (dimples, freckles, etc.). CRITICAL: The character MUST wear a striped sweatshirt. This description must capture ALL unique features so the AI-generated character looks EXACTLY like this child."},
                         {"type": "image_url", "image_url": image_content}
                     ],
                 }
             ],
-            max_tokens=150,
+            max_tokens=250,
             extra_headers={
                 "HTTP-Referer": "https://kidsstories.railway.app",
                 "X-Title": "Kids Story Bot"

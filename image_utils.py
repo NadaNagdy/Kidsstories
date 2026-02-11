@@ -114,7 +114,7 @@ def create_cover_page(image_url, top_text, bottom_text, output_path, child_photo
         title_font = ImageFont.truetype(font_path, 80) if os.path.exists(font_path) else ImageFont.load_default()
         name_font = ImageFont.truetype(font_path, 65) if os.path.exists(font_path) else ImageFont.load_default()
         
-        # 1. Top Title
+        # 1. Top Title (expects format "بطل الـ[Value]")
         reshaped_top = get_display(arabic_reshaper.reshape(top_text))
         t_bbox = draw.textbbox((0, 0), reshaped_top, font=title_font)
         tw = t_bbox[2] - t_bbox[0]

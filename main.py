@@ -238,7 +238,7 @@ def process_story_generation(sender_id, value):
         if cover_ai_url:
             from image_utils import create_cover_page
             cover_temp_path = f"/tmp/cover_{sender_id}.png"
-            title_text = f"بطل {value}"
+            title_text = f"بطل الـ{value}"
             # Swap child_name and title_text based on new requirement (Top: Title, Bottom: Name)
             cover_path = create_cover_page(cover_ai_url, title_text, child_name, cover_temp_path)
             if cover_path:
