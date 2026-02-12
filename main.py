@@ -266,7 +266,7 @@ def process_story_generation(sender_id, value, is_preview=False):
             
             # Generate Cover Page
             cover_prompt = f"A beautiful circular artistic frame cover featuring the hero: {char_desc}. Soft watercolor and colored pencil textures, clean white background, surrounded by small thematic elements."
-            cover_ai_url = generate_storybook_page(char_desc, cover_prompt)
+            cover_ai_url = generate_storybook_page(char_desc, cover_prompt, child_name=child_name)
             
             if cover_ai_url:
                 from image_utils import create_cover_page
@@ -296,7 +296,7 @@ def process_story_generation(sender_id, value, is_preview=False):
             send_text_message(sender_id, f"🎨 جاري رسم الصفحة {i+1} من {len(pages)}...")
             
             # Generate Background + Character
-            ai_image_url = generate_storybook_page(char_desc, page["prompt"])
+            ai_image_url = generate_storybook_page(char_desc, page["prompt"], child_name=child_name)
             
             if ai_image_url:
                 # Overlay Text

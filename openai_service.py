@@ -46,14 +46,16 @@ def create_character_reference(image_data, is_url=True):
         print(f"Error creating character reference: {e}")
         return "A cute child character, Pixar style"
 
-def generate_storybook_page(character_description, page_prompt):
+def generate_storybook_page(character_description, page_prompt, child_name=None):
     """
     Generates a storybook page ensuring character consistency using the description.
     """
     try:
         # Define the new high-quality prompt template
+        name_part = f"named {child_name}" if child_name else ""
+        
         full_prompt = (
-            f"A high-quality 3D digital illustration in a modern animation style of {character_description}. "
+            f"A high-quality 3D digital illustration in a modern animation style of a child {name_part}, described as: {character_description}. "
             f"The character is shown in this scene: {page_prompt}. "
             f"The scene is illuminated by soft, cinematic lighting, creating a heartwarming and magical vibe. "
             f"The colors are vibrant pastels, featuring soft textures and cinematic depth of field. "
