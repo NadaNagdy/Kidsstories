@@ -26,7 +26,7 @@ VERIFY_TOKEN = os.getenv("VERIFY_TOKEN", "my_verify_token")
 INSTAPAY_HANDLE = os.getenv("INSTAPAY_HANDLE", "01060746538")
 
 logger.info("=" * 60)
-logger.info("🚀 KIDS STORY BOT v6.3 - FIX DEFINITION ERROR 🚀")
+logger.info("🚀 KIDS STORY BOT v6.4 - GENDER SELECTION ADDED 🚀")
 logger.info("=" * 60)
 
 user_state = {}
@@ -62,10 +62,19 @@ async def webhook_handler(request: Request, background_tasks: BackgroundTasks):
 def start_processing(sender_id, messaging_event, background_tasks):
     message = messaging_event["message"]
     
+    # معالجة الردود السريعة (Quick Replies)
     if "quick_reply" in message:
         payload = message["quick_reply"]["payload"]
         current_step = user_state.get(sender_id, {}).get("step")
-        if current_step == "waiting_for_age":
+        
+        # --- خطوة جديدة: معالجة اختيار الجنس ---
+        if current_step == "waiting_for_gender":
+            user_state[sender_id]["gender"] = payload # "ولد" أو "بنت"
+            user_state[sender_id]["step"] = "waiting_for_photo"
+            suffix = "بطلتنا الجميلة" if payload == "بنت" else "بطلنا الصغير"
+            send_text_message(sender_id, f"عظيم! 📸 أرسلي الآن صورة واضحة لوجه {suffix} لنحولها لشخصية في القصة.")
+        
+        elif current_step == "waiting_for_age":
             handle_age_selection(sender_id, payload)
         elif current_step == "waiting_for_value":
             handle_value_selection(sender_id, payload, background_tasks)
@@ -74,6 +83,7 @@ def start_processing(sender_id, messaging_event, background_tasks):
                 send_text_message(sender_id, "بانتظار صورة التحويل (Screenshot) للتأكيد... 📸")
         return
 
+    # معالجة الصور
     if "attachments" in message:
         for attachment in message["attachments"]:
             if attachment["type"] == "image":
@@ -81,6 +91,7 @@ def start_processing(sender_id, messaging_event, background_tasks):
                 handle_image_reception(sender_id, image_url, background_tasks)
                 return
 
+    # معالجة النصوص
     text = message.get("text", "")
     if text:
         if text.lower() == "start":
@@ -95,9 +106,9 @@ def send_welcome_message(sender_id):
 
 def handle_text_reception(sender_id, text):
     user_state[sender_id]["child_name"] = text
-    user_state[sender_id]["step"] = "waiting_for_photo"
-    send_text_message(sender_id, f"تشرفنا يا {text}! 😊")
-    send_text_message(sender_id, "📸 أرسلي الآن صورة واضحة لوجه بطلنا الصغير.")
+    # --- التعديل هنا: الانتقال لخطوة الجنس بدلاً من الصورة ---
+    user_state[sender_id]["step"] = "waiting_for_gender"
+    send_quick_replies(sender_id, f"تشرفنا يا {text}! 😊 هل البطل الصغير ولد أم بنت؟", ["ولد", "بنت"])
 
 def download_image_as_base64(url):
     try:
@@ -119,12 +130,10 @@ def handle_image_reception(sender_id, image_url, background_tasks):
         send_text_message(sender_id, "🎨 جاري تحليل ملامح البطل الصغير...")
         background_tasks.add_task(process_image_ai, sender_id, image_url)
 
-# --- إعادة الدالة المفقودة التي سببت الخطأ ---
 def process_payment_verification(sender_id, image_url):
     try:
         base64_image = download_image_as_base64(image_url)
         if base64_image:
-            # التحقق عبر الذكاء الاصطناعي
             is_valid = verify_payment_screenshot(base64_image, INSTAPAY_HANDLE)
             if is_valid:
                 send_text_message(sender_id, "✅ تم التحقق من الدفع! جاري إكمال الكتاب...")
@@ -162,7 +171,12 @@ def process_story_generation(sender_id, value, is_preview=False):
         child_name = user_state[sender_id].get("child_name", "بطلنا")
         char_desc = user_state[sender_id].get("char_desc", "A child")
         age_group = user_state[sender_id].get("age_group", "2-3")
+        gender = user_state[sender_id].get("gender", "ولد") # جلب الجنس
         
+        # --- تحديد العنوان بناءً على الجنس ---
+        prefix = "بطلة" if gender == "بنت" else "بطل"
+        display_title = f"{prefix} {value}"
+
         value_map = {"الشجاعة": "courage.json", "الصدق": "honesty.json", "التعاون": "cooperation.json", "الاحترام": "respect.json"}
         json_filename = value_map.get(value)
         
@@ -176,7 +190,8 @@ def process_story_generation(sender_id, value, is_preview=False):
         if is_preview:
             cover_ai_url = generate_storybook_page(char_desc, f"Watercolor cover, {value}", child_name=child_name, is_cover=True)
             if cover_ai_url:
-                create_cover_page(cover_ai_url, f"بطل {value}", child_name, cover_temp_path)
+                # استخدام display_title (بطل/بطلة) هنا
+                create_cover_page(cover_ai_url, display_title, child_name, cover_temp_path)
                 send_image(sender_id, cover_temp_path)
                 time.sleep(2)
                 
