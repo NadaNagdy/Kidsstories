@@ -9,6 +9,7 @@ from messenger_api import send_text_message, send_quick_replies, send_file
 from story import generate_story
 from pdf_utils import create_pdf
 from openai_service import transform_photo_to_character
+from payment_service import generate_payment_link, PAYMOB_API_KEY
 
 # Configure Logging
 logging.basicConfig(level=logging.INFO)
@@ -260,27 +261,56 @@ def process_story_generation(sender_id, value, is_preview=False):
         generated_images = []
         
         # Determine range of pages to generate
+        # Determine range of pages to generate
         if is_preview:
             # Generate Cover Only
             send_text_message(sender_id, "🖼️ جاري تجهيز معاينة الغلاف...")
             
             # Generate Cover Page
             cover_prompt = f"A beautiful circular artistic frame cover featuring the hero: {char_desc}. Soft watercolor and colored pencil textures, clean white background, surrounded by small thematic elements."
-            cover_ai_url = generate_storybook_page(char_desc, cover_prompt, child_name=child_name)
-            
-            if cover_ai_url:
-                from image_utils import create_cover_page
-                cover_temp_path = f"/tmp/cover_{sender_id}.png"
-                title_text = f"بطل الـ{value}"
-                # Swap child_name and title_text based on new requirement (Top: Title, Bottom: Name)
-                cover_path = create_cover_page(cover_ai_url, title_text, child_name, cover_temp_path)
-                if cover_path:
-                    generated_images.append(cover_path)
-                    send_file(sender_id, cover_path)
+            try:
+                cover_ai_url = generate_storybook_page(char_desc, cover_prompt, child_name=child_name)
+                
+                if cover_ai_url:
+                    from image_utils import create_cover_page
+                    cover_temp_path = f"/tmp/cover_{sender_id}.png"
+                    title_text = f"بطل الـ{value}"
+                    cover_path = create_cover_page(cover_ai_url, title_text, child_name, cover_temp_path)
+                    if cover_path:
+                        generated_images.append(cover_path)
+                        send_file(sender_id, cover_path)
+                    else:
+                        logger.error("Failed to create cover page image (create_cover_page returned None)")
+                        send_text_message(sender_id, "⚠️ لم نتمكن من إنشاء الغلاف، لكن سنكمل القصة!")
+                else:
+                    logger.error("Failed to generate AI image for cover")
+                    send_text_message(sender_id, "⚠️ حدثت مشكلة في تصميم الغلاف، سننتقل للخطوة التالية.")
+            except Exception as e:
+                logger.error(f"Exception during cover generation: {e}")
             
             user_state[sender_id]["step"] = "waiting_for_payment"
-            # In a real app, this would be a webview button or link
-            send_quick_replies(sender_id, "🔒 لإكمال القصة والحصول على الكتاب PDF، يرجى دفع رسوم رمزية (25 جنيه).", ["PAY_25_EGP"])
+            
+            # Check for Paymob Configuration
+            if PAYMOB_API_KEY:
+                # Generate Real Payment Link
+                # Using dummy user info for now, in real app we'd ask for email/phone or get from FB profile
+                user_info = {"first_name": "User", "last_name": sender_id, "phone_number": "+201000000000", "email": "user@test.com"}
+                payment_url = generate_payment_link(25, user_info)
+                
+                if payment_url:
+                    # Send a button with the link
+                    # Messenger Button Template (Generic Template with 1 button)
+                    # For now, simplistic URL message + text
+                    send_text_message(sender_id, f"🔒 لإكمال القصة، يرجى الدفع عبر الرابط التالي:\n{payment_url}")
+                    # Also keep the simulated button for testing convenience? Or remove it?
+                    # Let's keep the simulated button as a 'Confirm Payment' step for this demo
+                    send_quick_replies(sender_id, "بعد الدفع، اضغط هنا:", ["تم الدفع"])
+                else:
+                     send_quick_replies(sender_id, "خطأ في الاتصال بنظام الدفع. (محاكاة):", ["PAY_25_EGP"])
+            else:
+                 # Fallback to Simulated Payment
+                 send_quick_replies(sender_id, "🔒 لإكمال القصة والحصول على الكتاب PDF، يرجى دفع رسوم رمزية (25 جنيه).", ["PAY_25_EGP"])
+            
             return
 
         else:
