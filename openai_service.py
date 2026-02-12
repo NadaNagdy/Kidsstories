@@ -12,14 +12,21 @@ client = OpenAI(
     api_key=api_key
 )
 
-# 2. Global Style
+# 2. Refined Global Style
+# JUSTIFICATION: We added explicit "Negative Prompts" here to stop the AI from 
+# drawing its own text boxes (like the "Adventures of" box you saw).
 GLOBAL_STORYBOOK_STYLE = """
-You are an image generation model specialized in classic children's storybooks.
-STYLE: Soft watercolor and colored pencil illustration, classic aesthetic, warm pastel colors, clean white background.
-CHARACTER CONSISTENCY: The hero child must stay identical on ALL pages.
-- Same face, skin tone, and hair.
-- CRITICAL: The child MUST always wear a striped sweatshirt.
-- Layout: Square (1:1). Top 75% artwork, bottom 25% kept empty/clean for text overlay.
+You are a professional children's book illustrator.
+STYLE: Soft watercolor and colored pencil, classic aesthetic, warm pastel tones, clean white background.
+CHARACTER CONSISTENCY: The hero child must stay identical on all pages.
+- Same face, skin tone, and curly hair.
+- CRITICAL: The child MUST always wear the same outfit (e.g., striped sweatshirt).
+
+LAYOUT RULES:
+- Absolutely NO text, letters, words, or banners inside the image.
+- DO NOT draw any frames or boxes around the character.
+- Leave the TOP 15% and BOTTOM 15% of the image as PURE WHITE SPACE to allow for external text overlay.
+- Centralize the character in the middle of the square canvas.
 """.strip()
 
 def create_character_reference(image_data, is_url=True):
@@ -32,7 +39,7 @@ def create_character_reference(image_data, is_url=True):
                 {
                     "role": "user",
                     "content": [
-                        {"type": "text", "text": "Analyze this child's photo and provide a CONCISE description (MAX 100 words). Focus on: face shape, hair texture/color, and eye shape. IMPORTANT: Always state they are wearing a striped sweatshirt for the story."},
+                        {"type": "text", "text": "Analyze this child's photo. Focus on: face shape, curly hair texture, and eye shape. State they are wearing a striped sweatshirt."},
                         {"type": "image_url", "image_url": image_content}
                     ],
                 }
@@ -44,9 +51,8 @@ def create_character_reference(image_data, is_url=True):
         print(f"Error creating character reference: {e}")
         return "A cute child with curly hair wearing a striped sweatshirt, watercolor style."
 
-# --- THIS IS THE MISSING FUNCTION ---
 def verify_payment_screenshot(image_data, target_handle):
-    """Verifies InstaPay or wallet number in the screenshot."""
+    """Verifies payment transfer."""
     try:
         headers = {
             "Authorization": f"Bearer {api_key}",
@@ -76,16 +82,20 @@ def verify_payment_screenshot(image_data, target_handle):
         return False
 
 def generate_storybook_page(character_description, page_prompt, child_name=None, is_cover=False, is_final=False):
-    """Generates a storybook page, handling both URLs and Base64 data."""
+    """Generates a storybook page without AI-generated text."""
     try:
-        page_type = "COVER PAGE" if is_cover else ("FINAL REWARD PAGE" if is_final else "STORY PAGE")
+        page_type = "COVER ART" if is_cover else ("FINAL REWARD ART" if is_final else "STORY ART")
         
+        # JUSTIFICATION: For the cover, we explicitly command the AI to focus 
+        # only on the character and the background elements, forbidding text boxes.
+        cover_extra = "This is a cover: Center the child, surrounded by magical storybook elements. NO BANNERS. NO TEXT." if is_cover else ""
+
         user_content = f"""
         TASK: {page_type}
-        CHARACTER DESCRIPTION: {character_description}
-        SCENE DESCRIPTION: {page_prompt}
-        {f'CHILD NAME: {child_name}' if child_name else ''}
-        REMINDER: Child MUST wear the striped sweatshirt. Leave bottom 25% empty.
+        CHARACTER: {character_description}
+        SCENE: {page_prompt}
+        {cover_extra}
+        REMINDER: No text in image. Keep top and bottom margins clear and white.
         """.strip()
 
         headers = {
@@ -108,7 +118,7 @@ def generate_storybook_page(character_description, page_prompt, child_name=None,
         response.raise_for_status()
         data = response.json()
         
-        # Check structured 'images' field first (Base64 or URL)
+        # Extract logic (Base64/URL)
         try:
             choices = data.get('choices', [])
             if choices:
@@ -118,7 +128,6 @@ def generate_storybook_page(character_description, page_prompt, child_name=None,
                     if img_url: return img_url
         except: pass
 
-        # Fallback to Regex search
         full_response_text = str(data)
         if "data:image" in full_response_text:
             match = re.search(r'data:image/[^;]+;base64,[^"\'\s]+', full_response_text)
