@@ -5,11 +5,16 @@ import uvicorn
 import logging
 import requests
 import base64
+import json
 from messenger_api import send_text_message, send_quick_replies, send_file, send_image
-from story import generate_story
+# Removed old 'story' import if it's no longer needed, or keep for legacy
+# from story import generate_story 
 from pdf_utils import create_pdf
-from openai_service import transform_photo_to_character, verify_payment_screenshot
+from openai_service import transform_photo_to_character, verify_payment_screenshot, generate_storybook_page, create_character_reference
 from payment_service import generate_payment_link, PAYMOB_API_KEY
+from image_utils import overlay_text_on_image, create_cover_page
+# NEW IMPORT: Import the StoryManager
+from story_manager import StoryManager
 
 # Configure Logging
 logging.basicConfig(level=logging.INFO)
@@ -25,7 +30,7 @@ INSTAPAY_HANDLE = os.getenv("INSTAPAY_HANDLE", "01060746538")
 
 # Startup Banner
 logger.info("=" * 60)
-logger.info("🚀 KIDS STORY BOT v5.2 - COVER PNG FIX 🚀")
+logger.info("🚀 KIDS STORY BOT v6.0 - DYNAMIC STORY MANAGER INTEGRATION 🚀")
 logger.info("=" * 60)
 
 # Simple in-memory state management
@@ -186,10 +191,9 @@ def handle_payment_success(sender_id, background_tasks):
     else:
         send_text_message(sender_id, "عذراً، حدث خطأ. الرجاء البدء من جديد.")
 
-import json
-from image_utils import overlay_text_on_image
-from openai_service import create_character_reference, generate_storybook_page
-
+# ==============================================================================
+# UPDATED STORY GENERATION LOGIC WITH STORY MANAGER
+# ==============================================================================
 def process_story_generation(sender_id, value, is_preview=False):
     try:
         user_state[sender_id]["selected_value"] = value
@@ -197,30 +201,41 @@ def process_story_generation(sender_id, value, is_preview=False):
         photo_url = user_state[sender_id].get("photo_url")
         age_group = user_state[sender_id].get("age_group", "2-3")
         
+        # 1. Get Character Description from Photo
         base64_image = download_image_as_base64(photo_url)
         if base64_image:
             char_desc = create_character_reference(base64_image, is_url=False)
         else:
             char_desc = "A cute child character, classic children's book illustration style"
         
-        try:
-            config_path = f"stories_content/{value}.json"
-            with open(config_path, "r", encoding="utf-8") as f:
-                story_config = json.load(f)
-        except Exception as e:
-            logger.error(f"Failed to load story config for {value}: {e}")
+        # 2. Map Arabic Value to JSON Filename
+        value_map = {
+            "الشجاعة": "courage.json",
+            "الصدق": "honesty.json",
+            "التعاون": "cooperation.json",
+            "الاحترام": "respect.json"
+        }
+        json_filename = value_map.get(value)
+        
+        if not json_filename:
             send_text_message(sender_id, f"عذراً، قصة {value} غير متوفرة حالياً.")
             return
 
-        story_data = story_config.get(age_group) or story_config.get("2-3")
-        if not story_data:
-            send_text_message(sender_id, "عذراً، القصة غير متوفرة.")
+        # 3. Initialize Story Manager & Inject Character
+        manager = StoryManager(child_name)
+        manager.character_desc = char_desc  # INJECT: Override default with specific photo analysis
+        
+        # 4. Generate the Prompts
+        # This returns a list of clean, fully-formed prompts ready for generation
+        pages_prompts = manager.generate_story_prompts(json_filename, age_group)
+        
+        if not pages_prompts:
+            send_text_message(sender_id, "عذراً، حدث خطأ في تحميل القصة.")
             return
 
-        pages = story_data["pages"]
         generated_images = []
         
-        # 3. Handle Cover Page (Ensure it exists and send as PNG)
+        # 5. Handle Cover Page
         cover_temp_path = f"/tmp/cover_{sender_id}.png"
         
         if not os.path.exists(cover_temp_path) or is_preview:
@@ -230,12 +245,13 @@ def process_story_generation(sender_id, value, is_preview=False):
                 "Classic children's storybook watercolor cover illustration.\n"
                 "- Show the hero child from the character description standing proudly inside a large soft circular frame in the center.\n"
                 "- Keep a clean light background (white or very light pastel) with subtle watercolor texture.\n"
-                "- LEAVE clear empty space at the TOP for the Arabic title 'بطل الشجاعة' (or similar) – do NOT draw complex details there.\n"
+                "- LEAVE clear empty space at the TOP for the Arabic title 'بطل " + value + "' – do NOT draw complex details there.\n"
                 "- LEAVE clear empty space at the BOTTOM for the child's name in Arabic – do NOT overcrowd this area.\n"
                 "- Add a subtle hand-drawn border/frame around the whole cover for a classic storybook look.\n"
                 "- Mood: warm, premium, heartwarming, suitable for ages 1–5."
             )
             try:
+                # We pass 'char_desc' here because cover logic is separate from StoryManager for now
                 cover_ai_url = generate_storybook_page(
                     char_desc,
                     cover_prompt,
@@ -243,7 +259,6 @@ def process_story_generation(sender_id, value, is_preview=False):
                     is_cover=True,
                 )
                 if cover_ai_url:
-                    from image_utils import create_cover_page
                     cover_path = create_cover_page(cover_ai_url, f"بطل الـ{value}", child_name, cover_temp_path)
                     if cover_path:
                         send_image(sender_id, cover_path)
@@ -255,6 +270,7 @@ def process_story_generation(sender_id, value, is_preview=False):
             if not is_preview:
                 send_image(sender_id, cover_temp_path)
 
+        # 6. Payment Gate (Preview Mode Stop)
         if is_preview:
             user_state[sender_id]["step"] = "waiting_for_payment"
             if PAYMOB_API_KEY:
@@ -271,30 +287,41 @@ def process_story_generation(sender_id, value, is_preview=False):
                 send_text_message(sender_id, msg)
             return
 
+        # 7. Full Generation Loop
         else:
             send_text_message(sender_id, "📚 جاري إكمال باقي صفحات القصة...")
-            for i, page in enumerate(pages):
-                send_text_message(sender_id, f"🎨 جاري رسم الصفحة {i+1} من {len(pages)}...")
-                # Treat the very last page in the JSON as the FINAL reward / tips page
-                is_final_page = i == len(pages) - 1
+            
+            for i, page_data in enumerate(pages_prompts):
+                send_text_message(sender_id, f"🎨 جاري رسم الصفحة {i+1} من {len(pages_prompts)}...")
+                
+                # Check if it's the final page (Reward Certificate)
+                is_final_page = i == len(pages_prompts) - 1
+                
+                # IMPORTANT: We pass an EMPTY string for char_desc because StoryManager 
+                # has already baked the character description into 'page_data["prompt"]'.
+                # This prevents duplication.
                 ai_image_url = generate_storybook_page(
-                    char_desc,
-                    page["prompt"],
+                    "",  # <--- Empty char_desc
+                    page_data["prompt"], # <--- Full prompt (Style + Character + Scene)
                     child_name=child_name,
                     is_final=is_final_page,
                 )
+                
                 if ai_image_url:
-                    page_text = page["text"].replace("{child_name}", child_name)
+                    # Overlay Text
+                    page_text = page_data["text"].replace("{child_name}", child_name)
                     temp_img_path = f"/tmp/page_{sender_id}_{i}.png"
                     result_path = overlay_text_on_image(ai_image_url, page_text, temp_img_path)
+                    
                     if result_path:
                         generated_images.append(temp_img_path)
             
+            # 8. Create Final PDF
             # Add cover to final PDF
             if os.path.exists(cover_temp_path):
                 generated_images.insert(0, cover_temp_path)
             
-            # Deduplicate
+            # Deduplicate just in case
             seen = set()
             generated_images = [x for x in generated_images if not (x in seen or seen.add(x))]
             
