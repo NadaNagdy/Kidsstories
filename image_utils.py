@@ -5,20 +5,166 @@ from io import BytesIO
 import arabic_reshaper
 from bidi.algorithm import get_display
 
+
+# ---------------------------------------------------------------------------
+# Arabic typography helpers
+# ---------------------------------------------------------------------------
+
+def _prepare_arabic_text(text: str) -> str:
+    """
+    Reshape + apply bidi so Pillow renders Arabic text correctly.
+    """
+    if not text:
+        return ""
+    reshaped = arabic_reshaper.reshape(text)
+    return get_display(reshaped)
+
+
+def _wrap_arabic_text(draw: ImageDraw.ImageDraw, text: str, font: ImageFont.FreeTypeFont, max_width: int):
+    """
+    Simple word-based wrapper that measures visual (reshaped+bidi) width
+    and returns a list of *visual-order* lines ready for drawing.
+    """
+    words = text.split()
+    if not words:
+        return []
+
+    lines = []
+    current = ""
+
+    for word in words:
+        candidate_raw = (current + " " + word).strip()
+        candidate_vis = _prepare_arabic_text(candidate_raw)
+        bbox = draw.textbbox((0, 0), candidate_vis, font=font)
+        candidate_width = bbox[2] - bbox[0]
+
+        if candidate_width <= max_width or not current:
+            current = candidate_raw
+        else:
+            # finalize current line
+            lines.append(current)
+            current = word
+
+    if current:
+        lines.append(current)
+
+    # Convert all logical lines to visual form for drawing
+    return [_prepare_arabic_text(line) for line in lines]
+
+
+def _get_arabic_font(size: int, weight: str = "regular") -> ImageFont.FreeTypeFont:
+    """
+    Load Amiri (preferred) with optional bold weight, fall back gracefully.
+    """
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    fonts_dir = os.path.join(base_dir, "fonts")
+
+    candidates = []
+    if weight.lower() == "bold":
+        candidates.append(os.path.join(fonts_dir, "Amiri-Bold.ttf"))
+    candidates.append(os.path.join(fonts_dir, "Amiri-Regular.ttf"))
+
+    for path in candidates:
+        if os.path.exists(path):
+            try:
+                return ImageFont.truetype(path, size)
+            except Exception:
+                continue
+
+    # Fallback – keeps code robust even if fonts are missing
+    return ImageFont.load_default()
+
+
+def _draw_story_text_box(
+    draw: ImageDraw.ImageDraw,
+    panel_width: int,
+    panel_height: int,
+    text: str,
+    font: ImageFont.FreeTypeFont,
+    *,
+    bottom_margin: int = 20,
+    horizontal_margin: int = 40,
+    padding_x: int = 24,
+    padding_y: int = 18,
+    radius: int = 16,
+    bg_color=(255, 248, 240),  # Creamy, matches #FFF8F0
+    text_color=(44, 24, 16),   # Dark brown #2C1810
+    line_spacing: float = 1.4,
+):
+    """
+    Draws the bottom 20–25% Arabic text box as per the style guide:
+    - Semi-opaque cream background (simulated on white)
+    - Rounded corners
+    - Multi-line RTL text, visually centered horizontally
+    """
+    if not text:
+        return
+
+    # Max width for the whole box and for text inside
+    box_width = panel_width - 2 * horizontal_margin
+    max_text_width = box_width - 2 * padding_x
+
+    # Wrap into multiple visual lines
+    lines = _wrap_arabic_text(draw, text, font, max_text_width)
+    if not lines:
+        return
+
+    # Approx line height
+    sample_bbox = draw.textbbox((0, 0), lines[0], font=font)
+    line_height = sample_bbox[3] - sample_bbox[1]
+
+    total_text_height = 0
+    for i, line in enumerate(lines):
+        if i == 0:
+            total_text_height += line_height
+        else:
+            total_text_height += int(line_height * line_spacing)
+
+    box_height = total_text_height + 2 * padding_y
+
+    # Position box at bottom with margin
+    box_left = (panel_width - box_width) // 2
+    box_right = box_left + box_width
+    box_bottom = panel_height - bottom_margin
+    box_top = box_bottom - box_height
+
+    # Draw rounded rectangle background
+    draw.rounded_rectangle(
+        [box_left, box_top, box_right, box_bottom],
+        radius=radius,
+        fill=bg_color,
+    )
+
+    # Draw text, RTL: align each line to the right inside the box
+    current_y = box_top + padding_y
+    for i, line in enumerate(lines):
+        bbox = draw.textbbox((0, 0), line, font=font)
+        line_width = bbox[2] - bbox[0]
+        # Right edge minus padding → starting x for this line
+        x_right = box_right - padding_x
+        x = x_right - line_width
+
+        draw.text((x, current_y), line, font=font, fill=text_color)
+
+        if i < len(lines) - 1:
+            current_y += int(line_height * line_spacing)
+
 def overlay_text_on_image(image_url, text, output_path):
     """
-    Downloads an image, places it on a white background, and adds text below it.
-    This replaces the previous 'overlay' behavior for better readability and style consistency.
+    Downloads an image, places it on a square panel, and adds a styled
+    Arabic text box in the bottom 20–25% following the Arabic text
+    layout guide.
     """
     try:
-        # 1. Background & Dimensions
+        # 1. Background & Dimensions (square panel)
         width, height = 1024, 1024
-        img = Image.new('RGB', (width, height), (255, 255, 255))
+        img = Image.new("RGB", (width, height), (255, 255, 255))
         draw = ImageDraw.Draw(img)
-        
-        # 2. Download & Paste Illustration
-        if image_url.startswith('data:'):
+
+        # 2. Download & Paste Illustration (top ~75%)
+        if image_url.startswith("data:"):
             import base64
+
             header, encoded = image_url.split(",", 1)
             image_data = base64.b64decode(encoded)
             art = Image.open(BytesIO(image_data)).convert("RGB")
@@ -28,28 +174,38 @@ def overlay_text_on_image(image_url, text, output_path):
                 print(f"Error: Failed to download image from {image_url}")
                 return None
             art = Image.open(BytesIO(response.content)).convert("RGB")
-            
-        # Scale art to leave room for text
-        art_size = 780
-        art = art.resize((art_size, art_size), Image.LANCZOS)
-        img.paste(art, ((width - art_size)//2, 60))
-        
-        # 3. Add Thick Border (Style Consistency)
+
+        # Keep aspect ratio, but constrain to leave generous room for text
+        max_art_width = int(width * 0.9)
+        max_art_height = int(height * 0.7)
+        art.thumbnail((max_art_width, max_art_height), Image.LANCZOS)
+
+        art_x = (width - art.width) // 2
+        art_y = 60  # small top margin
+        img.paste(art, (art_x, art_y))
+
+        # 3. Add Thick Border (classic framed panel)
         border_w = 25
-        draw.rectangle([border_w//2, border_w//2, width-border_w//2, height-border_w//2], outline=(150, 150, 150), width=border_w)
-        
-        # 4. Add Arabic Text Below
-        base_dir = os.path.dirname(os.path.abspath(__file__))
-        font_path = os.path.join(base_dir, "fonts", "Amiri-Regular.ttf")
-        font = ImageFont.truetype(font_path, 45) if os.path.exists(font_path) else ImageFont.load_default()
-        
-        reshaped_text = get_display(arabic_reshaper.reshape(text))
-        t_bbox = draw.textbbox((0, 0), reshaped_text, font=font)
-        tw = t_bbox[2] - t_bbox[0]
-        
-        # Draw at the bottom area (centered)
-        draw.text(((width - tw)//2, 880), reshaped_text, font=font, fill=(0, 0, 0))
-        
+        draw.rectangle(
+            [border_w // 2, border_w // 2, width - border_w // 2, height - border_w // 2],
+            outline=(150, 150, 150),
+            width=border_w,
+        )
+
+        # 4. Add Arabic Text Box at Bottom
+        font = _get_arabic_font(40, weight="regular")
+        _draw_story_text_box(
+            draw,
+            width,
+            height,
+            text=text,
+            font=font,
+            bottom_margin=30,
+            horizontal_margin=40,
+            padding_x=26,
+            padding_y=20,
+        )
+
         img.save(output_path)
         return output_path
     except Exception as e:
@@ -69,17 +225,25 @@ def create_cover_page(image_url, top_text, bottom_text, output_path, child_photo
         img = Image.new('RGB', (width, height), (255, 255, 255))
         draw = ImageDraw.Draw(img)
         
-        # Load fonts
-        base_dir = os.path.dirname(os.path.abspath(__file__))
-        font_path = os.path.join(base_dir, "fonts", "Amiri-Regular.ttf")
-        title_font = ImageFont.truetype(font_path, 80) if os.path.exists(font_path) else ImageFont.load_default()
-        name_font = ImageFont.truetype(font_path, 65) if os.path.exists(font_path) else ImageFont.load_default()
+        # Load fonts (Arabic classic style)
+        title_font = _get_arabic_font(80, weight="bold")
+        name_font = _get_arabic_font(65, weight="regular")
         
-        # 1. Top Title (expects format "بطل الـ[Value]")
-        reshaped_top = get_display(arabic_reshaper.reshape(top_text))
+        # 1. Top Title (expects format "بطل الشجاعة")
+        #    Styled as bold dark-brown Arabic title with subtle white stroke.
+        reshaped_top = _prepare_arabic_text(top_text)
         t_bbox = draw.textbbox((0, 0), reshaped_top, font=title_font)
         tw = t_bbox[2] - t_bbox[0]
-        draw.text(((width - tw)//2, 100), reshaped_top, font=title_font, fill=(50, 50, 150)) # Colorful Blue
+        title_x = (width - tw) // 2
+        title_y = 80
+        draw.text(
+            (title_x, title_y),
+            reshaped_top,
+            font=title_font,
+            fill=(44, 24, 16),  # Dark brown
+            stroke_width=2,
+            stroke_fill=(255, 255, 255),  # subtle white outline
+        )
         
         # 2. Central Circular Art
         # If we have the AI generated image, use it. If not, fallback to photo.
@@ -110,10 +274,10 @@ def create_cover_page(image_url, top_text, bottom_text, output_path, child_photo
         draw.rectangle([border_w//2, border_w//2, width-border_w//2, height-border_w//2], outline=(150, 150, 150), width=border_w)
         
         # 4. Bottom Name
-        reshaped_bottom = get_display(arabic_reshaper.reshape(bottom_text))
+        reshaped_bottom = _prepare_arabic_text(bottom_text)
         n_bbox = draw.textbbox((0, 0), reshaped_bottom, font=name_font)
         nw = n_bbox[2] - n_bbox[0]
-        draw.text(((width - nw)//2, 880), reshaped_bottom, font=name_font, fill=(0, 0, 0))
+        draw.text(((width - nw)//2, 880), reshaped_bottom, font=name_font, fill=(44, 24, 16))
         
         img.save(output_path)
         return output_path
@@ -132,18 +296,26 @@ def create_grid_cover_panel(photo_base64, child_name, value, output_path):
         img = Image.new('RGB', (width, height), (255, 255, 255))
         draw = ImageDraw.Draw(img)
         
-        # Load font
-        base_dir = os.path.dirname(os.path.abspath(__file__))
-        font_path = os.path.join(base_dir, "fonts", "Amiri-Regular.ttf")
-        title_font = ImageFont.truetype(font_path, 80) if os.path.exists(font_path) else ImageFont.load_default()
-        name_font = ImageFont.truetype(font_path, 60) if os.path.exists(font_path) else ImageFont.load_default()
+        # Load fonts
+        title_font = _get_arabic_font(80, weight="bold")
+        name_font = _get_arabic_font(60, weight="regular")
         
-        # 1. Title: "بطل الـ[Value]"
+        # 1. Title: "بطل [Value]" – styled top title for cover panel
         title_text = f"بطل {value}"
-        reshaped_title = get_display(arabic_reshaper.reshape(title_text))
+        reshaped_title = _prepare_arabic_text(title_text)
         t_bbox = draw.textbbox((0, 0), reshaped_title, font=title_font)
         tw = t_bbox[2] - t_bbox[0]
-        draw.text(((width - tw)//2, 80), reshaped_title, font=title_font, fill=(50, 50, 150)) # Colorful title
+        # Position slightly toward top, visually balanced
+        title_x = (width - tw) // 2
+        title_y = 70
+        draw.text(
+            (title_x, title_y),
+            reshaped_title,
+            font=title_font,
+            fill=(44, 24, 16),
+            stroke_width=2,
+            stroke_fill=(255, 255, 255),
+        )
         
         # 2. Circular Photo
         # Decode photo
@@ -165,10 +337,10 @@ def create_grid_cover_panel(photo_base64, child_name, value, output_path):
         img.paste(photo_circular, ((width - size[0])//2, 250), photo_circular)
         
         # 3. Name: "[Child's Name]"
-        reshaped_name = get_display(arabic_reshaper.reshape(child_name))
+        reshaped_name = _prepare_arabic_text(child_name)
         n_bbox = draw.textbbox((0, 0), reshaped_name, font=name_font)
         nw = n_bbox[2] - n_bbox[0]
-        draw.text(((width - nw)//2, 780), reshaped_name, font=name_font, fill=(0, 0, 0))
+        draw.text(((width - nw)//2, 780), reshaped_name, font=name_font, fill=(44, 24, 16))
         
         # Add a simple hand-drawn style frame (thick border)
         border_w = 40
@@ -191,28 +363,39 @@ def create_story_panel(image_url, text, output_path):
         art = Image.open(BytesIO(response.content)).convert("RGB")
         
         width, height = 1024, 1024
-        img = Image.new('RGB', (width, height), (255, 255, 255))
+        img = Image.new("RGB", (width, height), (255, 255, 255))
         draw = ImageDraw.Draw(img)
-        
-        # Paste art scaled down slightly to leave room for text/frame
-        art_size = 800
-        art = art.resize((art_size, art_size), Image.LANCZOS)
-        img.paste(art, ((width - art_size)//2, 80))
-        
-        # Text at bottom
-        base_dir = os.path.dirname(os.path.abspath(__file__))
-        font_path = os.path.join(base_dir, "fonts", "Amiri-Regular.ttf")
-        font = ImageFont.truetype(font_path, 40) if os.path.exists(font_path) else ImageFont.load_default()
-        
-        reshaped_text = get_display(arabic_reshaper.reshape(text))
-        t_bbox = draw.textbbox((0, 0), reshaped_text, font=font)
-        tw = t_bbox[2] - t_bbox[0]
-        draw.text(((width - tw)//2, 900), reshaped_text, font=font, fill=(0, 0, 0))
-        
+
+        # Paste art scaled down to leave a dedicated bottom text band (~25%)
+        max_art_width = int(width * 0.9)
+        max_art_height = int(height * 0.7)
+        art.thumbnail((max_art_width, max_art_height), Image.LANCZOS)
+        art_x = (width - art.width) // 2
+        art_y = 60
+        img.paste(art, (art_x, art_y))
+
+        # Text box at bottom following the Arabic layout guide
+        font = _get_arabic_font(40, weight="regular")
+        _draw_story_text_box(
+            draw,
+            width,
+            height,
+            text=text,
+            font=font,
+            bottom_margin=30,
+            horizontal_margin=40,
+            padding_x=26,
+            padding_y=20,
+        )
+
         # Hand-drawn frame effect (thick border)
         border_w = 20
-        draw.rectangle([border_w//2, border_w//2, width-border_w//2, height-border_w//2], outline=(120, 120, 120), width=border_w)
-        
+        draw.rectangle(
+            [border_w // 2, border_w // 2, width - border_w // 2, height - border_w // 2],
+            outline=(120, 120, 120),
+            width=border_w,
+        )
+
         img.save(output_path)
         return output_path
     except Exception as e:

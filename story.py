@@ -1,6 +1,52 @@
+import json
+import os
+from typing import List, Dict
+
+
+def load_story(value: str, age_group: str, child_name: str) -> List[Dict]:
+    """
+    تحميل القصة من ملف JSON في مجلد stories_content/
+    
+    Args:
+        value:  القيمة الأخلاقية (الشجاعة، الصدق، التعاون، الاحترام)
+        age_group: الفئة العمرية ("1-2", "2-3", "3-4", "4-5")
+        child_name: اسم الطفل لاستبدال {child_name} في النصوص
+    
+    Returns:
+        قائمة الصفحات (dict لكل صفحة) مع استبدال {child_name} في النصوص.
+        كل عنصر يحتوي على الأقل على "prompt" و "text".
+    """
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    filename = os.path.join(base_dir, "stories_content", f"{value}.json")
+
+    if not os.path.exists(filename):
+        raise FileNotFoundError(f"Story file not found: {filename}")
+
+    try:
+        with open(filename, "r", encoding="utf-8") as f:
+            story_data = json.load(f)
+    except json.JSONDecodeError as e:
+        raise ValueError(f"Invalid JSON in file: {filename}: {e}") from e
+
+    if age_group not in story_data:
+        raise ValueError(f"Age group {age_group} not found in {filename}")
+
+    age_block = story_data[age_group]
+    pages = age_block.get("pages", [])
+
+    # استبدال {child_name} في النصوص (إن وجدت)
+    for page in pages:
+        text = page.get("text")
+        if isinstance(text, str):
+            page["text"] = text.replace("{child_name}", child_name)
+
+    return pages
+
+
 def generate_story(child_name, value, age_group):
     """
-    Generates a story based on child's name, moral value, and age group.
+    Generates a simple template story (النسخة القديمة).
+    ملاحظة: المنطق الأساسي الآن يعتمد على ملفات JSON عبر load_story.
     """
     # Normalize age group string if needed, e.g., "1-2" -> "1-2"
     
