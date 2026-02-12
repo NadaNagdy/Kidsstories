@@ -6,14 +6,12 @@ import logging
 import requests
 import base64
 import json
+import time  # <--- NEW: Added for delivery delays
 from messenger_api import send_text_message, send_quick_replies, send_file, send_image
-# Removed old 'story' import if it's no longer needed, or keep for legacy
-# from story import generate_story 
 from pdf_utils import create_pdf
 from openai_service import transform_photo_to_character, verify_payment_screenshot, generate_storybook_page, create_character_reference
 from payment_service import generate_payment_link, PAYMOB_API_KEY
 from image_utils import overlay_text_on_image, create_cover_page
-# NEW IMPORT: Import the StoryManager
 from story_manager import StoryManager
 
 # Configure Logging
@@ -30,7 +28,7 @@ INSTAPAY_HANDLE = os.getenv("INSTAPAY_HANDLE", "01060746538")
 
 # Startup Banner
 logger.info("=" * 60)
-logger.info("🚀 KIDS STORY BOT v6.0 - DYNAMIC STORY MANAGER INTEGRATION 🚀")
+logger.info("🚀 KIDS STORY BOT v6.1 - COVER & TIMING FIXES 🚀")
 logger.info("=" * 60)
 
 # Simple in-memory state management
@@ -160,6 +158,7 @@ def process_image_ai(sender_id, image_url):
     try:
         base64_image = download_image_as_base64(image_url)
         if base64_image:
+            # 1. Scrap Features for immediate feedback
             ai_photo_url = transform_photo_to_character(base64_image)
             if ai_photo_url:
                 user_state[sender_id]["ai_photo_url"] = ai_photo_url
@@ -201,7 +200,8 @@ def process_story_generation(sender_id, value, is_preview=False):
         photo_url = user_state[sender_id].get("photo_url")
         age_group = user_state[sender_id].get("age_group", "2-3")
         
-        # 1. Get Character Description from Photo
+        # 1. Get Character Description from Photo (CRITICAL STEP)
+        # This ensures the bot "scraps" the photo details for the story
         base64_image = download_image_as_base64(photo_url)
         if base64_image:
             char_desc = create_character_reference(base64_image, is_url=False)
@@ -262,6 +262,9 @@ def process_story_generation(sender_id, value, is_preview=False):
                     cover_path = create_cover_page(cover_ai_url, f"بطل الـ{value}", child_name, cover_temp_path)
                     if cover_path:
                         send_image(sender_id, cover_path)
+                        # --- FIX: WAIT FOR IMAGE DELIVERY ---
+                        time.sleep(3) 
+                        # ------------------------------------
                     elif is_preview: 
                         send_text_message(sender_id, cover_ai_url)
             except Exception as e:
