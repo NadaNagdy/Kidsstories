@@ -55,10 +55,10 @@ def generate_storybook_page(character_description, page_prompt, child_name=None)
         name_part = f"named {child_name}" if child_name else ""
         
         full_prompt = (
-            f"A high-quality 3D digital illustration in a modern animation style of a child {name_part}, described as: {character_description}. "
+            f"A high-quality 3D digital illustration in a classic Disney/Pixar animation style of a child {name_part}, described as: {character_description}. "
             f"The character is shown in this scene: {page_prompt}. "
-            f"The scene is illuminated by soft, cinematic lighting, creating a heartwarming and magical vibe. "
-            f"The colors are vibrant pastels, featuring soft textures and cinematic depth of field. "
+            f"The scene is illuminated by soft, cinematic lighting, creating a heartwarming and magical storybook vibe. "
+            f"The colors are vibrant yet sophisticated, featuring intricate textures, detailed backgrounds, and cinematic depth of field. "
             f"CRITICAL INSTRUCTIONS: "
             f"1. Keep the child with the SAME cloth and features, just change poses. "
             f"2. Keep the composition framed such that text can be placed inside the frame of the photo. "
