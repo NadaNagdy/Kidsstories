@@ -227,14 +227,21 @@ def process_story_generation(sender_id, value, is_preview=False):
             send_text_message(sender_id, "🖼️ جاري تجهيز الغلاف..." if is_preview else "🖼️ جاري تحضير الغلاف النهائي...")
             
             cover_prompt = (
-                f"A beautiful artistic cover illustration featuring the hero: {char_desc}. "
-                f"Style: Classic children's book illustration, soft watercolor and colored pencil textures, hand-drawn look, gentle pastel color palette, clean white background. "
-                f"COMPOSITION: The character is centered inside a soft, artistic circular frame. "
-                f"Leave clear white space at the very top for a title and at the very bottom for a name. "
-                f"The overall feel is heartwarming and nostalgic."
+                "Classic children's storybook watercolor cover illustration.\n"
+                "- Show the hero child from the character description standing proudly inside a large soft circular frame in the center.\n"
+                "- Keep a clean light background (white or very light pastel) with subtle watercolor texture.\n"
+                "- LEAVE clear empty space at the TOP for the Arabic title 'بطل الشجاعة' (or similar) – do NOT draw complex details there.\n"
+                "- LEAVE clear empty space at the BOTTOM for the child's name in Arabic – do NOT overcrowd this area.\n"
+                "- Add a subtle hand-drawn border/frame around the whole cover for a classic storybook look.\n"
+                "- Mood: warm, premium, heartwarming, suitable for ages 1–5."
             )
             try:
-                cover_ai_url = generate_storybook_page(char_desc, cover_prompt, child_name=child_name)
+                cover_ai_url = generate_storybook_page(
+                    char_desc,
+                    cover_prompt,
+                    child_name=child_name,
+                    is_cover=True,
+                )
                 if cover_ai_url:
                     from image_utils import create_cover_page
                     cover_path = create_cover_page(cover_ai_url, f"بطل الـ{value}", child_name, cover_temp_path)
@@ -268,7 +275,14 @@ def process_story_generation(sender_id, value, is_preview=False):
             send_text_message(sender_id, "📚 جاري إكمال باقي صفحات القصة...")
             for i, page in enumerate(pages):
                 send_text_message(sender_id, f"🎨 جاري رسم الصفحة {i+1} من {len(pages)}...")
-                ai_image_url = generate_storybook_page(char_desc, page["prompt"], child_name=child_name)
+                # Treat the very last page in the JSON as the FINAL reward / tips page
+                is_final_page = i == len(pages) - 1
+                ai_image_url = generate_storybook_page(
+                    char_desc,
+                    page["prompt"],
+                    child_name=child_name,
+                    is_final=is_final_page,
+                )
                 if ai_image_url:
                     page_text = page["text"].replace("{child_name}", child_name)
                     temp_img_path = f"/tmp/page_{sender_id}_{i}.png"

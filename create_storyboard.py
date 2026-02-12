@@ -54,7 +54,7 @@ def create_storyboard(child_name="بطلنا", value="الشجاعة", photo_pat
 
     for i, scene in enumerate(scenes, 2):
         print(f"Generating Panel {i}...")
-        img_url = generate_storybook_page(character_desc, scene['prompt'])
+        img_url = generate_storybook_page(character_desc, scene["prompt"])
         if img_url:
             p_path = f"storyboard_output/panel_{i}.png"
             create_story_panel(img_url, scene['text'], p_path)
