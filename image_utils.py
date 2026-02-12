@@ -11,11 +11,21 @@ from bidi.algorithm import get_display
 # ---------------------------------------------------------------------------
 
 def _prepare_arabic_text(text: str) -> str:
+    """تحضير النص العربي مع دعم كامل للحروف المركبة والروابط (مثل لا)"""
     if not text: return ""
-    reshaped = arabic_reshaper.reshape(text)
-    return get_display(reshaped)
+    
+    # إعدادات متقدمة للمشكل (Reshaper) لضمان عدم سقوط أي حرف
+    configuration = {
+        'delete_harakat': False,      # الحفاظ على التشكيل إن وجد
+        'support_ligatures': True,     # دعم الحروف المركبة مثل "لا"
+        'arabic': True
+    }
+    reshaper = arabic_reshaper.ArabicReshaper(configuration=configuration)
+    reshaped_text = reshaper.reshape(text)
+    return get_display(reshaped_text)
 
 def _wrap_arabic_text(draw: ImageDraw.ImageDraw, text: str, font: ImageFont.FreeTypeFont, max_width: int):
+    """تقسيم النص العربي إلى أسطر مع الحفاظ على التنسيق"""
     words = text.split()
     if not words: return []
     lines, current = [], ""
@@ -36,14 +46,12 @@ def _get_arabic_font(size: int, weight: str = "bold") -> ImageFont.FreeTypeFont:
     base_dir = os.path.dirname(os.path.abspath(__file__))
     fonts_dir = os.path.join(base_dir, "fonts")
     
-    # نركز على Cairo-Bold لأنه الأوضح في الطباعة
     suffix = "-Bold.ttf" if weight.lower() == "bold" else "-Regular.ttf"
     font_path = os.path.join(fonts_dir, f"Cairo{suffix}")
 
     if os.path.exists(font_path):
         return ImageFont.truetype(font_path, size)
     
-    # محاولة بديلة لخط Almarai
     alt_path = os.path.join(fonts_dir, f"Almarai{suffix}")
     if os.path.exists(alt_path):
         return ImageFont.truetype(alt_path, size)
@@ -67,56 +75,54 @@ def get_image_source(image_input):
     return None
 
 def create_cover_page(image_url, top_text, bottom_text, output_path):
-    """إنشاء غلاف احترافي بخطوط حادة وواضحة جداً"""
+    """إنشاء غلاف احترافي مع معالجة ذكية للخطوط لتبدو حادة وغير ممسوحة"""
     try:
         width, height = 1024, 1024
         img = Image.new('RGB', (width, height), (255, 255, 255))
         draw = ImageDraw.Draw(img)
         
-        # أحجام ضخمة لضمان الوضوح
         title_font = _get_arabic_font(130, weight="bold")
         name_font = _get_arabic_font(115, weight="bold")
 
-        # 1. العنوان العلوي (بطل الاحترام) - مع طبقة ظل لتوضيح الحواف
+        # 1. العنوان العلوي (بطل القيمة) - استخدام Stroke للوضوح العالي
         reshaped_top = _prepare_arabic_text(top_text)
         tw = draw.textbbox((0, 0), reshaped_top, font=title_font)[2]
         tx, ty = (width - tw) // 2, 70
         
-        # طبقة الظل الخفيف (توهج بسيط)
-        draw.text((tx+2, ty+2), reshaped_top, font=title_font, fill=(210, 210, 210))
-        # النص الأساسي (بني داكن جداً للوضوح)
-        draw.text((tx, ty), reshaped_top, font=title_font, fill=(45, 30, 20))
+        # إضافة حد خارجي (Stroke) بسيط يجعل الخط حاداً جداً
+        draw.text((tx, ty), reshaped_top, font=title_font, fill=(45, 30, 20), 
+                  stroke_width=2, stroke_fill=(45, 30, 20))
 
         # 2. الصورة (مرتبطة بالذكاء الاصطناعي - نظيفة وبدون نصوص)
         art_source = get_image_source(image_url)
         if art_source:
             art = art_source.convert("RGBA")
-            art = art.resize((650, 650), Image.LANCZOS)
-            mask = Image.new('L', (650, 650), 0)
-            ImageDraw.Draw(mask).ellipse((0, 0, 650, 650), fill=255)
-            img.paste(art, ((width - 650) // 2, 215), mask=mask)
+            art = art.resize((660, 660), Image.LANCZOS)
+            mask = Image.new('L', (660, 660), 0)
+            ImageDraw.Draw(mask).ellipse((0, 0, 660, 660), fill=255)
+            img.paste(art, ((width - 660) // 2, 220), mask=mask)
 
-        # 3. اسم الطفل السفلي (محمد) - تأثير "البروز" الاحترافي
+        # 3. اسم الطفل السفلي (تأثير Glow + Stroke)
         reshaped_name = _prepare_arabic_text(bottom_text)
         nw = draw.textbbox((0, 0), reshaped_name, font=name_font)[2]
-        nx, ny = (width - nw) // 2, 860
+        nx, ny = (width - nw) // 2, 865
         
-        # رسم 4 طبقات ظل (Glow) بلون كريمي فاتح جداً خلف الاسم
-        glow_color = (245, 245, 245)
-        for off in [(-3,-3), (3,-3), (-3,3), (3,3), (0,4)]:
-            draw.text((nx+off[0], ny+off[1]), reshaped_name, font=name_font, fill=glow_color)
+        # رسم توهج خلفي (Glow)
+        for off in [(-3,-3), (3,-3), (-3,3), (3,3)]:
+            draw.text((nx+off[0], ny+off[1]), reshaped_name, font=name_font, fill=(245, 245, 245))
         
-        # النص الأساسي
-        draw.text((nx, ny), reshaped_name, font=name_font, fill=(60, 40, 30))
+        # النص الأساسي مع Stroke خفيف
+        draw.text((nx, ny), reshaped_name, font=name_font, fill=(60, 40, 30),
+                  stroke_width=1, stroke_fill=(60, 40, 30))
 
-        img.save(output_path, quality=100) # حفظ بأعلى جودة
+        img.save(output_path, quality=100, subsampling=0) 
         return output_path
     except Exception as e:
         print(f"Cover Error: {e}")
         return None
 
 def overlay_text_on_image(image_url, text, output_path):
-    """دمج صفحات القصة بنص عربي واضح داخل صندوق ناعم"""
+    """دمج صفحات القصة بنص عربي واضح داخل صندوق ناعم وبخط عريض"""
     try:
         width, height = 1024, 1024
         img = Image.new("RGB", (width, height), (255, 255, 255))
@@ -125,21 +131,23 @@ def overlay_text_on_image(image_url, text, output_path):
         art_source = get_image_source(image_url)
         if art_source:
             art = art_source.convert("RGB")
-            art.thumbnail((920, 750), Image.LANCZOS)
-            img.paste(art, ((width - art.width) // 2, 30))
+            art.thumbnail((940, 780), Image.LANCZOS)
+            img.paste(art, ((width - art.width) // 2, 35))
 
-        font = _get_arabic_font(52, weight="bold")
+        # استخدام حجم خط كبير (60) لضمان سهولة القراءة
+        font = _get_arabic_font(60, weight="bold")
         _draw_story_text_box(draw, width, height, text, font)
         
-        img.save(output_path, quality=95)
+        img.save(output_path, quality=95, subsampling=0)
         return output_path
     except Exception as e:
         print(f"Page Error: {e}")
         return None
 
 def _draw_story_text_box(draw, panel_width, panel_height, text, font):
+    """رسم صندوق النص بنمط 'كريمي' وحواف دائرية ونصوص حادة"""
     horizontal_margin = 60
-    padding_x, padding_y = 40, 35
+    padding_x, padding_y = 45, 40
     box_width = panel_width - 2 * horizontal_margin
     lines = _wrap_arabic_text(draw, text, font, box_width - 2 * padding_x)
     if not lines: return
@@ -149,14 +157,16 @@ def _draw_story_text_box(draw, panel_width, panel_height, text, font):
     box_height = int((line_height * 1.7 * len(lines)) + 2 * padding_y)
     box_top = (panel_height - 50) - box_height
 
-    # خلفية بيضاء لؤلؤية ناعمة جداً
+    # رسم خلفية الصندوق
     draw.rounded_rectangle(
         [horizontal_margin, box_top, horizontal_margin + box_width, panel_height - 50],
-        radius=35, fill=(255, 255, 252)
+        radius=35, fill=(255, 255, 254)
     )
 
     current_y = box_top + padding_y
     for line in lines:
         line_w = draw.textbbox((0, 0), line, font=font)[2] - draw.textbbox((0, 0), line, font=font)[0]
-        draw.text((horizontal_margin + box_width - padding_x - line_w, current_y), line, font=font, fill=(40, 30, 20))
+        # كتابة النص مع Stroke بسيط لضمان عدم اختفاء أي حرف في الطباعة
+        draw.text((horizontal_margin + box_width - padding_x - line_w, current_y), 
+                  line, font=font, fill=(40, 30, 20), stroke_width=1, stroke_fill=(40, 30, 20))
         current_y += line_height * 1.7
