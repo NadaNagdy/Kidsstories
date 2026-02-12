@@ -12,32 +12,8 @@
                 "teaching_moment": "Introducing the goal - building something big"
             },
             {
-                "page_number": 2,
-                "prompt": "Pixar 3D animation style, same toddler character carefully placing a red block on a colorful play mat, teddy bear reaching with its paw to place a yellow block on top, both characters focused and smiling, teamwork energy, bright cheerful room, 'We Are a Team!' banner in background, dynamic composition showing cooperation",
-                "text": "واحد ليا.. وواحد ليك. إحنا فريق!",
-                "english": "One for me... one for you. We're a team!",
-                "teaching_moment": "Taking turns and sharing"
-            },
-            {
-                "page_number": 3,
-                "prompt": "Pixar 3D animation style, medium shot of colorful block tower growing to 6-7 blocks tall, toddler character and teddy bear both holding blocks with excited expressions, reaching up together, motion lines showing building action, vibrant rainbow-colored blocks, joyful energy, golden hour lighting",
-                "text": "سوا.. سوا.. البرج بقى عالي!",
-                "english": "Together... together... the tower got so tall!",
-                "teaching_moment": "Working together achieves more"
-            },
-            {
-                "page_number": 4,
-                "prompt": "Pixar 3D animation style, dramatic moment of colorful blocks tumbling down in mid-air with motion blur, toddler character and teddy bear both laughing with mouths wide open showing pure joy, hands raised in surprise, 'BOOM!' comic-style text effect with sparkles, blocks scattered around, warm lighting, no sadness - only happy surprise",
-                "text": "بوم! وقع؟ مش مهم.. يلا نبني تاني سوا.",
-                "english": "Boom! It fell? No problem... let's build again together!",
-                "teaching_moment": "Resilience - trying again after setbacks"
-            },
-            {
-                "page_number": 5,
-                "prompt": "Pixar 3D animation style, heartwarming scene of toddler character giving teddy bear a big warm hug, both with eyes closed and happy smiles, successful tall tower of 10+ colorful blocks standing proudly in background, golden sunset light streaming through window, heart shapes floating around them, emotional and satisfying conclusion",
-                "text": "التعاون حلو.. شكراً يا صاحبي!",
-                "english": "Cooperation is wonderful... thank you my friend!",
-                "teaching_moment": "Gratitude and friendship"
+                "prompt": "Professional Disney Pixar illustration style, colorful stars and crowns, parents reading to a happy child, peaceful and attractive background, soft lighting",
+                "text": "🌟 صفحة المكافآت والنصائح للأهل 🌟\n\n👑 نظام النجوم والملصقات:\n⭐ نجمة الكلام الحلو\n💫 نجمة الصبر\n💖 نجمة الطيبة\n👑 تاج البطل المؤدب\n🌟 نجمة المساعدة\n\n💡 نصائح للأهل:\n✓ اقرا القصة ببطء وبتعبير واضح\n✓ خلي طفلك يشارك في الأصوات والحركات\n✓ اسأل أسئلة أثناء القراءة\n✓ اربط القصة بمواقف حقيقية\n✓ كافئ السلوك الإيجابي بالنجوم\n✓ كرر القصص المفضلة - التكرار بيعلم!\n\n🎭 عناصر تفاعلية:\n🔊 أصوات: قرمشة، مية، تصفيق، أصوات حيوانات\n✋ حركات: عد على صوابعك، صفق، احضن، ابتسم\n\n💝 كل ما طفلك يعمل سلوك حلو، ادّيله نجمة!\nلما يجمع ٥ نجوم، يستحق التاج! 👑"
             }
         ]
     },
@@ -80,6 +56,14 @@
                 "text": "تراااااخ! الجزرة طلعت. جدو قال: شكراً يا {child_name}! لولا تعاونك ماكانتش طلعت!",
                 "english": "PLOP! The carrot came out! Grandpa said: Thank you {child_name}! Without your cooperation, it wouldn't have come out!",
                 "teaching_moment": "Success through teamwork, recognition and gratitude"
+            },
+            {
+                "prompt": "Professional Disney Pixar illustration style, child smiling warmly, happy moral conclusion, bright sunshine",
+                "text": "الدرس النهاردة هو إن قلبنا بيكبر لما بنعمل الصح! 🌟"
+            },
+            {
+                "prompt": "Professional Disney Pixar illustration style, magical reward certificate, golden stars and hearts, child and a cute rabbit together celebrate, festive atmosphere",
+                "text": "🎉 مبروك! أتممت قصة الكلمات السحرية! 🎉\n\n✨ الكلمات السحرية اللي اتعلمناها:\n💛 من فضلك\n💚 شكراً\n💙 العفو\n\n🌟 نظام المكافآت:\n⭐ نجمة الكلام الحلو - لما تقول 'من فضلك'\n💫 نجمة الشكر - لما تقول 'شكراً'\n💖 نجمة الطيبة - لما تساعد حد\n👑 تاج البطل المؤدب - لما تجمع ٥ نجوم\n🌟 نجمة المساعدة - لما تشارك ألعابك\n\n📚 نصائح للأهل:\n✓ اقرا القصة ببطء وبتعبير واضح\n✓ خلي طفلك يشارك في الأصوات والحركات\n✓ اسأل أسئلة أثناء القراءة: 'إيه الكلمة السحرية؟'\n✓ اربط القصة بمواقف حقيقية في البيت\n✓ كافئ السلوك الإيجابي بالنجوم فوراً\n✓ كرر القصص المفضلة - التكرار بيعلم!\n✓ امدح طفلك لما يستخدم الكلمات السحرية\n\n🎵 غني الأغنية كل يوم:\n'من فضلك و شكراً... كلمات سحرية!\nنقولها كل يوم... ونبقى مؤدبين!'\n\n💝 تحدي الأسبوع: \nاستخدم الكلمات السحرية ١٠ مرات كل يوم!"
             }
         ]
     },
@@ -122,6 +106,14 @@
                 "text": "بطلنا قال: شكراً يا فريق التعاون! إيد لوحدها متسقفش، بس إيدينا سوا بتفتح المستحيل.",
                 "english": "Our hero said: Thank you cooperation team! One hand can't clap alone, but our hands together can open the impossible!",
                 "teaching_moment": "Wisdom - unity makes impossible things possible"
+            },
+            {
+                "prompt": "Professional Disney Pixar illustration style, child smiling warmly, happy moral conclusion, bright sunshine",
+                "text": "الدرس النهاردة هو إن قلبنا بيكبر لما بنعمل الصح! 🌟"
+            },
+            {
+                "prompt": "Professional Disney Pixar illustration style, superhero theme, child wearing a patience cape, magical 1-2-3 numbers visible, other children cheering in background",
+                "text": "🦸 أنت بطل الصبر الخارق! 🦸\n\n⏰ اتعلمت تنتظر دورك زي الأبطال!\n\n💪 قوتك الخارقة:\n1️⃣ الصبر - تعرف تستنى\n2️⃣ الاحترام - تحترم أصحابك\n3️⃣ التحكم في النفس - ماتتعجلش\n\n🏆 نظام المكافآت:\n⭐ نجمة الكلام الحلو - 'من فضلك' و 'شكراً'\n💫 نجمة الصبر - لما تستنى دورك\n💖 نجمة الطيبة - لما تساعد حد\n👑 تاج بطل الصبر - لما تجمع ٥ نجوم\n🌟 نجمة المساعدة - لما تشارك\n\n🎯 تمرين العد السحري:\nلما تحس إنك مستعجل، عد:\nواحد... اتنين... تلاتة... وتنفس!\n\n💡 نصائح للأهل:\n✓ اقرا القصة ببطء وبتعبير واضح\n✓ خلي طفلك يشارك في الأصوات والحركات\n✓ اسأل أسئلة: 'ليه بطلنا استنى؟'\n✓ اربط القصة بمواقف حقيقية (الصف، السوبر ماركت)\n✓ كافئ السلوك الإيجابي بالنجوم\n✓ كرر القصص المفضلة - التكرار بيعلم!\n✓ مارس لعبة 'الصف' بالعرايس في البيت\n\n🎭 أنشطة تفاعلية:\n🔊 أصوات: قرمشة، مية، تصفيق\n✋ حركات: عد على صوابعك ١-٢-٣، صفق، احضن\n🎵 غني: 'واحد اتنين تلاتة... أنا صبور!'\n\n📊 جدول النجوم الأسبوعي:\nكل يوم طفلك ينتظر دوره، حط نجمة!\n⭐⭐⭐⭐⭐ = تاج بطل الصبر! 👑"
             }
         ]
     },
@@ -164,6 +156,14 @@
                 "text": "في الآخر، الحجرة طلعت شوربة حقيقية تكفي الكل! بطلنا قال: شفتوا؟ التعاون خلى الحجرة تبقى أحلى عشاء في العالم.",
                 "english": "In the end, the stone became real soup that was enough for everyone! Our hero said: See? Cooperation made the stone become the best dinner in the world!",
                 "teaching_moment": "Collective effort creates abundance and magic"
+            },
+            {
+                "prompt": "Professional Disney Pixar illustration style, child smiling warmly, happy moral conclusion, bright sunshine",
+                "text": "الدرس النهاردة هو إن قلبنا بيكبر لما بنعمل الصح! 🌟"
+            },
+            {
+                "prompt": "Professional Disney Pixar illustration style, nature theme, child and a beetle are friends, kindness certificate, rainbow and hearts, achievement board",
+                "text": "💎 أنت بطل القلب الطيب! 💎\n\n🌟 الدرس العظيم:\n'اللي تعمله من خير، هييجي لك أضعاف!'\n\n🐞 اتعلمت:\n✓ الاحترام لكل المخلوقات (كبيرة وصغيرة)\n✓ اللطف والطيبة\n✓ المساعدة بترجع لك\n✓ الأصدقاء الحقيقيين بيفتكروا الجميل\n\n🏆 نظام المكافآت الكامل:\n⭐ نجمة الكلام الحلو - للأدب\n💫 نجمة الصبر - للانتظار\n💖 نجمة الطيبة - للمساعدة\n💚 نجمة الرحمة - للرفق بالحيوانات\n👑 تاج البطل المؤدب - ٥ نجوم\n💎 جوهرة القلب الطيب - للعمل الخيّر\n🌟 نجمة المساعدة - لمساعدة المحتاجين\n\n🌈 تحدي الطيبة:\n□ ساعد حد محتاج اليوم\n□ كن لطيف مع الحيوانات\n□ شارك ألعابك\n□ قول كلمة حلوة لصاحبك\n□ ساعد ماما أو بابا\n\n💡 نصائح مهمة للأهل:\n✓ اقرا القصة ببطء وبتعبير واضح\n✓ خلي طفلك يشارك في الأصوات والحركات\n✓ اسأل أسئلة عميقة: 'ليه الخنفساء ساعدت بطلنا؟'\n✓ اربط القصة بمواقف حقيقية في الحياة\n✓ كافئ السلوك الإيجابي بالنجوم فوراً\n✓ كرر القصص المفضلة - التكرار بيعلم!\n✓ اطلع مع طفلك للطبيعة وراقبوا الحشرات\n✓ علّم طفلك الرفق بالحيوانات الصغيرة\n\n🎨 أنشطة ممتعة:\n🔊 أصوات: قرمشة، مية، تصفيق، أصوات حيوانات\n✋ حركات: عد النقط على الخنفساء، صفق، احضن\n🎵 غني: 'خنفساء صغيرة... قلب بطلنا كبير!'\n🖍️ ارسم: خنفساء بنقط ملونة\n🌳 استكشف: اطلع الجنينة ودور على حشرات\n\n❓ أسئلة للمناقشة:\n• إيه اللي بطلنا عمله للخنفساء؟\n• ليه الخنفساء ساعدته؟\n• مين كمان محتاج مساعدتك؟\n• إزاي ممكن تكون طيب كل يوم؟\n\n💝 رسالة خاصة:\nكل عمل طيب - مهما كان صغير - بيفرق في الدنيا!\nكن دايماً طيب القلب زي بطلنا! 🌟"
             }
         ]
     },
