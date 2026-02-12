@@ -411,21 +411,16 @@ def process_story_generation(sender_id, value, is_preview=False):
 
         # If not preview, retrieve existing images (mock logic for now since tmp clears)
         # In a real app, you'd store these in S3/Cloudinary.
-        # Check if page 0 exists from preview step
-        page_0_path = f"/tmp/page_{sender_id}_0.png"
-        if os.path.exists(page_0_path):
-            generated_images.insert(0, page_0_path)
             
-        # Also need to add cover if it exists (assuming it was made during preview or persistent)
+        # Add cover to the start of the list if it exists
         cover_path = f"/tmp/cover_{sender_id}.png"
         if os.path.exists(cover_path):
-            # Check if cover is already in list (it might be added by previous cover logic if I didn't change it)
-            # The previous cover logic (lines 249-262) runs every time process_story_generation is called?
-            # Wait, line 249-262 is BEFORE this loop.
-            # I should wrap 249-262 in `if is_preview:` or handle it carefully.
-            # Actually, let's just make sure we don't duplicate.
             if cover_path not in generated_images:
                 generated_images.insert(0, cover_path)
+        
+        # Deduplicate to be safe
+        seen = set()
+        generated_images = [x for x in generated_images if not (x in seen or seen.add(x))]
         
         if not generated_images:
             send_text_message(sender_id, "عذراً، حدث خطأ أثناء إنشاء صفحات القصة.")
