@@ -44,7 +44,56 @@ def create_character_reference(image_data, is_url=True):
         return response.choices[0].message.content
     except Exception as e:
         print(f"Error creating character reference: {e}")
-        return "A cute child character, Pixar style"
+        return "A cute child character, classic children's book illustration style"
+
+def verify_payment_screenshot(image_data, target_handle):
+    """
+    Uses vision to check if the target_handle is visible in the payment screenshot.
+    """
+    try:
+        url = "https://openrouter.ai/api/v1/chat/completions"
+        headers = {
+            "Authorization": f"Bearer {api_key}",
+            "HTTP-Referer": "https://kidsstories.railway.app",
+            "X-Title": "Kids Story Bot",
+            "Content-Type": "application/json"
+        }
+        
+        prompt = (
+            f"This is a screenshot of a mobile payment or bank transfer. "
+            f"Can you see the number or handle '{target_handle}' as the recipient? "
+            f"If you see it, reply with exactly 'YES'. If not, reply with 'NO'. "
+            f"Be precise. Do not include any other text."
+        )
+        
+        payload = {
+            "model": "google/gemini-2.0-flash-001",
+            "messages": [
+                {
+                    "role": "user",
+                    "content": [
+                        {"type": "text", "text": prompt},
+                        {
+                            "type": "image_url",
+                            "image_url": {
+                                "url": f"data:image/jpeg;base64,{image_data}"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+        
+        response = requests.post(url, headers=headers, json=payload, timeout=20)
+        result = response.json()
+        
+        if result and "choices" in result:
+            answer = result["choices"][0]["message"]["content"].strip().upper()
+            return "YES" in answer
+            
+    except Exception as e:
+        print(f"Error in verify_payment_screenshot: {e}")
+    return False
 
 def generate_storybook_page(character_description, page_prompt, child_name=None):
     """
@@ -55,10 +104,12 @@ def generate_storybook_page(character_description, page_prompt, child_name=None)
         name_part = f"named {child_name}" if child_name else ""
         
         full_prompt = (
-            f"A high-quality 3D digital illustration in a modern animation style of a child {name_part}, described as: {character_description}. "
+            f"A high-quality classic children's book illustration of a child {name_part}, described as: {character_description}. "
+            f"Style: Soft watercolor and colored pencil textures, gentle hand-drawn look, pastel color palette, clean white background, reminiscent of nursery storybooks. "
+            f"COMPOSITION: The scene MUST be framed centrally such that the character and action are well-contained, allowing for text to be placed clearly inside the frame of the image (e.g. at the bottom or top). "
             f"The character is shown in this scene: {page_prompt}. "
-            f"The scene is illuminated by soft, cinematic lighting, creating a heartwarming and magical vibe. "
-            f"The colors are vibrant pastels, featuring soft textures and cinematic depth of field. "
+            f"The scene is illuminated by soft, natural lighting, creating a heartwarming and nostalgic vibe. "
+            f"The colors are gentle, with soft outlines and simple shapes. "
             f"CRITICAL INSTRUCTIONS: "
             f"1. Keep the child with the SAME cloth and features, just change poses. "
             f"2. Keep the composition framed such that text can be placed inside the frame of the photo. "

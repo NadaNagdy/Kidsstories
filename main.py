@@ -8,7 +8,7 @@ import base64
 from messenger_api import send_text_message, send_quick_replies, send_file, send_image
 from story import generate_story
 from pdf_utils import create_pdf
-from openai_service import transform_photo_to_character
+from openai_service import transform_photo_to_character, verify_payment_screenshot
 from payment_service import generate_payment_link, PAYMOB_API_KEY
 
 # Configure Logging
@@ -152,13 +152,48 @@ def download_image_as_base64(url):
         return None
 
 def handle_image_reception(sender_id, image_url, background_tasks):
-    user_state[sender_id]["step"] = "processing_ai"
-    user_state[sender_id]["photo_url"] = image_url
+    current_step = user_state.get(sender_id, {}).get("step")
     
-    send_text_message(sender_id, "🎨 جاري تحويل صورتك لشخصية كرتونية رائعة... لحظات!")
-    
-    # Move heavy processing to background to prevent Messenger timeout
-    background_tasks.add_task(process_image_ai, sender_id, image_url)
+    if current_step == "waiting_for_payment":
+        send_text_message(sender_id, "🔍 جاري التحقق من صورة التحويل... لحظات!")
+        background_tasks.add_task(process_payment_verification, sender_id, image_url)
+    else:
+        user_state[sender_id]["step"] = "processing_ai"
+        user_state[sender_id]["photo_url"] = image_url
+        send_text_message(sender_id, "🎨 جاري تحويل صورتك لشخصية كرتونية رائعة... لحظات!")
+        background_tasks.add_task(process_image_ai, sender_id, image_url)
+
+def process_payment_verification(sender_id, image_url):
+    try:
+        base64_image = download_image_as_base64(image_url)
+        if base64_image:
+            is_valid = verify_payment_screenshot(base64_image, INSTAPAY_HANDLE)
+            if is_valid:
+                # Proceed to full story generation
+                from main import handle_payment_success # Local import to avoid circular dependency if any
+                import asyncio
+                # Since we are in a thread/process from background_tasks, we can just call it
+                # But handle_payment_success expects background_tasks? 
+                # Let's refactor handle_payment_success or call it directly.
+                # Actually, I'll just trigger the story generation here.
+                send_text_message(sender_id, "✅ تم التحقق من التحويل بنجاح! شكراً لك.")
+                send_text_message(sender_id, "🚀 جاري إكمال باقي صفحات القصة وتحضير الكتاب...")
+                
+                value = user_state[sender_id].get("selected_value")
+                if value:
+                    # We need a new background task or just run it?
+                    # Since we are already in a background task, we can call it.
+                    process_story_generation(sender_id, value, is_preview=False)
+                else:
+                    send_text_message(sender_id, "عذراً، حدث خطأ. الرجاء البدء من جديد.")
+            else:
+                send_text_message(sender_id, "❌ لم نتمكن من العثور على رقم التحويل الصحيح في الصورة. يرجى التأكد من إرسال صورة واضحة للتحويل (Screenshot) لـلـرقم/الحساب الصحيح.")
+                send_text_message(sender_id, "لو سمحت أرسلي صوره من التحويل مره اخري.. القصه بانتظارك! 😊")
+        else:
+            send_text_message(sender_id, "عذراً، فشل تحميل الصورة. يرجى المحاولة مرة أخرى.")
+    except Exception as e:
+        logger.error(f"Error in process_payment_verification: {e}")
+        send_text_message(sender_id, "عذراً، حدث خطأ أثناء التحقق من الصورة.")
 
 def process_image_ai(sender_id, image_url):
     try:
@@ -236,7 +271,7 @@ def process_story_generation(sender_id, value, is_preview=False):
         if base64_image:
             char_desc = create_character_reference(base64_image, is_url=False)
         else:
-            char_desc = "A cute child character, Pixar style"
+            char_desc = "A cute child character, classic children's book illustration style"
         
         # 2. Load story config from category-specific file
         try:
@@ -324,10 +359,9 @@ def process_story_generation(sender_id, value, is_preview=False):
                      f"💰 الدفع عبر إنستا باي (InstaPay):\n\n"
                      f"لإكمال القصة، يرجى تحويل مبلغ 25 جنيه على:\n"
                      f"✨ {target_payment} ✨\n\n"
-                     f"بعد التحويل، اضغطي على الزر أدناه لتأكيد الدفع 👇"
+                     f"بعد التحويل، لو سمحت أرسلي صوره من التحويل (Screenshot) هنا.. القصه بانتظارك! 👇"
                  )
                  send_text_message(sender_id, msg)
-                 send_quick_replies(sender_id, "هل قمتي بالتحويل؟", ["تم التحويل via InstaPay ✅"])
             
             return
 
