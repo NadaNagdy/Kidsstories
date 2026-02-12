@@ -1,225 +1,186 @@
 {
-    "1-2": {
-        "age_group": "1-2 years",
-        "learning_goals": [
-            "Turn-taking",
-            "Patience",
-            "Social awareness"
-        ],
-        "pages": [
-            {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, standing politely in front of a small colorful slide with numbered steps (1,2,3), a cute teddy bear already climbing the stairs, 'My Turn Next' expression, bright playground setting with other toys visible",
-                "text": "بطلنا المؤدب بيستنى دوره. واحد... اتنين... تلاتة! دبدوب الأول، وبطلنا هادي ومبسوط.",
-                "interactive_element": "Count with me! واحد... اتنين... تلاتة!",
-                "parent_tip": "Practice counting while waiting - this makes patience fun and educational!"
-            },
-            {
-                "prompt": "Professional Disney Pixar illustration style, child smiling warmly, happy moral conclusion, bright sunshine, peaceful bedroom setting",
-                "text": "بطلنا اتعلم درس جميل النهارده.. إن حب الناس ومساعدة الغير هما اللي بيخلونا أبطال حقيقيين! 🌟"
-            },
-            {
-                "prompt": "Professional Disney Pixar illustration style, child smiling warmly, happy moral conclusion, bright sunshine, peaceful bedroom setting",
-                "text": "بطلنا اتعلم درس جميل النهارده.. إن حب الناس ومساعدة الغير هما اللي بيخلونا أبطال حقيقيين! 🌟"
-            },
-            {
-                "prompt": "Professional Disney Pixar illustration style, child smiling warmly, happy moral conclusion, bright sunshine, peaceful bedroom setting",
-                "text": "بطلنا اتعلم درس جميل النهارده.. إن حب الناس ومساعدة الغير هما اللي بيخلونا أبطال حقيقيين! 🌟"
-            },
-            {
-                "prompt": "Professional Disney Pixar illustration style, child smiling warmly, happy moral conclusion, bright sunshine, peaceful bedroom setting",
-                "text": "بطلنا اتعلم درس جميل النهارده.. إن حب الناس ومساعدة الغير هما اللي بيخلونا أبطال حقيقيين! 🌟"
-            },
-            {
-                "prompt": "Professional Disney Pixar illustration style, colorful stars and crowns, parents reading to a happy child, peaceful and attractive background, soft lighting",
-                "text": "🌟 صفحة المكافآت والنصائح للأهل 🌟\n\n👑 نظام النجوم والملصقات:\n⭐ نجمة الكلام الحلو\n💫 نجمة الصبر\n💖 نجمة الطيبة\n👑 تاج البطل المؤدب\n🌟 نجمة المساعدة\n\n💡 نصائح للأهل:\n✓ اقرا القصة ببطء وبتعبير واضح\n✓ خلي طفلك يشارك في الأصوات والحركات\n✓ اسأل أسئلة أثناء القراءة\n✓ اربط القصة بمواقف حقيقية\n✓ كافئ السلوك الإيجابي بالنجوم\n✓ كرر القصص المفضلة - التكرار بيعلم!\n\n🎭 عناصر تفاعلية:\n🔊 أصوات: قرمشة، مية، تصفيق، أصوات حيوانات\n✋ حركات: عد على صوابعك، صفق، احضن، ابتسم\n\n💝 كل ما طفلك يعمل سلوك حلو، ادّيله نجمة!\nلما يجمع ٥ نجوم، يستحق التاج! 👑"
-            }
-        ],
-        "activity_suggestion": "لعبة الدور: خلي طفلك يلعب بالعرايس ويتدرب على الانتظار"
-    },
-    "2-3": {
-        "age_group": "2-3 years",
-        "learning_goals": [
-            "Magic words (please/thank you)",
-            "Asking politely",
-            "Sharing",
-            "Gratitude"
-        ],
-        "pages": [
-            {
-                "prompt": "Professional 3D Pixar style, a cute small rabbit sitting with a very sweet-looking orange carrot with sparkles around it, child character looking at the carrot with wide curious eyes and slight smile, magical forest setting with colorful flowers",
-                "text": "كان يا ما كان.. أرنوب صغنن معاه جزرة سكرة برتقالية ولمّاعة. {child_name} كان نفسه يدوق حتة عشان ريحتها جميلة أوي!",
-                "sound_effect": "🥕 صوت قرمشة الجزرة!",
-                "interactive_element": "شم ريحة الجزرة اللذيذة! (pretend to smell)"
-            },
-            {
-                "prompt": "Professional 3D Pixar style, child character standing politely in front of the rabbit, hand outstretched gently with palm up, respectful gesture, magic sparkles around the words 'من فضلك', warm friendly lighting",
-                "text": "{child_name} المؤدب مخدهاش بسرعة. وقف بأدب وقال الكلمة السحرية الأولى: 'ممكن يا أرنوب.. من فضلك؟' ✨",
-                "interactive_element": "قول معايا: من فضلك! 🌟",
-                "parent_tip": "Encourage your child to say the magic word before you give them things"
-            },
-            {
-                "prompt": "Professional 3D Pixar style, rabbit giving a big piece of the carrot to the happy child character, both smiling with twinkling eyes, hearts floating around them, friendly atmosphere with other small animals peeking from behind trees",
-                "text": "الأرنوب فرح أوي لما سمع الكلمة السحرية! قاله: 'طبعاً يا بطل! عشان إنت مؤدب زي القمر!' وإداه حتة كبيرة. 💚",
-                "interactive_element": "ابتسم زي الأرنوب! 😊"
-            },
-            {
-                "prompt": "Professional 3D Pixar style, child character eating carrot and nodding respectfully, looking at the rabbit with big grateful eyes, one hand on heart, golden glow around them both",
-                "text": "{child_name} أخدها بحب وقال الكلمة السحرية التانية: 'شكراً يا أرنوب الطيب!' الجزرة كانت لذيذة قوي! 😋",
-                "interactive_element": "قول معايا: شكراً! 💛",
-                "sound_effect": "يم يم يم!"
-            },
-            {
-                "prompt": "Professional 3D Pixar style, multiple forest animals (birds, squirrels, butterflies) clapping and cheering for the child character, child looks happy and respected with a golden star above their head, confetti in the air",
-                "text": "كل الحيوانات سقفت وغنت: 'يا سلام على {child_name}.. بيحترم أصحابه وكلامه حلو زي العسل! إنت بطل الكلام الحلو!' 🌟👏",
-                "interactive_element": "صفق معاهم! 👏👏👏",
-                "reward_sticker": "⭐ نجمة الكلام الحلو!"
-            },
-            {
-                "prompt": "Professional Disney Pixar illustration style, magical reward certificate, golden stars and hearts, child and a cute rabbit together celebrate, festive atmosphere",
-                "text": "🎉 مبروك! أتممت قصة الكلمات السحرية! 🎉\n\n✨ الكلمات السحرية اللي اتعلمناها:\n💛 من فضلك\n💚 شكراً\n💙 العفو\n\n🌟 نظام المكافآت:\n⭐ نجمة الكلام الحلو - لما تقول 'من فضلك'\n💫 نجمة الشكر - لما تقول 'شكراً'\n💖 نجمة الطيبة - لما تساعد حد\n👑 تاج البطل المؤدب - لما تجمع ٥ نجوم\n🌟 نجمة المساعدة - لما تشارك ألعابك\n\n📚 نصائح للأهل:\n✓ اقرا القصة ببطء وبتعبير واضح\n✓ خلي طفلك يشارك في الأصوات والحركات\n✓ اسأل أسئلة أثناء القراءة: 'إيه الكلمة السحرية؟'\n✓ اربط القصة بمواقف حقيقية في البيت\n✓ كافئ السلوك الإيجابي بالنجوم فوراً\n✓ كرر القصص المفضلة - التكرار بيعلم!\n✓ امدح طفلك لما يستخدم الكلمات السحرية\n\n🎵 غني الأغنية كل يوم:\n'من فضلك و شكراً... كلمات سحرية!\nنقولها كل يوم... ونبقى مؤدبين!'\n\n💝 تحدي الأسبوع: \nاستخدم الكلمات السحرية ١٠ مرات كل يوم!"
-            }
-        ],
-        "song": "من فضلك و شكراً... كلمات سحرية! 🎵\nنقولها كل يوم... ونبقى مؤدبين! 🎵",
-        "activity_suggestion": "لعبة الكلمات السحرية: كل ما طفلك يقول 'من فضلك' أو 'شكراً'، ادّيله نجمة!"
-    },
-    "3-4": {
-        "age_group": "3-4 years",
-        "learning_goals": [
-            "Waiting in line",
-            "Self-control",
-            "Respecting others' space",
-            "Turn-taking"
-        ],
-        "pages": [
-            {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, standing in a small colorful line at a bathroom sink, a little girl with pigtails is in front washing her hands with soap bubbles, delicious food smell visually shown as wavy lines from the kitchen, clock showing near dinner time",
-                "text": "بطلنا مستعجل وعاوز يغسل إيده بسرعة عشان الأكل ريحته حلوة ووقت العشا قرّب. بس في صف قدامه!",
-                "interactive_element": "شم ريحة الأكل اللذيذ! مممم! 🍲",
-                "emotion_label": "مستعجل بس صبور 💙"
-            },
-            {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, standing calmly with hands clasped together, counting numbers 1-2-3 visible in thought bubble, waiting for the girl to finish, no pushing, peaceful expression, superhero patience cape appearing behind him",
-                "text": "بطلنا وقف مكانه باحترام. عد في دماغه: واحد... اتنين... تلاتة. ماتعجلش ولا زعل. هو بطل الصبر الخارق! 🦸",
-                "interactive_element": "عد معايا: ١... ٢... ٣! 🔢",
-                "parent_tip": "Counting helps children manage impatience - make it a fun game!"
-            },
-            {
-                "prompt": "Professional 3D Pixar style, the little girl stepping aside with a big smile and waving, saying 'Go ahead' with speech bubble, child character wearing a striped sweatshirt smiling and giving a thumbs up, sparkles between them showing mutual respect",
-                "text": "البنوتة خلصت وابتسمت وقالت: 'شكراً إنك استنيت وماتعجلتش!' بطلنا رد بابتسامة: 'العفو يا صديقتي الحلوة!' 💕",
-                "interactive_element": "قول 'العفو' وابتسم! 😊",
-                "reward_sticker": "⭐ نجمة الانتظار"
-            },
-            {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, washing hands thoroughly with lots of colorful soapy bubbles, singing bubbles with musical notes, careful and thorough, mirror showing happy reflection",
-                "text": "غسل إيده بالصابون وغنى أغنية الإيدين النضيفة! 🎵 'بالصابون والمية... إيدي هتبقى نقية!' 🧼✨",
-                "interactive_element": "غني معاه! 🎵 واعمل فقاقيع! 🫧",
-                "sound_effect": "صوت المية: شششش!"
-            },
-            {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt sitting at a colorful dinner table with yummy food, mother kissing child's forehead with hearts around, golden warm lighting, family members smiling in background",
-                "text": "ماما حضنته وباست جبينه وقالت: 'يا سلام على أخلاق الأبطال! إنت بطل الاحترام والصبر يا حبيب قلبي!' 💖👑",
-                "interactive_element": "خد حضن كبير! 🤗",
-                "reward_sticker": "👑 تاج بطل الصبر!"
-            },
-            {
-                "prompt": "Professional Disney Pixar illustration style, superhero theme, child wearing a patience cape, magical 1-2-3 numbers visible, other children cheering in background",
-                "text": "🦸 أنت بطل الصبر الخارق! 🦸\n\n⏰ اتعلمت تنتظر دورك زي الأبطال!\n\n💪 قوتك الخارقة:\n1️⃣ الصبر - تعرف تستنى\n2️⃣ الاحترام - تحترم أصحابك\n3️⃣ التحكم في النفس - ماتتعجلش\n\n🏆 نظام المكافآت:\n⭐ نجمة الكلام الحلو - 'من فضلك' و 'شكراً'\n💫 نجمة الصبر - لما تستنى دورك\n💖 نجمة الطيبة - لما تساعد حد\n👑 تاج بطل الصبر - لما تجمع ٥ نجوم\n🌟 نجمة المساعدة - لما تشارك\n\n🎯 تمرين العد السحري:\nلما تحس إنك مستعجل، عد:\nواحد... اتنين... تلاتة... وتنفس!\n\n💡 نصائح للأهل:\n✓ اقرا القصة ببطء وبتعبير واضح\n✓ خلي طفلك يشارك في الأصوات والحركات\n✓ اسأل أسئلة: 'ليه بطلنا استنى؟'\n✓ اربط القصة بمواقف حقيقية (الصف، السوبر ماركت)\n✓ كافئ السلوك الإيجابي بالنجوم\n✓ كرر القصص المفضلة - التكرار بيعلم!\n✓ مارس لعبة 'الصف' بالعرايس في البيت\n\n🎭 أنشطة تفاعلية:\n🔊 أصوات: قرمشة، مية، تصفيق\n✋ حركات: عد على صوابعك ١-٢-٣، صفق، احضن\n🎵 غني: 'واحد اتنين تلاتة... أنا صبور!'\n\n📊 جدول النجوم الأسبوعي:\nكل يوم طفلك ينتظر دوره، حط نجمة!\n⭐⭐⭐⭐⭐ = تاج بطل الصبر! 👑"
-            }
-        ],
-        "song": "واحد اتنين تلاتة... أنا صبور! 🎵\nمستني دوري... أنا مؤدب ومسرور! 🎵",
-        "activity_suggestion": "لعبة الصف: خلي طفلك يصف العرايس وينتظر دوره - امدحه لما يصبر!"
-    },
-    "4-5": {
-        "age_group": "4-5 years",
-        "learning_goals": [
-            "Kindness to all creatures",
-            "Cause and effect",
-            "Empathy",
-            "Gratitude returns"
-        ],
-        "moral_lesson": "الاحترام بيرجع لينا - اللي تعمله من خير هيرجع لك",
-        "pages": [
-            {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, kneeling down politely on a garden path to gently protect a tiny cute beetle on a green leaf, 'Friend of the Weak' golden text floating in air, macro-style garden setting with flowers and grass, gentle sunlight",
-                "text": "بطلنا كان بيلعب في الجنينة ولقى خنفساء صغننة ماشية في طريقه. كان ممكن يدوس عليها، بس قلبه الطيب قاله: 'لأ! دي كمان مخلوق لطيف!' وقف بحرص واحترمها وسابها تمشي بأمان. 🐞💚",
-                "interactive_element": "ابص للخنفساء الصغيرة! كام نقطة على ضهرها؟",
-                "discussion_prompt": "ليه بطلنا ماداسش على الخنفساء؟"
-            },
-            {
-                "prompt": "Professional 3D Pixar style, a tiny cute beetle on a leaf looking up at the large child character wearing a striped sweatshirt with big grateful eyes, child is smiling kindly down at beetle, tiny speech bubble with hearts and 'thank you' in Arabic, magical sparkles around them",
-                "text": "الخنفساء بصّت له بعيون صغيرة شكرت وقالت بصوت رقيق: 'شكراً يا بطل طيب القلب! هييجي يوم وأرد لك الجميل، وعد!' بطلنا ابتسم وقال: 'العفو يا صاحبتي الصغيرة! احنا أصدقاء دلوقتي!' 🌟",
-                "interactive_element": "لو كنت مكان الخنفساء، كنت هتقول إيه؟",
-                "emotion_label": "ممتن 💚"
-            },
-            {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, crawling on a colorful rug, looking with flashlight for a lost red toy car under a dark sofa, look of determination and focused search, toys scattered around, afternoon setting",
-                "text": "بعد يومين، بطلنا كان بيلعب وفجأة... أووه لأ! عربيته الحمرا المفضلة ضاعت! دوّر في كل حتة... فتش في الأوضة... بص تحت السرير... لكن تحت الكنبة كانت ضلمة قوي ومش شايف أي حاجة خالص! 😟🔦",
-                "interactive_element": "ساعد بطلنا يدور! فين العربية؟ 🚗",
-                "sound_effect": "صوت البحث: 'فين يا عربيتي؟'"
-            },
-            {
-                "prompt": "Professional 3D Pixar style, tiny magical glow-in-the-dark fireflies and the beetle with glowing spots leading the way under the dark sofa, glowing like tiny lanterns in blue and green colors, child character wearing a striped sweatshirt looking amazed with mouth open, toy car visible in the glow",
-                "text": "فجأة... بريق نور صغير ظهر! الخنفساء جابت أصحابها النورانيين (اليراعات الضويّة) ودخلوا كلهم تحت الكنبة زي مصابيح سحرية صغيرة ونوروا كل المكان لبطلنا! ✨💡🐛",
-                "interactive_element": "عد النور الصغيرة اللمّاعة! ١، ٢، ٣...",
-                "sound_effect": "صوت سحري: تينج تينج! ✨"
-            },
-            {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, happily holding a small red toy car high in the air with both hands, the beetle and shiny firefly insects are around him celebrating, warm celebratory garden/home scene with rainbow in background, golden hour lighting",
-                "text": "بطلنا لقى عربيته الحمرا وفرح فرحة كبيرة! حضن الخنفساء برفق وقال: 'شكراً يا أصحابي الأوفياء! إنتوا أحسن أصدقاء في الدنيا!' واتعلم درس مهم: 'اللي تعمله من خير، هييجي لك أضعاف! الاحترام بيرجع حب!' 💖🌈👑",
-                "interactive_element": "يالا نحتفل! صفق وارقص! 🎉",
-                "reward_sticker": "💎 جوهرة القلب الطيب!",
-                "discussion_prompt": "إيه الدرس اللي اتعلمناه من القصة دي؟"
-            },
-            {
-                "prompt": "Professional Disney Pixar illustration style, nature theme, child and a beetle are friends, kindness certificate, rainbow and hearts, achievement board",
-                "text": "💎 أنت بطل القلب الطيب! 💎\n\n🌟 الدرس العظيم:\n'اللي تعمله من خير، هييجي لك أضعاف!'\n\n🐞 اتعلمت:\n✓ الاحترام لكل المخلوقات (كبيرة وصغيرة)\n✓ اللطف والطيبة\n✓ المساعدة بترجع لك\n✓ الأصدقاء الحقيقيين بيفتكروا الجميل\n\n🏆 نظام المكافآت الكامل:\n⭐ نجمة الكلام الحلو - للأدب\n💫 نجمة الصبر - للانتظار\n💖 نجمة الطيبة - للمساعدة\n💚 نجمة الرحمة - للرفق بالحيوانات\n👑 تاج البطل المؤدب - ٥ نجوم\n💎 جوهرة القلب الطيب - للعمل الخيّر\n🌟 نجمة المساعدة - لمساعدة المحتاجين\n\n🌈 تحدي الطيبة:\n□ ساعد حد محتاج اليوم\n□ كن لطيف مع الحيوانات\n□ شارك ألعابك\n□ قول كلمة حلوة لصاحبك\n□ ساعد ماما أو بابا\n\n💡 نصائح مهمة للأهل:\n✓ اقرا القصة ببطء وبتعبير واضح\n✓ خلي طفلك يشارك في الأصوات والحركات\n✓ اسأل أسئلة عميقة: 'ليه الخنفساء ساعدت بطلنا؟'\n✓ اربط القصة بمواقف حقيقية في الحياة\n✓ كافئ السلوك الإيجابي بالنجوم فوراً\n✓ كرر القصص المفضلة - التكرار بيعلم!\n✓ اطلع مع طفلك للطبيعة وراقبوا الحشرات\n✓ علّم طفلك الرفق بالحيوانات الصغيرة\n\n🎨 أنشطة ممتعة:\n🔊 أصوات: قرمشة، مية، تصفيق، أصوات حيوانات\n✋ حركات: عد النقط على الخنفساء، صفق، احضن\n🎵 غني: 'خنفساء صغيرة... قلب بطلنا كبير!'\n🖍️ ارسم: خنفساء بنقط ملونة\n🌳 استكشف: اطلع الجنينة ودور على حشرات\n\n❓ أسئلة للمناقشة:\n• إيه اللي بطلنا عمله للخنفساء؟\n• ليه الخنفساء ساعدته؟\n• مين كمان محتاج مساعدتك؟\n• إزاي ممكن تكون طيب كل يوم؟\n\n💝 رسالة خاصة:\nكل عمل طيب - مهما كان صغير - بيفرق في الدنيا!\nكن دايماً طيب القلب زي بطلنا! 🌟"
-            }
-        ],
-        "song": "خنفساء صغيرة... قلب بطلنا كبير! 🎵\nساعدها امبارح... ساعدته النهارده... الخير بيرجع خير! 🎵",
-        "discussion_questions": [
-            "إيه اللي بطلنا عمله للخنفساء؟",
-            "الخنفساء ساعدته إزاي؟",
-            "لو كنت مكان بطلنا، كنت هتعمل إيه؟",
-            "مين كمان محتاج مساعدتنا؟"
-        ],
-        "activity_suggestion": "نشاط الطبيعة: اطلع مع طفلك الجنينة وابصوا على الحشرات الصغيرة - علّمه يحترمهم ويحميهم",
-        "extension_activity": "ارسم خنفساء ولونها! كام نقطة عاوز تحطلها؟ 🎨"
-    },
-    "bonus_features": {
-        "reward_system": {
-            "description": "نظام النجوم والملصقات",
-            "stickers": [
-                "⭐ نجمة الكلام الحلو",
-                "💫 نجمة الصبر",
-                "💖 نجمة الطيبة",
-                "👑 تاج البطل المؤدب",
-                "🌟 نجمة المساعدة"
-            ]
-        },
-        "parent_guide": {
-            "tips": [
-                "اقرا القصة ببطء وبتعبير واضح",
-                "خلي طفلك يشارك في الأصوات والحركات",
-                "اسأل أسئلة أثناء القراءة",
-                "اربط القصة بمواقف حقيقية",
-                "كافئ السلوك الإيجابي بالنجوم",
-                "كرر القصص المفضلة - التكرار بيعلم!"
-            ]
-        },
-        "interactive_elements": {
-            "sounds": [
-                "قرمشة",
-                "مية",
-                "تصفيق",
-                "أصوات حيوانات"
-            ],
-            "movements": [
-                "عد على صوابعك",
-                "صفق",
-                "احضن",
-                "ابتسم"
-            ],
-            "questions": "أسئلة تفاعلية في كل صفحة"
-        }
-    }
+  "1-2": {
+    "age_group": "1-2 years",
+    "learning_goals": [
+      "Turn-taking",
+      "Patience",
+      "Social awareness"
+    ],
+    "pages": [
+      {
+        "page_number": 1,
+        "scene_description": "child standing politely at the bottom of a small playground slide, looking up at a teddy bear who is climbing the steps",
+        "emotion": "patient and happy",
+        "text": "بطلنا المؤدب بيستنى دوره. واحد... اتنين... تلاتة! دبدوب الأول."
+      },
+      {
+        "page_number": 2,
+        "scene_description": "teddy bear sliding down the slide, child clapping hands and smiling, waiting near the steps",
+        "emotion": "excited",
+        "text": "دبدوب نزل! شاطر يا دبدوب. دلوقتي دور مين؟"
+      },
+      {
+        "page_number": 3,
+        "scene_description": "child climbing the steps of the slide carefully, holding the handrails, looking up",
+        "emotion": "brave and focused",
+        "text": "دلوقتي دور بطلنا! واحد.. اتنين.. تلاتة. أنا طالع فوق!"
+      },
+      {
+        "page_number": 4,
+        "scene_description": "child sliding down the slide with arms up in the air, hair blowing in wind, big smile",
+        "emotion": "joyful",
+        "text": "وووووي! الزحليقة حلوة أوي لما بنستنى دورنا."
+      },
+      {
+        "page_number": 5,
+        "scene_description": "child and teddy bear sitting together at bottom of slide, high-fiving or hugging",
+        "emotion": "proud and friendly",
+        "text": "أنا ودبدوب أصحاب شاطرين. كل واحد في دوره!"
+      },
+      {
+        "page_number": 6,
+        "scene_description": "reward page with golden stars, smiling sun, and the child wearing a 'Polite Hero' sash",
+        "emotion": "celebratory",
+        "text": "🌟 مبروك يا بطل الاحترام! 🌟\n\nتعلمنا اليوم:\n✓ نستنى دورنا\n✓ نلعب مع أصحابنا بنظام"
+      }
+    ]
+  },
+  "2-3": {
+    "age_group": "2-3 years",
+    "learning_goals": [
+      "Magic words",
+      "Sharing",
+      "Gratitude"
+    ],
+    "pages": [
+      {
+        "page_number": 1,
+        "scene_description": "cute small rabbit sitting on grass holding a bright orange carrot, child looking at it with curiosity",
+        "emotion": "curious and wanting",
+        "text": "كان يا ما كان.. أرنوب معاه جزرة جميلة. بطلنا كان نفسه يدوق حتة."
+      },
+      {
+        "page_number": 2,
+        "scene_description": "child standing gently in front of rabbit, hand open with palm up, not grabbing",
+        "emotion": "polite and soft",
+        "text": "بطلنا وقف بأدب وقال الكلمة السحرية: 'ممكن يا أرنوب.. من فضلك؟' ✨"
+      },
+      {
+        "page_number": 3,
+        "scene_description": "rabbit breaking the carrot in half and giving a big piece to the child, both smiling",
+        "emotion": "happy and sharing",
+        "text": "الأرنوب فرح بالأدب وقال: 'طبعاً يا بطل!' وإداه حتة كبيرة."
+      },
+      {
+        "page_number": 4,
+        "scene_description": "child eating the carrot piece with enjoyment, hand on heart to show thanks",
+        "emotion": "grateful",
+        "text": "أكلنا الجزرة اللذيذة! بطلنا قال الكلمة السحرية التانية: 'شكراً يا أرنوب!'"
+      },
+      {
+        "page_number": 5,
+        "scene_description": "forest animals (birds, squirrels) gathering around clapping for the polite child",
+        "emotion": "proud and socially accepted",
+        "text": "كل الحيوانات سقفت: 'يا سلام على الأدب! كلامك حلو زي العسل!'"
+      },
+      {
+        "page_number": 6,
+        "scene_description": "reward certificate page with magic sparkles, 'Magic Words' written in gold, child and rabbit hugging",
+        "emotion": "accomplished",
+        "text": "🎉 مبروك! أتممت قصة الكلمات السحرية! 🎉\n\n✨ كلماتنا السحرية:\n💛 من فضلك\n💚 شكراً"
+      }
+    ]
+  },
+  "3-4": {
+    "age_group": "3-4 years",
+    "learning_goals": [
+      "Waiting in line",
+      "Self-control",
+      "Respect"
+    ],
+    "pages": [
+      {
+        "page_number": 1,
+        "scene_description": "child standing in line at a bathroom sink, a little girl is washing hands in front, child looks eager but staying in place",
+        "emotion": "impatient but trying",
+        "text": "بطلنا مستعجل وعاوز يغسل إيده عشان الأكل. بس في صف قدامه!"
+      },
+      {
+        "page_number": 2,
+        "scene_description": "child standing still with hands clasped, thinking bubble showing numbers 1-2-3",
+        "emotion": "patient and calm",
+        "text": "بطلنا وقف مكانه باحترام. عد في دماغه: واحد... اتنين... تلاتة. هو بطل الصبر!"
+      },
+      {
+        "page_number": 3,
+        "scene_description": "little girl stepping away from sink smiling and waving, child stepping forward politely",
+        "emotion": "friendly and respectful",
+        "text": "البنوتة خلصت وقالت: 'شكراً إنك استنيت!' بطلنا رد: 'العفو يا صديقتي!'"
+      },
+      {
+        "page_number": 4,
+        "scene_description": "child washing hands thoroughly with soap bubbles, looking in mirror",
+        "emotion": "clean and happy",
+        "text": "غسل إيده بالصابون والمية.. إيدينا بقت نضيفة وريحتها فلة!"
+      },
+      {
+        "page_number": 5,
+        "scene_description": "mother kissing child's forehead at the dinner table, family eating together",
+        "emotion": "loved and praised",
+        "text": "ماما قالت: 'يا سلام على أخلاق الأبطال! إنت بطل الاحترام والصبر!'"
+      },
+      {
+        "page_number": 6,
+        "scene_description": "superhero themed reward page, child wearing a cape marked 'Patience', numbers 1-2-3 in background",
+        "emotion": "heroic",
+        "text": "🦸 أنت بطل الصبر الخارق! 🦸\n\nاتعلمت تنتظر دورك زي الأبطال!"
+      }
+    ]
+  },
+  "4-5": {
+    "age_group": "4-5 years",
+    "learning_goals": [
+      "Kindness to creatures",
+      "Empathy",
+      "Karma"
+    ],
+    "pages": [
+      {
+        "page_number": 1,
+        "scene_description": "child kneeling on garden path looking at a tiny beetle on a leaf, gently protecting it with hand",
+        "emotion": "gentle and protective",
+        "text": "بطلنا لقى خنفساء صغننة. قلبه الطيب قاله: 'احميها!' وسابها تمشي بأمان."
+      },
+      {
+        "page_number": 2,
+        "scene_description": "close up of beetle looking up at child, tiny hearts floating between them",
+        "emotion": "connection",
+        "text": "الخنفساء قالت في سرها: 'شكراً يا بطل! هييجي يوم وأرد لك الجميل.'"
+      },
+      {
+        "page_number": 3,
+        "scene_description": "child searching under a dark sofa for a lost red toy car, looking worried with a flashlight",
+        "emotion": "worried and searching",
+        "text": "بعد يومين، عربية بطلنا ضاعت تحت الكنبة الضلمة. مش شايف حاجة!"
+      },
+      {
+        "page_number": 4,
+        "scene_description": "beetle returning with glowing fireflies lighting up the space under the sofa",
+        "emotion": "amazed",
+        "text": "فجأة... نور صغير ظهر! الخنفساء جابت أصحابها ونوروا المكان لبطلنا! ✨"
+      },
+      {
+        "page_number": 5,
+        "scene_description": "child holding the red toy car happily, beetle sitting on the floor nearby",
+        "emotion": "grateful and happy",
+        "text": "بطلنا لقى عربيته! اتعلمنا درس مهم: 'اللي تعمله من خير، هيرجع لك!'"
+      },
+      {
+        "page_number": 6,
+        "scene_description": "nature themed reward page, child and beetle depicted as friends, rainbow in background",
+        "emotion": "peaceful",
+        "text": "💎 أنت بطل القلب الطيب! 💎\n\nالدرس العظيم: الاحترام بيرجع حب!"
+      }
+    ]
+  }
 }
