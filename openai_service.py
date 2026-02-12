@@ -59,9 +59,11 @@ def generate_storybook_page(character_description, page_prompt, child_name=None)
             f"The character is shown in this scene: {page_prompt}. "
             f"The scene is illuminated by soft, cinematic lighting, creating a heartwarming and magical vibe. "
             f"The colors are vibrant pastels, featuring soft textures and cinematic depth of field. "
-            f"CRITICAL: The main character must look EXACTLY like the description provided (Face, Hair, Clothing). "
-            f"Do not change the character's look or clothing. "
-            f"Ensure the name of the child is conceptually represented as the hero."
+            f"CRITICAL INSTRUCTIONS: "
+            f"1. Keep the child with the SAME cloth and features, just change poses. "
+            f"2. Keep the composition framed such that text can be placed inside the frame of the photo. "
+            f"3. Ensure the name of the child is conceptually represented as the hero."
+            f"4. The main character must look EXACTLY like the description provided (Face, Hair, Clothing)."
         )
         
         # OpenRouter image generation via Chat Completions
