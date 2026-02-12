@@ -1,6 +1,7 @@
 from PIL import Image, ImageDraw, ImageFont
 import os
 import requests
+import base64
 from io import BytesIO
 import arabic_reshaper
 from bidi.algorithm import get_display
@@ -60,12 +61,37 @@ def _get_arabic_font(size: int, weight: str = "regular") -> ImageFont.FreeTypeFo
                 continue
     return ImageFont.load_default()
 
+# ---------------------------------------------------------------------------
+# Image Processing Core
+# ---------------------------------------------------------------------------
+
+def get_image_source(image_input):
+    """دالة ذكية لتحويل الرابط أو نص Base64 إلى صورة قابلة للمعالجة"""
+    try:
+        # الحالة الأولى: بيانات Base64
+        if str(image_input).startswith("data:image") or ";base64," in str(image_input):
+            if "," in str(image_input):
+                header, encoded = str(image_input).split(",", 1)
+            else:
+                encoded = image_input
+            image_data = base64.b64decode(encoded)
+            return Image.open(BytesIO(image_data))
+        
+        # الحالة الثانية: رابط URL
+        else:
+            response = requests.get(image_input, timeout=20)
+            if response.status_code == 200:
+                return Image.open(BytesIO(response.content))
+    except Exception as e:
+        print(f"Error in get_image_source: {e}")
+    return None
+
 def _draw_story_text_box(draw, panel_width, panel_height, text, font, **kwargs):
     """رسم صندوق النص السفلي بنمط يتناسب مع قصص الأطفال"""
     if not text: return
 
-    bg_color = kwargs.get('bg_color', (255, 251, 245)) # لون كريمي فاتح جداً
-    text_color = kwargs.get('text_color', (50, 30, 20)) # بني داكن دافئ
+    bg_color = kwargs.get('bg_color', (255, 251, 245)) 
+    text_color = kwargs.get('text_color', (50, 30, 20)) 
     
     horizontal_margin = 50
     padding_x, padding_y = 30, 25
@@ -84,14 +110,12 @@ def _draw_story_text_box(draw, panel_width, panel_height, text, font, **kwargs):
     box_bottom = panel_height - 40
     box_top = box_bottom - box_height
 
-    # رسم خلفية الصندوق بحواف دائرية
     draw.rounded_rectangle(
         [box_left, box_top, box_left + box_width, box_bottom],
         radius=20,
         fill=bg_color
     )
 
-    # رسم النص (محاذاة لليمين لأنها قصة عربية)
     current_y = box_top + padding_y
     for line in lines:
         bbox = draw.textbbox((0, 0), line, font=font)
@@ -100,31 +124,28 @@ def _draw_story_text_box(draw, panel_width, panel_height, text, font, **kwargs):
         current_y += line_height * 1.5
 
 def overlay_text_on_image(image_url, text, output_path):
-    """دمج رسمة القصة مع النص العربي في لوحة مربعة"""
+    """دمج رسمة القصة مع النص العربي"""
     try:
         width, height = 1024, 1024
         img = Image.new("RGB", (width, height), (255, 255, 255))
         draw = ImageDraw.Draw(img)
 
-        # تحميل الرسمة
-        response = requests.get(image_url, timeout=15)
-        art = Image.open(BytesIO(response.content)).convert("RGB")
+        # استخدام الدالة المساعدة الجديدة لدعم Base64/URL
+        art_source = get_image_source(image_url)
+        if not art_source: return None
+        art = art_source.convert("RGB")
         
-        # تصغير الصورة لتترك مساحة للنص
         art.thumbnail((900, 700), Image.LANCZOS)
         img.paste(art, ((width - art.width) // 2, 50))
-
-        # إضافة إطار كلاسيكي رقيق
         draw.rectangle([10, 10, 1014, 1014], outline=(200, 200, 200), width=15)
 
-        # إضافة النص
         font = _get_arabic_font(42)
         _draw_story_text_box(draw, width, height, text, font)
 
         img.save(output_path)
         return output_path
     except Exception as e:
-        print(f"Error: {e}")
+        print(f"Error in overlay_text: {e}")
         return None
 
 def create_cover_page(image_url, top_text, bottom_text, output_path):
@@ -134,30 +155,27 @@ def create_cover_page(image_url, top_text, bottom_text, output_path):
         img = Image.new('RGB', (width, height), (255, 255, 255))
         draw = ImageDraw.Draw(img)
         
-        # الخطوط
         title_font = _get_arabic_font(85, weight="bold")
         name_font = _get_arabic_font(60)
 
-        # العنوان العلوي
         reshaped_top = _prepare_arabic_text(top_text)
         tw = draw.textbbox((0, 0), reshaped_top, font=title_font)[2]
         draw.text(((width - tw) // 2, 70), reshaped_top, font=title_font, fill=(60, 40, 30))
 
-        # الصورة المركزية (دائرية)
-        response = requests.get(image_url, timeout=15)
-        art = Image.open(BytesIO(response.content)).convert("RGBA")
+        # معالجة صورة الغلاف (دعم Base64/URL)
+        art_source = get_image_source(image_url)
+        if not art_source: return None
+        art = art_source.convert("RGBA")
+        
         size = (600, 600)
         art = art.resize(size, Image.LANCZOS)
-        
         mask = Image.new('L', size, 0)
         ImageDraw.Draw(mask).ellipse((0, 0) + size, fill=255)
         
         circular_art = Image.new('RGBA', size, (0, 0, 0, 0))
         circular_art.paste(art, (0, 0), mask=mask)
-        
         img.paste(circular_art, ((width - size[0]) // 2, 200), circular_art)
 
-        # الاسم السفلي
         reshaped_name = _prepare_arabic_text(bottom_text)
         nw = draw.textbbox((0, 0), reshaped_name, font=name_font)[2]
         draw.text(((width - nw) // 2, 850), reshaped_name, font=name_font, fill=(80, 60, 50))
