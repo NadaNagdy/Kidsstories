@@ -114,7 +114,7 @@ def generate_storybook_page(character_description, page_prompt, child_name=None,
             "modalities": ["image"]
         }
         
-        # زيادة التايم أوت لأن توليد الصور يستغرق وقتاً
+        # إرسال الطلب مع مهلة انتظار طويلة (60 ثانية) لأن الرسم يستغرق وقتاً
         response = requests.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=payload, timeout=60)
         response.raise_for_status()
         data = response.json()
@@ -130,7 +130,7 @@ def generate_storybook_page(character_description, page_prompt, child_name=None,
             print(f"✅ Successfully generated image: {final_url}")
             return final_url
         
-        print(f"⚠️ No image URL found in response: {full_response_text}")
+        print(f"⚠️ No image URL found in response structure: {full_response_text}")
         return None
 
     except Exception as e:
@@ -138,6 +138,8 @@ def generate_storybook_page(character_description, page_prompt, child_name=None,
         return None
 
 def transform_photo_to_character(image_data, is_url=False):
-    """وظيفة للتحويل السريع لصورة طفل إلى شخصية كرتونية (للمعاينة)"""
+    """وظيفة للتحويل السريع لصورة طفل إلى شخصية كرتونية"""
+    # 1. أولاً نحصل على وصف الملامح من الصورة الأصلية
     char_desc = create_character_reference(image_data, is_url=is_url)
+    # 2. ثانياً نطلب من موديل الصور رسم الشخصية بناءً على هذا الوصف
     return generate_storybook_page(char_desc, "A beautiful character portrait, smiling, professional children's book style.")
