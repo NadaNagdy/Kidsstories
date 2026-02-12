@@ -1,45 +1,36 @@
 {
-  "1-2": {
-    "age_group": "1-2 years",
-    "character_description": {
-        "appearance": "Cute toddler with round chubby cheeks, big sparkling brown eyes, short curly dark hair"
-    },
+  "2-3": {
+    "age_group": "2-3 years",
     "pages": [
       {
         "page_number": 1,
-        "scene_description": "toddler standing nervously at the top of a small slide in a playground, looking down with wide eyes, hugging a teddy bear",
-        "emotion": "hesitant but curious",
-        "text": "اليوم يوم الحديقة! الزحليقة عالية.. بطلنا خايف شوية."
+        "scene_description": "child walking in a sunny forest path, seeing a large gentle lion sitting looking sad with a paw held up",
+        "emotion": "curious",
+        "text": "كان يا ما كان.. أسد كبير قاعد زعلان. بطلنا شافه وقرب منه.. يا ترى ماله؟"
       },
       {
         "page_number": 2,
-        "scene_description": "toddler taking one small step up the slide ladder, looking back at parent who is smiling and encouraging",
-        "emotion": "trying to be brave",
-        "text": "ماما قالت: 'أنت بطل!'.. بطلنا أخد نفس عميق.. واحد.. اتنين."
+        "scene_description": "close up of child looking concerned at a small thorn sticking out of the lion's big paw, child's hand reaching out hesitatingly",
+        "emotion": "nervous but empathetic",
+        "text": "يا خبر! فيه شوكة في رجل الأسد! الأسد يتألم.. وبطلنا خايف شوية، بس قلبه طيب."
       },
       {
         "page_number": 3,
-        "scene_description": "toddler sitting at the very top of the slide, looking down with a mix of excitement and nervousness, sun shining bright",
-        "emotion": "excited nervousness",
-        "text": "أنا فوق! الهوا جميل.. يلا ننزل؟ واحد.. اتنين.. تلاتة!"
+        "scene_description": "child bravely pulling the thorn out of the lion's paw with a little magical sparkle effect, lion looking relieved",
+        "emotion": "brave and determined",
+        "text": "واحد.. اتنين.. تلاتة! بطلنا شد الشوكة! أنا شجاع! أنا قوي! ساعدت الأسد الكبير!"
       },
       {
         "page_number": 4,
-        "scene_description": "toddler sliding down fast, hair blowing in wind, big wide smile, arms up in the air",
-        "emotion": "pure joy and thrill",
-        "text": "ووووووي! الزحليقة سريعة وممتعة جداً!"
+        "scene_description": "lion nuzzling the child gently, child hugging the lion's neck laughing, butterflies flying around",
+        "emotion": "joyful and loved",
+        "text": "الأسد فرح وقال: 'شكراً يا بطل! أنت صغير بس قلبك كبير وشجاع!' الشجاعة هي إننا نساعد غيرنا."
       },
       {
         "page_number": 5,
-        "scene_description": "toddler at the bottom of the slide clapping hands, parent clapping too, toddler looking proud",
-        "emotion": "proud and triumphant",
-        "text": "أنا عملتها! الشجاعة حلوة.. كمان مرة!"
-      },
-      {
-        "page_number": 6,
-        "scene_description": "reward page with golden stars, lion badges, and the toddler wearing a paper crown holding the teddy bear",
-        "emotion": "celebratory",
-        "text": "🦁 مبروك يا بطل الشجاعة! 🦁\n\n💪 اتعلمت:\n✓ أنا أقدر أجرب حاجات جديدة\n✓ الخوف عادي، بس الشجاعة أقوى"
+        "scene_description": "reward certificate page design, child wearing a golden crown and a lion badge, surrounded by stars and a border",
+        "emotion": "proud and celebrated",
+        "text": "🦁 مبروك يا بطل الشجاعة! 🦁\n\n💡 نصائح للأهل:\n✓ امدح طفلك لما يجرب حاجة جديدة\n✓ الخوف طبيعي، الشجاعة هي المحاولة\n\n⭐ مكافأتك: تاج الأسد الشجاع!"
       }
     ]
   }
