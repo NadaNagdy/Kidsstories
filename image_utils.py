@@ -105,14 +105,15 @@ def create_cover_page(image_url, top_text, bottom_text, output_path, child_photo
         
         img.paste(circular_art, ((width - size[0])//2, circle_y), circular_art)
         
-        # 3. Bottom Name
+        # 3. Add Outer Border (Consistency with story pages)
+        border_w = 25
+        draw.rectangle([border_w//2, border_w//2, width-border_w//2, height-border_w//2], outline=(150, 150, 150), width=border_w)
+        
+        # 4. Bottom Name
         reshaped_bottom = get_display(arabic_reshaper.reshape(bottom_text))
         n_bbox = draw.textbbox((0, 0), reshaped_bottom, font=name_font)
         nw = n_bbox[2] - n_bbox[0]
         draw.text(((width - nw)//2, 880), reshaped_bottom, font=name_font, fill=(0, 0, 0))
-        
-        # Decoration: Add some simple stars/hearts effect (optional but nice)
-        # For brevity, we'll keep it clean as requested.
         
         img.save(output_path)
         return output_path
