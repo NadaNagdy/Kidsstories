@@ -1,90 +1,105 @@
 {
   "1-2": {
     "age_group": "1-2 years",
+    "theme": "الشجاعة الجسدية والثقة",
     "pages": [
       {
-        "page_number": 1,
-        "scene_description": "simple watercolor of a brave child standing near a big friendly lion, bright colors",
-        "emotion": "happy",
-        "text": "بطلنا الصغير شجاع وقوي! شاف الأسد الطيب ومشي جنبه."
+        "prompt": "Character looking up at a tall colorful wooden slide in a sunny park, feeling small but curious, soft watercolor style, wide angle.",
+        "text": "شوفوا الزحليقة الكبيرة! {child_name} واقف بيفكر.. يا ترى هيقدر يطلع لوحده؟"
       },
       {
-        "page_number": 2,
-        "scene_description": "child touching the lion's paw gently, magical sparkles",
-        "emotion": "brave",
-        "text": "لمسة صغيرة بطلة.. الأسد فرحان ومبسوط!"
+        "prompt": "Character holding a parent's hand, taking the first step on a colorful ladder, determined expression, soft sunlight, watercolor.",
+        "text": "خطوة.. خطوة.. {child_name} بطل شجاع، بدأ يطلع أول سلمة وهو ماسك إيد ماما."
       },
       {
-        "page_number": 3,
-        "scene_description": "reward page, child wearing a bright yellow lion hat, stars in background",
-        "emotion": "proud",
-        "text": "🦁 أنت بطل شجاع! 🦁\n\nنصيحة: شجعي طفلك على استكشاف الأشياء الجديدة بحب."
+        "prompt": "Character sitting at the very top of the slide, looking down with a big proud smile, feeling like a king, bright watercolor park.",
+        "text": "ياي! {child_name} وصل فوق خالص.. الدنيا من هنا شكلها جميل والألوان بتلمع!"
+      },
+      {
+        "prompt": "Action shot of character sliding down the slide, hair blowing in the wind, pure joy and laughter, soft watercolor motion.",
+        "text": "واحد.. اتنين.. تلاتة.. وووووووي! {child_name} بيتزحلق وبطولته بتطير في الهوا!"
+      },
+      {
+        "prompt": "Character standing at the bottom of the slide, clapping hands happily, victorious pose, sunny celebratory garden atmosphere.",
+        "text": "أنا شجاع! {child_name} نزل على الأرض بسلام وبيصقف لنفسه وهو فرحان جداً."
       }
     ]
   },
-  
   "2-3": {
     "age_group": "2-3 years",
+    "theme": "مساعدة الآخرين رغم الخوف",
     "pages": [
       {
-        "page_number": 1,
-        "scene_description": "child walking in a sunny forest path, seeing a large gentle lion sitting looking sad with a paw held up",
-        "emotion": "curious",
-        "text": "كان يا ما كان.. أسد كبير قاعد زعلان. بطلنا شافه وقرب منه.. يا ترى ماله؟"
+        "prompt": "Character walking through a soft pastel jungle with glowing flowers, ears perked up, listening to a sound, watercolor aesthetic.",
+        "text": "{child_name} ماشي في الغابة السحرية، وفجأة سمع صوت حد بيعيط ورا الشجر!"
       },
       {
-        "page_number": 2,
-        "scene_description": "close up of child looking concerned at a small thorn sticking out of the lion's big paw, child's hand reaching out hesitatingly",
-        "emotion": "nervous but empathetic",
-        "text": "يا خبر! فيه شوكة في رجل الأسد! الأسد يتألم.. وبطلنا خايف شوية، بس قلبه طيب."
+        "prompt": "Character meeting a large but gentle lion sitting under a tree, lion looking sad and pointing to a thorn in its paw, watercolor.",
+        "text": "ده الأسد القوي! بس الأسد طلع خايف وحزين عشان فيه شوكة صغيرة تعباه في رجله."
       },
       {
-        "page_number": 3,
-        "scene_description": "child bravely pulling the thorn out of the lion's paw with a little magical sparkle effect, lion looking relieved",
-        "emotion": "brave and determined",
-        "text": "واحد.. اتنين.. تلاتة! بطلنا شد الشوكة! أنا شجاع! أنا قوي! ساعدت الأسد الكبير!"
+        "prompt": "Character standing bravely in front of the huge lion, reaching out a small hand to help, close-up on brave eyes, warm light.",
+        "text": "{child_name} خاف في الأول، بس قال: 'أنا بطل ولازم أساعد صاحبي الأسد'."
       },
       {
-        "page_number": 4,
-        "scene_description": "lion nuzzling the child gently, child hugging the lion's neck laughing, butterflies flying around",
-        "emotion": "joyful and loved",
-        "text": "الأسد فرح وقال: 'شكراً يا بطل! أنت صغير بس قلبك كبير وشجاع!' الشجاعة هي إننا نساعد غيرنا."
+        "prompt": "Character carefully removing the thorn from the lion's paw, lion looking relieved and starting to smile, magical watercolor glow.",
+        "text": "بكل هدوء وشجاعة، {child_name} شال الشوكة.. والأسد بطل يعيط وبدأ يضحك من قلبه."
       },
       {
-        "page_number": 5,
-        "scene_description": "reward certificate page design, child wearing a golden crown and a lion badge, surrounded by stars and a border",
-        "emotion": "proud and celebrated",
-        "text": "🦁 مبروك يا بطل الشجاعة! 🦁\n\n💡 نصائح للأهل:\n✓ امدح طفلك لما يجرب حاجة جديدة\n✓ الخوف طبيعي، الشجاعة هي المحاولة\n\n⭐ مكافأتك: تاج الأسد الشجاع!"
+        "prompt": "Character hugging the lion's golden mane, both laughing together in a lush meadow, sunset lighting, beautiful watercolor finish.",
+        "text": "شكراً يا أشجع بطل! {child_name} والأسد بقوا أصحاب وبيلعبوا سوا في الغابة."
       }
     ]
   },
-  
   "3-4": {
     "age_group": "3-4 years",
+    "theme": "اكتشاف المجهول",
     "pages": [
       {
-        "page_number": 1,
-        "scene_description": "detailed watercolor of a child in a forest meeting a sad lion, more background details",
-        "emotion": "brave",
-        "text": "بطلنا الشجاع قرر يساعد الأسد المسكين. القوة مش بس في العضلات، القوة في القلب!"
+        "prompt": "Character standing at the entrance of a colorful garden play tunnel, looking inside, a bit dark but mysterious, watercolor style.",
+        "text": "{child_name} لقى نفق طويل ومستخبي في الحديقة.. يا ترى فيه إيه جواه؟"
       },
       {
-        "page_number": 2,
-        "scene_description": "reward certificate, heroic pose",
-        "emotion": "heroic",
-        "text": "🏆 أنت بطل حقيقي! 🏆\n\nنصيحة: علمي طفلك إن مساعدة الضعيف هي قمة الشجاعة."
+        "prompt": "Character holding a glowing flashlight, beam of light cutting through the tunnel darkness, brave forward step, watercolor.",
+        "text": "معايا كشاف الشجاعة! {child_name} نور النور ودخل أول خطوة جوه النفق."
+      },
+      {
+        "prompt": "Character discovering small kittens with glowing eyes inside the tunnel, kittens looking cute, warm light from flashlight.",
+        "text": "جوه النفق، {child_name} شاف عينين بتلمع.. طلعت قطط صغننة كانت مستخبية!"
+      },
+      {
+        "prompt": "Character emerging from the other side of the tunnel into bright sunlight, arms wide open, victorious explorer, watercolor park.",
+        "text": "{child_name} عدّى النفق كله وطلع من الناحية التانية.. الشمس كانت منورة وجميلة!"
+      },
+      {
+        "prompt": "Character playing with the kittens in the grass, feeling like a brave explorer, soft sunny watercolor background.",
+        "text": "الضلمة مابقتش بتخوف، لأن {child_name} اكتشف فيها أصحاب جدد ومفاجآت حلوة."
       }
     ]
   },
-  
   "4-5": {
     "age_group": "4-5 years",
+    "theme": "فهم المخاوف وصداقة الظلام",
     "pages": [
       {
-        "page_number": 1,
-        "scene_description": "complex forest scene, child speaking to a lion",
-        "emotion": "determined",
-        "text": "بطلنا الذكي عرف إن الشجاعة هي مواجهة الخوف. ساعد الأسد وبقوا أصحاب للأبد!"
+        "prompt": "Character sitting in bed, looking at strange shadows on the wall, soft moonlight, slightly nervous expression, watercolor bedroom.",
+        "text": "وقت النوم جه، و{child_name} شايف خيالات غريبة على الحيطة.. يا ترى ده إيه؟"
+      },
+      {
+        "prompt": "Character standing up and touching the shadow, discovering it is just their teddy bear, relief and a smile, soft lighting.",
+        "text": "{child_name} الشجاع قام يشوف الخيال ده.. وطلع مجرد دبدوبه الصغير بيلعب مع النور!"
+      },
+      {
+        "prompt": "Character looking out of a large window at a beautiful starry night sky, moon smiling, peaceful blue watercolor tones.",
+        "text": "يا ظلام، أنت مش وحش.. {child_name} بدأ يشوف النجوم وهي بتنور في السما بجمال."
+      },
+      {
+        "prompt": "Character lying back in bed, magical dream bubbles floating above, glowing stars, feeling peaceful and brave, watercolor style.",
+        "text": "{child_name} قرر يصاحب الظلام، لأن في الضلمة بس بنقدر نشوف الأحلام الجميلة."
+      },
+      {
+        "prompt": "Character sleeping peacefully with their teddy bear, soft warm blankets, serene starry night background, watercolor masterpiece.",
+        "text": "تصبح على خير يا بطل الحكمة.. {child_name} نايم مطمن لأن قلبه مليان شجاعة."
       }
     ]
   }
