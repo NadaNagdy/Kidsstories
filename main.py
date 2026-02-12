@@ -20,6 +20,8 @@ app = FastAPI()
 # Environment variables
 VERIFY_TOKEN = os.getenv("VERIFY_TOKEN", "my_verify_token")
 PAGE_ACCESS_TOKEN = os.getenv("PAGE_ACCESS_TOKEN")
+VODAFONE_CASH_NUMBER = os.getenv("VODAFONE_CASH_NUMBER")
+INSTAPAY_HANDLE = os.getenv("INSTAPAY_HANDLE", "01060746538")
 
 # Startup Banner (AFTER variables are defined)
 logger.info("=" * 60)
@@ -98,7 +100,7 @@ def start_processing(sender_id, messaging_event, background_tasks):
         elif current_step == "waiting_for_value":
             handle_value_selection(sender_id, payload, background_tasks)
         elif current_step == "waiting_for_payment":
-            if payload == "PAY_25_EGP":
+            if payload == "PAY_25_EGP" or payload == "تم التحويل ✅" or payload == "تم الدفع" or "InstaPay" in payload:
                 handle_payment_success(sender_id, background_tasks)
         return
 
@@ -310,8 +312,22 @@ def process_story_generation(sender_id, value, is_preview=False):
                 else:
                      send_quick_replies(sender_id, "خطأ في الاتصال بنظام الدفع. (محاكاة):", ["PAY_25_EGP"])
             else:
-                 # Fallback to Simulated Payment
-                 send_quick_replies(sender_id, "🔒 لإكمال القصة والحصول على الكتاب PDF، يرجى دفع رسوم رمزية (25 جنيه).", ["PAY_25_EGP"])
+                 # Fallback to Manual Payment (Instapay / Vodafone Cash)
+                 if INSTAPAY_HANDLE and INSTAPAY_HANDLE != "username@instapay":
+                     target_payment = f"حساب إنستا باي: {INSTAPAY_HANDLE}"
+                 elif VODAFONE_CASH_NUMBER:
+                     target_payment = f"رقم محفظة: {VODAFONE_CASH_NUMBER}"
+                 else:
+                     target_payment = "رقم: 010XXXXXXXX (مثال)"
+
+                 msg = (
+                     f"💰 الدفع عبر إنستا باي (InstaPay):\n\n"
+                     f"لإكمال القصة، يرجى تحويل مبلغ 25 جنيه على:\n"
+                     f"✨ {target_payment} ✨\n\n"
+                     f"بعد التحويل، اضغطي على الزر أدناه لتأكيد الدفع 👇"
+                 )
+                 send_text_message(sender_id, msg)
+                 send_quick_replies(sender_id, "هل قمتي بالتحويل؟", ["تم التحويل via InstaPay ✅"])
             
             return
 
