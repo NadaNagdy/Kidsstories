@@ -5,6 +5,7 @@ import re
 from openai import OpenAI
 
 # 1. إعداد مفتاح API والعميل
+# يتم جلب المفتاح من متغيرات البيئة لضمان الأمان
 api_key = os.getenv("OPENROUTER_API_KEY") or os.getenv("OPENAI_API_KEY") or "not_set"
 
 client = OpenAI(
@@ -12,21 +13,37 @@ client = OpenAI(
     api_key=api_key
 )
 
-# 2. القواعد العامة لنمط الكتاب
+# 2. القواعد العامة لنمط الكتاب (Visual Style & Layout)
+# تم تحديثها لمنع الذكاء الاصطناعي من توليد أي نصوص أو مربعات داخل الصورة
 GLOBAL_STORYBOOK_STYLE = """
 You are a professional children's book illustrator.
 STYLE: Soft watercolor and colored pencil, classic aesthetic, warm pastel tones, clean white background.
 CHARACTER CONSISTENCY: The hero child must stay identical on all pages.
 - Respect the gender provided. Same face, skin tone, and hair texture.
-- Absolutely NO text, letters, or banners inside the image.
-- Leave the TOP 15% and BOTTOM 15% clear for external text overlay.
+- STRICT NEGATIVE RULE: Absolutely NO text, letters, words, banners, or ribbons inside the image.
+- LAYOUT: Leave the TOP 15% and BOTTOM 15% of the image as PURE WHITE SPACE to allow for external text overlay.
+- Centralize the character in the middle of the square canvas.
 """.strip()
 
 def create_character_reference(image_data, gender="boy", is_url=True):
-    """تحليل الصورة واستخلاص الملامح بناءً على الجنس"""
+    """
+    تحليل احترافي للصورة لاستخراج وصف دقيق (100 كلمة بحد أقصى).
+    يركز على ملامح الوجه، نسيج الشعر، والملابس الحقيقية الموجودة في الصورة.
+    """
     try:
         image_content = {"url": image_data} if is_url else {"url": f"data:image/jpeg;base64,{image_data}"}
-        gender_context = "This child is a girl." if gender == "girl" else "This child is a boy."
+        
+        # البرومبت المطور لاستخلاص الهوية البصرية بدقة "قصصية"
+        detailed_prompt = (
+            f"Act as a professional character designer. Provide a highly detailed but CONCISE visual description (MAX 100 words). "
+            f"Analyze this {gender}'s photo and describe: "
+            f"1. Exact age. "
+            f"2. Hair (color, style, texture). "
+            f"3. Face (skin tone, eye shape/color, expression). "
+            f"4. EXACT clothing they are wearing (colors, patterns, and type). "
+            f"5. Atmosphere/Lighting. "
+            f"Output must be a single fluid paragraph suitable for an AI art generator."
+        )
         
         response = client.chat.completions.create(
             model="google/gemini-2.0-flash-lite-001",
@@ -34,21 +51,20 @@ def create_character_reference(image_data, gender="boy", is_url=True):
                 {
                     "role": "user",
                     "content": [
-                        {"type": "text", "text": f"{gender_context} Analyze this photo for face shape and hair. Focus on details to maintain consistency."},
+                        {"type": "text", "text": detailed_prompt},
                         {"type": "image_url", "image_url": image_content}
                     ],
                 }
             ],
-            max_tokens=150
+            max_tokens=150 # يضمن بقاء الوصف في حدود 100 كلمة
         )
         return response.choices[0].message.content.strip()
     except Exception as e:
-        print(f"Error: {e}")
-        return "A cute child, watercolor style."
+        print(f"Error in character analysis: {e}")
+        return f"A cute {gender} in a storybook setting, watercolor style."
 
-# --- الدالة التي كانت مفقودة وتسببت في توقف البوت ---
 def verify_payment_screenshot(image_data, target_handle):
-    """التحقق من صحة صورة التحويل عبر الذكاء الاصطناعي"""
+    """التحقق من صحة صورة التحويل (إنستا باي أو محفظة) عبر الذكاء الاصطناعي"""
     try:
         headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
         payload = {
@@ -71,10 +87,25 @@ def verify_payment_screenshot(image_data, target_handle):
         return False
 
 def generate_storybook_page(character_description, page_prompt, gender="boy", is_cover=False):
-    """توليد صور القصة مع دعم روابط URL و Base64"""
+    """
+    توليد صور القصة مع الالتزام بالوصف الدقيق ومنع الهلوسة النصية.
+    character_description: الوصف المستخلص من صورة الطفل (الـ 100 كلمة).
+    """
     try:
+        # تحديد موضوع الرسم بناءً على الجنس لزيادة الدقة
         gender_subject = "a beautiful little girl" if gender == "girl" else "a brave little boy"
-        user_content = f"TASK: {'COVER' if is_cover else 'STORY'}. SUBJECT: {gender_subject}. CHARACTER: {character_description}. SCENE: {page_prompt}."
+        
+        # برومبت إضافي في حالة الغلاف لضمان تكوين سينمائي
+        cover_extra = "This is a cover: Center the child, surrounded by magical storybook elements. NO BANNERS. NO TEXT." if is_cover else ""
+
+        user_content = f"""
+        TASK: {'COVER ART' if is_cover else 'STORY ART'}
+        SUBJECT: {gender_subject}
+        CHARACTER DESCRIPTION: {character_description}
+        SCENE DESCRIPTION: {page_prompt}
+        {cover_extra}
+        REMINDER: Absolutely no text in image. Keep top and bottom margins clear and white.
+        """.strip()
 
         payload = {
             "model": "google/gemini-2.5-flash-image",
@@ -97,6 +128,7 @@ def generate_storybook_page(character_description, page_prompt, gender="boy", is
         
         url_match = re.search(r'https://[^\s"\'<>]+(?:\.png|\.jpg|\.jpeg|\b)', full_text)
         return url_match.group(0).rstrip(').') if url_match else None
+        
     except Exception as e:
         print(f"Generation Error: {e}")
         return None
