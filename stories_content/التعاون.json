@@ -1,98 +1,199 @@
 {
     "1-2": {
+        "title": "Let's Build Together!",
+        "age_group": "1-2 years",
+        "theme": "Cooperation and Sharing",
         "pages": [
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, holding a red toy block, a cute teddy bear sitting nearby with a yellow block, 'Let's Do It Together!' written in the background",
-                "text": "بطلنا عاوز يبني برج كبيييير!"
+                "page_number": 1,
+                "prompt": "Pixar 3D animation style, adorable toddler character with big expressive eyes wearing a colorful striped sweatshirt, excitedly holding a bright red wooden block above their head, fluffy brown teddy bear sitting nearby with a yellow block between its paws, sunny playroom with soft lighting, warm colors, child-friendly atmosphere, 'Let's Do It Together!' text floating in background with sparkles",
+                "text": "بطلنا عاوز يبني برج كبيييير!",
+                "english": "Our hero wants to build a HUGE tower!",
+                "teaching_moment": "Introducing the goal - building something big"
             },
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, placing a block on the floor, teddy bear placing a yellow block on top of it, 'We are a Team!' expression",
-                "text": "واحد ليا.. وواحد ليك. إحنا فريق!"
+                "page_number": 2,
+                "prompt": "Pixar 3D animation style, same toddler character carefully placing a red block on a colorful play mat, teddy bear reaching with its paw to place a yellow block on top, both characters focused and smiling, teamwork energy, bright cheerful room, 'We Are a Team!' banner in background, dynamic composition showing cooperation",
+                "text": "واحد ليا.. وواحد ليك. إحنا فريق!",
+                "english": "One for me... one for you. We're a team!",
+                "teaching_moment": "Taking turns and sharing"
             },
             {
-                "prompt": "Professional 3D Pixar style, the toy tower growing taller, child character and teddy bear both holding blocks together and smiling",
-                "text": "سوا.. سوا.. البرج بقى عالي!"
+                "page_number": 3,
+                "prompt": "Pixar 3D animation style, medium shot of colorful block tower growing to 6-7 blocks tall, toddler character and teddy bear both holding blocks with excited expressions, reaching up together, motion lines showing building action, vibrant rainbow-colored blocks, joyful energy, golden hour lighting",
+                "text": "سوا.. سوا.. البرج بقى عالي!",
+                "english": "Together... together... the tower got so tall!",
+                "teaching_moment": "Working together achieves more"
             },
             {
-                "prompt": "Professional 3D Pixar style, the toy tower falling down, blocks scattered, child character and teddy bear both laughing happily, 'Boom!' effect",
-                "text": "بوم! وقع؟ مش مهم.. يلا نبني تاني سوا."
+                "page_number": 4,
+                "prompt": "Pixar 3D animation style, dramatic moment of colorful blocks tumbling down in mid-air with motion blur, toddler character and teddy bear both laughing with mouths wide open showing pure joy, hands raised in surprise, 'BOOM!' comic-style text effect with sparkles, blocks scattered around, warm lighting, no sadness - only happy surprise",
+                "text": "بوم! وقع؟ مش مهم.. يلا نبني تاني سوا.",
+                "english": "Boom! It fell? No problem... let's build again together!",
+                "teaching_moment": "Resilience - trying again after setbacks"
             },
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, hugging the teddy bear, tall tower successfully built in the background, heartfelt scene",
-                "text": "التعاون حلو.. شكراً يا صاحبي!"
+                "page_number": 5,
+                "prompt": "Pixar 3D animation style, heartwarming scene of toddler character giving teddy bear a big warm hug, both with eyes closed and happy smiles, successful tall tower of 10+ colorful blocks standing proudly in background, golden sunset light streaming through window, heart shapes floating around them, emotional and satisfying conclusion",
+                "text": "التعاون حلو.. شكراً يا صاحبي!",
+                "english": "Cooperation is wonderful... thank you my friend!",
+                "teaching_moment": "Gratitude and friendship"
             }
         ]
     },
     "2-3": {
+        "title": "The Giant Carrot",
+        "age_group": "2-3 years",
+        "theme": "Teamwork and Family",
         "pages": [
             {
-                "prompt": "Professional 3D Pixar style, a giant funny-looking carrot half out of the ground, an old grandfather trying to pull it, looking funny",
-                "text": "كان يا ما كان.. فيه جزرة كبيييييرة أوي في الأرض. جدو جه يشدها: يا هيلة هيلة.. مش راضية!"
+                "page_number": 1,
+                "prompt": "Pixar 3D animation style, enormous comical orange carrot with oversized green leafy top half-buried in rich brown soil, kind elderly grandfather with white beard and suspenders pulling hard on the leaves, red-faced from effort with exaggerated funny expression, rural garden setting with blue sky, butterflies, cheerful countryside atmosphere, carrot is hilariously huge - twice the grandfather's size",
+                "text": "كان يا ما كان.. فيه جزرة كبيييييرة أوي في الأرض. جدو جه يشدها: يا هيلة هيلة.. مش راضية!",
+                "english": "Once upon a time... there was a HUGE carrot in the ground. Grandpa came to pull it: heave-ho... it won't budge!",
+                "teaching_moment": "Sometimes tasks are too big for one person"
             },
             {
-                "prompt": "Professional 3D Pixar style, grandmother holding onto grandfather, both pulling a giant carrot, faces red from effort",
-                "text": "تيتا جت تمسك في جدو: يا هيلة هيلة.. يا هيلة هيلة.. برضه الجزرة مش راضية تطلع!"
+                "page_number": 2,
+                "prompt": "Pixar 3D animation style, sweet grandmother with gray hair in a bun and flowery apron holding tight onto grandfather's waist, both leaning back pulling the giant carrot together, faces bright red from straining, feet digging into ground, motion lines showing effort, comedic exaggerated poses, garden background with vegetables watching, dust clouds from their feet",
+                "text": "تيتا جت تمسك في جدو: يا هيلة هيلة.. يا هيلة هيلة.. برضه الجزرة مش راضية تطلع!",
+                "english": "Grandma came to hold onto Grandpa: heave-ho, heave-ho... still the carrot won't come out!",
+                "teaching_moment": "Two are better than one, but still not enough"
             },
             {
-                "prompt": "Professional 3D Pixar style, child character arriving and holding onto grandmother, smiling at the camera, ready to help",
-                "text": "مين جه يساعد؟ البطل {child_name}! مسك في تيتا وقال: أنا هساعدكم يا جدو."
+                "page_number": 3,
+                "prompt": "Pixar 3D animation style, cheerful toddler child character with {child_name} on their shirt running into scene, grabbing grandmother's apron from behind, big confident smile looking at camera, determined expression, dynamic action pose, grandmother smiling over shoulder, grandfather still holding carrot top, three generations working together, encouraging atmosphere",
+                "text": "مين جه يساعد؟ البطل {child_name}! مسك في تيتا وقال: أنا هساعدكم يا جدو.",
+                "english": "Who came to help? The hero {child_name}! Grabbed onto Grandma and said: I'll help you Grandpa!",
+                "teaching_moment": "Everyone can contribute, even the smallest"
             },
             {
-                "prompt": "Professional 3D Pixar style, grandfather, grandmother and child character all pulling together, strong motion lines, effort",
-                "text": "كلنا مع بعض: واحد.. اتنين.. تلاتة.. شِددد!"
+                "page_number": 4,
+                "prompt": "Pixar 3D animation style, dramatic pulling scene with grandfather, grandmother, and child in a line all leaning back at 45-degree angle, strong motion lines and speed effects, muscles tensed, countdown moment, giant carrot starting to move with soil cracking around it, dust and pebbles flying, intense teamwork energy, dynamic diagonal composition",
+                "text": "كلنا مع بعض: واحد.. اتنين.. تلاتة.. شِددد!",
+                "english": "All together: one... two... three... PULL!",
+                "teaching_moment": "Unity and synchronized effort"
             },
             {
-                "prompt": "Professional 3D Pixar style, giant carrot flying in the air, everyone clapping and happy, celebratory atmosphere",
-                "text": "تراااااخ! الجزرة طلعت. جدو قال: شكراً يا {child_name}! لولا تعاونك ماكانتش طلعت!"
+                "page_number": 5,
+                "prompt": "Pixar 3D animation style, triumphant scene with gigantic orange carrot flying up in the air with trailing dirt and sparkles, grandfather, grandmother, and child all jumping and clapping with arms raised in celebration, huge smiles, confetti-like effect, sunny sky background, all three characters muddy but extremely happy, victorious atmosphere with golden light",
+                "text": "تراااااخ! الجزرة طلعت. جدو قال: شكراً يا {child_name}! لولا تعاونك ماكانتش طلعت!",
+                "english": "PLOP! The carrot came out! Grandpa said: Thank you {child_name}! Without your cooperation, it wouldn't have come out!",
+                "teaching_moment": "Success through teamwork, recognition and gratitude"
             }
         ]
     },
     "3-4": {
+        "title": "The Stubborn Jar",
+        "age_group": "3-4 years",
+        "theme": "Family Cooperation and Persistence",
         "pages": [
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, trying to open a large sealed jar of colorful clay, 'Heave-ho!' effort, bright room",
-                "text": "بطلنا عاوز يلعب بالصلصال، بس العلبة مقفولة أوي.. يا هيلة هيلة.. مش بتفتح!"
+                "page_number": 1,
+                "prompt": "Pixar 3D animation style, determined child character in colorful striped sweatshirt struggling to open a large clear glass jar filled with bright rainbow-colored modeling clay, face scrunched with effort, both hands gripping the lid, jar sitting on a wooden table, bright playroom with toys in background, frustrated but not giving up expression, 'Heave-Ho!' text near character",
+                "text": "بطلنا عاوز يلعب بالصلصال، بس العلبة مقفولة أوي.. يا هيلة هيلة.. مش بتفتح!",
+                "english": "Our hero wants to play with clay, but the container is sealed tight... heave-ho... it won't open!",
+                "teaching_moment": "Recognizing when we need help"
             },
             {
-                "prompt": "Professional 3D Pixar style, father helping the child character wearing a striped sweatshirt to pull the lid, both straining, funny effort faces",
-                "text": "بابا جه يساعد: يلا يا بطل.. زق معايا! برضه العلبة مش راضية تفتح."
+                "page_number": 2,
+                "prompt": "Pixar 3D animation style, caring father with rolled-up sleeves kneeling beside child character, both gripping the stubborn jar lid together, father's hands covering child's hands, both pulling with exaggerated effort faces - puffed cheeks and squinted eyes, veins showing strain, comedic struggle, warm home interior, motivational teamwork energy",
+                "text": "بابا جه يساعد: يلا يا بطل.. زق معايا! برضه العلبة مش راضية تفتح.",
+                "english": "Dad came to help: come on champ... push with me! Still the jar refuses to open.",
+                "teaching_moment": "Parents help when we struggle"
             },
             {
-                "prompt": "Professional 3D Pixar style, mother joining father and the child character wearing a striped sweatshirt, all three pulling together in a line, 'One.. Two.. Three.. Pull!'",
-                "text": "ماما جت كمان ومسكت فيهم.. واحد.. اتنين.. تلاتة.. شِدددد!"
+                "page_number": 3,
+                "prompt": "Pixar 3D animation style, mother joining from behind, three family members in a line - mother holding father's waist, father gripping the jar with child, synchronized pulling motion with all leaning back, countdown energy, rainbow-colored clay visible through glass, dynamic action composition, 'One... Two... Three... PULL!' text in speech bubbles, family cooperation at its peak",
+                "text": "ماما جت كمان ومسكت فيهم.. واحد.. اتنين.. تلاتة.. شِدددد!",
+                "english": "Mom came too and grabbed them... one... two... three... PULL!",
+                "teaching_moment": "The whole family working together"
             },
             {
-                "prompt": "Professional 3D Pixar style, the jar lid popping off, colorful clay spilling out, everyone laughing and surprised, action shot",
-                "text": "بببببببببب! العلبة اتفتحت وكلنا فرحنا بالصلصال الملون."
+                "page_number": 4,
+                "prompt": "Pixar 3D animation style, explosive moment with jar lid popping off with 'POP!' effect and sparkles, colorful modeling clay balls bouncing out in rainbow colors (red, blue, yellow, green, purple), all three family members falling backward with surprised and delighted expressions, mouths open in laughter, motion blur showing the sudden release, celebratory chaos, bright burst of light",
+                "text": "بببببببببب! العلبة اتفتحت وكلنا فرحنا بالصلصال الملون.",
+                "english": "POP! The jar opened and we all celebrated with the colorful clay!",
+                "teaching_moment": "Sweet victory after persistence"
             },
             {
-                "prompt": "Professional 3D Pixar style, father, mother, and child character wearing a striped sweatshirt sitting at a table, making cool shapes with clay, peaceful happy scene",
-                "text": "بطلنا قال: شكراً يا فريق التعاون! إيد لوحدها متسقفش، بس إيدينا سوا بتفتح المستحيل."
+                "page_number": 5,
+                "prompt": "Pixar 3D animation style, peaceful happy scene at wooden craft table, father, mother, and child sitting together making creative clay sculptures - child making a colorful snake, father making a star, mother making a flower, all smiling and engaged in creative play, clay scattered on table, warm afternoon sunlight through window, family bonding moment, cozy homey atmosphere with hearts floating subtly",
+                "text": "بطلنا قال: شكراً يا فريق التعاون! إيد لوحدها متسقفش، بس إيدينا سوا بتفتح المستحيل.",
+                "english": "Our hero said: Thank you cooperation team! One hand can't clap alone, but our hands together can open the impossible!",
+                "teaching_moment": "Wisdom - unity makes impossible things possible"
             }
         ]
     },
     "4-5": {
+        "title": "The Magic Stone Soup",
+        "age_group": "4-5 years",
+        "theme": "Sharing and Community",
         "pages": [
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, standing in front of a giant cooking pot on a campfire, holding a clean gray stone, 'Secret of the Magic Soup' written in the sky, friends gathered around",
-                "text": "بطلنا كان جعان هو وأصحابه ومفيش أكل. جاب حلة مية وحط فيها حجرة نظيفة وقال: أنا هعمل شوربة حجارة طعمها يجنن!"
+                "page_number": 1,
+                "prompt": "Pixar 3D animation style, adventurous child character in striped sweatshirt standing proudly beside a large black cooking pot over glowing campfire with orange flames, holding up a smooth round gray stone with both hands showing it to 4-5 curious animal friends gathered around (rabbit, squirrel, bird, fox), hungry expressions on all faces, forest clearing setting with trees in background, 'Secret of the Magic Soup' written in glowing text in the sky, mysterious enchanting atmosphere",
+                "text": "بطلنا كان جعان هو وأصحابه ومفيش أكل. جاب حلة مية وحط فيها حجرة نظيفة وقال: أنا هعمل شوربة حجارة طعمها يجنن!",
+                "english": "Our hero was hungry with their friends and there was no food. They got a pot of water, put in a clean stone and said: I'll make stone soup that tastes amazing!",
+                "teaching_moment": "Creative thinking and leadership"
             },
             {
-                "prompt": "Professional 3D Pixar style, a friend giving a bright orange carrot to the child character wearing a striped sweatshirt, both smiling, steam rising from the pot",
-                "text": "صاحبه سأله: ممكن أساعد؟ بطلنا قال: يا ريت لو معاك جزرة. صاحبه جاب جزرة وحطها."
+                "page_number": 2,
+                "prompt": "Pixar 3D animation style, friendly rabbit character offering a bright orange carrot to the smiling child character, both standing by the steaming pot, child receiving the carrot with gratitude, rabbit looking proud to help, other friends watching in background with interest, white steam rising beautifully from pot, warm firelight on faces, generous sharing moment, forest setting at dusk",
+                "text": "صاحبه سأله: ممكن أساعد؟ بطلنا قال: يا ريت لو معاك جزرة. صاحبه جاب جزرة وحطها.",
+                "english": "Their friend asked: Can I help? Our hero said: I wish you had a carrot. Their friend brought a carrot and added it.",
+                "teaching_moment": "Asking for help and contributing"
             },
             {
-                "prompt": "Professional 3D Pixar style, multiple friends arriving with different vegetables (potatoes, tomatoes), child character wearing a striped sweatshirt putting them into the large pot",
-                "text": "صاحبتهم التانية جابت بطاطس، والتالت جاب طماطم. كل واحد بدأ يحط حاجة صغننة من عنده في الحلة."
+                "page_number": 3,
+                "prompt": "Pixar 3D animation style, lively scene with multiple animal friends arriving with vegetables - squirrel carrying two brown potatoes, bird flying in with red tomatoes in a small basket, fox bringing leafy greens, child character enthusiastically dropping vegetables into the large bubbling pot, all friends smiling and excited, vegetables floating in mid-air before entering pot, community gathering energy, golden hour lighting",
+                "text": "صاحبتهم التانية جابت بطاطس، والتالت جاب طماطم. كل واحد بدأ يحط حاجة صغننة من عنده في الحلة.",
+                "english": "Their second friend brought potatoes, the third brought tomatoes. Everyone started adding something small from what they had into the pot.",
+                "teaching_moment": "Everyone contributing what they can"
             },
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt stirring the large pot with a wooden spoon, delicious steam clouds, friends watching excitedly",
-                "text": "الحلة بقت مليانة خضار وريحتها تحفة! بطلنا فضل يقلبها وكلهم بيساعدوا سوا بفرحة."
+                "page_number": 4,
+                "prompt": "Pixar 3D animation style, child character stirring the large pot with a long wooden spoon, delicious swirling steam clouds rising in beautiful shapes (hearts, stars), pot filled with colorful vegetables visible through steam, all animal friends gathered close watching eagerly with wide excited eyes, some sniffing the air with delight, magical cooking atmosphere, warm fire glow, aromatic visualization with sparkles in steam",
+                "text": "الحلة بقت مليانة خضار وريحتها تحفة! بطلنا فضل يقلبها وكلهم بيساعدوا سوا بفرحة.",
+                "english": "The pot became full of vegetables and smelled wonderful! Our hero kept stirring it and everyone helped together with joy.",
+                "teaching_moment": "Working together creates something beautiful"
             },
             {
-                "prompt": "Professional 3D Pixar style, everyone sitting around the pot, holding wooden bowls of soup, laughing and eating together, warm firelight",
-                "text": "في الآخر، الحجرة طلعت شوربة حقيقية تكفي الكل! بطلنا قال: شفتوا؟ التعاون خلى الحجرة تبقى أحلى عشاء في العالم."
+                "page_number": 5,
+                "prompt": "Pixar 3D animation style, heartwarming feast scene in circle around the campfire, all friends sitting together holding wooden bowls of steaming vegetable soup, everyone eating happily with big smiles, child character in center raising their bowl in celebration, warm firelight illuminating happy faces, stars twinkling in night sky above, communal sharing and satisfaction, the removed stone sitting beside pot, magical peaceful atmosphere with friendship and abundance",
+                "text": "في الآخر، الحجرة طلعت شوربة حقيقية تكفي الكل! بطلنا قال: شفتوا؟ التعاون خلى الحجرة تبقى أحلى عشاء في العالم.",
+                "english": "In the end, the stone became real soup that was enough for everyone! Our hero said: See? Cooperation made the stone become the best dinner in the world!",
+                "teaching_moment": "Collective effort creates abundance and magic"
             }
+        ]
+    },
+    "image_generation_tips": {
+        "general_guidelines": [
+            "Always specify 'Pixar 3D animation style' at the start for consistency",
+            "Include character descriptions (age, clothing, expressions) for each scene",
+            "Specify lighting (golden hour, warm firelight, sunny, etc.)",
+            "Add atmosphere descriptors (warm, cheerful, magical, cozy)",
+            "Include background details and setting",
+            "Mention specific colors for visual richness",
+            "Add emotion keywords (joyful, excited, determined, peaceful)"
+        ],
+        "character_consistency": [
+            "Describe the main character the same way each time: 'toddler/child character in striped sweatshirt'",
+            "Keep supporting characters recognizable with consistent features",
+            "Use {child_name} placeholder for personalization"
+        ],
+        "composition_tips": [
+            "Vary shot types: close-up for emotion, medium for action, wide for context",
+            "Use diagonal lines for dynamic energy",
+            "Center important elements",
+            "Include motion lines for action scenes",
+            "Add depth with foreground and background elements"
+        ],
+        "age_appropriate_elements": [
+            "1-2 years: Simple, bright colors, large objects, clear expressions",
+            "2-3 years: Action and humor, exaggerated features, recognizable situations",
+            "3-4 years: Family dynamics, problem-solving, cause and effect",
+            "4-5 years: Community, sharing, moral lessons, more complex narratives"
         ]
     }
 }
