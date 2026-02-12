@@ -2,27 +2,27 @@ from fastapi import FastAPI, Request, BackgroundTasks, HTTPException
 from fastapi.responses import PlainTextResponse
 import os, uvicorn, logging, requests, base64, time
 
-# استيراد الدوال من الملفات الأخرى
+# استيراد الدوال من الملفات المساعدة التي قمنا بتطويرها
 from messenger_api import send_text_message, send_quick_replies, send_file, send_image
 from pdf_utils import create_pdf
 from openai_service import verify_payment_screenshot, generate_storybook_page, create_character_reference
 from image_utils import overlay_text_on_image, create_cover_page
 from story_manager import StoryManager
 
-# إعداد السجلات
+# إعداد السجلات لمراقبة أداء البوت
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
-# متغيرات البيئة
+# متغيرات البيئة (تأكد من ضبطها في Railway)
 VERIFY_TOKEN = os.getenv("VERIFY_TOKEN", "my_verify_token")
 PAYMENT_NUMBER = os.getenv("INSTAPAY_HANDLE", "01060746538")
 user_state = {}
 
 @app.get("/")
 def home():
-    return {"status": "Running"}
+    return {"status": "Story Bot is Active"}
 
 @app.get("/webhook")
 def verify_webhook(request: Request):
@@ -72,45 +72,46 @@ def start_processing(sender_id, messaging_event, background_tasks):
                 send_text_message(sender_id, "بانتظار صورة التحويل (Screenshot) للتأكيد... 📸")
         return
 
-    # 2. معالجة المرفقات (الصورة)
+    # 2. معالجة المرفقات (الصورة الشخصية أو صورة الدفع)
     if "attachments" in message:
         for att in message["attachments"]:
             if att["type"] == "image":
                 handle_image_reception(sender_id, att["payload"]["url"], background_tasks)
                 return
 
-    # 3. معالجة النصوص العادية
+    # 3. معالجة النصوص (البداية والاسم)
     text = message.get("text", "")
     if text:
         if text.lower() == "start":
             user_state[sender_id] = {"step": "waiting_for_name"}
-            send_text_message(sender_id, "👋 أهلاً بك! ما اسم بطل القصة أو بطلتنا الصغيرة؟")
+            send_text_message(sender_id, "👋 أهلاً بك في عالم القصص الذكية!")
+            send_text_message(sender_id, "ما اسم بطل القصة أو بطلتنا الصغيرة؟")
         elif user_state[sender_id].get("step") == "waiting_for_name":
             user_state[sender_id].update({"child_name": text, "step": "waiting_for_gender"})
             send_quick_replies(sender_id, f"تشرفنا يا {text}! 😊 هل البطل ولد أم بنت؟", ["ولد", "بنت"])
 
-# --- دوال المعالجة المساعدة ---
+# --- الدوال المساعدة لإدارة تدفق البيانات ---
 
 def handle_image_reception(sender_id, url, background_tasks):
     step = user_state[sender_id].get("step")
     if step == "waiting_for_payment":
-        send_text_message(sender_id, "🔍 جاري التحقق من صورة التحويل... لحظات!")
+        send_text_message(sender_id, "🔍 جاري التحقق من التحويل... لحظات!")
         background_tasks.add_task(process_payment_verification, sender_id, url)
     else:
         user_state[sender_id]["photo_url"] = url
-        send_text_message(sender_id, "🎨 جاري تحليل الملامح وبناء الشخصية...")
+        send_text_message(sender_id, "🎨 جاري تحليل الملامح وبناء الشخصية بدقة...")
         background_tasks.add_task(process_image_ai, sender_id, url)
 
 def process_image_ai(sender_id, url):
     try:
         gender = user_state[sender_id].get("gender", "ولد")
-        # استخراج وصف دقيق (100 كلمة) من الصورة
+        # استخراج وصف بحد أقصى 100 كلمة يشمل ملامح الوجه والملابس الحقيقية
         char_desc = create_character_reference(url, gender=gender, is_url=True)
         if char_desc:
             user_state[sender_id].update({"char_desc": char_desc, "step": "waiting_for_age"})
-            send_quick_replies(sender_id, "تم استلام الصورة! ✨ كم عمر طفلك؟", ["1-2", "2-3", "3-4", "4-5"])
+            send_quick_replies(sender_id, "تم استلام الصورة بنجاح! ✨ كم عمر طفلك؟", ["1-2", "2-3", "3-4", "4-5"])
     except Exception as e:
-        logger.error(f"AI Analysis Error: {e}")
+        logger.error(f"AI Error: {e}")
 
 def handle_age_selection(sender_id, age_group):
     user_state[sender_id].update({"age_group": age_group, "step": "waiting_for_value"})
@@ -118,58 +119,82 @@ def handle_age_selection(sender_id, age_group):
 
 def handle_value_selection(sender_id, value, background_tasks):
     user_state[sender_id]["selected_value"] = value
-    send_text_message(sender_id, f"📖 جاري تجهيز الغلاف باسم بطلنا... لحظات!")
+    send_text_message(sender_id, f"📖 جاري رسم غلاف القصة المخصص... انتظروني!")
     background_tasks.add_task(process_story_generation, sender_id, value, is_preview=True)
 
 def process_payment_verification(sender_id, image_url):
     try:
-        # تحميل الصورة وتحويلها لـ Base64 للتحقق
         response = requests.get(image_url)
-        base64_image = base64.b64encode(response.content).decode("utf-8")
-        is_valid = verify_payment_screenshot(base64_image, PAYMENT_NUMBER)
-        
-        if is_valid:
-            send_text_message(sender_id, "✅ تم التأكد من الدفع! جاري رسم صفحات القصة كاملة... انتظروني!")
+        base64_img = base64.b64encode(response.content).decode("utf-8")
+        if verify_payment_screenshot(base64_img, PAYMENT_NUMBER):
+            send_text_message(sender_id, "✅ تم تأكيد الدفع بنجاح! نبدأ الآن رسم القصة كاملة...")
             value = user_state[sender_id].get("selected_value")
             process_story_generation(sender_id, value, is_preview=False)
         else:
-            send_text_message(sender_id, "❌ لم نتمكن من التأكد من بيانات التحويل. يرجى إرسال صورة واضحة تظهر رقم المستلم والمبلغ.")
+            send_text_message(sender_id, "❌ لم نتمكن من التحقق من الصورة. يرجى إرسال لقطة شاشة واضحة للتحويل.")
     except Exception as e:
-        logger.error(f"Payment Verification Error: {e}")
+        logger.error(f"Payment Error: {e}")
 
 def process_story_generation(sender_id, value, is_preview=False):
     try:
         data = user_state[sender_id]
-        child_name = data.get("child_name", "بطلنا")
-        gender = data.get("gender", "ولد")
-        char_desc = data.get("char_desc", "A cute child")
-        
+        child_name, gender, char_desc = data["child_name"], data["gender"], data["char_desc"]
         prefix = "بطلة" if gender == "بنت" else "بطل"
         display_title = f"{prefix} {value}"
         
+        # تحضير النصوص عبر StoryManager
+        manager = StoryManager(child_name)
+        value_map = {"الشجاعة": "courage.json", "الصدق": "honesty.json", "التعاون": "cooperation.json", "الاحترام": "respect.json"}
+        pages_prompts = manager.generate_story_prompts(value_map.get(value), data.get("age_group"))
+        total_pages = len(pages_prompts)
+
+        cover_path = f"/tmp/cover_{sender_id}.png"
+
+        # --- حالة المعاينة: توليد الغلاف فقط ---
         if is_preview:
-            # توليد الغلاف فقط للمعاينة
-            cover_url = generate_storybook_page(char_desc, f"Magical watercolor cover for {value} story", gender=gender, is_cover=True)
-            path = f"/tmp/cover_{sender_id}.png"
-            if create_cover_page(cover_url, display_title, child_name, path):
-                send_image(sender_id, path)
-                time.sleep(2)
-                msg = (
-                    f"💰 لإكمال قصة {child_name}، يرجى تحويل 25 جنيه:\n\n"
-                    f"1️⃣ انستا باي: {PAYMENT_NUMBER}\n"
-                    f"2️⃣ فودافون كاش: {PAYMENT_NUMBER}\n\n"
-                    f"📸 أرسلي صورة التحويل هنا!"
-                )
+            cover_url = generate_storybook_page(char_desc, f"Magical watercolor cover for {value}", gender=gender, is_cover=True)
+            if cover_url and create_cover_page(cover_url, display_title, child_name, cover_path):
+                send_image(sender_id, cover_path)
+                time.sleep(1)
+                msg = (f"💰 لإكمال قصة {child_name}، يرجى تحويل 25 جنيه عبر:\n"
+                       f"📍 فودافون كاش أو إنستا باي: {PAYMENT_NUMBER}\n"
+                       f"📸 ثم أرسلي صورة التحويل هنا فوراً!")
                 user_state[sender_id]["step"] = "waiting_for_payment"
                 send_text_message(sender_id, msg)
             return
 
-        # توليد القصة الكاملة (هنا يتم استدعاء StoryManager لإنشاء الصفحات)
-        # سيتم رسم كل صفحة ودمج النص عليها ثم إنشاء PDF
-        # (الكود يكمل عملية التوليد المعتادة)
+        # --- حالة التوليد الكامل: رسم الصفحات وتجميع الـ PDF ---
+        generated_images = [cover_path] if os.path.exists(cover_path) else []
         
+        for i, p in enumerate(pages_prompts):
+            page_num = i + 1
+            send_text_message(sender_id, f"⏳ جاري تحميل الصفحة {page_num} من {total_pages}...")
+            
+            img_url = generate_storybook_page(char_desc, p["prompt"], gender=gender)
+            if img_url:
+                path = f"/tmp/p_{sender_id}_{i}.png"
+                overlay_text_on_image(img_url, p["text"], path)
+                generated_images.append(path)
+            else:
+                send_text_message(sender_id, f"⚠️ عذراً، تأخرت الصفحة {page_num}.. أحاول مرة أخرى.")
+                # محاولة إعادة توليد بسيطة لضمان الاستمرارية
+                img_url = generate_storybook_page(char_desc, p["prompt"], gender=gender)
+                if img_url:
+                    path = f"/tmp/p_{sender_id}_{i}.png"
+                    overlay_text_on_image(img_url, p["text"], path)
+                    generated_images.append(path)
+
+        if len(generated_images) > 1:
+            send_text_message(sender_id, "✅ اكتملت الرسومات! جاري تجميع ملف الـ PDF... 📚")
+            pdf_path = f"/tmp/story_{sender_id}.pdf"
+            create_pdf(generated_images, pdf_path)
+            send_file(sender_id, pdf_path)
+            send_text_message(sender_id, f"🎉 قصة {child_name} جاهزة! نتمنى لكم قراءة ممتعة. هل نجهز قصة أخرى؟")
+            user_state[sender_id] = {"step": "start"}
+
     except Exception as e:
         logger.error(f"Story Gen Error: {e}")
+        send_text_message(sender_id, "😔 حدث خطأ غير متوقع، جاري مراجعة النظام.")
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
