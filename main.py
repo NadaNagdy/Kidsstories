@@ -281,7 +281,9 @@ def process_story_generation(sender_id, value, is_preview=False):
                         send_file(sender_id, cover_path)
                     else:
                         logger.error("Failed to create cover page image (create_cover_page returned None)")
-                        send_text_message(sender_id, "⚠️ لم نتمكن من إنشاء الغلاف، لكن سنكمل القصة!")
+                        # Fallback: Send the raw AI image
+                        send_text_message(sender_id, "⚠️ لم نتمكن من إضافة النصوص، لكن إليك الغلاف:")
+                        send_text_message(sender_id, cover_ai_url) # Send URL directly, Messenger renders it
                 else:
                     logger.error("Failed to generate AI image for cover")
                     send_text_message(sender_id, "⚠️ حدثت مشكلة في تصميم الغلاف، سننتقل للخطوة التالية.")
