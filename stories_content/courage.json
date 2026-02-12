@@ -1,4 +1,27 @@
 {
+  "1-2": {
+    "age_group": "1-2 years",
+    "pages": [
+      {
+        "page_number": 1,
+        "scene_description": "simple watercolor of a brave child standing near a big friendly lion, bright colors",
+        "emotion": "happy",
+        "text": "بطلنا الصغير شجاع وقوي! شاف الأسد الطيب ومشي جنبه."
+      },
+      {
+        "page_number": 2,
+        "scene_description": "child touching the lion's paw gently, magical sparkles",
+        "emotion": "brave",
+        "text": "لمسة صغيرة بطلة.. الأسد فرحان ومبسوط!"
+      },
+      {
+        "page_number": 3,
+        "scene_description": "reward page, child wearing a bright yellow lion hat, stars in background",
+        "emotion": "proud",
+        "text": "🦁 أنت بطل شجاع! 🦁\n\nنصيحة: شجعي طفلك على استكشاف الأشياء الجديدة بحب."
+      }
+    ]
+  },
   "2-3": {
     "age_group": "2-3 years",
     "pages": [
@@ -31,6 +54,34 @@
         "scene_description": "reward certificate page design, child wearing a golden crown and a lion badge, surrounded by stars and a border",
         "emotion": "proud and celebrated",
         "text": "🦁 مبروك يا بطل الشجاعة! 🦁\n\n💡 نصائح للأهل:\n✓ امدح طفلك لما يجرب حاجة جديدة\n✓ الخوف طبيعي، الشجاعة هي المحاولة\n\n⭐ مكافأتك: تاج الأسد الشجاع!"
+      }
+    ]
+  },
+  "3-4": {
+    "age_group": "3-4 years",
+    "pages": [
+      {
+        "page_number": 1,
+        "scene_description": "detailed watercolor of a child in a forest meeting a sad lion, more background details",
+        "emotion": "brave",
+        "text": "بطلنا الشجاع قرر يساعد الأسد المسكين. القوة مش بس في العضلات، القوة في القلب!"
+      },
+      {
+        "page_number": 2,
+        "scene_description": "reward certificate, heroic pose",
+        "emotion": "heroic",
+        "text": "🏆 أنت بطل حقيقي! 🏆\n\nنصيحة: علمي طفلك إن مساعدة الضعيف هي قمة الشجاعة."
+      }
+    ]
+  },
+  "4-5": {
+    "age_group": "4-5 years",
+    "pages": [
+      {
+        "page_number": 1,
+        "scene_description": "complex forest scene, child speaking to a lion",
+        "emotion": "determined",
+        "text": "بطلنا الذكي عرف إن الشجاعة هي مواجهة الخوف. ساعد الأسد وبقوا أصحاب للأبد!"
       }
     ]
   }
