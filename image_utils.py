@@ -7,92 +7,53 @@ from bidi.algorithm import get_display
 
 def overlay_text_on_image(image_url, text, output_path):
     """
-    Downloads an image, overlays Arabic text, and saves it.
+    Downloads an image, places it on a white background, and adds text below it.
+    This replaces the previous 'overlay' behavior for better readability and style consistency.
     """
     try:
-        print(f"DEBUG: Overlaying text: {text[:20]}...")
-        # Download image or decode base64
+        # 1. Background & Dimensions
+        width, height = 1024, 1024
+        img = Image.new('RGB', (width, height), (255, 255, 255))
+        draw = ImageDraw.Draw(img)
+        
+        # 2. Download & Paste Illustration
         if image_url.startswith('data:'):
             import base64
-            # Extract base64 part
             header, encoded = image_url.split(",", 1)
             image_data = base64.b64decode(encoded)
-            img = Image.open(BytesIO(image_data)).convert("RGBA")
+            art = Image.open(BytesIO(image_data)).convert("RGB")
         else:
             response = requests.get(image_url, timeout=15)
             if response.status_code != 200:
-                print(f"Error: Failed to download image from {image_url}. Status: {response.status_code}")
+                print(f"Error: Failed to download image from {image_url}")
                 return None
-            img = Image.open(BytesIO(response.content)).convert("RGBA")
-        overlay = Image.new('RGBA', img.size, (0,0,0,0))
-        draw = ImageDraw.Draw(overlay)
-        
-        # Prepare Arabic text - Reshaping line by line for better multiline support
-        lines = text.split('\n')
-        processed_lines = []
-        for line in lines:
-            reshaped_line = arabic_reshaper.reshape(line)
-            bidi_line = get_display(reshaped_line)
-            processed_lines.append(bidi_line)
-        
-        bidi_text = '\n'.join(processed_lines)
-        
-        # Load font (Bundled version for consistency across platforms)
-        base_dir = os.path.dirname(os.path.abspath(__file__))
-        font_paths = [
-            os.path.join(base_dir, "fonts", "Amiri-Regular.ttf"),
-            "/System/Library/Fonts/GeezaPro.ttc",
-            "/System/Library/Fonts/SFArabic.ttf"
-        ]
-        
-        font = None
-        for path in font_paths:
-            if os.path.exists(path):
-                try:
-                    font = ImageFont.truetype(path, 50) # Increased from 35 for mobile readability
-                    print(f"DEBUG: Loaded font: {path}")
-                    break
-                except Exception as e:
-                    print(f"Error loading font {path}: {e}")
-                    continue
-        
-        if not font:
-            print("Warning: Falling back to default font (Arabic will likely not render)")
-            font = ImageFont.load_default()
+            art = Image.open(BytesIO(response.content)).convert("RGB")
             
-        # Draw semi-transparent background for text readability
-        width, height = img.size
-        margin = 40
+        # Scale art to leave room for text
+        art_size = 780
+        art = art.resize((art_size, art_size), Image.LANCZOS)
+        img.paste(art, ((width - art_size)//2, 60))
         
-        # multiline_textbbox handles multiple lines correctly
-        text_bbox = draw.multiline_textbbox((0, 0), bidi_text, font=font, align="center")
-        text_width = text_bbox[2] - text_bbox[0]
-        text_height = text_bbox[3] - text_bbox[1]
+        # 3. Add Thick Border (Style Consistency)
+        border_w = 25
+        draw.rectangle([border_w//2, border_w//2, width-border_w//2, height-border_w//2], outline=(150, 150, 150), width=border_w)
         
-        # Place text at the bottom with some padding
-        padding = 15
-        rect_x0 = margin
-        rect_y0 = height - text_height - margin - (padding * 2)
-        rect_x1 = width - margin
-        rect_y1 = height - margin
+        # 4. Add Arabic Text Below
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        font_path = os.path.join(base_dir, "fonts", "Amiri-Regular.ttf")
+        font = ImageFont.truetype(font_path, 45) if os.path.exists(font_path) else ImageFont.load_default()
         
-        # Draw the rectangle on the overlay
-        draw.rectangle([rect_x0, rect_y0, rect_x1, rect_y1], fill=(255, 255, 255, 200))
+        reshaped_text = get_display(arabic_reshaper.reshape(text))
+        t_bbox = draw.textbbox((0, 0), reshaped_text, font=font)
+        tw = t_bbox[2] - t_bbox[0]
         
-        # Draw the multiline text
-        text_x = width // 2 - text_width // 2
-        text_y = rect_y0 + padding
-        draw.multiline_text((text_x, text_y), bidi_text, font=font, fill=(0, 0, 0), align="center")
+        # Draw at the bottom area (centered)
+        draw.text(((width - tw)//2, 880), reshaped_text, font=font, fill=(0, 0, 0))
         
-        # Composite and save
-        out = Image.alpha_composite(img, overlay).convert("RGB")
-        out.save(output_path)
-        print(f"DEBUG: Saved image with text to {output_path}")
+        img.save(output_path)
         return output_path
     except Exception as e:
-        print(f"Error overlaying text: {e}")
-        import traceback
-        traceback.print_exc()
+        print(f"Error creating story page: {e}")
         return None
 
 def create_cover_page(image_url, top_text, bottom_text, output_path, child_photo_base64=None):
@@ -129,7 +90,7 @@ def create_cover_page(image_url, top_text, bottom_text, output_path, child_photo
             return None
             
         # Circular crop logic
-        size = (650, 650)
+        size = (620, 620) # Slightly smaller to ensure fit
         art = art.resize(size, Image.LANCZOS)
         mask = Image.new('L', size, 0)
         mask_draw = ImageDraw.Draw(mask)
@@ -139,15 +100,16 @@ def create_cover_page(image_url, top_text, bottom_text, output_path, child_photo
         circular_art.paste(art, (0, 0), mask=mask)
         
         # Add a soft colored pencil border around the circle
-        draw.ellipse([(width-size[0])//2 - 5, 250 - 5, (width+size[0])//2 + 5, 250 + size[1] + 5], outline=(200, 200, 230), width=10)
+        circle_y = 200
+        draw.ellipse([(width-size[0])//2 - 5, circle_y - 5, (width+size[0])//2 + 5, circle_y + size[1] + 5], outline=(200, 200, 230), width=10)
         
-        img.paste(circular_art, ((width - size[0])//2, 250), circular_art)
+        img.paste(circular_art, ((width - size[0])//2, circle_y), circular_art)
         
         # 3. Bottom Name
         reshaped_bottom = get_display(arabic_reshaper.reshape(bottom_text))
         n_bbox = draw.textbbox((0, 0), reshaped_bottom, font=name_font)
         nw = n_bbox[2] - n_bbox[0]
-        draw.text(((width - nw)//2, 850), reshaped_bottom, font=name_font, fill=(0, 0, 0))
+        draw.text(((width - nw)//2, 880), reshaped_bottom, font=name_font, fill=(0, 0, 0))
         
         # Decoration: Add some simple stars/hearts effect (optional but nice)
         # For brevity, we'll keep it clean as requested.

@@ -104,17 +104,18 @@ def generate_storybook_page(character_description, page_prompt, child_name=None)
         name_part = f"named {child_name}" if child_name else ""
         
         full_prompt = (
-            f"A high-quality classic children's book illustration of a child {name_part}, described as: {character_description}. "
+            f"A high-quality classic children's book illustration of a child {name_part}. "
+            f"CHARACTER DESCRIPTION: {character_description}. "
             f"Style: Soft watercolor and colored pencil textures, gentle hand-drawn look, pastel color palette, clean white background, reminiscent of nursery storybooks. "
             f"COMPOSITION: The scene MUST be framed centrally such that the character and action are well-contained, allowing for text to be placed clearly inside the frame of the image (e.g. at the bottom or top). "
             f"The character is shown in this scene: {page_prompt}. "
             f"The scene is illuminated by soft, natural lighting, creating a heartwarming and nostalgic vibe. "
             f"The colors are gentle, with soft outlines and simple shapes. "
             f"CRITICAL INSTRUCTIONS: "
-            f"1. Keep the child with the SAME cloth and features, just change poses. "
-            f"2. Keep the composition framed such that text can be placed inside the frame of the photo. "
-            f"3. Ensure the name of the child is conceptually represented as the hero."
-            f"4. The main character must look EXACTLY like the description provided (Face, Hair, Clothing)."
+            f"1. YOU MUST KEEP the child with the EXACT SAME features and clothing as described in the CHARACTER DESCRIPTION. "
+            f"2. DO NOT modify any physical traits or outfits. ONLY change the pose and action to match the scene. "
+            f"3. Keep the composition framed such that text can be placed below the photo. "
+            f"4. The main character must look IDENTICAL in every page."
         )
         
         # OpenRouter image generation via Chat Completions

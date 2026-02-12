@@ -304,7 +304,13 @@ def process_story_generation(sender_id, value, is_preview=False):
             send_text_message(sender_id, "🖼️ جاري تجهيز معاينة الغلاف...")
             
             # Generate Cover Page
-            cover_prompt = f"A beautiful circular artistic frame cover featuring the hero: {char_desc}. Soft watercolor and colored pencil textures, clean white background, surrounded by small thematic elements."
+            cover_prompt = (
+                f"A beautiful artistic cover illustration featuring the hero: {char_desc}. "
+                f"Style: Classic children's book illustration, soft watercolor and colored pencil textures, hand-drawn look, gentle pastel color palette, clean white background. "
+                f"COMPOSITION: The character is centered inside a soft, artistic circular frame. "
+                f"Leave clear white space at the very top for a title and at the very bottom for a name. "
+                f"The overall feel is heartwarming and nostalgic, reminiscent of professional nursery storybooks."
+            )
             try:
                 cover_ai_url = generate_storybook_page(char_desc, cover_prompt, child_name=child_name)
                 
