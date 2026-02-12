@@ -8,14 +8,15 @@ from openai import OpenAI
 api_key = os.getenv("OPENROUTER_API_KEY") or os.getenv("OPENAI_API_KEY") or "not_set"
 client = OpenAI(base_url="https://openrouter.ai/api/v1", api_key=api_key)
 
-# 2. القواعد الفنية الصارمة (لضمان الجمالية ومنع النصوص العشوائية)
+# 2. القواعد الفنية الصارمة (تم تحديثها لمنع "الهلوسة النصية" نهائياً)
 GLOBAL_STORYBOOK_STYLE = """
-You are a professional children's book illustrator. 
-STYLE: Soft watercolor and colored pencil, warm pastel tones, clean white background. 
-RULES: 
-- The image must be PURELY VISUAL. No text, letters, or banners.
-- Centralize the character. Leave TOP 15% and BOTTOM 15% as clear white space.
-- Maintain 100% character consistency based on the provided description.
+You are a professional children's illustrator. 
+STYLE: Soft watercolor, warm pastel tones, clean white background. 
+STRICT RULES: 
+- PURE VISUAL ONLY. Absolutely NO text, NO letters, NO words, NO banners.
+- Centralize the character. 
+- Leave the TOP 20% and BOTTOM 20% as PURE WHITE EMPTY SPACE for external text overlay.
+- Do NOT draw any titles or frames.
 """.strip()
 
 def create_character_reference(image_data, gender="boy", is_url=True):
@@ -26,11 +27,11 @@ def create_character_reference(image_data, gender="boy", is_url=True):
     try:
         image_content = {"url": image_data} if is_url else {"url": f"data:image/jpeg;base64,{image_data}"}
         
-        # هذا هو البرومبت الذي سينتج الوصف الذي أعجبك
+        # البرومبت الذهبي لضمان استخراج ملامح دقيقة جداً وثابتة
         analysis_prompt = (
             f"Act as a professional character designer. Analyze this {gender}'s photo and provide "
             f"a highly detailed visual description (MAX 100 words). Describe their exact age, "
-            f"hair texture/color, eye shape/expression, and EXACT clothing (colors, patterns, type). "
+            f"hair texture/color, eye shape/expression, and EXACT clothing (colors, stripes, patterns). "
             f"End with the lighting and storybook atmosphere. Output as a single fluid paragraph."
         )
 
@@ -53,15 +54,16 @@ def create_character_reference(image_data, gender="boy", is_url=True):
 
 def generate_storybook_page(character_description, page_prompt, gender="boy", is_cover=False):
     """
-    توليد الصفحة باستخدام الوصف التفصيلي المستخرج
+    توليد الصفحة باستخدام الوصف التفصيلي المستخرج مع منع النصوص تماماً
     """
     try:
-        # دمج الوصف التفصيلي مع فعل الصفحة المطلوبة
+        # تجنب استخدام كلمة 'Cover' أو 'Book' في البرومبت لمنع الذكاء الاصطناعي من الكتابة
+        scene_type = "A central artistic portrait" if is_cover else "A visual story scene"
+        
         full_prompt = (
-            f"{'COVER ART:' if is_cover else 'STORY SCENE:'} "
-            f"The character is: {character_description}. "
-            f"In this scene: {page_prompt}. "
-            f"Ensure the clothing and facial features remain identical to the description."
+            f"{scene_type} featuring the following character: {character_description}. "
+            f"Action in this scene: {page_prompt}. "
+            f"STRICT: No text, No typography. Ensure features match the description perfectly."
         )
 
         payload = {
