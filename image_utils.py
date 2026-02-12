@@ -27,13 +27,10 @@ def overlay_text_on_image(image_url, text, output_path):
         overlay = Image.new('RGBA', img.size, (0,0,0,0))
         draw = ImageDraw.Draw(overlay)
         
-        # Wrap text to fit width (simple character count approximation)
-        import textwrap
-        # Reshape requires logical text first. We wrap logical text.
-        wrapped_lines = textwrap.wrap(text, width=45) # ~45 chars fits well at font size 50
-        
+        # Prepare Arabic text - Reshaping line by line for better multiline support
+        lines = text.split('\n')
         processed_lines = []
-        for line in wrapped_lines:
+        for line in lines:
             reshaped_line = arabic_reshaper.reshape(line)
             bidi_line = get_display(reshaped_line)
             processed_lines.append(bidi_line)
