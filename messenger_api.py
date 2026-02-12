@@ -90,4 +90,46 @@ def send_file(sender_id, file_path):
     r = requests.post("https://graph.facebook.com/v15.0/me/messages", params=params, data=data, files=files)
     
     if r.status_code != 200:
-        print(f"Error sending file: {r.status_code}, {r.text}")
+        logger.error(f"Error sending file: {r.status_code}, {r.text}")
+
+def send_image(sender_id, image_path):
+    """
+    Sends an image to the user.
+    """
+    if not PAGE_ACCESS_TOKEN:
+        logger.error("PAGE_ACCESS_TOKEN is missing")
+        return
+
+    params = {
+        "access_token": PAGE_ACCESS_TOKEN
+    }
+    
+    data = {
+        "recipient": json.dumps({"id": sender_id}),
+        "message": json.dumps({
+            "attachment": {
+                "type": "image", 
+                "payload": {}
+            }
+        })
+    }
+    
+    # Prepare the file
+    # Determine mime type (simple check)
+    mime_type = "image/png"
+    if image_path.lower().endswith(".jpg") or image_path.lower().endswith(".jpeg"):
+        mime_type = "image/jpeg"
+        
+    try:
+        files = {
+            "filedata": (os.path.basename(image_path), open(image_path, "rb"), mime_type)
+        }
+        
+        r = requests.post("https://graph.facebook.com/v15.0/me/messages", params=params, data=data, files=files)
+        
+        if r.status_code != 200:
+            logger.error(f"Error sending image: {r.status_code}, {r.text}")
+        else:
+            logger.info(f"Image sent to {sender_id}")
+    except Exception as e:
+        logger.error(f"Exception sending image: {e}")

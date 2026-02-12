@@ -5,7 +5,7 @@ import uvicorn
 import logging
 import requests
 import base64
-from messenger_api import send_text_message, send_quick_replies, send_file
+from messenger_api import send_text_message, send_quick_replies, send_file, send_image
 from story import generate_story
 from pdf_utils import create_pdf
 from openai_service import transform_photo_to_character
@@ -278,7 +278,7 @@ def process_story_generation(sender_id, value, is_preview=False):
                     cover_path = create_cover_page(cover_ai_url, title_text, child_name, cover_temp_path)
                     if cover_path:
                         generated_images.append(cover_path)
-                        send_file(sender_id, cover_path)
+                        send_image(sender_id, cover_path)
                     else:
                         logger.error("Failed to create cover page image (create_cover_page returned None)")
                         # Fallback: Send the raw AI image
@@ -341,7 +341,7 @@ def process_story_generation(sender_id, value, is_preview=False):
                     
                     # If preview mode, send the image immediately
                     if is_preview:
-                        send_file(sender_id, temp_img_path)
+                        send_image(sender_id, temp_img_path)
                 else:
                     logger.error(f"Failed to overlay text for page {i+1}")
             else:
