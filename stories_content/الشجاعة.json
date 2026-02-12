@@ -1,103 +1,258 @@
-{
+ {
     "1-2": {
+        "age_group": "1-2 years",
+        "learning_goals": ["Building confidence", "Trying new things", "Self-belief", "Overcoming small fears"],
+        "character_description": {
+            "child_name": "{child_name}",
+            "appearance": "Cute toddler with round chubby cheeks, big sparkling brown eyes, short curly dark hair, warm skin tone, sweet gentle smile",
+            "outfit": "Red and white horizontal striped cotton sweatshirt, comfortable blue denim overalls with yellow buttons, white sneakers with velcro straps",
+            "personality": "Brave, determined, confident, adventurous despite being young"
+        },
         "pages": [
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, standing in front of a small colorful slide, 'I Can Do It!' written child-style in the background, backyard setting",
-                "text": "السلم عالي.. وبطلنا خايف؟ لا!"
+                "prompt": "Classic children's storybook illustration style, warm watercolor and soft pencil technique, encouraging backyard scene: a cute toddler (round chubby cheeks, big sparkling brown eyes, short curly dark hair, warm skin tone, sweet gentle smile) wearing a red and white horizontal striped cotton sweatshirt and comfortable blue denim overalls with yellow buttons and white sneakers with velcro straps, standing confidently in front of a small colorful playground slide (bright red and yellow), hands on hips in a determined pose, the child-style hand-drawn text 'I Can Do It!' appearing in fun colorful letters floating in the background sky, sunny cheerful backyard setting with green grass, a few toys scattered around (red ball, yellow bucket), white fence in background, warm encouraging atmosphere, professional children's book quality, detailed and expressive, storybook charm",
+                "text": "السلم عالي.. وبطلنا خايف؟ لا!",
+                "interactive_element": "قول معايا: أنا أقدر! 💪",
+                "parent_tip": "Encourage your toddler to try new physical activities with positive reinforcement"
             },
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, placing one hand on the first step of a small slide and lifting a foot, 'One.. Two!' motion effect",
-                "text": "تاتا تاتا.. واحد.. اتنين! أنا شجاع."
+                "prompt": "Classic storybook illustration, dynamic watercolor action scene, moment of bravery: the same cute toddler (round chubby cheeks, big sparkling brown eyes, short curly dark hair, warm skin, sweet smile) in red and white striped sweatshirt and blue overalls, placing one small determined hand firmly on the first step of the small colorful slide ladder, lifting one foot with sneaker onto the first rung, face showing concentration mixed with excitement, motion effect lines around the foot suggesting movement, the fun text 'One.. Two!' in playful hand-drawn letters, sunny garden background softly blurred, warm encouraging lighting, professional children's book illustration emphasizing first brave steps and counting, detailed and supportive",
+                "text": "تاتا تاتا.. واحد.. اتنين! أنا شجاع.",
+                "interactive_element": "عد معايا: واحد... اتنين! 🔢",
+                "sound_effect": "تاتا تاتا!"
             },
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, climbing the small ladder while laughing, mother clapping in the background, sunny garden",
-                "text": "بطلنا بيقول: أنا أقدر.. أنا أقدر!"
+                "prompt": "Classic children's storybook watercolor illustration, joyful climbing scene: the adorable toddler (round chubby cheeks, sparkling brown eyes, curly dark hair, warm skin, big happy smile showing small teeth) wearing red and white striped sweatshirt and blue denim overalls, actively climbing the small colorful slide ladder with both hands gripping the rails and feet on the steps, head tilted back laughing with pure joy and pride, a loving mother figure with gentle features and warm smile visible in the soft-focus background clapping her hands in encouragement and pride, sunny beautiful garden setting with flowers (daisies, tulips) blooming, bright blue sky, golden sunlight, warm supportive atmosphere celebrating the child's courage, professional storybook quality, detailed and heartwarming",
+                "text": "بطلنا بيقول: أنا أقدر.. أنا أقدر!",
+                "interactive_element": "صفق لبطلنا الشجاع! 👏",
+                "parent_tip": "Celebrate small victories - this builds confidence!"
             },
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, sitting at the top of a small slide, looking down with a huge proud smile",
-                "text": "هييييه! أنا فوق! أنا بطل شجاع."
+                "prompt": "Classic storybook illustration, triumphant watercolor moment, top of the world feeling: the proud toddler (round chubby cheeks, big sparkling brown eyes full of pride, short curly dark hair, warm skin tone, huge genuine proud smile) in red and white striped sweatshirt and blue overalls with yellow buttons, sitting confidently at the top of the small colorful slide platform, looking down at the slide path below with an expression of achievement and joy, both hands gripping the side rails, legs dangling, the text 'I did it!' in golden sparkly letters above, sunny garden view from elevated perspective, soft clouds in blue sky, warm golden lighting making the moment feel special, professional children's book illustration capturing the feeling of accomplishment, detailed and inspiring",
+                "text": "هييييه! أنا فوق! أنا بطل شجاع.",
+                "interactive_element": "ارفع إيدك فوق زي البطل! 🙌",
+                "emotion_label": "فخور 💛"
             },
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, sliding down the small slide with joy, 'Woooii!', mother kissing the child's cheek in the background",
-                "text": "وووووي! شاطر يا بطل.. إنت شجاع أوي!"
+                "prompt": "Classic children's storybook watercolor illustration, celebration scene full of joy: the ecstatic toddler (round chubby cheeks, sparkling brown eyes, curly dark hair flying in wind, warm skin, laughing mouth wide open with delight) wearing red and white striped sweatshirt and blue denim overalls, sliding down the colorful slide with arms raised high in the air, motion blur suggesting speed and excitement, the playful text 'Woooii!' in dynamic curved letters following the slide path, in the background the loving mother leaning in to kiss the child's cheek with a proud smile and hearts floating around, sunny cheerful garden setting, flowers and grass, golden afternoon light, incredibly warm celebratory atmosphere, professional children's book quality emphasizing joy and achievement, detailed and triumphant",
+                "text": "وووووي! شاطر يا بطل.. إنت شجاع أوي!",
+                "interactive_element": "يالا ننزل زي الشاطرين! وووي! 🎢",
+                "sound_effect": "وووووي!",
+                "reward_sticker": "⭐ نجمة الشجاعة!"
+            }
+        ],
+        "song": "أنا أقدر... أنا شجاع! 🎵\nواحد اتنين... أنا طالع! 🎵",
+        "activity_suggestion": "خلي طفلك يجرب حاجة جديدة كل يوم - حتى لو صغيرة - وامدحه!",
+        "pages": [
+            {
+                "prompt": "Classic children's storybook illustration, warm watercolor reward page layout with soft edges, featuring cute illustrated cartoon-style golden stars with brave lion faces, shining courage badges with superhero symbols, a friendly loving parent character with gentle features cheering for a happy toddler (round chubby cheeks, bright eyes, curly hair) wearing striped shirt standing on a winner's podium with arms raised victoriously, soft pastel background in warm orange and light yellow with subtle sparkles and small flags, decorative text areas with hand-drawn borders for tips and rewards, encouraging and empowering atmosphere, storybook charm with traditional children's book illustration style, detailed and motivational",
+                "text": "🦁 مبروك يا بطل الشجاعة! 🦁\n\n💪 اتعلمت:\n✓ أنا أقدر أجرب حاجات جديدة\n✓ الخوف عادي، بس الشجاعة أقوى\n✓ واحد خطوة.. اتنين خطوة.. أنا طالع!\n\n🌟 نظام المكافآت:\n⭐ نجمة الشجاعة - لما تجرب حاجة جديدة\n💫 نجمة المحاولة - لما تحاول تاني\n💖 نجمة النجاح - لما تنجح\n👑 تاج البطل الشجاع - ٥ نجوم\n🦁 شارة الأسد - للشجعان\n\n💡 نصائح للأهل:\n✓ شجع طفلك يجرب أنشطة جديدة\n✓ احتفل بكل محاولة، مش بس النجاح\n✓ قول 'أنا أقدر' معاه كل يوم\n✓ اصبر على المحاولات المتكررة\n✓ امدح الشجاعة أكتر من النتيجة\n✓ خليه يشوفك بتجرب حاجات جديدة\n\n🎭 عناصر تفاعلية:\n🔊 أصوات: تاتا تاتا، وووي!\n✋ حركات: طلّع، انزل، صفق\n🎵 غني: 'أنا أقدر... أنا شجاع!'\n\n📊 جدول الشجاعة:\nكل يوم طفلك يجرب حاجة جديدة، حط نجمة!\n⭐⭐⭐⭐⭐ = تاج البطل! 👑"
             }
         ]
     },
     "2-3": {
+        "age_group": "2-3 years",
+        "learning_goals": ["Helping others despite fear", "Bravery in action", "Empathy", "Being brave for friends"],
+        "character_description": {
+            "child_name": "{child_name}",
+            "appearance": "Adorable young child with round face, large expressive brown eyes with long lashes, medium-length wavy dark brown hair with natural shine, warm olive skin tone, cheerful friendly smile showing small teeth",
+            "outfit": "Bright yellow and white horizontal striped long-sleeve cotton sweatshirt, soft green corduroy pants with front pockets, red canvas shoes with white laces tied in bows",
+            "personality": "Brave, helpful, kind-hearted, courageous helper of those in need"
+        },
         "pages": [
             {
-                "prompt": "Professional 3D Pixar style, a giant sleeping lion with a huge fluffy mane, peaceful garden background",
+                "prompt": "Classic children's storybook illustration style, enchanting watercolor and colored pencil artwork, peaceful garden scene: a magnificent giant sleeping lion with an enormous fluffy golden-brown mane flowing like a cloud, lying peacefully on soft green grass with closed eyes and gentle breathing, tiny flowers (daisies, buttercups) scattered around, beautiful serene garden background with flowering bushes and trees, warm afternoon sunlight filtering through leaves creating dappled shadows, the quiet text 'Shhhhh...' in soft whisper-style letters, incredibly peaceful and calm atmosphere, professional storybook quality illustration, rich details and textures, inviting and gentle despite the lion's size",
                 "text": "كان يا ما كان.. فيه أسد كبيييير. الأسد نايم.. ششششش.",
-                "static_image": "story_assets/courage/courage_storyboard_panel_2_1770828531839.png"
+                "interactive_element": "قول بصوت واطي: ششششش! 🤫",
+                "sound_effect": "ششششش..."
             },
             {
-                "prompt": "Professional 3D Pixar style, child character walking on tiptoes in a garden, giant lion lying down with a thorn in its paw, child looks curious",
+                "prompt": "Classic storybook illustration, warm watercolor discovery scene: an adorable young child (round face, large expressive brown eyes with long lashes, medium-length wavy dark brown hair, warm olive skin, cheerful smile) wearing a bright yellow and white horizontal striped long-sleeve cotton sweatshirt, soft green corduroy pants, and red canvas shoes, walking carefully on tiptoes with exaggerated tip-toe posture through the garden with arms out for balance, looking curious and concerned, the giant fluffy-maned lion lying nearby with one huge paw raised showing a large red thorn stuck in it, the lion's face showing discomfort with one eye squeezed shut and mouth open saying 'Ow!', beautiful garden setting with flowers and grass, gentle sunlight, professional children's book illustration showing the moment of discovery and empathy, detailed and expressive",
                 "text": "جه {child_name} الشجاع.. مشي تاتا تاتا.. لقى الأسد زعلان وبينادي: آي يا رجلي.. آي.",
-                "static_image": "story_assets/courage/courage_storyboard_panel_3_final_retry_1770828640589.png"
+                "interactive_element": "امشي على صوابعك: تاتا تاتا! 👣",
+                "emotion_label": "قلقان بس شجاع 💚"
             },
             {
-                "prompt": "Professional 3D Pixar style, child character comforting the giant lion, holding its big paw, lion looks scared but relieved",
+                "prompt": "Classic children's storybook watercolor illustration, touching moment of courage and comfort: the brave child (round face, expressive brown eyes full of kindness, wavy dark hair, warm olive skin, gentle encouraging smile) in yellow and white striped sweatshirt and green corduroy pants, kneeling beside the giant lion and gently holding the lion's enormous paw with both small hands in a comforting gesture, looking at the lion with caring eyes, the giant lion with fluffy golden mane looking scared and vulnerable despite his size with eyes squeezed shut tight and worried expression, one paw raised with the red thorn visible, the child appearing small but brave next to the massive lion, warm garden setting, soft golden lighting, professional storybook quality emphasizing bravery, empathy and helping others despite fear, detailed and heartwarming",
                 "text": "{child_name} قاله: متخافش يا أسد، أنا بطل وشجاع! والأسد كان خايف ومغمض عينه.",
-                "static_image": "story_assets/courage/courage_storyboard_panel_4_retry_1770828593585.png"
+                "interactive_element": "قول للأسد: متخافش! 🦁",
+                "parent_tip": "Teach children that being brave means helping others even when scared"
             },
             {
-                "prompt": "Professional 3D Pixar style, child character pulling a large thorn from a lion's paw, the thorn is flying in the air, action shot",
+                "prompt": "Classic storybook illustration, dynamic watercolor action moment: the determined child (round face, large brown eyes focused with concentration, wavy dark hair, warm skin, face showing effort) wearing yellow striped sweatshirt and green pants, pulling with both hands on a large red thorn that's coming out of the giant lion's paw, the thorn flying dramatically through the air with motion lines and a 'POP!' effect, small sparkles around the paw showing the moment of release, the child's feet planted firmly on the ground showing effort, the lion's paw in foreground with the child pulling, beautiful garden background, dynamic lighting catching the action moment, professional children's book illustration with comic-book style action energy, detailed and exciting, capturing the heroic moment",
                 "text": "بإيده الصغننة، شد الشوكة.. تشب! الشوكة طلعت والوجع طار!",
-                "static_image": "story_assets/courage/courage_storyboard_panel_5_1770828547968.png"
+                "interactive_element": "اشد الشوكة معاه: تشب! 💪",
+                "sound_effect": "تشب!"
             },
             {
-                "prompt": "Professional 3D Pixar style, child character riding on the back of the happy giant lion, both are laughing and roaming a beautiful garden",
+                "prompt": "Classic children's storybook watercolor illustration, joyful celebration scene: the happy child (round face, large sparkling brown eyes full of joy, wavy dark hair flowing in wind, warm olive skin, huge delighted smile) in yellow and white striped sweatshirt and green corduroy pants, riding proudly on the back of the magnificent giant lion with the enormous golden fluffy mane flowing in the breeze, sitting comfortably between the lion's shoulders, both the child and lion laughing with pure happiness, the grateful lion with a big friendly smile showing he's no longer in pain, both traveling through a beautiful lush garden filled with colorful flowers (roses, sunflowers, tulips), butterflies flying around them, birds in trees, warm golden afternoon sunlight, rainbow appearing in the background sky, hearts and sparkles floating in the air, incredibly warm and celebratory atmosphere, professional children's book quality showing friendship and gratitude, detailed and triumphant",
                 "text": "الأسد فرح وقال: شكراً يا {child_name} يا بطل! وشاله ولفوا الحديقة وهم مبسوطين.",
-                "static_image": "story_assets/courage/courage_storyboard_panel_6_1770828565056.png"
+                "interactive_element": "يالا نركب الأسد ونلف! 🎠",
+                "reward_sticker": "🦁 شارة الأسد الشجاع!"
+            }
+        ],
+        "song": "أنا شجاع... أساعد صاحبي! 🎵\nمش خايف... أنا بطل قوي! 🎵",
+        "discussion_questions": [
+            "ليه {child_name} ساعد الأسد؟",
+            "هل {child_name} كان خايف؟",
+            "إزاي ممكن تساعد حد خايف؟"
+        ],
+        "activity_suggestion": "مثّل القصة بالعرايس - خلي طفلك يكون البطل الشجاع!",
+        "pages": [
+            {
+                "prompt": "Classic children's storybook illustration, celebratory watercolor and colored pencil artwork, heroic reward certificate page design with ornate hand-drawn border of jungle vines and flowers, featuring the brave child character (round face, expressive brown eyes, wavy dark hair) and the friendly giant lion with golden mane side by side both smiling and holding opposite ends of a decorative 'Bravery Award' banner together, illustrated golden stars with lion faces, red hearts, courage badges with superhero shields arranged in a semi-circle, warm sunset orange and golden yellow background with safari trees silhouettes, text areas with adventure-style borders, celebratory heroic atmosphere, traditional storybook quality, warm and empowering, detailed illustration emphasizing bravery and friendship",
+                "text": "🦁 مبروك يا بطل ساعد الأسد! 🦁\n\n💪 الشجاعة اللي اتعلمناها:\n✓ نساعد الناس حتى لو كبار\n✓ الشجاعة مش معناها مفيش خوف\n✓ الشجاعة معناها نعمل الصح رغم الخوف\n✓ لما نساعد، الكل بيفرح\n\n🌟 نظام المكافآت:\n⭐ نجمة المساعدة - لما تساعد حد\n💫 نجمة الشجاعة - لما تعمل حاجة صعبة\n💖 نجمة القلب الطيب - لما تهتم بغيرك\n👑 تاج البطل الشجاع - ٥ نجوم\n🦁 شارة الأسد - للي بيساعد الكبار\n\n💡 نصائح للأهل:\n✓ علّم طفلك إن الشجاعة مش غياب الخوف\n✓ الشجاعة هي إننا نعمل الصح رغم الخوف\n✓ امدح المساعدة والشجاعة\n✓ مثّل القصة بالعرايس\n✓ اسأل: 'إيه أشجع حاجة عملتها؟'\n✓ شجع طفلك يساعد الآخرين\n\n🎭 أنشطة تفاعلية:\n🔊 أصوات: ششش، آي، تشب!\n✋ حركات: امشي تاتا تاتا، اشد الشوكة\n🎵 غني: 'أنا شجاع... أساعد صاحبي!'\n🎨 ارسم: أسد كبير ولونه\n🎭 مثّل: كن البطل وساعد الأسد\n\n❓ أسئلة للمناقشة:\n• ليه {child_name} ساعد الأسد؟\n• الأسد كان خايف ليه؟\n• إزاي ممكن تساعد حد خايف؟\n• مين ممكن تساعده النهارده؟\n\n💝 تحدي الأسبوع:\nساعد ٣ أشخاص هذا الأسبوع وكن شجاعاً!"
             }
         ]
     },
     "3-4": {
+        "age_group": "3-4 years",
+        "learning_goals": ["Overcoming fear of dark/unknown", "Exploration courage", "Discovering surprises", "Fear turns to adventure"],
+        "character_description": {
+            "child_name": "{child_name}",
+            "appearance": "Sweet-faced child with bright hazel eyes, shoulder-length straight dark brown hair with side-swept bangs, warm peachy skin tone, friendly gentle smile with dimples",
+            "outfit": "Navy blue and white horizontal striped cotton sweatshirt with long sleeves, khaki beige cargo pants with side pockets and elastic waistband, green and white sneakers with velcro straps",
+            "personality": "Brave explorer, adventurous, curious, overcomes fears through courage"
+        },
         "pages": [
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, standing in front of a large playground tunnel, slightly dark inside, mysterious but fun atmosphere",
-                "text": "كان يا ما كان.. فيه نفق كبييير وضلمة. بطلنا خاف شوية؟ ممكن.. بس هو شجاع!"
+                "prompt": "Classic children's storybook illustration style, warm watercolor technique, intriguing playground scene: a sweet-faced child (bright hazel eyes, shoulder-length straight dark brown hair with side-swept bangs, warm peachy skin, friendly smile with dimples) wearing a navy blue and white horizontal striped cotton sweatshirt with long sleeves, khaki beige cargo pants with side pockets, and green sneakers, standing at the entrance of a large colorful playground tunnel (bright blue and yellow curved tube), the inside of the tunnel appearing slightly dark and mysterious but not scary with a faint glow at the far end suggesting light on the other side, the child's posture showing slight hesitation but also determination with one foot forward, other children playing happily in soft focus in the playground background, sunny park setting with trees and playground equipment, mysterious but inviting atmosphere, professional children's book quality, detailed and engaging",
+                "text": "كان يا ما كان.. فيه نفق كبييير وضلمة. بطلنا خاف شوية؟ ممكن.. بس هو شجاع!",
+                "interactive_element": "هل إنت شجاع زي بطلنا؟ 💪",
+                "emotion_label": "خايف شوية بس شجاع 💙"
             },
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, taking a brave first step into the dark tunnel, arm outstretched, determined look",
-                "text": "مشي تاتا تاتا.. وقال بصوت قوي: أنا مش خايف! أنا بطل المستكشفين!"
+                "prompt": "Classic storybook illustration, dynamic watercolor moment of bravery, taking the first step: the same child (bright hazel eyes showing determination, dark hair with bangs, peachy skin, dimpled face with brave expression) in navy striped sweatshirt and khaki cargo pants, taking a courageous first step into the dark tunnel entrance with one leg extended forward into the shadowy space, one arm outstretched ahead feeling the way with fingers spread, the other arm still outside in the light, body language showing determination and bravery despite uncertainty, face showing focused concentration mixed with courage, visible transition from bright sunlight outside to mysterious dimness inside the tunnel, warm encouraging lighting from behind creating a hero silhouette effect, professional children's book illustration emphasizing the brave moment of facing fears, detailed and inspiring",
+                "text": "مشي تاتا تاتا.. وقال بصوت قوي: أنا مش خايف! أنا بطل المستكشفين!",
+                "interactive_element": "قول معايا بصوت قوي: أنا مش خايف! 🔊",
+                "sound_effect": "تاتا تاتا!",
+                "parent_tip": "Encourage children to verbalize bravery - it builds confidence!"
             },
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, inside the tunnel, finding a bright colorful ball, 'Surprise!' expression, glowing eyes",
-                "text": "لقى إيه؟ كورة جميلة كانت مستخبية! الضلمة طلعت مش وحشة، دي طلعت مكان للمفاجآت."
+                "prompt": "Classic children's storybook watercolor illustration, exciting discovery moment inside tunnel: the delighted child (bright hazel eyes wide with surprise and joy, shoulder-length dark hair, peachy skin, huge excited smile with dimples showing) wearing navy blue and white striped sweatshirt and khaki pants, inside the tunnel environment which is softly lit with a magical blue-purple glow, bending down and reaching out to pick up a bright colorful ball (red, yellow, blue stripes) that was hidden in the tunnel, the child's expression showing pure surprise and happiness with 'Surprise!' written in playful glowing letters in the air, small sparkles around the ball making it look special and magical, the tunnel walls showing fun patterns and not scary at all, warm mystical lighting creating a sense of wonder and discovery, professional children's book quality showing that facing fears leads to surprises, detailed and joyful",
+                "text": "لقى إيه؟ كورة جميلة كانت مستخبية! الضلمة طلعت مش وحشة، دي طلعت مكان للمفاجآت.",
+                "interactive_element": "ياااه! مفاجأة! 🎉",
+                "discussion_prompt": "الضلمة كانت وحشة ولا لأ؟"
             },
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, running out of the other side of the tunnel, 'Woooii!', bright sunlight outside",
-                "text": "خرج من الناحية التانية وجري بسرعة.. وووووي! أنا عديت النفق لوحدي!"
+                "prompt": "Classic storybook illustration, triumphant watercolor action scene, burst into light: the ecstatic child (bright hazel eyes sparkling with joy and pride, dark hair with bangs flowing back from movement, peachy skin, laughing face with dimples and wide smile) in navy striped sweatshirt and khaki cargo pants, running at full speed out of the other end of the colorful tunnel with arms raised high in victory holding the colorful ball, motion blur lines suggesting fast movement and excitement, the playful text 'Woooii!' in dynamic curved letters above, emerging into brilliant bright golden sunlight that creates a dramatic contrast with the tunnel's darkness behind, green grass and blue sky, flowers, trees in the background, incredibly triumphant and liberating atmosphere, professional children's book illustration celebrating overcoming fears, detailed and energetic",
+                "text": "خرج من الناحية التانية وجري بسرعة.. وووووي! أنا عديت النفق لوحدي!",
+                "interactive_element": "يالا نجري ونفرح! وووي! 🏃",
+                "sound_effect": "وووووي!",
+                "emotion_label": "فخور جداً 💛"
             },
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, hugging mother while holding a colorful ball up, celebratory garden park setting",
-                "text": "ماما سقفت وقالت: برافو يا بطل الشجاعة! بطلنا مبقاش يخاف من الضلمة تاني."
+                "prompt": "Classic children's storybook watercolor illustration, warm celebration and pride scene: the proud happy child (bright hazel eyes full of joy, shoulder-length dark hair, peachy skin, biggest dimpled smile) wearing navy blue and white striped sweatshirt and khaki cargo pants, running into a warm embrace with loving mother who has gentle kind features and warm smile, the child holding up the colorful striped ball victoriously with one hand while hugging mother with the other arm, mother clapping and beaming with pride, small hearts and golden stars floating around them, beautiful celebratory garden park setting with colorful playground equipment in background, other children playing happily, flowers blooming, bright sunny afternoon, warm golden lighting creating a glow around the mother and child, professional children's book quality emphasizing achievement, love and overcoming fears, detailed and heartwarming",
+                "text": "ماما سقفت وقالت: برافو يا بطل الشجاعة! بطلنا مبقاش يخاف من الضلمة تاني.",
+                "interactive_element": "صفق للبطل الشجاع! 👏👏",
+                "reward_sticker": "🌟 نجمة قاهر الخوف!"
+            }
+        ],
+        "song": "أنا مش خايف... أنا مستكشف! 🎵\nالضلمة مش وحشة... فيها مفاجآت! 🎵",
+        "discussion_questions": [
+            "بطلنا كان خايف من إيه؟",
+            "لقى إيه في النفق؟",
+            "الضلمة كانت وحشة؟"
+        ],
+        "activity_suggestion": "اعمل نفق من البطاطين والكراسي - واستكشفوه مع بعض!",
+        "pages": [
+            {
+                "prompt": "Classic children's storybook illustration, dynamic watercolor superhero-themed reward page with adventure explorer influence, featuring the child character (bright hazel eyes, shoulder-length dark hair with bangs, peachy skin, confident dimpled smile) wearing their navy blue and white striped sweatshirt and khaki cargo pants with an explorer's vest and a flashlight clipped to the belt, holding a brave explorer flag, standing in a proud confident pose on top of a conquered tunnel with a 'Fear Conquered!' banner, the colorful numbers representing brave steps floating around, other diverse children in the background cheering, achievement badges showing tunnels, flashlights, and courage symbols displayed on an adventure map style board, bright motivational poster aesthetic with deep blues and warm golds, text areas with hand-drawn explorer journal borders, adventurous and empowering atmosphere, classic storybook quality meets brave explorer energy, detailed and encouraging",
+                "text": "🌟 أنت بطل المستكشفين! 🌟\n\n🔦 اتعلمت:\n✓ الضلمة مش وحشة\n✓ المجهول ممكن يكون فيه مفاجآت حلوة\n✓ الشجاعة تخليني أكتشف حاجات جديدة\n✓ أنا أقدر أعدّي أي نفق!\n\n🏆 نظام المكافآت:\n⭐ نجمة الاستكشاف - لما تجرب مكان جديد\n💫 نجمة الشجاعة - لما تعدّي خوفك\n💖 نجمة الاكتشاف - لما تلاقي حاجة جديدة\n👑 تاج المستكشف الشجاع - ٥ نجوم\n🔦 شارة الكشاف - لقاهر الضلمة\n\n🎯 خطوات الشجاعة:\n1️⃣ قف قدام الخوف\n2️⃣ خد نفس عميق\n3️⃣ قول: 'أنا مش خايف!'\n4️⃣ خد خطوة للأمام\n5️⃣ اكتشف المفاجأة!\n\n💡 نصائح للأهل:\n✓ خلي الاستكشاف لعبة ممتعة\n✓ اصنع 'أنفاق' آمنة في البيت\n✓ استخدم الكشاف كأداة شجاعة\n✓ احتفل بكل خطوة جريئة\n✓ شارك في الاستكشاف مع طفلك\n✓ اسأل: 'إيه أكتر حاجة شجاعة عملتها؟'\n\n🎭 أنشطة تفاعلية:\n🔊 أصوات: تاتا تاتا، وووي!\n✋ حركات: امشي بشجاعة، اجري بفخر\n🎵 غني: 'أنا مش خايف... أنا مستكشف!'\n🏗️ اصنع: نفق من البطاطين\n🔦 استكشف: الأماكن الضلمة بأمان\n\n❓ أسئلة للمناقشة:\n• بطلنا كان خايف من إيه؟\n• لقى إيه في النفق؟\n• ليه الضلمة مش وحشة؟\n• إيه المفاجآت اللي ممكن نلاقيها؟\n\n📊 جدول المغامرات:\nكل مرة تستكشف مكان جديد، حط نجمة!\n⭐⭐⭐⭐⭐ = تاج المستكشف! 👑"
             }
         ]
     },
     "4-5": {
+        "age_group": "4-5 years",
+        "learning_goals": ["Overcoming fear of darkness", "Understanding darkness", "Befriending fears", "Nighttime peace"],
+        "moral_lesson": "الشجاعة هي إننا نفهم مخاوفنا - الضلام صديق مش عدو",
+        "character_description": {
+            "child_name": "{child_name}",
+            "appearance": "Intelligent-looking child with warm brown eyes full of curiosity, neat short dark hair with a slight wave, healthy tan skin tone, kind compassionate smile",
+            "outfit": "Forest green and cream horizontal striped long-sleeve cotton sweatshirt, comfortable dark brown corduroy pants with reinforced knees, sturdy brown hiking boots with red laces",
+            "personality": "Thoughtful, brave, learns to understand fears, makes peace with darkness"
+        },
         "pages": [
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, holding a flashlight with a strong smile, 'Conqueror of Darkness' written in the background, mysterious but not scary bedroom setup",
-                "text": "بطلنا كان بيخاف من الضلام اللي بيستخبى ورا الباب وبالليل. كان بيفتكر إن الضلام وحش كبيييير."
+                "prompt": "Classic children's storybook illustration style, warm watercolor and ink technique, bedroom scene with mysterious but not frightening atmosphere: an intelligent-looking child (warm brown eyes showing slight worry but curiosity, neat short dark hair with slight wave, healthy tan skin, thoughtful expression) wearing a forest green and cream horizontal striped long-sleeve cotton sweatshirt and comfortable dark brown corduroy pants, standing in a cozy bedroom holding a bright yellow flashlight with a strong determined smile despite lingering fears, the room having a mysterious ambiance with twilight blue lighting, shadows visible behind a slightly open closet door and under the bed but not scary, the child's own shadow on the wall, the golden glowing text 'Conqueror of Darkness' appearing in brave letters above, comfortable bedroom with toys, bookshelf, window showing evening sky, professional children's book quality illustration balancing mystery with courage, detailed and thoughtful",
+                "text": "بطلنا كان بيخاف من الضلام اللي بيستخبى ورا الباب وبالليل. كان بيفتكر إن الضلام وحش كبيييير.",
+                "interactive_element": "هل إنت بتخاف من الضلام أحياناً؟",
+                "emotion_label": "خايف بس عاوز يفهم 💙",
+                "discussion_prompt": "ليه بطلنا كان خايف من الضلام؟"
             },
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, holding a bright flashlight, stepping bravely into a dimly lit room, friendly night atmosphere",
-                "text": "في ليلة، الضلام نادى عليه بصوت واطي: تعال يا بطل.. أنا مش وحش. بطلنا مسك كشافه وقرر يكون شجاع."
+                "prompt": "Classic storybook illustration, gentle watercolor nighttime scene, moment of invitation and bravery: the same child (warm brown eyes showing a mix of caution and courage, short wavy dark hair, tan skin, determined face) wearing forest green and cream striped sweatshirt and dark brown corduroy pants, holding a bright glowing flashlight that creates a warm cone of light, taking a brave step toward a dimly lit room with one foot forward, the darkness appearing as a gentle presence rather than scary with subtle friendly features suggested in the shadows, a soft speech bubble with gentle wavy letters saying 'Come, brave one... I'm not a monster' in Arabic coming from the darkness, friendly peaceful night atmosphere with soft blue and purple tones, stars visible through a window, warm encouraging lighting from the flashlight creating a safe feeling, professional children's book illustration showing the moment of facing fears with understanding, detailed and compassionate",
+                "text": "في ليلة، الضلام نادى عليه بصوت واطي: تعال يا بطل.. أنا مش وحش. بطلنا مسك كشافه وقرر يكون شجاع.",
+                "interactive_element": "خد نفس عميق وكن شجاعاً! 💪",
+                "sound_effect": "صوت واطي ولطيف...",
+                "parent_tip": "Help children understand that darkness is natural and safe, not something to fear"
             },
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, shining a flashlight behind a door, finding lost toys and a favorite sock, looking surprised and happy",
-                "text": "بطلنا دخل ورا الباب بالكشاف، لقى إن الضلام مجرد مكان مستخبي فيه لعبته الضايعة وشرابه المفضل."
+                "prompt": "Classic children's storybook watercolor illustration, exciting discovery moment with flashlight illumination: the surprised and happy child (warm brown eyes wide with wonder and relief, short dark wavy hair, tan skin, amazed smile) wearing forest green striped sweatshirt and brown corduroy pants, bending down and shining the bright yellow flashlight beam behind a bedroom door, the flashlight creating a warm golden cone of light that reveals treasures - the child's favorite lost toys (a blue teddy bear, red toy car, yellow blocks) and a beloved striped sock on the floor, the 'scary' darkness just being a normal space with normal things, expression showing surprise mixed with happiness and relief, the shadows now appearing friendly and harmless, cozy bedroom setting with soft nighttime blues and the warm flashlight glow, professional children's book quality showing the revelation that darkness hides ordinary not scary things, detailed and reassuring",
+                "text": "بطلنا دخل ورا الباب بالكشاف، لقى إن الضلام مجرد مكان مستخبي فيه لعبته الضايعة وشرابه المفضل.",
+                "interactive_element": "شوف! الضلام كان بيخبي الحاجات الحلوة! 🔦",
+                "discussion_prompt": "الضلام كان وحش؟ لأ، كان إيه؟"
             },
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, looking out the window at the beautiful starry night and moon, the darkness looks peaceful",
-                "text": "الضلام قاله: أنا اللي بخليك تنام وترتاح، وبخلي النجوم تنور. بطلنا مبقاش خايف وطفى الكشاف."
+                "prompt": "Classic storybook illustration, peaceful watercolor nighttime wisdom scene: the thoughtful child (warm brown eyes full of understanding and peace, neat short dark hair, tan skin, gentle grateful smile) in forest green and cream striped sweatshirt and brown corduroy pants, standing at a bedroom window looking out at the beautiful starry night sky filled with twinkling silver stars and a glowing gentle moon with a kind face, the darkness outside appearing soft, peaceful and protective rather than scary, showing the beauty of night with deep blues and purples, silhouettes of sleeping trees, maybe an owl on a branch, the child's face illuminated by the soft moonlight showing comprehension and comfort, a subtle friendly darkness presence beside the child like a guardian, professional children's book quality illustration showing the understanding that darkness brings rest, stars, and peace, detailed and serene",
+                "text": "الضلام قاله: أنا اللي بخليك تنام وترتاح، وبخلي النجوم تنور. بطلنا مبقاش خايف وطفى الكشاف.",
+                "interactive_element": "ابص للنجوم الجميلة! ⭐✨",
+                "emotion_label": "مطمئن وفاهم 💜",
+                "discussion_prompt": "الضلام بيعمل إيه كويس؟"
             },
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, sleeping peacefully in a cozy bed, smiling in sleep, guardian angel style atmosphere",
-                "text": "بطلنا نام في سريره وهو مطمن، وقال: أنا شجاع والضلام بقى صاحبي."
+                "prompt": "Classic children's storybook watercolor illustration, serene peaceful sleep scene with guardian angel atmosphere: the child (warm brown eyes closed peacefully in sleep, short dark hair spread on pillow, tan skin with healthy glow, gentle content smile) wearing comfortable pajamas, sleeping deeply and peacefully in a cozy bed with soft blankets (green and cream colors matching their outfit), lying on a fluffy pillow, the bedroom bathed in gentle peaceful darkness with soft blue moonlight streaming through the window creating a magical glow, stars visible in the night sky outside, maybe a friendly moon peeking through the window, the darkness appearing as a gentle protective presence like a soft blanket over the room, small sparkles in the air suggesting sweet dreams, a few favorite stuffed animals tucked in with the child, incredibly peaceful and safe atmosphere, professional children's book quality emphasizing security, rest and friendship with darkness, detailed and comforting",
+                "text": "بطلنا نام في سريره وهو مطمن، وقال: أنا شجاع والضلام بقى صاحبي.",
+                "interactive_element": "تصبح على خير يا بطل! 😴💤",
+                "reward_sticker": "🌙 شارة صديق القمر!",
+                "discussion_prompt": "إيه اللي اتعلمناه عن الضلام؟"
+            }
+        ],
+        "song": "الضلام صديقي... مش وحش كبير! 🎵\nبخليني أنام... والنجوم تنير! 🎵",
+        "discussion_questions": [
+            "ليه بطلنا كان خايف من الضلام؟",
+            "لقى إيه في الضلام؟",
+            "الضلام عمل إيه كويس؟",
+            "هل الضلام وحش ولا صاحب؟"
+        ],
+        "activity_suggestion": "اطفوا النور مع بعض وابصوا للنجوم - اكتشفوا جمال الليل!",
+        "extension_activity": "ارسم النجوم والقمر على ورق أسود - الضلام جميل! 🎨",
+        "pages": [
+            {
+                "prompt": "Classic children's storybook illustration, peaceful watercolor reward page with nighttime wisdom theme and hand-painted texture, featuring the child character (warm brown eyes, neat short wavy dark hair, healthy tan skin, peaceful smile) wearing forest green and cream striped sweatshirt and brown corduroy pants, standing confidently under a beautiful starry night sky with a gentle smiling moon and twinkling stars, holding a small flashlight pointed down (not needing it anymore), standing beside a friendly personified darkness figure that looks like a gentle guardian with kind eyes made of night sky, illustrated golden stars and silver crescent moons floating around, a 'Darkness Friend Certificate' with decorative night-sky border in the child's hand, deep blues and purples with golden star accents in the background, peaceful nighttime scene with sleeping flowers and resting trees, text areas with constellation-pattern borders, serene and wise atmosphere, traditional storybook quality with rich watercolor details, heartwarming and understanding, celebrating wisdom and courage",
+                "text": "🌙 أنت بطل فهم الضلام! 🌙\n\n⭐ الحقيقة العظيمة:\n'الضلام مش عدو... الضلام صديق!'\n\n💜 اتعلمت:\n✓ الضلام مش وحش - ده صاحب\n✓ الضلام بيخليني أنام وأرتاح\n✓ الضلام بيخلي النجوم تنور\n✓ الضلام بيخبي مفاجآت حلوة\n✓ الشجاعة هي الفهم مش الخوف\n\n🏆 نظام المكافآت:\n⭐ نجمة الفهم - لما تفهم خوفك\n💫 نجمة الشجاعة - لما تواجه الضلام\n💖 نجمة الصداقة - لما تصاحب الضلام\n👑 تاج قاهر المخاوف - ٥ نجوم\n🌙 شارة صديق القمر - للشجعان\n✨ نجمة النجوم - للي بيحب الليل\n\n🌟 حاجات حلوة في الضلام:\n🌙 القمر الجميل\n⭐ النجوم اللامعة\n😴 النوم المريح\n🦉 الحيوانات الليلية\n🌃 السكون والهدوء\n\n💡 نصائح مهمة للأهل:\n✓ اشرح إن الضلام طبيعي ومفيد\n✓ اجعل وقت النوم تجربة إيجابية\n✓ ابص مع طفلك على النجوم\n✓ استخدم ضوء خفيف لو محتاج\n✓ اقرأ قصص قبل النوم في جو هادي\n✓ علّم طفلك إن الضلام للراحة\n✓ حول المخاوف لفهم وحكمة\n\n🎭 أنشطة ممتعة:\n🔊 أصوات: صوت الليل الهادي\n✋ حركات: نام بهدوء، احتضن الضلام\n🎵 غني: 'الضلام صديقي... مش وحش كبير!'\n🔦 استكشف: الضلام بأمان\n🌌 ابص: على النجوم والقمر\n🎨 ارسم: النجوم على ورق أسود\n\n❓ أسئلة للمناقشة:\n• ليه بطلنا كان خايف من الضلام؟\n• لقى إيه في الضلام؟\n• الضلام عمل إيه كويس؟\n• إيه الحاجات الجميلة في الليل؟\n• هل الضلام وحش ولا صاحب؟\n\n🌈 تحدي الحكمة:\n□ ابص على النجوم ليلة واحدة\n□ نام في ضلمة هادية\n□ لاقي حاجة حلوة في الضلام\n□ اشكر الضلام على الراحة\n□ علّم حد إن الضلام صديق\n\n💝 رسالة الحكمة:\nالشجاعة الحقيقية هي إننا نفهم مخاوفنا!\nالضلام مش عدو... الضلام هدية للراحة والنوم!\nكن شجاعاً وحكيماً زي بطلنا! 🌟\n\nتصبح على خير يا بطل! 😴💤"
             }
         ]
+    },
+    
+    "bonus_features": {
+        "reward_system": {
+            "description": "نظام النجوم والملصقات للشجاعة",
+            "stickers": [
+                "⭐ نجمة الشجاعة",
+                "💫 نجمة المحاولة",
+                "💖 نجمة المساعدة",
+                "👑 تاج البطل الشجاع",
+                "🦁 شارة الأسد",
+                "🔦 شارة المستكشف",
+                "🌙 شارة صديق القمر"
+            ]
+        },
+        "parent_guide": {
+            "tips": [
+                "شجع طفلك على مواجهة مخاوفه تدريجياً",
+                "احتفل بكل خطوة شجاعة مهما كانت صغيرة",
+                "علّم أن الشجاعة ليست غياب الخوف بل مواجهته",
+                "كن قدوة في الشجاعة",
+                "اشرح المخاوف بطريقة علمية مناسبة للعمر",
+                "حوّل المواقف المخيفة لمغامرات ممتعة"
+            ]
+        },
+        "courage_themes": {
+            "1-2": "التجربة الجسدية والثقة بالنفس",
+            "2-3": "مساعدة الآخرين رغم الخوف",
+            "3-4": "اكتشاف المجهول",
+            "4-5": "فهم المخاوف وتحويلها لأصدقاء"
+        }
     }
 }
