@@ -1,82 +1,165 @@
 {
     "1-2": {
+        "age_group": "1-2 years",
+        "learning_goals": ["Turn-taking", "Patience", "Social awareness"],
         "pages": [
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, standing politely in front of a small slide, a cute teddy bear already on the stairs, 'My Turn Next' expression",
-                "text": "بطلنا المؤدب بيستنى دوره. واحد وراه دبدوب، وهو هادي."
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, standing politely in front of a small colorful slide with numbered steps (1,2,3), a cute teddy bear already climbing the stairs, 'My Turn Next' expression, bright playground setting with other toys visible",
+                "text": "بطلنا المؤدب بيستنى دوره. واحد... اتنين... تلاتة! دبدوب الأول، وبطلنا هادي ومبسوط.",
+                "interactive_element": "Count with me! واحد... اتنين... تلاتة!",
+                "parent_tip": "Practice counting while waiting - this makes patience fun and educational!"
             }
-        ]
+        ],
+        "activity_suggestion": "لعبة الدور: خلي طفلك يلعب بالعرايس ويتدرب على الانتظار"
     },
     "2-3": {
+        "age_group": "2-3 years",
+        "learning_goals": ["Magic words (please/thank you)", "Asking politely", "Sharing", "Gratitude"],
         "pages": [
             {
-                "prompt": "Professional 3D Pixar style, a cute small rabbit sitting with a very sweet-looking carrot, child character looking at the carrot longingly",
-                "text": "كان يا ما كان.. أرنوب صغنن معاه جزرة سكرة. {child_name} كان نفسه يدوق حتة."
+                "prompt": "Professional 3D Pixar style, a cute small rabbit sitting with a very sweet-looking orange carrot with sparkles around it, child character looking at the carrot with wide curious eyes and slight smile, magical forest setting with colorful flowers",
+                "text": "كان يا ما كان.. أرنوب صغنن معاه جزرة سكرة برتقالية ولمّاعة. {child_name} كان نفسه يدوق حتة عشان ريحتها جميلة أوي!",
+                "sound_effect": "🥕 صوت قرمشة الجزرة!",
+                "interactive_element": "شم ريحة الجزرة اللذيذة! (pretend to smell)"
             },
             {
-                "prompt": "Professional 3D Pixar style, child character standing politely in front of the rabbit, hand outstretched gently, respectful gesture",
-                "text": "{child_name} المؤدب مخدهاش بسرعة. قال الكلمة السحرية: ممكن يا أرنوب.. من فضلك؟"
+                "prompt": "Professional 3D Pixar style, child character standing politely in front of the rabbit, hand outstretched gently with palm up, respectful gesture, magic sparkles around the words 'من فضلك', warm friendly lighting",
+                "text": "{child_name} المؤدب مخدهاش بسرعة. وقف بأدب وقال الكلمة السحرية الأولى: 'ممكن يا أرنوب.. من فضلك؟' ✨",
+                "interactive_element": "قول معايا: من فضلك! 🌟",
+                "parent_tip": "Encourage your child to say the magic word before you give them things"
             },
             {
-                "prompt": "Professional 3D Pixar style, rabbit giving a piece of the carrot to the happy child character, both smiling, friendly atmosphere",
-                "text": "الأرنوب فرح أوي وقاله: طبعاً يا بطل عشان إنت مؤدب! وإداه حتة كبيرة."
+                "prompt": "Professional 3D Pixar style, rabbit giving a big piece of the carrot to the happy child character, both smiling with twinkling eyes, hearts floating around them, friendly atmosphere with other small animals peeking from behind trees",
+                "text": "الأرنوب فرح أوي لما سمع الكلمة السحرية! قاله: 'طبعاً يا بطل! عشان إنت مؤدب زي القمر!' وإداه حتة كبيرة. 💚",
+                "interactive_element": "ابتسم زي الأرنوب! 😊"
             },
             {
-                "prompt": "Professional 3D Pixar style, child character eating carrot and nodding respectfully, looking at the rabbit with gratitude",
-                "text": "{child_name} أخدها وقال الكلمة السحرية التانية: شكراً يا أرنوب."
+                "prompt": "Professional 3D Pixar style, child character eating carrot and nodding respectfully, looking at the rabbit with big grateful eyes, one hand on heart, golden glow around them both",
+                "text": "{child_name} أخدها بحب وقال الكلمة السحرية التانية: 'شكراً يا أرنوب الطيب!' الجزرة كانت لذيذة قوي! 😋",
+                "interactive_element": "قول معايا: شكراً! 💛",
+                "sound_effect": "يم يم يم!"
             },
             {
-                "prompt": "Professional 3D Pixar style, multiple forest animals clapping for the child character, child looks happy and respected",
-                "text": "كلنا سقفنا وقلنا: يا سلام على {child_name}.. بيحترم أصحابه وكلامه زي السكر."
+                "prompt": "Professional 3D Pixar style, multiple forest animals (birds, squirrels, butterflies) clapping and cheering for the child character, child looks happy and respected with a golden star above their head, confetti in the air",
+                "text": "كل الحيوانات سقفت وغنت: 'يا سلام على {child_name}.. بيحترم أصحابه وكلامه حلو زي العسل! إنت بطل الكلام الحلو!' 🌟👏",
+                "interactive_element": "صفق معاهم! 👏👏👏",
+                "reward_sticker": "⭐ نجمة الكلام الحلو!"
             }
-        ]
+        ],
+        "song": "من فضلك و شكراً... كلمات سحرية! 🎵\nنقولها كل يوم... ونبقى مؤدبين! 🎵",
+        "activity_suggestion": "لعبة الكلمات السحرية: كل ما طفلك يقول 'من فضلك' أو 'شكراً'، ادّيله نجمة!"
     },
     "3-4": {
+        "age_group": "3-4 years",
+        "learning_goals": ["Waiting in line", "Self-control", "Respecting others' space", "Turn-taking"],
         "pages": [
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, standing in a small line at a bathroom sink, a little girl is in front washing her hands, delicious food smell drifting from the kitchen",
-                "text": "بطلنا مستعجل وعاوز يغسل إيده بسرعة عشان الأكل ريحته حلوة."
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, standing in a small colorful line at a bathroom sink, a little girl with pigtails is in front washing her hands with soap bubbles, delicious food smell visually shown as wavy lines from the kitchen, clock showing near dinner time",
+                "text": "بطلنا مستعجل وعاوز يغسل إيده بسرعة عشان الأكل ريحته حلوة ووقت العشا قرّب. بس في صف قدامه!",
+                "interactive_element": "شم ريحة الأكل اللذيذ! مممم! 🍲",
+                "emotion_label": "مستعجل بس صبور 💙"
             },
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, standing calmly and waiting for the girl to finish, no pushing, very respectful behavior",
-                "text": "بطلنا وقف مكانه باحترام. ميزقش أصحابه أبداً.. هو بطل مؤدب."
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, standing calmly with hands clasped together, counting numbers 1-2-3 visible in thought bubble, waiting for the girl to finish, no pushing, peaceful expression, superhero patience cape appearing behind him",
+                "text": "بطلنا وقف مكانه باحترام. عد في دماغه: واحد... اتنين... تلاتة. ماتعجلش ولا زعل. هو بطل الصبر الخارق! 🦸",
+                "interactive_element": "عد معايا: ١... ٢... ٣! 🔢",
+                "parent_tip": "Counting helps children manage impatience - make it a fun game!"
             },
             {
-                "prompt": "Professional 3D Pixar style, the little girl stepping aside and saying 'Go ahead', child character wearing a striped sweatshirt smiling and nodding back",
-                "text": "البنوتة قالت: شكراً إنك استنيت. بطلنا رد: العفو يا صديقتي."
+                "prompt": "Professional 3D Pixar style, the little girl stepping aside with a big smile and waving, saying 'Go ahead' with speech bubble, child character wearing a striped sweatshirt smiling and giving a thumbs up, sparkles between them showing mutual respect",
+                "text": "البنوتة خلصت وابتسمت وقالت: 'شكراً إنك استنيت وماتعجلتش!' بطلنا رد بابتسامة: 'العفو يا صديقتي الحلوة!' 💕",
+                "interactive_element": "قول 'العفو' وابتسم! 😊",
+                "reward_sticker": "⭐ نجمة الانتظار"
             },
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, washing hands with lots of soapy bubbles, careful and thorough",
-                "text": "غسل إيده بالراحة واستخدم الكلمات السحرية: من فضلك و شكراً."
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, washing hands thoroughly with lots of colorful soapy bubbles, singing bubbles with musical notes, careful and thorough, mirror showing happy reflection",
+                "text": "غسل إيده بالصابون وغنى أغنية الإيدين النضيفة! 🎵 'بالصابون والمية... إيدي هتبقى نقية!' 🧼✨",
+                "interactive_element": "غني معاه! 🎵 واعمل فقاقيع! 🫧",
+                "sound_effect": "صوت المية: شششش!"
             },
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt sitting at a dinner table, mother kissing child's forehead, warm lighting",
-                "text": "ماما قالت: يا سلام على أخلاق الأبطال! إنت بطل الاحترام يا حبيبي."
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt sitting at a colorful dinner table with yummy food, mother kissing child's forehead with hearts around, golden warm lighting, family members smiling in background",
+                "text": "ماما حضنته وباست جبينه وقالت: 'يا سلام على أخلاق الأبطال! إنت بطل الاحترام والصبر يا حبيب قلبي!' 💖👑",
+                "interactive_element": "خد حضن كبير! 🤗",
+                "reward_sticker": "👑 تاج بطل الصبر!"
             }
-        ]
+        ],
+        "song": "واحد اتنين تلاتة... أنا صبور! 🎵\nمستني دوري... أنا مؤدب ومسرور! 🎵",
+        "activity_suggestion": "لعبة الصف: خلي طفلك يصف العرايس وينتظر دوره - امدحه لما يصبر!"
     },
     "4-5": {
+        "age_group": "4-5 years",
+        "learning_goals": ["Kindness to all creatures", "Cause and effect", "Empathy", "Gratitude returns"],
+        "moral_lesson": "الاحترام بيرجع لينا - اللي تعمله من خير هيرجع لك",
         "pages": [
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, kneeling down politely to gently touch a tiny beetle on a leaf, 'Friend of the Weak' written in nature, macro-style garden setting",
-                "text": "بطلنا كان بيلعب ولقى خنفساء صغننة ماشية في طريقه. كان ممكن يدوس عليها، بس هو وقف واحترمها وسابها تمشي."
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, kneeling down politely on a garden path to gently protect a tiny cute beetle on a green leaf, 'Friend of the Weak' golden text floating in air, macro-style garden setting with flowers and grass, gentle sunlight",
+                "text": "بطلنا كان بيلعب في الجنينة ولقى خنفساء صغننة ماشية في طريقه. كان ممكن يدوس عليها، بس قلبه الطيب قاله: 'لأ! دي كمان مخلوق لطيف!' وقف بحرص واحترمها وسابها تمشي بأمان. 🐞💚",
+                "interactive_element": "ابص للخنفساء الصغيرة! كام نقطة على ضهرها؟",
+                "discussion_prompt": "ليه بطلنا ماداسش على الخنفساء؟"
             },
             {
-                "prompt": "Professional 3D Pixar style, a tiny beetle on a leaf looking up at the large child character wearing a striped sweatshirt, child is smiling kindly, tiny speech bubble with a 'thank you' icon",
-                "text": "الخنفساء قالت له: شكراً يا بطل، هييجي يوم وأرد لك الجميل. بطلنا ابتسم وقال: العفو، إنتي صاحبتي."
+                "prompt": "Professional 3D Pixar style, a tiny cute beetle on a leaf looking up at the large child character wearing a striped sweatshirt with big grateful eyes, child is smiling kindly down at beetle, tiny speech bubble with hearts and 'thank you' in Arabic, magical sparkles around them",
+                "text": "الخنفساء بصّت له بعيون صغيرة شكرت وقالت بصوت رقيق: 'شكراً يا بطل طيب القلب! هييجي يوم وأرد لك الجميل، وعد!' بطلنا ابتسم وقال: 'العفو يا صاحبتي الصغيرة! احنا أصدقاء دلوقتي!' 🌟",
+                "interactive_element": "لو كنت مكان الخنفساء، كنت هتقول إيه؟",
+                "emotion_label": "ممتن 💚"
             },
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, crawling on a rug, looking for a lost toy under a dark sofa, look of frustration and focused search",
-                "text": "بعد يومين، بطلنا كان بيدور على لعبته الضايعة تحت الكنبة ومش شايف حاجة خالص في الضلمة."
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, crawling on a colorful rug, looking with flashlight for a lost red toy car under a dark sofa, look of determination and focused search, toys scattered around, afternoon setting",
+                "text": "بعد يومين، بطلنا كان بيلعب وفجأة... أووه لأ! عربيته الحمرا المفضلة ضاعت! دوّر في كل حتة... فتش في الأوضة... بص تحت السرير... لكن تحت الكنبة كانت ضلمة قوي ومش شايف أي حاجة خالص! 😟🔦",
+                "interactive_element": "ساعد بطلنا يدور! فين العربية؟ 🚗",
+                "sound_effect": "صوت البحث: 'فين يا عربيتي؟'"
             },
             {
-                "prompt": "Professional 3D Pixar style, tiny glow-in-the-dark butterflies and the beetle leading the way under the dark sofa, glowing like tiny lanterns, child character wearing a striped sweatshirt looking amazed",
-                "text": "الخنفساء جابت أصحابها المنورين ودخلوا تحت الكنبة ونوروا المكان لبطلنا."
+                "prompt": "Professional 3D Pixar style, tiny magical glow-in-the-dark fireflies and the beetle with glowing spots leading the way under the dark sofa, glowing like tiny lanterns in blue and green colors, child character wearing a striped sweatshirt looking amazed with mouth open, toy car visible in the glow",
+                "text": "فجأة... بريق نور صغير ظهر! الخنفساء جابت أصحابها النورانيين (اليراعات الضويّة) ودخلوا كلهم تحت الكنبة زي مصابيح سحرية صغيرة ونوروا كل المكان لبطلنا! ✨💡🐛",
+                "interactive_element": "عد النور الصغيرة اللمّاعة! ١، ٢، ٣...",
+                "sound_effect": "صوت سحري: تينج تينج! ✨"
             },
             {
-                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, happily holding a small lost toy, the beetle and shiny insects are around, warm celebratory garden/home scene",
-                "text": "بطلنا لقى لعبته وفرح أوي وقاله: شكراً يا أصحابي! اتعلم إن احترام الصغير بيجيب خير كبير."
+                "prompt": "Professional 3D Pixar style, child character wearing a striped sweatshirt, happily holding a small red toy car high in the air with both hands, the beetle and shiny firefly insects are around him celebrating, warm celebratory garden/home scene with rainbow in background, golden hour lighting",
+                "text": "بطلنا لقى عربيته الحمرا وفرح فرحة كبيرة! حضن الخنفساء برفق وقال: 'شكراً يا أصحابي الأوفياء! إنتوا أحسن أصدقاء في الدنيا!' واتعلم درس مهم: 'اللي تعمله من خير، هييجي لك أضعاف! الاحترام بيرجع حب!' 💖🌈👑",
+                "interactive_element": "يالا نحتفل! صفق وارقص! 🎉",
+                "reward_sticker": "💎 جوهرة القلب الطيب!",
+                "discussion_prompt": "إيه الدرس اللي اتعلمناه من القصة دي؟"
             }
-        ]
+        ],
+        "song": "خنفساء صغيرة... قلب بطلنا كبير! 🎵\nساعدها امبارح... ساعدته النهارده... الخير بيرجع خير! 🎵",
+        "discussion_questions": [
+            "إيه اللي بطلنا عمله للخنفساء؟",
+            "الخنفساء ساعدته إزاي؟",
+            "لو كنت مكان بطلنا، كنت هتعمل إيه؟",
+            "مين كمان محتاج مساعدتنا؟"
+        ],
+        "activity_suggestion": "نشاط الطبيعة: اطلع مع طفلك الجنينة وابصوا على الحشرات الصغيرة - علّمه يحترمهم ويحميهم",
+        "extension_activity": "ارسم خنفساء ولونها! كام نقطة عاوز تحطلها؟ 🎨"
+    },
+    
+    "bonus_features": {
+        "reward_system": {
+            "description": "نظام النجوم والملصقات",
+            "stickers": [
+                "⭐ نجمة الكلام الحلو",
+                "💫 نجمة الصبر",
+                "💖 نجمة الطيبة",
+                "👑 تاج البطل المؤدب",
+                "🌟 نجمة المساعدة"
+            ]
+        },
+        "parent_guide": {
+            "tips": [
+                "اقرا القصة ببطء وبتعبير واضح",
+                "خلي طفلك يشارك في الأصوات والحركات",
+                "اسأل أسئلة أثناء القراءة",
+                "اربط القصة بمواقف حقيقية",
+                "كافئ السلوك الإيجابي بالنجوم",
+                "كرر القصص المفضلة - التكرار بيعلم!"
+            ]
+        },
+        "interactive_elements": {
+            "sounds": ["قرمشة", "مية", "تصفيق", "أصوات حيوانات"],
+            "movements": ["عد على صوابعك", "صفق", "احضن", "ابتسم"],
+            "questions": "أسئلة تفاعلية في كل صفحة"
+        }
     }
 }
