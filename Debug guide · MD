@@ -1,0 +1,195 @@
+# 🔍 Quick Debug Guide - حل مشكلة "No valid image data found"
+
+## 🎯 الهدف
+معرفة **بالضبط** إيه اللي بيرجع من OpenRouter API
+
+---
+
+## 🚀 الخطوات السريعة
+
+### الخطوة 1: تفعيل Debug Logging
+
+في Railway أو السيرفر، أضف متغير البيئة:
+
+```bash
+LOG_LEVEL=DEBUG
+```
+
+أو في الكود:
+```python
+import logging
+logging.basicConfig(level=logging.DEBUG)
+```
+
+### الخطوة 2: شغّل القصة مرة واحدة
+
+افتح logs السيرفر وابحث عن:
+```
+🔍 OpenRouter Response:
+Top keys: [...]
+Message keys: [...]
+Response preview: {...}
+```
+
+### الخطوة 3: انسخ الـ logs وابعتها لي
+
+أنا محتاج أشوف:
+1. `Top keys:`
+2. `Message keys:`  
+3. `Response preview:`
+
+---
+
+## 🔧 خطة B: استخدام ملف Debug المستقل
+
+إذا ما قدرتش تشوف الـ logs:
+
+### 1. حمّل `debug_openrouter.py`
+
+### 2. عدّل السطر:
+```python
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "YOUR_KEY_HERE")
+```
+وحط المفتاح بتاعك
+
+### 3. شغّله:
+```bash
+python debug_openrouter.py
+```
+
+### 4. هيطبع الاستجابة الكاملة من OpenRouter
+
+---
+
+## 💡 الأسباب المحتملة
+
+### السبب 1: الصورة في مكان غير متوقع ❓
+```json
+{
+  "choices": [{
+    "message": {
+      "content": "https://image-url.com/img.png"  // ← هنا؟
+      // أو
+      "data": {"url": "..."}  // ← أو هنا؟
+      // أو
+      "output": "base64..."  // ← أو هنا؟
+    }
+  }]
+}
+```
+
+### السبب 2: النموذج مش بيدعم modalities ⚠️
+بعض النماذج تحتاج format مختلف:
+```python
+# بدل
+"modalities": ["image"]
+
+# جرب
+"response_format": {"type": "url"}
+# أو
+"image_url": True
+```
+
+### السبب 3: النموذج نفسه مش صح ❌
+FLUX Klein 4b قد يحتاج:
+- Plan مدفوع
+- Credits كافية
+- Model ID مختلف
+
+---
+
+## 📋 Checklist
+
+قبل ما تشتغل على الحل، تأكد من:
+
+- [ ] ✅ OPENROUTER_API_KEY موجود
+- [ ] ✅ Credits/Balance كافي في حسابك
+- [ ] ✅ النموذج `black-forest-labs/flux.2-klein-4b` متاح لحسابك
+- [ ] ✅ الـ request بيوصل (status 200)
+- [ ] ✅ مافيش error messages في الـ response
+
+---
+
+## 🎯 التشخيص السريع
+
+**لو الـ logs بتقول:**
+
+### ✅ `Response status: 200`
+**معناه:** الطلب وصل بنجاح
+
+### ✅ `Top keys: ['id', 'choices', 'model', ...]`
+**معناه:** الاستجابة عادية
+
+### ❌ `Message keys: ['content', 'role']` (بدون 'images')
+**معناه:** الصورة مش في `images[]`، ممكن في `content`
+
+### ❌ `content: "I cannot generate images"`
+**معناه:** النموذج رافض يولد صورة (مشكلة في الـ plan أو الـ model)
+
+---
+
+## 💊 الحلول المحتملة
+
+### الحل 1: لو الصورة في `content`
+```python
+# في _extract_image_from_response
+content = message.get("content")
+if content and isinstance(content, str):
+    if content.startswith("http"):
+        return content
+```
+
+### الحل 2: لو الصورة في `data`
+```python
+data = message.get("data", {})
+if isinstance(data, dict):
+    return data.get("url") or data.get("image_url")
+```
+
+### الحل 3: تغيير النموذج
+```python
+# بدل FLUX، جرب نموذج آخر
+"model": "openai/dall-e-3"
+# أو
+"model": "stability-ai/stable-diffusion-xl"
+```
+
+---
+
+## 📞 ابعتلي المعلومات دي:
+
+عشان أقدر أساعدك بدقة، أنا محتاج:
+
+1. **نتيجة الـ debug logging:**
+   ```
+   Top keys: [...]
+   Message keys: [...]
+   Response preview: {...}
+   ```
+
+2. **حالة حسابك:**
+   - هل عندك credits؟
+   - إيه الـ plan بتاعك؟
+
+3. **أي error messages** في الـ response
+
+---
+
+**بمجرد ما تبعتلي المعلومات دي، هقدر أعملك fix دقيق ومضمون!** 🎯
+
+---
+
+## 🚨 إذا كنت في عجلة:
+
+**الحل المؤقت:**  
+استخدم DALL-E 3 من OpenAI بدل FLUX:
+
+```python
+# في openai_service.py، غيّر:
+"model": "black-forest-labs/flux.2-klein-4b"
+
+# إلى:
+"model": "openai/dall-e-3"
+```
+
+على الأقل كده الصور هتشتغل لحد ما نحل مشكلة FLUX. ✅
