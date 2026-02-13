@@ -62,7 +62,9 @@ class FluxPromptBuilder:
             f"rosy airbrushed cheeks, "
             f"sweet joyful smile, "
             f"wearing {clothing}, "
-            f"cute rounded toddler proportions"
+            f"cute rounded toddler proportions. "
+            f"STRICT INSTRUCTION: DO NOT use blonde hair, yellow hair, or blue/green eyes unless explicitly written in the description above. "
+            f"Prioritize the natural brown/black hair and brown eyes from the provided analysis."
         )
         
         return character
@@ -172,11 +174,11 @@ class FluxPromptBuilder:
         
         # Progressive lighting based on page
         lighting_progression = {
-            1: "bright cheerful morning sunlight with golden glow",
-            2: "warm afternoon light with soft shadows",
-            3: "golden hour glow with magical warmth",
-            4: "enchanting sunset light with pink and orange hues",
-            5: "dreamy twilight with glowing stars and soft moonlight"
+            1: "clear natural daylight with soft realistic brightness",
+            2: "bright neutral daylight with clean white light",
+            3: "soft afternoon light with natural realistic colors",
+            4: "warm neutral evening light, gentle and realistic",
+            5: "dreamy twilight with cool blue moonlight and white stars"
         }
         
         lighting = lighting_progression.get(

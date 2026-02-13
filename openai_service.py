@@ -272,8 +272,9 @@ def generate_storybook_page(
         age_desc = f"{age_group} year old" if "-" in age_group else "toddler"
         
         character = (
-            f"an adorable {age_desc} {gender_term} with a unique face and personality, "
-            f"sweet joyful smile, cute rounded toddler proportions"
+            f"an adorable {age_desc} {gender_term} with a unique face and personality based 100% on the unique child description. "
+            f"sweet joyful smile, cute rounded toddler proportions. "
+            f"IMPORTANT: Use the exact hair and eye color from the description. No blonde/yellow hair if not specified."
         )
         
         # Style (Artistic theme ONLY - no physical features)
