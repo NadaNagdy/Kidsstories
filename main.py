@@ -2,7 +2,7 @@ from fastapi import FastAPI, Request, BackgroundTasks, HTTPException
 from fastapi.responses import PlainTextResponse
 import os, uvicorn, logging, requests, base64, time
 
-# استيراد الدوال من الملفات المساعدة التي قمنا بتطويرها
+# استيراد الدوال من الملفات المساعدة
 from messenger_api import send_text_message, send_quick_replies, send_file, send_image
 from pdf_utils import create_pdf
 from openai_service import verify_payment_screenshot, generate_storybook_page, create_character_reference
@@ -51,7 +51,6 @@ async def webhook_handler(request: Request, background_tasks: BackgroundTasks):
 def start_processing(sender_id, messaging_event, background_tasks):
     message = messaging_event["message"]
     
-    # 1. معالجة الردود السريعة (Quick Replies)
     if "quick_reply" in message:
         payload = message["quick_reply"]["payload"]
         step = user_state[sender_id].get("step")
@@ -72,14 +71,12 @@ def start_processing(sender_id, messaging_event, background_tasks):
                 send_text_message(sender_id, "بانتظار صورة التحويل (Screenshot) للتأكيد... 📸")
         return
 
-    # 2. معالجة المرفقات (الصورة الشخصية أو صورة الدفع)
     if "attachments" in message:
         for att in message["attachments"]:
             if att["type"] == "image":
                 handle_image_reception(sender_id, att["payload"]["url"], background_tasks)
                 return
 
-    # 3. معالجة النصوص (البداية والاسم)
     text = message.get("text", "")
     if text:
         if text.lower() == "start":
@@ -89,8 +86,6 @@ def start_processing(sender_id, messaging_event, background_tasks):
         elif user_state[sender_id].get("step") == "waiting_for_name":
             user_state[sender_id].update({"child_name": text, "step": "waiting_for_gender"})
             send_quick_replies(sender_id, f"تشرفنا يا {text}! 😊 هل البطل ولد أم بنت؟", ["ولد", "بنت"])
-
-# --- الدوال المساعدة لإدارة تدفق البيانات ---
 
 def handle_image_reception(sender_id, url, background_tasks):
     step = user_state[sender_id].get("step")
@@ -137,28 +132,28 @@ def process_payment_verification(sender_id, image_url):
 def process_story_generation(sender_id, value, is_preview=False):
     try:
         data = user_state[sender_id]
-        child_name, gender, char_desc = data["child_name"], data["gender"], data["char_desc"]
-        prefix = "بطلة" if gender == "بنت" else "بطل"
-        display_title = f"{prefix} {value}"
+        child_name = data.get("child_name", "")
+        gender = data.get("gender", "")
+        char_desc = data.get("char_desc", "")
         
+        logger.info(f"🚀 Generating story for {child_name} - Value: {value} - Preview: {is_preview}")
+
         # تحضير النصوص عبر StoryManager
         manager = StoryManager(child_name)
-      
-        manager.character_desc = char_desc  # 🌟 [تم الإصلاح] تمرير وصف ملامح الطفل ليتم دمجها في الصور
-      # 🌟 [تم الإصلاح] توحيد أسماء الملفات لتطابق ما حفظناه
+        manager.character_desc = char_desc 
+
         value_map = {
             "الشجاعة": "courage.json", 
             "الصدق": "honesty.json", 
             "التعاون": "cooperation.json", 
-            "الاحترام": "respect.json"  # 👈 التعديل هنا!
+            "الاحترام": "respect.json" 
         }
         
         json_filename = value_map.get(value)
         pages_prompts = manager.generate_story_prompts(json_filename, data.get("age_group"))
         
-        # 🌟 [تم الإصلاح] حماية السيرفر من الانهيار إذا لم يجد القصة
         if not pages_prompts:
-            send_text_message(sender_id, "⚠️ عذراً، محتوى هذه القصة قيد التحديث حالياً. يرجى المحاولة لاحقاً أو اختيار قيمة أخرى.")
+            send_text_message(sender_id, "⚠️ عذراً، محتوى هذه القصة قيد التحديث. يرجى اختيار قيمة أخرى.")
             return
 
         total_pages = len(pages_prompts)
@@ -166,15 +161,25 @@ def process_story_generation(sender_id, value, is_preview=False):
 
         # --- حالة المعاينة: توليد الغلاف فقط ---
         if is_preview:
-            cover_url = generate_storybook_page(char_desc, f"Magical watercolor cover for {value}", gender=gender, is_cover=True)
-            if cover_url and create_cover_page(cover_url, display_title, child_name, cover_path):
-                send_image(sender_id, cover_path)
-                time.sleep(1)
-                msg = (f"💰 لإكمال قصة {child_name}، يرجى تحويل 25 جنيه عبر:\n"
-                       f"📍 فودافون كاش أو إنستا باي: {PAYMENT_NUMBER}\n"
-                       f"📸 ثم أرسلي صورة التحويل هنا فوراً!")
-                user_state[sender_id]["step"] = "waiting_for_payment"
-                send_text_message(sender_id, msg)
+            # برومبت الغلاف المحسن لنموذج FLUX
+            cover_prompt = f"A whimsical classic children's book cover illustration for a story about {child_name} learning about {value}. Soft digital watercolor washes, delicate colored pencil detailing. Dreamy, cozy bedtime story aesthetic with warm glowing light, floating golden stars, and fluffy clouds. Masterpiece quality."
+            
+            cover_url = generate_storybook_page(char_desc, cover_prompt, gender=gender, is_cover=True)
+            
+            if cover_url:
+                # استدعاء الدالة المعدلة لكتابة "بطل/بطلة القيمة" واسم الطفل
+                if create_cover_page(cover_url, value, child_name, gender, cover_path):
+                    send_image(sender_id, cover_path)
+                    time.sleep(1)
+                    msg = (f"💰 لإكمال قصة {child_name}، يرجى تحويل 25 جنيه عبر:\n"
+                           f"📍 فودافون كاش أو إنستا باي: {PAYMENT_NUMBER}\n"
+                           f"📸 ثم أرسلي صورة التحويل هنا فوراً!")
+                    user_state[sender_id]["step"] = "waiting_for_payment"
+                    send_text_message(sender_id, msg)
+                else:
+                    send_text_message(sender_id, "⚠️ حدث خطأ أثناء تجهيز الغلاف، جاري المحاولة مرة أخرى.")
+            else:
+                send_text_message(sender_id, "⚠️ أداة الرسم مشغولة حالياً، يرجى إعادة اختيار القيمة بعد ثوانٍ.")
             return
 
         # --- حالة التوليد الكامل: رسم الصفحات وتجميع الـ PDF ---
@@ -182,20 +187,22 @@ def process_story_generation(sender_id, value, is_preview=False):
         
         for i, p in enumerate(pages_prompts):
             page_num = i + 1
-            send_text_message(sender_id, f"⏳ جاري تحميل الصفحة {page_num} من {total_pages}...")
+            send_text_message(sender_id, f"⏳ جاري رسم الصفحة {page_num} من {total_pages}...")
             
-            img_url = generate_storybook_page(char_desc, p["prompt"], gender=gender)
-            if img_url:
+            # استخدام المسار المحلي المرتجع من دالة FLUX الجديدة
+            img_result = generate_storybook_page(char_desc, p["prompt"], gender=gender)
+            if img_result:
                 path = f"/tmp/p_{sender_id}_{i}.png"
-                overlay_text_on_image(img_url, p["text"], path)
+                # overlay_text_on_image تدعم الآن المسار المحلي أو الرابط
+                overlay_text_on_image(img_result, p["text"], path)
                 generated_images.append(path)
             else:
-                send_text_message(sender_id, f"⚠️ عذراً، تأخرت الصفحة {page_num}.. أحاول مرة أخرى.")
-                # محاولة إعادة توليد بسيطة لضمان الاستمرارية
-                img_url = generate_storybook_page(char_desc, p["prompt"], gender=gender)
-                if img_url:
+                send_text_message(sender_id, f"⚠️ تأخرت الصفحة {page_num}.. أحاول مرة أخرى.")
+                # محاولة ثانية سريعة
+                img_result = generate_storybook_page(char_desc, p["prompt"], gender=gender)
+                if img_result:
                     path = f"/tmp/p_{sender_id}_{i}.png"
-                    overlay_text_on_image(img_url, p["text"], path)
+                    overlay_text_on_image(img_result, p["text"], path)
                     generated_images.append(path)
 
         if len(generated_images) > 1:
@@ -203,12 +210,12 @@ def process_story_generation(sender_id, value, is_preview=False):
             pdf_path = f"/tmp/story_{sender_id}.pdf"
             create_pdf(generated_images, pdf_path)
             send_file(sender_id, pdf_path)
-            send_text_message(sender_id, f"🎉 قصة {child_name} جاهزة! نتمنى لكم قراءة ممتعة. هل نجهز قصة أخرى؟")
+            send_text_message(sender_id, f"🎉 قصة {child_name} جاهزة! نتمنى لكم قراءة ممتعة.")
             user_state[sender_id] = {"step": "start"}
 
     except Exception as e:
         logger.error(f"Story Gen Error: {e}")
-        send_text_message(sender_id, "😔 حدث خطأ غير متوقع، جاري مراجعة النظام.")
+        send_text_message(sender_id, "😔 حدث خطأ غير متوقع في النظام.")
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
