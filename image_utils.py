@@ -100,20 +100,37 @@ def create_cover_page(image_url, value, child_name, gender, output_path):
         stroke_color = (0, 0, 0) # أسود للحدود لضمان البروز
 
         # 1. العنوان المسطح في الأعلى
-        prefix = "بطلة" if gender == "female" else "بطل"
+        prefix = "بطلة" if gender == "بنت" else "بطل"
         top_text = f"{prefix} {value}"
         reshaped_top = _prepare_arabic_text(top_text)
-        tw = draw.textbbox((0, 0), reshaped_top, font=title_font)[2]
-        tx, ty = (width - tw) // 2, 80
         
+        # تصغير الخط تلقائياً إذا كان العرض كبيراً
+        current_title_size = 115
+        while current_title_size > 40:
+            title_font = _get_arabic_font(current_title_size, weight="bold")
+            bbox = draw.textbbox((0, 0), reshaped_top, font=title_font)
+            tw = bbox[2] - bbox[0]
+            if tw < 940:
+                break
+            current_title_size -= 5
+            
+        tx, ty = (width - tw) // 2 - bbox[0], 80
         draw.text((tx, ty), reshaped_top, font=title_font, fill=main_fill, 
                   stroke_width=10, stroke_fill=stroke_color)
 
         # 2. اسم الطفل في الأسفل
         reshaped_name = _prepare_arabic_text(child_name)
-        nw = draw.textbbox((0, 0), reshaped_name, font=name_font)[2]
-        nx, ny = (width - nw) // 2, 860
         
+        current_name_size = 105
+        while current_name_size > 40:
+            name_font = _get_arabic_font(current_name_size, weight="bold")
+            n_bbox = draw.textbbox((0, 0), reshaped_name, font=name_font)
+            nw = n_bbox[2] - n_bbox[0]
+            if nw < 940:
+                break
+            current_name_size -= 5
+            
+        nx, ny = (width - nw) // 2 - n_bbox[0], 860
         draw.text((nx, ny), reshaped_name, font=name_font, fill=main_fill,
                   stroke_width=10, stroke_fill=stroke_color)
 
