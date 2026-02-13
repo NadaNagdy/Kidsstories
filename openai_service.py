@@ -347,32 +347,6 @@ def generate_storybook_page(
                 logger.warning(f"Full response (first 2000 chars):\n{response_preview}")
             except:
                 logger.warning(f"Response: {str(data)[:1000]}")
-            
-            logger.warning(f"\nTop-level keys: {list(data.keys())}")
-            
-            if "choices" in data and data["choices"]:
-                choice = data["choices"][0]
-                logger.warning(f"Choice keys: {list(choice.keys())}")
-                
-                message = choice.get("message", {})
-                logger.warning(f"Message keys: {list(message.keys())}")
-                
-                # طباعة تفصيلية لكل مفتاح
-                for key, value in message.items():
-                    value_type = type(value).__name__
-                    logger.warning(f"\n  message.{key}: {value_type}")
-                    
-                    if isinstance(value, str) and len(value) < 300:
-                        logger.warning(f"    = {value}")
-                    elif isinstance(value, list):
-                        logger.warning(f"    length: {len(value)}")
-                        if value and len(value) > 0:
-                            logger.warning(f"    first: {value[0]}")
-                    elif isinstance(value, dict):
-                        logger.warning(f"    keys: {list(value.keys())}")
-            
-            logger.warning("="*80)
-            
             # ✅ محاولة الاستخراج
             image_data = _extract_image_from_response(data)
             
