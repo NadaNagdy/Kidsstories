@@ -1,200 +1,120 @@
 {
+  "value": "التعاون",
+  "age_groups": {
     "1-2": {
-        "title": "Let's Build Together!",
-        "age_group": "1-2 years",
-        "theme": "Cooperation and Sharing",
-        "pages": [
-            {
-                "page_number": 1,
-                "prompt": "Pixar 3D animation style, adorable toddler character with big expressive eyes wearing a colorful striped sweatshirt, excitedly holding a bright red wooden block above their head, fluffy brown teddy bear sitting nearby with a yellow block between its paws, sunny playroom with soft lighting, warm colors, child-friendly atmosphere, 'Let's Do It Together!' text floating in background with sparkles",
-                "text": "بطلنا عاوز يبني برج كبيييير!",
-                "english": "Our hero wants to build a HUGE tower!",
-                "teaching_moment": "Introducing the goal - building something big"
-            },
-            {
-                "prompt": "Professional Disney Pixar illustration style, child smiling warmly, happy moral conclusion, bright sunshine, peaceful bedroom setting",
-                "text": "بطلنا اتعلم درس جميل النهارده.. إن حب الناس ومساعدة الغير هما اللي بيخلونا أبطال حقيقيين! 🌟"
-            },
-            {
-                "prompt": "Professional Disney Pixar illustration style, child smiling warmly, happy moral conclusion, bright sunshine, peaceful bedroom setting",
-                "text": "بطلنا اتعلم درس جميل النهارده.. إن حب الناس ومساعدة الغير هما اللي بيخلونا أبطال حقيقيين! 🌟"
-            },
-            {
-                "prompt": "Professional Disney Pixar illustration style, child smiling warmly, happy moral conclusion, bright sunshine, peaceful bedroom setting",
-                "text": "بطلنا اتعلم درس جميل النهارده.. إن حب الناس ومساعدة الغير هما اللي بيخلونا أبطال حقيقيين! 🌟"
-            },
-            {
-                "prompt": "Professional Disney Pixar illustration style, child smiling warmly, happy moral conclusion, bright sunshine, peaceful bedroom setting",
-                "text": "بطلنا اتعلم درس جميل النهارده.. إن حب الناس ومساعدة الغير هما اللي بيخلونا أبطال حقيقيين! 🌟"
-            },
-            {
-                "prompt": "Professional Disney Pixar illustration style, colorful stars and crowns, parents reading to a happy child, peaceful and attractive background, soft lighting",
-                "text": "🌟 صفحة المكافآت والنصائح للأهل 🌟\n\n👑 نظام النجوم والملصقات:\n⭐ نجمة الكلام الحلو\n💫 نجمة الصبر\n💖 نجمة الطيبة\n👑 تاج البطل المؤدب\n🌟 نجمة المساعدة\n\n💡 نصائح للأهل:\n✓ اقرا القصة ببطء وبتعبير واضح\n✓ خلي طفلك يشارك في الأصوات والحركات\n✓ اسأل أسئلة أثناء القراءة\n✓ اربط القصة بمواقف حقيقية\n✓ كافئ السلوك الإيجابي بالنجوم\n✓ كرر القصص المفضلة - التكرار بيعلم!\n\n🎭 عناصر تفاعلية:\n🔊 أصوات: قرمشة، مية، تصفيق، أصوات حيوانات\n✋ حركات: عد على صوابعك، صفق، احضن، ابتسم\n\n💝 كل ما طفلك يعمل سلوك حلو، ادّيله نجمة!\nلما يجمع ٥ نجوم، يستحق التاج! 👑"
-            }
-        ]
+      "story_title": "مين البطل المتعاون؟",
+      "pages": [
+        {
+          "page_number": 1,
+          "text": "مين البطل المتعاون؟ {child_name} خلص لعب بالمكعبات الملونة! والدلوقتي بيرتبهم بنفسه ويحطهم في الصندوق بشطارة.",
+          "prompt": "{child_name} happily putting colorful building blocks into a toy box, tidy nursery room, cute cooperative expression, soft watercolor style."
+        },
+        {
+          "page_number": 2,
+          "text": "مين البطل المتعاون؟ {child_name} بيساعد ماما في البيت! بيديها الهدوم الصغيرة عشان تطبقها، وماما فرحانة بيه جداً.",
+          "prompt": "{child_name} honestly handing a small piece of clean clothing to a mother's hand, helping with laundry, sunny indoor setting, soft watercolor style."
+        },
+        {
+          "page_number": 3,
+          "text": "مين البطل المتعاون؟ {child_name} بيشارك لعبه مع صاحبه! إداله العربية الحلوة عشان يلعبوا سوا ويبقوا أصحاب أحسن.",
+          "prompt": "{child_name} smiling and sharing a favorite toy car with another toddler friend, playing together nicely on a colorful rug, soft watercolor illustration."
+        },
+        {
+          "page_number": 4,
+          "text": "مين البطل المتعاون؟ {child_name} دايماً بيساعد وبيفرح الناس! كل الناس بتسقفله وبتحبه لأنه بطل متعاون جميل.",
+          "prompt": "{child_name} clapping hands happily, surrounded by proud and smiling parents clapping for them, joyful and magical atmosphere, beautiful watercolor finish."
+        }
+      ]
     },
     "2-3": {
-        "title": "The Giant Carrot",
-        "age_group": "2-3 years",
-        "theme": "Teamwork and Family",
-        "pages": [
-            {
-                "page_number": 1,
-                "prompt": "Pixar 3D animation style, enormous comical orange carrot with oversized green leafy top half-buried in rich brown soil, kind elderly grandfather with white beard and suspenders pulling hard on the leaves, red-faced from effort with exaggerated funny expression, rural garden setting with blue sky, butterflies, cheerful countryside atmosphere, carrot is hilariously huge - twice the grandfather's size",
-                "text": "كان يا ما كان.. فيه جزرة كبيييييرة أوي في الأرض. جدو جه يشدها: يا هيلة هيلة.. مش راضية!",
-                "english": "Once upon a time... there was a HUGE carrot in the ground. Grandpa came to pull it: heave-ho... it won't budge!",
-                "teaching_moment": "Sometimes tasks are too big for one person"
-            },
-            {
-                "page_number": 2,
-                "prompt": "Pixar 3D animation style, sweet grandmother with gray hair in a bun and flowery apron holding tight onto grandfather's waist, both leaning back pulling the giant carrot together, faces bright red from straining, feet digging into ground, motion lines showing effort, comedic exaggerated poses, garden background with vegetables watching, dust clouds from their feet",
-                "text": "تيتا جت تمسك في جدو: يا هيلة هيلة.. يا هيلة هيلة.. برضه الجزرة مش راضية تطلع!",
-                "english": "Grandma came to hold onto Grandpa: heave-ho, heave-ho... still the carrot won't come out!",
-                "teaching_moment": "Two are better than one, but still not enough"
-            },
-            {
-                "page_number": 3,
-                "prompt": "Pixar 3D animation style, cheerful toddler child character with {child_name} on their shirt running into scene, grabbing grandmother's apron from behind, big confident smile looking at camera, determined expression, dynamic action pose, grandmother smiling over shoulder, grandfather still holding carrot top, three generations working together, encouraging atmosphere",
-                "text": "مين جه يساعد؟ البطل {child_name}! مسك في تيتا وقال: أنا هساعدكم يا جدو.",
-                "english": "Who came to help? The hero {child_name}! Grabbed onto Grandma and said: I'll help you Grandpa!",
-                "teaching_moment": "Everyone can contribute, even the smallest"
-            },
-            {
-                "page_number": 4,
-                "prompt": "Pixar 3D animation style, dramatic pulling scene with grandfather, grandmother, and child in a line all leaning back at 45-degree angle, strong motion lines and speed effects, muscles tensed, countdown moment, giant carrot starting to move with soil cracking around it, dust and pebbles flying, intense teamwork energy, dynamic diagonal composition",
-                "text": "كلنا مع بعض: واحد.. اتنين.. تلاتة.. شِددد!",
-                "english": "All together: one... two... three... PULL!",
-                "teaching_moment": "Unity and synchronized effort"
-            },
-            {
-                "page_number": 5,
-                "prompt": "Pixar 3D animation style, triumphant scene with gigantic orange carrot flying up in the air with trailing dirt and sparkles, grandfather, grandmother, and child all jumping and clapping with arms raised in celebration, huge smiles, confetti-like effect, sunny sky background, all three characters muddy but extremely happy, victorious atmosphere with golden light",
-                "text": "تراااااخ! الجزرة طلعت. جدو قال: شكراً يا {child_name}! لولا تعاونك ماكانتش طلعت!",
-                "english": "PLOP! The carrot came out! Grandpa said: Thank you {child_name}! Without your cooperation, it wouldn't have come out!",
-                "teaching_moment": "Success through teamwork, recognition and gratitude"
-            },
-            {
-                "prompt": "Professional Disney Pixar illustration style, magical reward certificate, golden stars and hearts, child and a cute rabbit together celebrate, festive atmosphere",
-                "text": "🎉 مبروك! أتممت قصة الكلمات السحرية! 🎉\n\n✨ الكلمات السحرية اللي اتعلمناها:\n💛 من فضلك\n💚 شكراً\n💙 العفو\n\n🌟 نظام المكافآت:\n⭐ نجمة الكلام الحلو - لما تقول 'من فضلك'\n💫 نجمة الشكر - لما تقول 'شكراً'\n💖 نجمة الطيبة - لما تساعد حد\n👑 تاج البطل المؤدب - لما تجمع ٥ نجوم\n🌟 نجمة المساعدة - لما تشارك ألعابك\n\n📚 نصائح للأهل:\n✓ اقرا القصة ببطء وبتعبير واضح\n✓ خلي طفلك يشارك في الأصوات والحركات\n✓ اسأل أسئلة أثناء القراءة: 'إيه الكلمة السحرية؟'\n✓ اربط القصة بمواقف حقيقية في البيت\n✓ كافئ السلوك الإيجابي بالنجوم فوراً\n✓ كرر القصص المفضلة - التكرار بيعلم!\n✓ امدح طفلك لما يستخدم الكلمات السحرية\n\n🎵 غني الأغنية كل يوم:\n'من فضلك و شكراً... كلمات سحرية!\nنقولها كل يوم... ونبقى مؤدبين!'\n\n💝 تحدي الأسبوع: \nاستخدم الكلمات السحرية ١٠ مرات كل يوم!"
-            }
-        ]
+      "story_title": "فريق الإنقاذ",
+      "pages": [
+        {
+          "page_number": 1,
+          "text": "الأوضة كانت مليانة لعب على الأرض في كل مكان! القطار الصغير والمكعبات الملونة كانوا تعبانين ومحتاجين يرجعوا بيتهم الجميل في الصندوق عشان يرتاحوا.",
+          "prompt": "{child_name} looking sympathetically at scattered toys on the floor, a small toy train and colorful blocks, cozy playroom, soft watercolor illustration."
+        },
+        {
+          "page_number": 2,
+          "text": "{child_name} جاب صاحبه الدبدوب 'بندق' وقاله بحماس: 'تعالى يا بندق! إيه رأيك نعمل فريق إنقاذ ونساعد كل اللعب ترتاح؟'",
+          "prompt": "{child_name} holding the stuffed puppy toy named Bondoq, looking excited and determined, messy room background, magical playtime atmosphere, soft watercolor style."
+        },
+        {
+          "page_number": 3,
+          "text": "{child_name} وبندق بدأوا الشغل سوا كفريق واحد! جابوا العربية الكبيرة، وبدأوا يلموا فيها المكعبات واللعب واحدة واحدة بالراحة والترتيب.",
+          "prompt": "{child_name} happily loading colorful blocks into a large toy dump truck, the stuffed puppy sitting nearby as a helper, cooperative play, bright watercolor."
+        },
+        {
+          "page_number": 4,
+          "text": "وصلوا بالعربية لحد الصندوق، و{child_name} رجع كل اللعب مكانها بحب ولطف عشان تنام مرتاحة ومبسوطة. الأوضة بقت نضيفة ومرتبة وجميلة!",
+          "prompt": "{child_name} gently placing the last toy into a colorful toy box, the room is now tidy, peaceful and neat setting, soft comforting lighting, watercolor finish."
+        },
+        {
+          "page_number": 5,
+          "text": "ماما دخلت الأوضة وانبهرت من النضافة والترتيب! حضنت {child_name} بحب كبير وقالت: 'برافو عليكو! أنتو أحسن وأشطر فريق متعاون في الدنيا!'",
+          "prompt": "A smiling mom giving {child_name} a warm, loving hug in a clean, tidy playroom, the stuffed puppy toy resting happily on the toy box, glowing with happiness and teamwork, beautiful watercolor style."
+        }
+      ]
     },
     "3-4": {
-        "title": "The Stubborn Jar",
-        "age_group": "3-4 years",
-        "theme": "Family Cooperation and Persistence",
-        "pages": [
-            {
-                "page_number": 1,
-                "prompt": "Pixar 3D animation style, determined child character in colorful striped sweatshirt struggling to open a large clear glass jar filled with bright rainbow-colored modeling clay, face scrunched with effort, both hands gripping the lid, jar sitting on a wooden table, bright playroom with toys in background, frustrated but not giving up expression, 'Heave-Ho!' text near character",
-                "text": "بطلنا عاوز يلعب بالصلصال، بس العلبة مقفولة أوي.. يا هيلة هيلة.. مش بتفتح!",
-                "english": "Our hero wants to play with clay, but the container is sealed tight... heave-ho... it won't open!",
-                "teaching_moment": "Recognizing when we need help"
-            },
-            {
-                "page_number": 3,
-                "prompt": "Pixar 3D animation style, mother joining from behind, three family members in a line - mother holding father's waist, father gripping the jar with child, synchronized pulling motion with all leaning back, countdown energy, rainbow-colored clay visible through glass, dynamic action composition, 'One... Two... Three... PULL!' text in speech bubbles, family cooperation at its peak",
-                "text": "ماما جت كمان ومسكت فيهم.. واحد.. اتنين.. تلاتة.. شِدددد!",
-                "english": "Mom came too and grabbed them... one... two... three... PULL!",
-                "teaching_moment": "The whole family working together"
-            },
-            {
-                "page_number": 4,
-                "prompt": "Pixar 3D animation style, explosive moment with jar lid popping off with 'POP!' effect and sparkles, colorful modeling clay balls bouncing out in rainbow colors (red, blue, yellow, green, purple), all three family members falling backward with surprised and delighted expressions, mouths open in laughter, motion blur showing the sudden release, celebratory chaos, bright burst of light",
-                "text": "بببببببببب! العلبة اتفتحت وكلنا فرحنا بالصلصال الملون.",
-                "english": "POP! The jar opened and we all celebrated with the colorful clay!",
-                "teaching_moment": "Sweet victory after persistence"
-            },
-            {
-                "page_number": 5,
-                "prompt": "Pixar 3D animation style, peaceful happy scene at wooden craft table, father, mother, and child sitting together making creative clay sculptures - child making a colorful snake, father making a star, mother making a flower, all smiling and engaged in creative play, clay scattered on table, warm afternoon sunlight through window, family bonding moment, cozy homey atmosphere with hearts floating subtly",
-                "text": "بطلنا قال: شكراً يا فريق التعاون! إيد لوحدها متسقفش، بس إيدينا سوا بتفتح المستحيل.",
-                "english": "Our hero said: Thank you cooperation team! One hand can't clap alone, but our hands together can open the impossible!",
-                "teaching_moment": "Wisdom - unity makes impossible things possible"
-            },
-            {
-                "prompt": "Professional Disney Pixar illustration style, child smiling warmly, happy moral conclusion, bright sunshine",
-                "text": "الدرس النهاردة هو إن قلبنا بيكبر لما بنعمل الصح! 🌟"
-            },
-            {
-                "prompt": "Professional Disney Pixar illustration style, superhero theme, child wearing a patience cape, magical 1-2-3 numbers visible, other children cheering in background",
-                "text": "🦸 أنت بطل الصبر الخارق! 🦸\n\n⏰ اتعلمت تنتظر دورك زي الأبطال!\n\n💪 قوتك الخارقة:\n1️⃣ الصبر - تعرف تستنى\n2️⃣ الاحترام - تحترم أصحابك\n3️⃣ التحكم في النفس - ماتتعجلش\n\n🏆 نظام المكافآت:\n⭐ نجمة الكلام الحلو - 'من فضلك' و 'شكراً'\n💫 نجمة الصبر - لما تستنى دورك\n💖 نجمة الطيبة - لما تساعد حد\n👑 تاج بطل الصبر - لما تجمع ٥ نجوم\n🌟 نجمة المساعدة - لما تشارك\n\n🎯 تمرين العد السحري:\nلما تحس إنك مستعجل، عد:\nواحد... اتنين... تلاتة... وتنفس!\n\n💡 نصائح للأهل:\n✓ اقرا القصة ببطء وبتعبير واضح\n✓ خلي طفلك يشارك في الأصوات والحركات\n✓ اسأل أسئلة: 'ليه بطلنا استنى؟'\n✓ اربط القصة بمواقف حقيقية (الصف، السوبر ماركت)\n✓ كافئ السلوك الإيجابي بالنجوم\n✓ كرر القصص المفضلة - التكرار بيعلم!\n✓ مارس لعبة 'الصف' بالعرايس في البيت\n\n🎭 أنشطة تفاعلية:\n🔊 أصوات: قرمشة، مية، تصفيق\n✋ حركات: عد على صوابعك ١-٢-٣، صفق، احضن\n🎵 غني: 'واحد اتنين تلاتة... أنا صبور!'\n\n📊 جدول النجوم الأسبوعي:\nكل يوم طفلك ينتظر دوره، حط نجمة!\n⭐⭐⭐⭐⭐ = تاج بطل الصبر! 👑"
-            }
-        ]
+      "story_title": "حل الزحليقة الذكي",
+      "pages": [
+        {
+          "page_number": 1,
+          "text": "{child_name} وصاحبه طلعوا فوق الزحليقة العالية في الحديقة. الاتنين كانوا عايزين يتزحلقوا في نفس اللحظة، لكن المكان ضيق ومافيش مكان للاتنين!",
+          "prompt": "{child_name} and a friend standing at the top of a playground slide, looking stuck and squeezed together, sunny park background, watercolor style."
+        },
+        {
+          "page_number": 2,
+          "text": "لو زقوا بعض زي الماعزتين في القصص، ممكن يقعوا ويتعوروا! {child_name} فكر بذكاء وقال لصاحبه: 'استنى! لازم نلاقي حل حلو ونلعب سوا من غير مشاكل!'",
+          "prompt": "{child_name} thinking with a finger on chin, looking at the friend, imagining two silly goats bumping heads (in a thought bubble), soft watercolor style."
+        },
+        {
+          "page_number": 3,
+          "text": "{child_name} بطل متعاون وذكي! وسع المكان لصاحبه وقال له بابتسامة كبيرة: 'اتفضل يا صاحبي، انزل إنت الأول وأنا هنزل وراك!'",
+          "prompt": "{child_name} stepping back slightly at the top of the slide, making a polite gesture with hand for the friend to go down, smiling kindly, watercolor illustration."
+        },
+        {
+          "page_number": 4,
+          "text": "صاحبه اتزحلق ونزل بسرعة وفرح! وبعدين {child_name} نزل وراه في ثانية وصرخ 'وييييي!' كان اللعب بالدور أحلى وأمتع بكتير!",
+          "prompt": "{child_name} sliding down the slide happily with wind in hair, the friend waiting at the bottom clapping, action shot, bright colors, watercolor."
+        },
+        {
+          "page_number": 5,
+          "text": "{child_name} وصاحبه سقفوا لبعض بفرحة كبيرة! اتعلموا إن لما نتعاون ونستنى دورنا، اللعب بيبقى أجمل ومافيش زعل ولا خناقات.",
+          "prompt": "{child_name} and the friend high-fiving each other at the bottom of the slide, big smiles, sunny playground, glowing with friendship, beautiful watercolor finish."
+        }
+      ]
     },
     "4-5": {
-        "title": "The Magic Stone Soup",
-        "age_group": "4-5 years",
-        "theme": "Sharing and Community",
-        "pages": [
-            {
-                "page_number": 1,
-                "prompt": "Pixar 3D animation style, adventurous child character in striped sweatshirt standing proudly beside a large black cooking pot over glowing campfire with orange flames, holding up a smooth round gray stone with both hands showing it to 4-5 curious animal friends gathered around (rabbit, squirrel, bird, fox), hungry expressions on all faces, forest clearing setting with trees in background, 'Secret of the Magic Soup' written in glowing text in the sky, mysterious enchanting atmosphere",
-                "text": "بطلنا كان جعان هو وأصحابه ومفيش أكل. جاب حلة مية وحط فيها حجرة نظيفة وقال: أنا هعمل شوربة حجارة طعمها يجنن!",
-                "english": "Our hero was hungry with their friends and there was no food. They got a pot of water, put in a clean stone and said: I'll make stone soup that tastes amazing!",
-                "teaching_moment": "Creative thinking and leadership"
-            },
-            {
-                "page_number": 2,
-                "prompt": "Pixar 3D animation style, friendly rabbit character offering a bright orange carrot to the smiling child character, both standing by the steaming pot, child receiving the carrot with gratitude, rabbit looking proud to help, other friends watching in background with interest, white steam rising beautifully from pot, warm firelight on faces, generous sharing moment, forest setting at dusk",
-                "text": "صاحبه سأله: ممكن أساعد؟ بطلنا قال: يا ريت لو معاك جزرة. صاحبه جاب جزرة وحطها.",
-                "english": "Their friend asked: Can I help? Our hero said: I wish you had a carrot. Their friend brought a carrot and added it.",
-                "teaching_moment": "Asking for help and contributing"
-            },
-            {
-                "page_number": 3,
-                "prompt": "Pixar 3D animation style, lively scene with multiple animal friends arriving with vegetables - squirrel carrying two brown potatoes, bird flying in with red tomatoes in a small basket, fox bringing leafy greens, child character enthusiastically dropping vegetables into the large bubbling pot, all friends smiling and excited, vegetables floating in mid-air before entering pot, community gathering energy, golden hour lighting",
-                "text": "صاحبتهم التانية جابت بطاطس، والتالت جاب طماطم. كل واحد بدأ يحط حاجة صغننة من عنده في الحلة.",
-                "english": "Their second friend brought potatoes, the third brought tomatoes. Everyone started adding something small from what they had into the pot.",
-                "teaching_moment": "Everyone contributing what they can"
-            },
-            {
-                "page_number": 4,
-                "prompt": "Pixar 3D animation style, child character stirring the large pot with a long wooden spoon, delicious swirling steam clouds rising in beautiful shapes (hearts, stars), pot filled with colorful vegetables visible through steam, all animal friends gathered close watching eagerly with wide excited eyes, some sniffing the air with delight, magical cooking atmosphere, warm fire glow, aromatic visualization with sparkles in steam",
-                "text": "الحلة بقت مليانة خضار وريحتها تحفة! بطلنا فضل يقلبها وكلهم بيساعدوا سوا بفرحة.",
-                "english": "The pot became full of vegetables and smelled wonderful! Our hero kept stirring it and everyone helped together with joy.",
-                "teaching_moment": "Working together creates something beautiful"
-            },
-            {
-                "page_number": 5,
-                "prompt": "Pixar 3D animation style, heartwarming feast scene in circle around the campfire, all friends sitting together holding wooden bowls of steaming vegetable soup, everyone eating happily with big smiles, child character in center raising their bowl in celebration, warm firelight illuminating happy faces, stars twinkling in night sky above, communal sharing and satisfaction, the removed stone sitting beside pot, magical peaceful atmosphere with friendship and abundance",
-                "text": "في الآخر، الحجرة طلعت شوربة حقيقية تكفي الكل! بطلنا قال: شفتوا؟ التعاون خلى الحجرة تبقى أحلى عشاء في العالم.",
-                "english": "In the end, the stone became real soup that was enough for everyone! Our hero said: See? Cooperation made the stone become the best dinner in the world!",
-                "teaching_moment": "Collective effort creates abundance and magic"
-            },
-            {
-                "prompt": "Professional Disney Pixar illustration style, nature theme, child and a beetle are friends, kindness certificate, rainbow and hearts, achievement board",
-                "text": "💎 أنت بطل القلب الطيب! 💎\n\n🌟 الدرس العظيم:\n'اللي تعمله من خير، هييجي لك أضعاف!'\n\n🐞 اتعلمت:\n✓ الاحترام لكل المخلوقات (كبيرة وصغيرة)\n✓ اللطف والطيبة\n✓ المساعدة بترجع لك\n✓ الأصدقاء الحقيقيين بيفتكروا الجميل\n\n🏆 نظام المكافآت الكامل:\n⭐ نجمة الكلام الحلو - للأدب\n💫 نجمة الصبر - للانتظار\n💖 نجمة الطيبة - للمساعدة\n💚 نجمة الرحمة - للرفق بالحيوانات\n👑 تاج البطل المؤدب - ٥ نجوم\n💎 جوهرة القلب الطيب - للعمل الخيّر\n🌟 نجمة المساعدة - لمساعدة المحتاجين\n\n🌈 تحدي الطيبة:\n□ ساعد حد محتاج اليوم\n□ كن لطيف مع الحيوانات\n□ شارك ألعابك\n□ قول كلمة حلوة لصاحبك\n□ ساعد ماما أو بابا\n\n💡 نصائح مهمة للأهل:\n✓ اقرا القصة ببطء وبتعبير واضح\n✓ خلي طفلك يشارك في الأصوات والحركات\n✓ اسأل أسئلة عميقة: 'ليه الخنفساء ساعدت بطلنا؟'\n✓ اربط القصة بمواقف حقيقية في الحياة\n✓ كافئ السلوك الإيجابي بالنجوم فوراً\n✓ كرر القصص المفضلة - التكرار بيعلم!\n✓ اطلع مع طفلك للطبيعة وراقبوا الحشرات\n✓ علّم طفلك الرفق بالحيوانات الصغيرة\n\n🎨 أنشطة ممتعة:\n🔊 أصوات: قرمشة، مية، تصفيق، أصوات حيوانات\n✋ حركات: عد النقط على الخنفساء، صفق، احضن\n🎵 غني: 'خنفساء صغيرة... قلب بطلنا كبير!'\n🖍️ ارسم: خنفساء بنقط ملونة\n🌳 استكشف: اطلع الجنينة ودور على حشرات\n\n❓ أسئلة للمناقشة:\n• إيه اللي بطلنا عمله للخنفساء؟\n• ليه الخنفساء ساعدته؟\n• مين كمان محتاج مساعدتك؟\n• إزاي ممكن تكون طيب كل يوم؟\n\n💝 رسالة خاصة:\nكل عمل طيب - مهما كان صغير - بيفرق في الدنيا!\nكن دايماً طيب القلب زي بطلنا! 🌟"
-            }
-        ]
-    },
-    "image_generation_tips": {
-        "general_guidelines": [
-            "Always specify 'Pixar 3D animation style' at the start for consistency",
-            "Include character descriptions (age, clothing, expressions) for each scene",
-            "Specify lighting (golden hour, warm firelight, sunny, etc.)",
-            "Add atmosphere descriptors (warm, cheerful, magical, cozy)",
-            "Include background details and setting",
-            "Mention specific colors for visual richness",
-            "Add emotion keywords (joyful, excited, determined, peaceful)"
-        ],
-        "character_consistency": [
-            "Describe the main character the same way each time: 'toddler/child character in striped sweatshirt'",
-            "Keep supporting characters recognizable with consistent features",
-            "Use {child_name} placeholder for personalization"
-        ],
-        "composition_tips": [
-            "Vary shot types: close-up for emotion, medium for action, wide for context",
-            "Use diagonal lines for dynamic energy",
-            "Center important elements",
-            "Include motion lines for action scenes",
-            "Add depth with foreground and background elements"
-        ],
-        "age_appropriate_elements": [
-            "1-2 years: Simple, bright colors, large objects, clear expressions",
-            "2-3 years: Action and humor, exaggerated features, recognizable situations",
-            "3-4 years: Family dynamics, problem-solving, cause and effect",
-            "4-5 years: Community, sharing, moral lessons, more complex narratives"
-        ]
+      "story_title": "قلعة الرمل العظيمة",
+      "pages": [
+        {
+          "page_number": 1,
+          "text": "{child_name} وصاحبه راحوا الشاطئ وقرروا يبنوا قلعة رمل كبيرة! {child_name} كان عايز يعمل برج عالي يوصل السما، وصاحبه كان عايز يحفر خندق مية عميق حوالين القلعة.",
+          "prompt": "{child_name} and a friend on a sandy beach, arguing slightly, one pointing up (tower) and the other pointing down (moat), sand buckets nearby, watercolor style."
+        },
+        {
+          "page_number": 2,
+          "text": "بدأوا يتخانقوا ويشدوا الجردل من بعض! كل واحد بيشتغل لوحده من غير تعاون. الرمل وقع والقلعة اتهدمت خالص. الاتنين قعدوا زعلانين وضهرهم لبعض.",
+          "prompt": "The sandcastle collapsed into a mess, both kids sitting back to back looking angry and crossed arms, broken sand shapes, sad atmosphere, watercolor."
+        },
+        {
+          "page_number": 3,
+          "text": "{child_name} فكر بذكاء ولقى حل جميل! لف لصاحبه بابتسامة وقال: 'بدل ما نتخانق ونزعل، تعال نفكر سوا! نعمل برج عالي جداً وحواليه خندق مية كبير! الاتنين مع بعض!'",
+          "prompt": "{child_name} turning around with a lightbulb moment idea, talking excitedly to the friend, drawing a plan in the sand with a finger, bright eyes, watercolor style."
+        },
+        {
+          "page_number": 4,
+          "text": "قسموا الشغل بينهم بالعدل! {child_name} بدأ يبني البرج العالي بتركيز، وصاحبه بدأ يحفر الخندق حوالين البرج. كل واحد عمل الحاجة اللي يحبها، والشغل بقى أسهل وأسرع بكتير!",
+          "prompt": "{child_name} carefully building a tower while the friend digs a moat around it, working together harmoniously, focused expressions, bright sunny beach, watercolor."
+        },
+        {
+          "page_number": 5,
+          "text": "عملوا أحلى وأكبر قلعة رمل في الشاطئ كله! الناس كلها وقفت تتفرج وتصقفلهم. {child_name} وصاحبه سقفوا لبعض وعرفوا إن بالتعاون نقدر نعمل حاجات مستحيلة!",
+          "prompt": "A magnificent huge sandcastle with towers and a moat, {child_name} and friend standing proudly next to it, high-fiving, glowing with teamwork, beautiful watercolor finish."
+        }
+      ]
     }
+  }
 }
