@@ -1,12 +1,13 @@
-from fastapi import FastAPI, Request, BackgroundTasks, HTTPException
-from fastapi.responses import PlainTextResponse
-import os, uvicorn, logging, requests, base64, time
+from fastapi import FastAPI, Request, BackgroundTasks, HTTPException, Response
+from fastapi.responses import PlainTextResponse, HTMLResponse
+from fastapi.staticfiles import StaticFiles
+import os, uvicorn, logging, requests, base64, time, json, shutil, uuid
 
 # استيراد الدوال من الملفات المساعدة
 from messenger_api import send_text_message, send_quick_replies, send_file, send_image
 from pdf_utils import create_pdf
 from openai_service import verify_payment_screenshot, generate_storybook_page, create_character_reference
-from image_utils import overlay_text_on_image, create_cover_page
+from image_utils import overlay_text_on_image, create_cover_page, create_text_page
 from story_manager import StoryManager
 
 # إعداد السجلات لمراقبة أداء البوت
@@ -15,14 +16,26 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
+# تأكد من إنشاء مجلدات التخزين
+os.makedirs("static/stories", exist_ok=True)
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
 # متغيرات البيئة (تأكد من ضبطها في Railway)
 VERIFY_TOKEN = os.getenv("VERIFY_TOKEN", "my_verify_token")
 PAYMENT_NUMBER = os.getenv("INSTAPAY_HANDLE", "01060746538")
+BASE_URL = os.getenv("APP_URL", "https://kidsstories-production.up.railway.app") # عدل هذا لرابط تطبيقك
 user_state = {}
 
 @app.get("/")
 def home():
     return {"status": "Story Bot is Active"}
+
+@app.get("/flipbook/{story_id}")
+def flipbook_viewer(story_id: str):
+    """عرض القصة التفاعلية"""
+    with open("static/flipbook.html", "r", encoding="utf-8") as f:
+        html_content = f.read()
+    return HTMLResponse(content=html_content)
 
 @app.get("/webhook")
 def verify_webhook(request: Request):
@@ -210,10 +223,53 @@ def process_story_generation(sender_id, value, is_preview=False):
 
         if len(generated_images) > 1:
             send_text_message(sender_id, "✅ اكتملت الرسومات! جاري تجميع ملف الـ PDF... 📚")
+            
+            # --- إنشاء القصة التفاعلية (Flipbook) ---
+            story_id = str(uuid.uuid4())[:8]
+            story_dir = f"static/stories/{story_id}"
+            os.makedirs(story_dir, exist_ok=True)
+            
+            # حفظ الصور وتجهيز المانيفست
+            web_images = []
+            manifest_pages = []
+            
+            # الغلاف
+            shutil.copy(cover_path, f"{story_dir}/cover.png")
+            
+            # الصفحات
+            # نلاحظ أن generated_images تبدأ بالغلاف إذا وجد
+            # ونريد حفظ كل Art و Text
+            for idx, img_path in enumerate(generated_images):
+                filename = f"page_{idx}.png"
+                shutil.copy(img_path, f"{story_dir}/{filename}")
+                web_images.append(f"/static/stories/{story_id}/{filename}")
+
+            # بناء المانيفست للـ HTML
+            manifest = {
+                "child_name": child_name,
+                "cover": f"/static/stories/{story_id}/page_0.png",
+                "pages": []
+            }
+            # interleaving (page_1 is art, page_2 is text, etc.)
+            for j in range(1, len(web_images), 2):
+                if j+1 < len(web_images):
+                    manifest["pages"].append({
+                        "art": web_images[j],
+                        "text": web_images[j+1]
+                    })
+            
+            with open(f"{story_dir}/manifest.json", "w", encoding="utf-8") as f:
+                json.dump(manifest, f)
+
+            flipbook_url = f"{BASE_URL}/flipbook/{story_id}"
+            
+            # إنشاء الـ PDF
             pdf_path = f"/tmp/story_{sender_id}.pdf"
             create_pdf(generated_images, pdf_path)
+            
+            # إرسال النتائج
             send_file(sender_id, pdf_path)
-            send_text_message(sender_id, f"🎉 قصة {child_name} جاهزة! الصفحات الآن موزعة بطريقة احترافية (رسمة ثم نص).")
+            send_text_message(sender_id, f"🎉 قصة {child_name} جاهزة!\n\nيمكنك الآن تصفح القصة ككتاب حقيقي عبر هذا الرابط: {flipbook_url}")
             user_state[sender_id] = {"step": "start"}
 
     except Exception as e:
