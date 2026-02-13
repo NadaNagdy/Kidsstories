@@ -48,20 +48,27 @@ def _prepare_arabic_text(text: str) -> str:
 
 def _get_arabic_font(size: int, weight: str = "bold") -> ImageFont.FreeTypeFont:
     """تحميل الخطوط مع ضمان الدقة - Almarai هو الأفضل للوضوح"""
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    fonts_dir = os.path.join(base_dir, "fonts")
-    
-    suffix = "-Bold.ttf" if weight.lower() == "bold" else "-Regular.ttf"
-    
-    almarai_path = os.path.join(fonts_dir, f"Almarai{suffix}")
-    if os.path.exists(almarai_path):
-        return ImageFont.truetype(almarai_path, size)
-    
-    cairo_path = os.path.join(fonts_dir, f"Cairo{suffix}")
-    if os.path.exists(cairo_path):
-        return ImageFont.truetype(cairo_path, size)
+    try:
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        fonts_dir = os.path.join(base_dir, "fonts")
+        
+        suffix = "-Bold.ttf" if weight.lower() == "bold" else "-Regular.ttf"
+        
+        almarai_path = os.path.join(fonts_dir, f"Almarai{suffix}")
+        if os.path.exists(almarai_path):
+            return ImageFont.truetype(almarai_path, size)
+        
+        cairo_path = os.path.join(fonts_dir, f"Cairo{suffix}")
+        if os.path.exists(cairo_path):
+            return ImageFont.truetype(cairo_path, size)
+    except Exception as e:
+        print(f"⚠️ Font loading error: {e}")
 
-    return ImageFont.load_default()
+    # Fallback to a system font that might support Arabic if possible
+    try:
+        return ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial.ttf", size)
+    except:
+        return ImageFont.load_default()
 
 def _detect_best_position(img):
     """تحليل الصورة للعثور على أفضل مساحة (أغمق مساحة) للنص الأصفر"""
@@ -104,13 +111,15 @@ def create_cover_page(image_url, value, child_name, gender, output_path):
         top_text = f"{prefix} {value}"
         reshaped_top = _prepare_arabic_text(top_text)
         
-        # تصغير الخط تلقائياً إذا كان العرض كبيراً
-        current_title_size = 115
+        # تصغير الخط تلقائياً وتوسيع الهوامش لضمان عدم اختفاء أي حرف (مثل القاف في الصدق)
+        current_title_size = 100 # تقليل الحجم الابتدائي قليلاً
+        max_title_width = 820   # ترك مساحة كافية على الجوانب (100px من كل جهة)
+        
         while current_title_size > 40:
             title_font = _get_arabic_font(current_title_size, weight="bold")
-            bbox = draw.textbbox((0, 0), reshaped_top, font=title_font)
+            bbox = draw.textbbox((0, 0), reshaped_top, font=title_font, stroke_width=10)
             tw = bbox[2] - bbox[0]
-            if tw < 940:
+            if tw < max_title_width:
                 break
             current_title_size -= 5
             
@@ -121,12 +130,12 @@ def create_cover_page(image_url, value, child_name, gender, output_path):
         # 2. اسم الطفل في الأسفل
         reshaped_name = _prepare_arabic_text(child_name)
         
-        current_name_size = 105
+        current_name_size = 90
         while current_name_size > 40:
             name_font = _get_arabic_font(current_name_size, weight="bold")
-            n_bbox = draw.textbbox((0, 0), reshaped_name, font=name_font)
+            n_bbox = draw.textbbox((0, 0), reshaped_name, font=name_font, stroke_width=10)
             nw = n_bbox[2] - n_bbox[0]
-            if nw < 940:
+            if nw < max_title_width:
                 break
             current_name_size -= 5
             
@@ -164,7 +173,7 @@ def overlay_text_on_image(image_url, text, output_path):
         for word in words:
             current_line.append(word)
             test_line = " ".join(current_line)
-            if draw.textlength(_prepare_arabic_text(test_line), font=font) > 960:
+            if draw.textlength(_prepare_arabic_text(test_line), font=font) > 820:
                 current_line.pop()
                 lines.append(" ".join(current_line))
                 current_line = [word]
