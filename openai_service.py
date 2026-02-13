@@ -305,7 +305,8 @@ def generate_storybook_page(
         
         # Complete prompt with FLUX structure
         full_prompt = (
-            f"An immersive {style} of {character} {safe_prompt}. "
+            f"A high-fidelity immersive {style} of {character} {safe_prompt}. "
+            f"The character MUST be a pixel-perfect artistic replica of this exact description: {char_desc}. "
             f"Composition: {composition}. "
             f"Lighting: {lighting_style}. "
             f"Quality: {quality}. "
@@ -515,14 +516,14 @@ def create_character_reference(
                         {
                             "type": "text",
                             "text": (
-                                f"Analyze this child's photo for a high-end storybook. "
+                                f"Analyze this child's photo with surgical precision for a professional 1-to-1 storybook illustration match. "
                                 f"Gender: {'Girl' if gender == 'بنت' else 'Boy'}. "
-                                f"Provide a detailed 100-word paragraph describing: "
-                                f"1. Skin tone (precisely, e.g., porcelain, honey, olive, deep brown). "
-                                f"2. Hair style and texture (e.g., tight curls, loose waves, straight bob) and exact color. "
-                                f"3. Eye details (shape, color, sparkle). "
-                                f"4. Any unique features (dimples, rosy cheeks, specific smile). "
-                                f"Focus on visual details that an illustrator can replicate exactly."
+                                f"Provide an ultra-descriptive 150-word paragraph including: "
+                                f"1. Hair: Complete style (length, volume), exact texture (tight curls, waves), and precise color. "
+                                f"2. Eyes: Precise shape (round, almond), color, and specific sparkle. "
+                                f"3. Face: Cheekbone structure, nose shape, chin, and mouth expression. "
+                                f"4. Identity: Capture the unique 'soul' and likeness of this specific child. "
+                                f"Focus on every physical detail so an illustrator can replicate this exact person."
                             )
                         },
                         image_content
