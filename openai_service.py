@@ -27,6 +27,125 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")  # للـ Vision API (اختيار�
 # 🛡️ Helper Functions (Safe Utilities)
 # ============================================================================
 
+def _extract_image_from_response(response_data: dict) -> Optional[str]:
+    """
+    استخراج الصورة من استجابة OpenRouter بطرق متعددة
+    
+    Args:
+        response_data: البيانات المُرجعة من API
+    
+    Returns:
+        URL أو base64 string، أو None
+    """
+    try:
+        choices = response_data.get("choices", [])
+        if not choices:
+            return None
+        
+        message = choices[0].get("message", {})
+        
+        # محاولة 1: images كـ list
+        images = message.get("images", [])
+        if images and isinstance(images, list) and len(images) > 0:
+            image_data = images[0]
+            
+            if isinstance(image_data, dict):
+                url = image_data.get("url") or image_data.get("data")
+                if url:
+                    logger.debug("✅ Found in images[0].url/data")
+                    return url
+            elif isinstance(image_data, str):
+                logger.debug("✅ Found as string in images[0]")
+                return image_data
+        
+        # محاولة 2: content
+        content = message.get("content")
+        if content and isinstance(content, str):
+            if content.startswith("http") or "base64" in content or len(content) > 100:
+                logger.debug("✅ Found in message.content")
+                return content
+        
+        # محاولة 3: بحث عميق
+        def search_for_image(obj, depth=0):
+            if depth > 5:
+                return None
+            
+            if isinstance(obj, dict):
+                for key in ["url", "image", "data", "base64", "content"]:
+                    if key in obj:
+                        value = obj[key]
+                        if isinstance(value, str) and (
+                            value.startswith("http") or 
+                            "base64" in value or 
+                            len(value) > 100
+                        ):
+                            return value
+                
+                for value in obj.values():
+                    result = search_for_image(value, depth + 1)
+                    if result:
+                        return result
+            
+            elif isinstance(obj, list):
+                for item in obj:
+                    result = search_for_image(item, depth + 1)
+                    if result:
+                        return result
+            
+            return None
+        
+        image_url = search_for_image(response_data)
+        if image_url:
+            logger.debug("✅ Found via deep search")
+            return image_url
+        
+        return None
+        
+    except Exception as e:
+        logger.error(f"❌ Error extracting image: {e}")
+        return None
+
+
+def _save_image_from_data(image_data: str) -> Optional[str]:
+    """
+    حفظ الصورة من URL أو base64
+    
+    Args:
+        image_data: URL أو base64 string
+    
+    Returns:
+        مسار الملف أو URL
+    """
+    try:
+        # حالة 1: URL مباشر
+        if image_data.startswith("http"):
+            logger.info(f"✅ Direct URL: {image_data[:50]}...")
+            return image_data
+        
+        # حالة 2: Base64
+        if "base64," in image_data:
+            image_data = image_data.split("base64,")[1]
+        elif "," in image_data:
+            image_data = image_data.split(",", 1)[1]
+        
+        image_data = image_data.strip().replace(" ", "").replace("\n", "")
+        
+        image_bytes = base64.b64decode(image_data)
+        
+        temp_filename = f"/tmp/flux_{uuid.uuid4().hex[:8]}.png"
+        with open(temp_filename, "wb") as fh:
+            fh.write(image_bytes)
+        
+        file_size = os.path.getsize(temp_filename)
+        logger.info(f"✅ Saved: {temp_filename} ({file_size} bytes)")
+        
+        return temp_filename
+        
+    except Exception as e:
+        logger.error(f"❌ Save error: {e}")
+        return None
+
+
 def prepare_prompt_safe(
     prompt: str, 
     child_name: Optional[str] = None,
@@ -164,45 +283,28 @@ def generate_storybook_page(
             timeout=timeout
         )
         
-        # معالجة الاستجابة
+        # معالجة الاستجابة المحسّنة
         if response.status_code == 200:
             data = response.json()
-            message = data.get("choices", [{}])[0].get("message", {})
-            images = message.get("images", [])
             
-            if images:
-                image_data = images[0]
+            # ✅ طريقة محسّنة لاستخراج الصورة
+            image_data = _extract_image_from_response(data)
+            
+            if image_data:
+                # ✅ حفظ أو إرجاع الصورة
+                result = _save_image_from_data(image_data)
                 
-                # استخراج الرابط أو Base64
-                if isinstance(image_data, dict):
-                    url = image_data.get("url", "")
+                if result:
+                    logger.info(f"✅ Image generated successfully!")
+                    return result
                 else:
-                    url = image_data
-                
-                # معالجة Base64
-                if url and ("base64" in url or "," in url):
-                    try:
-                        base64_string = url.split(",")[1] if "," in url else url
-                        temp_filename = f"/tmp/flux_{uuid.uuid4().hex[:8]}.png"
-                        
-                        with open(temp_filename, "wb") as fh:
-                            fh.write(base64.b64decode(base64_string))
-                        
-                        logger.info(f"✅ Image saved: {temp_filename}")
-                        return temp_filename
-                    except Exception as e:
-                        logger.error(f"❌ Base64 decode error: {e}")
-                        return None
-                
-                # رابط URL مباشر
-                if url and url.startswith("http"):
-                    logger.info(f"✅ Image URL: {url[:50]}...")
-                    return url
-                
-                logger.warning("⚠️ No valid image data found")
-                return None
+                    logger.error("❌ Failed to save/process image")
+                    return None
             else:
-                logger.warning("⚠️ No images in response")
+                logger.warning("⚠️ No valid image data found in response")
+                logger.debug(f"Response keys: {list(data.keys())}")
+                if data.get("choices"):
+                    logger.debug(f"Message keys: {list(data['choices'][0].get('message', {}).keys())}")
                 return None
         else:
             logger.error(f"❌ OpenRouter API Error: {response.status_code}")
