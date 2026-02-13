@@ -61,7 +61,8 @@
       "pages": [
         {
           "page_number": 1,
-          "text": "{child_name} قرر يعمل مقلب مضحك في بابا! استخبى ورا الكنبة وصرخ بصوت عالي: 'بابا! الحقني أنا وقع"prompt": "{child_name} hiding behind a sofa, giggling with hand over mouth, shouting playfully, living room setting, soft watercolor style."
+          "text": "{child_name} قرر يعمل مقلب مضحك في بابا! استخبى ورا الكنبة وصرخ بصوت عالي: 'بابا! الحقني أنا وقعت!'",
+          "prompt": "{child_name} hiding behind a sofa, giggling with hand over mouth, shouting playfully, living room setting, soft watercolor style."
         },
         {
           "page_number": 2,
