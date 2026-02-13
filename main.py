@@ -165,7 +165,7 @@ def process_story_generation(sender_id, value, is_preview=False):
             # برومبت الغلاف المحسن لنموذج FLUX - محايد لترك التفاصيل لـ char_desc
             cover_prompt = f"Professional children's book cover illustration for a story about {child_name} learning about {value}. Soft digital watercolor washes, delicate colored pencil detailing, dreamy cozy bedtime story aesthetic with warm glowing light. Masterpiece quality."
             
-            cover_url = generate_storybook_page(char_desc, cover_prompt, gender=gender, is_cover=True)
+            cover_url = generate_storybook_page(char_desc, cover_prompt, gender=gender, age_group=data.get("age_group", "3-4"), is_cover=True)
             
             if cover_url:
                 # استدعاء الدالة المعدلة لكتابة "بطل/بطلة القيمة" واسم الطفل
@@ -191,7 +191,7 @@ def process_story_generation(sender_id, value, is_preview=False):
             send_text_message(sender_id, f"⏳ جاري رسم الصفحة {page_num} من {total_pages}...")
             
             # استخدام المسار المحلي المرتجع من دالة FLUX الجديدة
-            img_result = generate_storybook_page(char_desc, p["prompt"], gender=gender)
+            img_result = generate_storybook_page(char_desc, p["prompt"], gender=gender, age_group=data.get("age_group", "3-4"))
             if img_result:
                 path = f"/tmp/p_{sender_id}_{i}.png"
                 # overlay_text_on_image تدعم الآن المسار المحلي أو الرابط
@@ -200,7 +200,7 @@ def process_story_generation(sender_id, value, is_preview=False):
             else:
                 send_text_message(sender_id, f"⚠️ تأخرت الصفحة {page_num}.. أحاول مرة أخرى.")
                 # محاولة ثانية سريعة
-                img_result = generate_storybook_page(char_desc, p["prompt"], gender=gender)
+                img_result = generate_storybook_page(char_desc, p["prompt"], gender=gender, age_group=data.get("age_group", "3-4"))
                 if img_result:
                     path = f"/tmp/p_{sender_id}_{i}.png"
                     overlay_text_on_image(img_result, p["text"], path)

@@ -230,6 +230,7 @@ def generate_storybook_page(
     prompt: str, 
     child_name: Optional[str] = None,
     gender: str = "ولد", 
+    age_group: str = "3-4",
     is_cover: bool = False,
     timeout: int = 120
 ) -> Optional[str]:
@@ -268,8 +269,10 @@ def generate_storybook_page(
         
         # Character description (base ID only, details come from char_desc)
         gender_term = "girl" if gender == "بنت" else "boy"
+        age_desc = f"{age_group} year old" if "-" in age_group else "toddler"
+        
         character = (
-            f"adorable 3-4 year old {gender_term} with a unique face and personality, "
+            f"an adorable {age_desc} {gender_term} with a unique face and personality, "
             f"sweet joyful smile, cute rounded toddler proportions"
         )
         
@@ -300,9 +303,9 @@ def generate_storybook_page(
             "clean simple masterpiece, vibrant colors, suitable for ages 1-5"
         )
         
-        # Complete prompt with FLUX structure
+        # Complete prompt with FLUX structure (User-specific template)
         full_prompt = (
-            f"A high-fidelity immersive {style} of {character} {safe_prompt}. "
+            f"A high-fidelity immersive {style}, {character} {safe_prompt}. "
             f"The character MUST be a pixel-perfect artistic replica of this exact description: {char_desc}. "
             f"Composition: {composition}. "
             f"Lighting: {lighting_style}. "
