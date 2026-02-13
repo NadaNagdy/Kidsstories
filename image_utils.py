@@ -70,43 +70,40 @@ def _get_arabic_font(size: int, weight: str = "bold") -> ImageFont.FreeTypeFont:
 # ---------------------------------------------------------------------------
 
 def create_cover_page(image_url, value, child_name, gender, output_path):
-    """إنشاء الغلاف بخطوط حادة جداً ومساحات نظيفة"""
+    """إنشاء الغلاف بملء الصفحة مع نصوص بارزة"""
     try:
         width, height = 1024, 1024
-        img = Image.new('RGB', (width, height), (255, 255, 255))
+        art_source = get_image_source(image_url)
+        if not art_source: return None
+        
+        # 1. تكبير الصورة لتملأ الصفحة تماماً
+        img = art_source.convert("RGB").resize((width, height), Image.LANCZOS)
         draw = ImageDraw.Draw(img)
         
-        # أحجام الخطوط المثالية للغلاف
-        title_font = _get_arabic_font(130, weight="bold")
-        name_font = _get_arabic_font(115, weight="bold")
+        # أحجام الخطوط
+        title_font = _get_arabic_font(120, weight="bold")
+        name_font = _get_arabic_font(100, weight="bold")
 
-        # 1. رسم العنوان (بطل/بطلة القيمة)
+        # 2. رسم العنوان (بطل/بطلة القيمة) في الأعلى
         prefix = "بطلة" if gender == "female" else "بطل"
         top_text = f"{prefix} {value}"
         reshaped_top = _prepare_arabic_text(top_text)
         tw = draw.textbbox((0, 0), reshaped_top, font=title_font)[2]
-        tx, ty = (width - tw) // 2, 70
+        tx, ty = (width - tw) // 2, 80
         
-        # رسم النص بـ Stroke يمنع بهتان الحواف
-        draw.text((tx, ty), reshaped_top, font=title_font, fill=(45, 30, 20), 
-                  stroke_width=2, stroke_fill=(45, 30, 20))
+        # Stroke عريض لضمان القراءة فوق أي خلفية
+        draw.text((tx, ty), reshaped_top, font=title_font, fill=(255, 255, 255), 
+                  stroke_width=6, stroke_fill=(45, 30, 20))
+        draw.text((tx, ty), reshaped_top, font=title_font, fill=(45, 30, 20))
 
-        # 2. رسم صورة الطفل (دائرية)
-        art_source = get_image_source(image_url)
-        if art_source:
-            art = art_source.convert("RGBA").resize((660, 660), Image.LANCZOS)
-            mask = Image.new('L', (660, 660), 0)
-            ImageDraw.Draw(mask).ellipse((0, 0, 660, 660), fill=255)
-            img.paste(art, ((width - 660) // 2, 350), mask=mask) # تحريك الدائرة لأسفل قليلاً لترك مساحة للعنوان
-
-        # 3. اسم الطفل
+        # 3. اسم الطفل في الأسفل
         reshaped_name = _prepare_arabic_text(child_name)
         nw = draw.textbbox((0, 0), reshaped_name, font=name_font)[2]
-        nx, ny = (width - nw) // 2, 70 # هنا يظهر اسم الطفل تحت العنوان مباشرة؟ لا، نضع ny في الأسفل
-        ny = 865 # القيمة القديمة
+        nx, ny = (width - nw) // 2, 850
         
-        draw.text((nx, ny), reshaped_name, font=name_font, fill=(60, 40, 30),
-                  stroke_width=3, stroke_fill=(255, 255, 255))
+        draw.text((nx, ny), reshaped_name, font=name_font, fill=(255, 255, 255),
+                  stroke_width=6, stroke_fill=(60, 40, 30))
+        draw.text((nx, ny), reshaped_name, font=name_font, fill=(60, 40, 30))
 
         img.save(output_path, quality=100, subsampling=0) 
         return output_path
@@ -115,23 +112,56 @@ def create_cover_page(image_url, value, child_name, gender, output_path):
         return None
 
 def overlay_text_on_image(image_url, text, output_path):
-    """دمج صفحات القصة بصندوق نص واضح"""
+    """دمج نصوص القصة فوق صورة تملأ الصفحة بلمسة جمالية"""
     try:
         width, height = 1024, 1024
-        img = Image.new("RGB", (width, height), (255, 255, 255))
+        art_source = get_image_source(image_url)
+        if not art_source: return None
+        
+        # 1. الصورة تملأ الصفحة
+        img = art_source.convert("RGB").resize((width, height), Image.LANCZOS)
         draw = ImageDraw.Draw(img)
         
-        art_source = get_image_source(image_url)
-        if art_source:
-            art = art_source.convert("RGB")
-            art.thumbnail((940, 780), Image.LANCZOS)
-            img.paste(art, ((width - art.width) // 2, 35))
-
-        # حجم خط كبير (60) لضمان سهولة القراءة
-        font = _get_arabic_font(60, weight="bold")
-        _draw_story_text_box(draw, width, height, text, font)
+        # 2. إعداد الخط
+        font = _get_arabic_font(55, weight="bold")
+        reshaped_text = _prepare_arabic_text(text)
         
+        # 3. رسم صندوق خلفية للنص لضمان الوضوح (نصف شفاف)
+        # تقسيم النص لسطور إذا كان طويلاً
+        lines = []
+        words = text.split()
+        current_line = []
+        for word in words:
+            current_line.append(word)
+            test_line = " ".join(current_line)
+            if draw.textlength(_prepare_arabic_text(test_line), font=font) > 900:
+                current_line.pop()
+                lines.append(" ".join(current_line))
+                current_line = [word]
+        lines.append(" ".join(current_line))
+        
+        line_height = 70
+        total_height = len(lines) * line_height + 40
+        
+        # رسم مستطيل خلفية داكن وشفاف في الأسفل
+        rect_y = height - total_height - 60
+        overlay = Image.new('RGBA', (width, height), (0, 0, 0, 0))
+        overlay_draw = ImageDraw.Draw(overlay)
+        overlay_draw.rounded_rectangle([40, rect_y, width - 40, height - 40], 
+                                      radius=20, fill=(0, 0, 0, 160))
+        img = Image.alpha_composite(img.convert("RGBA"), overlay).convert("RGB")
+        draw = ImageDraw.Draw(img)
+        
+        # 4. رسم النصوص المختزلة
+        for i, line in enumerate(lines):
+            line_reshaped = _prepare_arabic_text(line)
+            lw = draw.textlength(line_reshaped, font=font)
+            lx = (width - lw) // 2
+            ly = rect_y + 20 + (i * line_height)
+            draw.text((lx, ly), line_reshaped, font=font, fill=(255, 255, 255))
+
         img.save(output_path, quality=95, subsampling=0)
         return output_path
     except Exception as e:
+        print(f"❌ Error in overlay_text_on_image: {e}")
         return None

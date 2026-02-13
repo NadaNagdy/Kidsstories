@@ -276,12 +276,12 @@ def generate_storybook_page(
             f"cute rounded toddler proportions"
         )
         
-        # Style (matching Millie and the Moon Bear aesthetic)
+        # Style (exact Millie and the Moon Bear aesthetic)
         style = (
-            "digital illustration with soft painterly textures, "
-            "children's storybook art, blend of digital painting and watercolor washes, "
-            "rich saturated colors with soft gradients, deep blues, warm golds, creamy whites, "
-            "visible brush strokes, paper texture, gentle blending"
+            "whimsical classic children's book illustration, Millie and the Moon Bear style, "
+            "soft digital watercolor washes, delicate colored pencil detailing, "
+            "dreamy cozy bedtime story aesthetic, rich saturated painterly textures, "
+            "gentle watercolor gradients, paper texture, soft blending"
         )
         
         # Lighting (magical bedtime story aesthetic)
@@ -291,27 +291,25 @@ def generate_storybook_page(
         )
         
         # Composition
-        if is_cover:
-            composition = (
-                "book cover layout, centered character with space for title at top, "
-                "whimsical border elements, professional children's book cover design"
-            )
-        else:
-            composition = "centered scene, children's book page layout, space for text at top"
+        composition = (
+            "full frame artistic illustration, edge-to-edge masterpiece, "
+            "cinematic wide angle, no borders, no margins, "
+            "strictly NO text, NO letters, NO characters, NO titles, NO typography"
+        )
         
         # Quality markers
         quality = (
-            "high definition children's book illustration, professional publication quality, "
-            "sharp detail, vibrant colors, suitable for ages 1-5"
+            "ultra-high definition children's book illustration, professional publication quality, "
+            "clean simple masterpiece, vibrant colors, suitable for ages 1-5"
         )
         
         # Complete prompt with FLUX structure
         full_prompt = (
-            f"{character}, {safe_prompt}. "
-            f"Style: {style}. "
-            f"Lighting: {lighting_style}. "
+            f"An immersive {style} of {character} {safe_prompt}. "
             f"Composition: {composition}. "
-            f"Quality: {quality}"
+            f"Lighting: {lighting_style}. "
+            f"Quality: {quality}. "
+            f"Style: {style}."
         )
         
         logger.info(f"🎨 Generating image with FLUX Klein 4b...")
@@ -517,12 +515,12 @@ def create_character_reference(
                         {
                             "type": "text",
                             "text": (
-                                f"Analyze this child's photo for children's book illustration. "
+                                f"Analyze this child's photo with extreme detail for a professional children's book. "
                                 f"Gender: {'Girl' if gender == 'بنت' else 'Boy'}. "
-                                f"Describe: hair (color, style, texture), eyes (color), "
-                                f"skin tone, and distinctive features. "
-                                f"Write one paragraph for AI image generation, "
-                                f"age-appropriate (1-5 years)."
+                                f"Provide a ultra-descriptive 100-word paragraph including: "
+                                f"precise hair texture (curly/straight, volume, shine), eye shape and sparkle, "
+                                f"exact skin tone, rosy cheek placement, and any unique facial features or expressions. "
+                                f"This description will be used to maintain 100% character consistency across all pages."
                             )
                         },
                         image_content
