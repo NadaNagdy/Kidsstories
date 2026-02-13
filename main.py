@@ -162,7 +162,8 @@ def process_story_generation(sender_id, value, is_preview=False):
         # --- حالة المعاينة: توليد الغلاف فقط ---
         if is_preview:
             # برومبت الغلاف المحسن لنموذج FLUX
-            cover_prompt = f"A whimsical classic children's book cover illustration for a story about {child_name} learning about {value}. Soft digital watercolor washes, delicate colored pencil detailing. Dreamy, cozy bedtime story aesthetic with warm glowing light, floating golden stars, and fluffy clouds. Masterpiece quality."
+            # برومبت الغلاف المحسن لنموذج FLUX - محايد لترك التفاصيل لـ char_desc
+            cover_prompt = f"Professional children's book cover illustration for a story about {child_name} learning about {value}. Soft digital watercolor washes, delicate colored pencil detailing, dreamy cozy bedtime story aesthetic with warm glowing light. Masterpiece quality."
             
             cover_url = generate_storybook_page(char_desc, cover_prompt, gender=gender, is_cover=True)
             

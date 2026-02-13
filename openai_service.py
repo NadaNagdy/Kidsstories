@@ -266,14 +266,11 @@ def generate_storybook_page(
         # ✅ بناء FLUX-optimized prompt
         # Based on FLUX Klein 4B best practices & Millie reference style
         
-        # Character description (detailed for FLUX)
+        # Character description (base ID only, details come from char_desc)
         gender_term = "girl" if gender == "بنت" else "boy"
         character = (
-            f"adorable 3-4 year old {gender_term} with beautifully detailed "
-            f"voluminous curly brown hair with natural bounce and shine, "
-            f"warm skin tone, large expressive glossy brown eyes with sparkle highlights, "
-            f"rosy airbrushed cheeks, sweet joyful smile, "
-            f"cute rounded toddler proportions"
+            f"adorable 3-4 year old {gender_term} with a unique face and personality, "
+            f"sweet joyful smile, cute rounded toddler proportions"
         )
         
         # Style (exact Millie and the Moon Bear aesthetic)
