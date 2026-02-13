@@ -100,7 +100,7 @@ def handle_image_reception(sender_id, url, background_tasks):
 def process_image_ai(sender_id, url):
     try:
         gender = user_state[sender_id].get("gender", "ولد")
-        char_desc = create_character_reference(url, gender=gender, is_url=True)
+        char_desc = create_character_reference(url, gender=gender, is_url=True, use_ai_analysis=True)
         if char_desc:
             user_state[sender_id].update({"char_desc": char_desc, "step": "waiting_for_age"})
             send_quick_replies(sender_id, "تم استلام الصورة بنجاح! ✨ كم عمر طفلك؟", ["1-2", "2-3", "3-4", "4-5"])

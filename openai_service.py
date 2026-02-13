@@ -314,7 +314,8 @@ def generate_storybook_page(
         )
         
         logger.info(f"🎨 Generating image with FLUX Klein 4b...")
-        logger.debug(f"Prompt: {full_prompt[:100]}...")
+        logger.info(f"👤 Character Description for AI: {char_desc}")
+        logger.debug(f"Full Prompt: {full_prompt}")
         
         # إعداد الطلب
         headers = {
@@ -451,7 +452,7 @@ def create_character_reference(
     image_url: str, 
     gender: str = "ولد", 
     is_url: bool = True,
-    use_ai_analysis: bool = False
+    use_ai_analysis: bool = True
 ) -> str:
     """
     تحليل ملامح الطفل من الصورة
@@ -472,9 +473,9 @@ def create_character_reference(
     
     # الوصف الافتراضي
     default_desc = (
-        f"A cute toddler {'girl' if gender == 'بنت' else 'boy'} "
-        f"with big expressive eyes, rosy cheeks, sweet smile, "
-        f"soft features, beautifully detailed curly hair, "
+        f"A cute {'girl' if gender == 'بنت' else 'boy'} "
+        f"with big expressive eyes, sweet smile, "
+        f"soft features, clean simple character design, "
         f"warm skin tone, huggable proportions"
     )
     
