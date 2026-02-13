@@ -32,78 +32,83 @@ def get_image_source(source):
 # ---------------------------------------------------------------------------
 
 def _prepare_arabic_text(text: str) -> str:
-    """تحضير النص ليدعم الحروف المركبة مثل (لا) والتنوين والهمزات"""
+    """تحضير النص ليكون مقروءاً وصحيحاً برمجياً"""
     if not text: return ""
-    
-    # إعدادات تجبر المكتبة على رسم الحروف كاملة وبدون أخطاء
-    configuration = {
-        'delete_harakat': False,      # الحفاظ على التشكيل لجمال الخط
-        'support_ligatures': True,     # حل مشكلة حرف (لا) والحروف المتصلة
-        'arabic': True
-    }
-    reshaper = arabic_reshaper.ArabicReshaper(configuration=configuration)
-    reshaped_text = reshaper.reshape(text)
+    # استخدام الإعدادات الافتراضية الأكثر قوة وتوافقاً مع Pillow
+    # تم تعطيل support_ligatures لأنها قد تسبب مربعات في بعض الخطوط
+    reshaped_text = arabic_reshaper.reshape(text)
     return get_display(reshaped_text)
 
 def _get_arabic_font(size: int, weight: str = "bold") -> ImageFont.FreeTypeFont:
-    """تحميل الخطوط التي رفعتها مع ضمان الدقة - Almarai هو الأفضل للوضوح"""
+    """تحميل الخطوط مع ضمان الدقة - Almarai هو الأفضل للوضوح"""
     base_dir = os.path.dirname(os.path.abspath(__file__))
     fonts_dir = os.path.join(base_dir, "fonts")
     
     suffix = "-Bold.ttf" if weight.lower() == "bold" else "-Regular.ttf"
     
-    # محاولة Almarai أولاً (أكثر استقراراً للحروف المعقدة)
     almarai_path = os.path.join(fonts_dir, f"Almarai{suffix}")
     if os.path.exists(almarai_path):
         return ImageFont.truetype(almarai_path, size)
     
-    # المحاولة الثانية: Cairo
     cairo_path = os.path.join(fonts_dir, f"Cairo{suffix}")
     if os.path.exists(cairo_path):
         return ImageFont.truetype(cairo_path, size)
 
     return ImageFont.load_default()
 
+def _detect_best_position(img):
+    """تحليل الصورة للعثور على أفضل مساحة (أغمق مساحة) للنص الأصفر"""
+    try:
+        w, h = img.size
+        # فحص الجزء العلوي (أول 30%) والجزء السفلي (آخر 30%)
+        top_slice = img.crop((0, 0, w, int(h * 0.3))).convert("L")
+        bottom_slice = img.crop((0, int(h * 0.7), w, h)).convert("L")
+        
+        top_bright = sum(top_slice.getdata()) / (w * int(h * 0.3))
+        bottom_bright = sum(bottom_slice.getdata()) / (w * (h - int(h * 0.7)))
+        
+        # نختار المنطقة الأغمق ليكون النص الأصفر بارزاً جداً
+        return "TOP" if top_bright < bottom_bright else "BOTTOM"
+    except:
+        return "BOTTOM"
+
 # ---------------------------------------------------------------------------
-# 2. وظائف إنشاء الصور (تأثيرات البروز والوضوح)
+# 2. وظائف إنشاء الصور (تحسين البروز والوضوح)
 # ---------------------------------------------------------------------------
 
 def create_cover_page(image_url, value, child_name, gender, output_path):
-    """إنشاء الغلاف بملء الصفحة مع نصوص صفراء بارزة"""
+    """إنشاء الغلاف بملء الصفحة مع نصوص صفراء فائقة الوضوح"""
     try:
         width, height = 1024, 1024
         art_source = get_image_source(image_url)
         if not art_source: return None
         
-        # 1. تكبير الصورة لتملأ الصفحة تماماً
         img = art_source.convert("RGB").resize((width, height), Image.LANCZOS)
         draw = ImageDraw.Draw(img)
         
-        # أحجام الخطوط
-        title_font = _get_arabic_font(110, weight="bold")
-        name_font = _get_arabic_font(100, weight="bold")
+        title_font = _get_arabic_font(115, weight="bold")
+        name_font = _get_arabic_font(105, weight="bold")
 
-        # 2. رسم العنوان (بطل/بطلة القيمة) في الأعلى
+        main_fill = (255, 235, 0)
+        stroke_color = (0, 0, 0) # أسود للحدود لضمان البروز
+
+        # 1. العنوان المسطح في الأعلى
         prefix = "بطلة" if gender == "female" else "بطل"
         top_text = f"{prefix} {value}"
         reshaped_top = _prepare_arabic_text(top_text)
         tw = draw.textbbox((0, 0), reshaped_top, font=title_font)[2]
         tx, ty = (width - tw) // 2, 80
         
-        # نصوص صفراء مع حدود داكنة جداً للبروز (Yellow with dark stroke)
-        main_fill = (255, 230, 0)
-        stroke_color = (45, 30, 20)
-        
         draw.text((tx, ty), reshaped_top, font=title_font, fill=main_fill, 
-                  stroke_width=8, stroke_fill=stroke_color)
+                  stroke_width=10, stroke_fill=stroke_color)
 
-        # 3. اسم الطفل في الأسفل
+        # 2. اسم الطفل في الأسفل
         reshaped_name = _prepare_arabic_text(child_name)
         nw = draw.textbbox((0, 0), reshaped_name, font=name_font)[2]
         nx, ny = (width - nw) // 2, 860
         
         draw.text((nx, ny), reshaped_name, font=name_font, fill=main_fill,
-                  stroke_width=8, stroke_fill=stroke_color)
+                  stroke_width=10, stroke_fill=stroke_color)
 
         img.save(output_path, quality=100, subsampling=0) 
         return output_path
@@ -112,29 +117,30 @@ def create_cover_page(image_url, value, child_name, gender, output_path):
         return None
 
 def overlay_text_on_image(image_url, text, output_path):
-    """دمج نصوص القصة بلون أصفر وبدون خلفية في المساحات الفارغة"""
+    """توزيع النص بذكاء في المساحات الفارغة بلون أصفر وبروز عالٍ"""
     try:
         width, height = 1024, 1024
         art_source = get_image_source(image_url)
         if not art_source: return None
         
-        # 1. الصورة تملأ الصفحة
         img = art_source.convert("RGB").resize((width, height), Image.LANCZOS)
+        
+        # تحديد أفضل مكان للنص
+        position = _detect_best_position(img)
         draw = ImageDraw.Draw(img)
         
-        # 2. إعداد الخط (أصفر بارز)
         font = _get_arabic_font(60, weight="bold")
-        main_fill = (255, 230, 0)
-        stroke_color = (0, 0, 0) # أسود للحدود لضمان الوضوح التام
+        main_fill = (255, 235, 0)
+        stroke_color = (0, 0, 0)
         
-        # 3. تقسيم النص لسطور
+        # تقسيم النص لسطور
         lines = []
         words = text.split()
         current_line = []
         for word in words:
             current_line.append(word)
             test_line = " ".join(current_line)
-            if draw.textlength(_prepare_arabic_text(test_line), font=font) > 940:
+            if draw.textlength(_prepare_arabic_text(test_line), font=font) > 920:
                 current_line.pop()
                 lines.append(" ".join(current_line))
                 current_line = [word]
@@ -143,17 +149,19 @@ def overlay_text_on_image(image_url, text, output_path):
         line_height = 80
         total_height = len(lines) * line_height
         
-        # 4. وضع النص في الأسفل (أو الأعلى حسب الرغبة) ولكن بدون خلفية
-        # سنستخدم Stroke كثيف جداً (Glow effect) لجعل النص مقروءاً
-        rect_y = height - total_height - 100
+        # اختيار الإحداثيات بناءً على ذكاء المساحة
+        if position == "TOP":
+            start_y = 60
+        else:
+            start_y = height - total_height - 100
         
         for i, line in enumerate(lines):
             line_reshaped = _prepare_arabic_text(line)
             lw = draw.textlength(line_reshaped, font=font)
             lx = (width - lw) // 2
-            ly = rect_y + (i * line_height)
+            ly = start_y + (i * line_height)
             
-            # رسم النص بحدود سميكة جداً
+            # رسم النص بحدود سميكة جداً لضمان القراءة
             draw.text((lx, ly), line_reshaped, font=font, fill=main_fill,
                       stroke_width=10, stroke_fill=stroke_color)
 
