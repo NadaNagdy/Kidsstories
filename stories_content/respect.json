@@ -1,186 +1,125 @@
 {
-  "1-2": {
-    "age_group": "1-2 years",
-    "learning_goals": [
-      "Turn-taking",
-      "Patience",
-      "Social awareness"
-    ],
-    "pages": [
-      {
-        "page_number": 1,
-        "scene_description": "child standing politely at the bottom of a small playground slide, looking up at a teddy bear who is climbing the steps",
-        "emotion": "patient and happy",
-        "text": "بطلنا المؤدب بيستنى دوره. واحد... اتنين... تلاتة! دبدوب الأول."
-      },
-      {
-        "page_number": 2,
-        "scene_description": "teddy bear sliding down the slide, child clapping hands and smiling, waiting near the steps",
-        "emotion": "excited",
-        "text": "دبدوب نزل! شاطر يا دبدوب. دلوقتي دور مين؟"
-      },
-      {
-        "page_number": 3,
-        "scene_description": "child climbing the steps of the slide carefully, holding the handrails, looking up",
-        "emotion": "brave and focused",
-        "text": "دلوقتي دور بطلنا! واحد.. اتنين.. تلاتة. أنا طالع فوق!"
-      },
-      {
-        "page_number": 4,
-        "scene_description": "child sliding down the slide with arms up in the air, hair blowing in wind, big smile",
-        "emotion": "joyful",
-        "text": "وووووي! الزحليقة حلوة أوي لما بنستنى دورنا."
-      },
-      {
-        "page_number": 5,
-        "scene_description": "child and teddy bear sitting together at bottom of slide, high-fiving or hugging",
-        "emotion": "proud and friendly",
-        "text": "أنا ودبدوب أصحاب شاطرين. كل واحد في دوره!"
-      },
-      {
-        "page_number": 6,
-        "scene_description": "reward page with golden stars, smiling sun, and the child wearing a 'Polite Hero' sash",
-        "emotion": "celebratory",
-        "text": "🌟 مبروك يا بطل الاحترام! 🌟\n\nتعلمنا اليوم:\n✓ نستنى دورنا\n✓ نلعب مع أصحابنا بنظام"
-      }
-    ]
-  },
-  "2-3": {
-    "age_group": "2-3 years",
-    "learning_goals": [
-      "Magic words",
-      "Sharing",
-      "Gratitude"
-    ],
-    "pages": [
-      {
-        "page_number": 1,
-        "scene_description": "cute small rabbit sitting on grass holding a bright orange carrot, child looking at it with curiosity",
-        "emotion": "curious and wanting",
-        "text": "كان يا ما كان.. أرنوب معاه جزرة جميلة. بطلنا كان نفسه يدوق حتة."
-      },
-      {
-        "page_number": 2,
-        "scene_description": "child standing gently in front of rabbit, hand open with palm up, not grabbing",
-        "emotion": "polite and soft",
-        "text": "بطلنا وقف بأدب وقال الكلمة السحرية: 'ممكن يا أرنوب.. من فضلك؟' ✨"
-      },
-      {
-        "page_number": 3,
-        "scene_description": "rabbit breaking the carrot in half and giving a big piece to the child, both smiling",
-        "emotion": "happy and sharing",
-        "text": "الأرنوب فرح بالأدب وقال: 'طبعاً يا بطل!' وإداه حتة كبيرة."
-      },
-      {
-        "page_number": 4,
-        "scene_description": "child eating the carrot piece with enjoyment, hand on heart to show thanks",
-        "emotion": "grateful",
-        "text": "أكلنا الجزرة اللذيذة! بطلنا قال الكلمة السحرية التانية: 'شكراً يا أرنوب!'"
-      },
-      {
-        "page_number": 5,
-        "scene_description": "forest animals (birds, squirrels) gathering around clapping for the polite child",
-        "emotion": "proud and socially accepted",
-        "text": "كل الحيوانات سقفت: 'يا سلام على الأدب! كلامك حلو زي العسل!'"
-      },
-      {
-        "page_number": 6,
-        "scene_description": "reward certificate page with magic sparkles, 'Magic Words' written in gold, child and rabbit hugging",
-        "emotion": "accomplished",
-        "text": "🎉 مبروك! أتممت قصة الكلمات السحرية! 🎉\n\n✨ كلماتنا السحرية:\n💛 من فضلك\n💚 شكراً"
-      }
-    ]
-  },
-  "3-4": {
-    "age_group": "3-4 years",
-    "learning_goals": [
-      "Waiting in line",
-      "Self-control",
-      "Respect"
-    ],
-    "pages": [
-      {
-        "page_number": 1,
-        "scene_description": "child standing in line at a bathroom sink, a little girl is washing hands in front, child looks eager but staying in place",
-        "emotion": "impatient but trying",
-        "text": "بطلنا مستعجل وعاوز يغسل إيده عشان الأكل. بس في صف قدامه!"
-      },
-      {
-        "page_number": 2,
-        "scene_description": "child standing still with hands clasped, thinking bubble showing numbers 1-2-3",
-        "emotion": "patient and calm",
-        "text": "بطلنا وقف مكانه باحترام. عد في دماغه: واحد... اتنين... تلاتة. هو بطل الصبر!"
-      },
-      {
-        "page_number": 3,
-        "scene_description": "little girl stepping away from sink smiling and waving, child stepping forward politely",
-        "emotion": "friendly and respectful",
-        "text": "البنوتة خلصت وقالت: 'شكراً إنك استنيت!' بطلنا رد: 'العفو يا صديقتي!'"
-      },
-      {
-        "page_number": 4,
-        "scene_description": "child washing hands thoroughly with soap bubbles, looking in mirror",
-        "emotion": "clean and happy",
-        "text": "غسل إيده بالصابون والمية.. إيدينا بقت نضيفة وريحتها فلة!"
-      },
-      {
-        "page_number": 5,
-        "scene_description": "mother kissing child's forehead at the dinner table, family eating together",
-        "emotion": "loved and praised",
-        "text": "ماما قالت: 'يا سلام على أخلاق الأبطال! إنت بطل الاحترام والصبر!'"
-      },
-      {
-        "page_number": 6,
-        "scene_description": "superhero themed reward page, child wearing a cape marked 'Patience', numbers 1-2-3 in background",
-        "emotion": "heroic",
-        "text": "🦸 أنت بطل الصبر الخارق! 🦸\n\nاتعلمت تنتظر دورك زي الأبطال!"
-      }
-    ]
-  },
-  "4-5": {
-    "age_group": "4-5 years",
-    "learning_goals": [
-      "Kindness to creatures",
-      "Empathy",
-      "Karma"
-    ],
-    "pages": [
-      {
-        "page_number": 1,
-        "scene_description": "child kneeling on garden path looking at a tiny beetle on a leaf, gently protecting it with hand",
-        "emotion": "gentle and protective",
-        "text": "بطلنا لقى خنفساء صغننة. قلبه الطيب قاله: 'احميها!' وسابها تمشي بأمان."
-      },
-      {
-        "page_number": 2,
-        "scene_description": "close up of beetle looking up at child, tiny hearts floating between them",
-        "emotion": "connection",
-        "text": "الخنفساء قالت في سرها: 'شكراً يا بطل! هييجي يوم وأرد لك الجميل.'"
-      },
-      {
-        "page_number": 3,
-        "scene_description": "child searching under a dark sofa for a lost red toy car, looking worried with a flashlight",
-        "emotion": "worried and searching",
-        "text": "بعد يومين، عربية بطلنا ضاعت تحت الكنبة الضلمة. مش شايف حاجة!"
-      },
-      {
-        "page_number": 4,
-        "scene_description": "beetle returning with glowing fireflies lighting up the space under the sofa",
-        "emotion": "amazed",
-        "text": "فجأة... نور صغير ظهر! الخنفساء جابت أصحابها ونوروا المكان لبطلنا! ✨"
-      },
-      {
-        "page_number": 5,
-        "scene_description": "child holding the red toy car happily, beetle sitting on the floor nearby",
-        "emotion": "grateful and happy",
-        "text": "بطلنا لقى عربيته! اتعلمنا درس مهم: 'اللي تعمله من خير، هيرجع لك!'"
-      },
-      {
-        "page_number": 6,
-        "scene_description": "nature themed reward page, child and beetle depicted as friends, rainbow in background",
-        "emotion": "peaceful",
-        "text": "💎 أنت بطل القلب الطيب! 💎\n\nالدرس العظيم: الاحترام بيرجع حب!"
-      }
-    ]
+  "value": "الأدب والاحترام",
+  "age_groups": {
+    "1-2": {
+      "story_title": "مين البطل المؤدب؟",
+      "pages": [
+        {
+          "page_number": 1,
+          "text": "مين البطل المؤدب؟ {child_name} هادي وصوته حلو! مش بيصرخ ولا يعيط بصوت عالي، بيتكلم بالراحة وبابتسامة جميلة.",
+          "prompt": "{child_name} sitting calmly with a sweet and peaceful expression, not crying or shouting, gentle and quiet atmosphere, beautiful nursery, soft pastel watercolor style."
+        },
+        {
+          "page_number": 2,
+          "text": "مين البطل المؤدب؟ {child_name} لما يعوز حاجة بيطلبها بأدب. بيقول 'لو سمحت' ويمد إيده بهدوء وبابتسامة حلوة.",
+          "prompt": "{child_name} politely reaching out for a toy from a parent's hand, sweet and calm smile, no crying, warm lighting, soft watercolor illustration."
+        },
+        {
+          "page_number": 3,
+          "text": "مين البطل المؤدب؟ {child_name} مش بيضرب حد خالص! بيلعب مع أصحابه بلطف، وبيسلم على الكبار بابتسامة وبحب.",
+          "prompt": "{child_name} gently giving a high-five to an adult and playing nicely with a toddler friend, smiling, no hitting, polite and sweet behavior, cozy playroom setting, soft watercolor illustration."
+        },
+        {
+          "page_number": 4,
+          "text": "مين البطل المؤدب؟ {child_name} بيحب الحيوانات! بيطبطب على القطة بالراحة ومش بيشدها ولا يأذيها أبداً.",
+          "prompt": "{child_name} gently petting a soft fluffy cat, careful and sweet expression, cozy indoor setting, soft watercolor style."
+        },
+        {
+          "page_number": 5,
+          "text": "مين البطل المؤدب؟ {child_name} دايماً لطيف ومحترم! كل الناس بتحبه أوي وبيدوله بوسات وأحضان كبيرة لأنه بطل جميل.",
+          "prompt": "{child_name} receiving a loving kiss on the cheek from a smiling parent, glowing with happiness and politeness, magical atmosphere, beautiful watercolor finish."
+        }
+      ]
+    },
+    "2-3": {
+      "story_title": "شووو... جدو نايم",
+      "pages": [
+        {
+          "page_number": 1,
+          "text": "{child_name} كان ماسك طبلته الصغيرة هو وصاحبه 'بندق'، وكانوا عايزين يلعبوا ويعملوا حفلة موسيقى كبيرة في الصالة بصوت عالي!",
+          "prompt": "{child_name} holding a small toy drum and the stuffed puppy 'Bondoq', looking excited and ready to make noise, energetic expression, cozy living room, watercolor style."
+        },
+        {
+          "page_number": 2,
+          "text": "بس فجأة وقف {child_name} لما شاف جدو نايم على الكرسي المريح. كان باين عليه التعب والإرهاق. لو لعبوا بصوت عالي، جدو هيصحى وهيزعل وما هيقدرش يرتاح.",
+          "prompt": "A kind grandfather sleeping peacefully in a comfortable armchair, {child_name} stopping suddenly and looking at him with concern, holding the toys, soft lighting, watercolor."
+        },
+        {
+          "page_number": 3,
+          "text": "{child_name} حط صباعه على بؤه وهمس لـ'بندق': 'شووو... لازم نكون هاديين جداً عشان جدو يرتاح وينام براحته. مش عايزينه يتعب أكتر.'",
+          "prompt": "Close up of {child_name} putting a finger to their lips in a 'shhh' gesture, looking at the stuffed puppy toy, caring and respectful expression, quiet atmosphere, watercolor."
+        },
+        {
+          "page_number": 4,
+          "text": "{child_name} وبندق مشيوا على طراطيف صوابعهم بكل هدوء وحرص، وقعدوا يرسموا بالألوان في الركن البعيد عشان ما يزعجوش جدو أبداً.",
+          "prompt": "{child_name} tiptoeing carefully away from the sleeping grandfather, holding the toy puppy, sneaking quietly to play with crayons instead, cute respectful pose, watercolor style."
+        },
+        {
+          "page_number": 5,
+          "text": "لما جدو صحي من النوم، كان مرتاح ومبسوط وشكر {child_name}. حضنه بحب وقاله: 'أنت بطل مؤدب ومحترم! شكراً إنك كنت هادي وخليتني أرتاح.'",
+          "prompt": "Grandfather waking up with a smile, hugging {child_name} warmly, the stuffed puppy nearby, glowing with love and respect, cozy home atmosphere, beautiful watercolor finish."
+        }
+      ]
+    },
+    "3-4": {
+      "story_title": "الاستئذان الجميل",
+      "pages": [
+        {
+          "page_number": 1,
+          "text": "أخو {child_name} الصغير كان بيلعب بقطر ألوانه حلوة جداً على السجادة. {child_name} شافه من بعيد وعجبه القطر أوي! كان نفسه يلعب بيه حالاً.",
+          "prompt": "A toddler sibling playing happily with a colorful toy train on a cozy rug, {child_name} standing nearby looking at the toy with big, excited eyes, wanting to play, bright playroom, watercolor style."
+        },
+        {
+          "page_number": 2,
+          "text": "{child_name} قرب بسرعة ومد إيده عشان ياخد القطر! كان هيشده بقوة ويخطفه من إيد أخوه. أخوه كشر وكان هيزعل ويعيط!",
+          "prompt": "{child_name} reaching out quickly, almost grabbing the toy train forcefully from the sibling's hands, the sibling looking surprised and holding the toy tightly, tension in the playroom, watercolor style."
+        },
+        {
+          "page_number": 3,
+          "text": "لكن {child_name} بطل مؤدب ومحترم! افتكر إن الاحترام معناه 'ما نخطفش حاجة من حد'. وقف ونزل إيده بالراحة وقرر يستأذن الأول.",
+          "prompt": "A close-up of {child_name} stopping their hand mid-air before grabbing the toy, a thoughtful and realizing expression on their face, practicing self-control, soft warm lighting, watercolor."
+        },
+        {
+          "page_number": 4,
+          "text": "{child_name} ابتسم ابتسامة حلوة وقال الكلمة السحرية بأدب: 'لو سمحت يا أخويا، ممكن ألعب معاك بالقطر شوية؟' أخوه فرح جداً وقاله: 'يلا بينا نلعب سوا!'",
+          "prompt": "{child_name} smiling politely and asking the sibling with gentle open hands, the sibling smiling back happily and offering the toy train to share, friendly and respectful atmosphere, watercolor style."
+        },
+        {
+          "page_number": 5,
+          "text": "قعدوا يلعبوا سوا والقطر بيمشي بينهم 'توت توت!' ماما شافتهم من الباب وابتسمت بفخر وقالت: 'برافو! الاستئذان بيخلينا نحترم بعض واللعب بيبقى أحلى بكتير.'",
+          "prompt": "{child_name} and the sibling sitting together on the rug, playing happily with the toy train, sharing nicely, Mom watching from the doorway with a proud and loving smile, glowing with respect, beautiful watercolor finish."
+        }
+      ]
+    },
+    "4-5": {
+      "story_title": "الصديق الجديد",
+      "pages": [
+        {
+          "page_number": 1,
+          "text": "في الحضانة، كل الأطفال كانوا بيلعبوا كورة في الملعب ويضحكوا ويجروا ويفرحوا. لكن فيه ولد جديد قاعد لوحده على الكرسي بعيد عن الكل وحزين جداً.",
+          "prompt": "A group of happy kids playing ball in a playground, focused on one lonely kid sitting on a bench in the background looking down, distinct separation, watercolor style."
+        },
+        {
+          "page_number": 2,
+          "text": "محدش انتبه للولد الجديد ولا لعب معاه وسابوه قاعد لوحده. لكن {child_name} قلبه طيب وحنين، شافه من بعيد وحس إنه حزين وزعل عشانه.",
+          "prompt": "{child_name} stopping the game, holding the ball, looking sympathetically at the lonely kid, thoughtful expression, emotional moment, watercolor."
+        },
+        {
+          "page_number": 3,
+          "text": "{child_name} ساب اللعب والكورة وراح للولد الجديد. ابتسم له ابتسامة كبيرة وحلوة ومد إيده وقال: 'تعالى العب معانا الكورة! إحنا محتاجينك في الفريق وعايزينك معانا!'",
+          "prompt": "{child_name} extending a hand to the lonely kid, offering the ball, smiling kindly, the lonely kid looking up with surprise and hope, watercolor style."
+        },
+        {
+          "page_number": 4,
+          "text": "الولد الجديد فرح جداً جداً وقام من الكرسي ولعب معاهم! وطلع شاطر أوي في الكورة وعمل جول جميل! كل الأطفال فرحوا بيه وبقوا كلهم أصحابه.",
+          "prompt": "The new kid playing happily with the group, laughing, {child_name} giving a thumbs up, dynamic and joyful playground scene, watercolor."
+        },
+        {
+          "page_number": 5,
+          "text": "{child_name} اتعلم درس جميل: الاحترام والطيبة معناهم إننا نكون لطيفين مع كل الناس، ومانسيبش حد يحس إنه وحيد أو حزين أبداً. كلنا أصحاب!",
+          "prompt": "{child_name} and the new friend walking with arms around shoulders, friendship and warmth, glowing with respect and kindness, beautiful watercolor finish."
+        }
+      ]
+    }
   }
 }
