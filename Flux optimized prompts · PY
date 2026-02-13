@@ -28,8 +28,6 @@ class FluxPromptBuilder:
         "technique": "children's storybook art, blend of digital painting and watercolor washes",
         "colors": "rich saturated colors with soft gradients, deep blues, warm golds, creamy whites",
         "texture": "visible brush strokes, paper texture, gentle blending",
-        "character_style": "large expressive eyes, rosy cheeks, detailed curly hair with volume and shine, soft rounded proportions",
-        "lighting": "magical glowing light, soft luminous stars, dreamy moonlight",
         "atmosphere": "enchanting bedtime story aesthetic, cozy and whimsical",
         "quality": "high definition children's book illustration, professional publication quality"
     }

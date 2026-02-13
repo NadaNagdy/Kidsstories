@@ -276,11 +276,11 @@ def generate_storybook_page(
             f"sweet joyful smile, cute rounded toddler proportions"
         )
         
-        # Style (exact Millie and the Moon Bear aesthetic)
+        # Style (Artistic theme ONLY - no physical features)
         style = (
-            "whimsical classic children's book illustration, Millie and the Moon Bear style, "
+            "whimsical classic children's book illustration theme, Millie and the Moon Bear artistic aesthetic, "
             "soft digital watercolor washes, delicate colored pencil detailing, "
-            "dreamy cozy bedtime story aesthetic, rich saturated painterly textures, "
+            "dreamy cozy bedtime story colors, rich saturated painterly textures, "
             "gentle watercolor gradients, paper texture, soft blending"
         )
         
