@@ -35,11 +35,10 @@ def _prepare_arabic_text(text: str) -> str:
     """تحضير النص ليكون مقروءاً وصحيحاً برمجياً مع دعم كامل للحروف والروابط"""
     if not text: return ""
     
-    # إعدادات مخصصة لضمان عدم اختفاء أي حرف ودعم الروابط مثل (لا)
+    # إعدادات مبسطة لضمان التوافق مع معظم الخطوط بدون صناديق (Boxes)
     configuration = {
-        'delete_harakat': False,
+        'delete_harakat': True,  # الحركات أحياناً تسبب صناديق في بعض الخطوط
         'support_ligatures': True,
-        'delete_tatweel': False,
         'arabic': True
     }
     reshaper = arabic_reshaper.ArabicReshaper(configuration=configuration)
@@ -47,27 +46,39 @@ def _prepare_arabic_text(text: str) -> str:
     return get_display(reshaped_text)
 
 def _get_arabic_font(size: int, weight: str = "bold") -> ImageFont.FreeTypeFont:
-    """تحميل الخطوط مع ضمان الدقة - Almarai هو الأفضل للوضوح"""
+    """تحميل الخطوط مع ضمان الدقة - تفضيل خطوط النظام على Mac للوضوح التام"""
     try:
+        # المحاولة 1: خط Geeza Pro (الأفضل للغة العربية على Mac)
+        if os.path.exists("/System/Library/Fonts/GeezaPro.ttc"):
+            return ImageFont.truetype("/System/Library/Fonts/GeezaPro.ttc", size)
+        
+        # المحاولة 2: خط Arial (الاختيار البديل الأكثر أماناً)
+        if os.path.exists("/System/Library/Fonts/Supplemental/Arial.ttf"):
+            return ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial.ttf", size)
+
+        # المحاولة 3: الخطوط المرفقة بالمشروع
         base_dir = os.path.dirname(os.path.abspath(__file__))
         fonts_dir = os.path.join(base_dir, "fonts")
-        
         suffix = "-Bold.ttf" if weight.lower() == "bold" else "-Regular.ttf"
         
-        almarai_path = os.path.join(fonts_dir, f"Almarai{suffix}")
-        if os.path.exists(almarai_path):
-            return ImageFont.truetype(almarai_path, size)
-        
+        # Cairo أفضل من Almarai في التوافق مع Reshaper
         cairo_path = os.path.join(fonts_dir, f"Cairo{suffix}")
         if os.path.exists(cairo_path):
             return ImageFont.truetype(cairo_path, size)
+            
+        almarai_path = os.path.join(fonts_dir, f"Almarai{suffix}")
+        if os.path.exists(almarai_path):
+            return ImageFont.truetype(almarai_path, size)
     except Exception as e:
         print(f"⚠️ Font loading error: {e}")
 
     # Fallback to a system font that might support Arabic if possible
     try:
+        print("⚠️ Falling back to Arial system font")
         return ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial.ttf", size)
-    except:
+    except Exception as e2:
+        print(f"⚠️ Arial fallback failed: {e2}")
+        print("⚠️ Using default PIL font (NO ARABIC SUPPORT)")
         return ImageFont.load_default()
 
 def _detect_best_position(img):
@@ -202,4 +213,59 @@ def overlay_text_on_image(image_url, text, output_path):
         return output_path
     except Exception as e:
         print(f"❌ Error in overlay_text_on_image: {e}")
+        return None
+
+def create_text_page(text, output_path):
+    """
+    إنشاء صفحة بيضاء تحتوي على نص القصة بشكل أنيق وواضح جداً
+    تزيل مشكلة الحروف الناقصة وتوفر راحة في القراءة
+    """
+    try:
+        width, height = 1024, 1024
+        # إنشاء صفحة بيضاء نقية
+        img = Image.new("RGB", (width, height), color=(255, 255, 255))
+        draw = ImageDraw.Draw(img)
+        
+        # اختيار خط كبير وواضح (Regular لراحة العين)
+        font = _get_arabic_font(50, weight="regular")
+        text_color = (40, 40, 40) # رمادي غامق جداً أفضل للعين من الأسود الصرف
+        
+        # نظام ذكي لتقسيم السطور مع هوامش كبيرة
+        max_width = 850 
+        lines = []
+        words = text.split()
+        current_line = []
+        
+        for word in words:
+            current_line.append(word)
+            test_line = " ".join(current_line)
+            reshaped_test = _prepare_arabic_text(test_line)
+            # استخدام textlength للحساب الجغرافي الدقيق
+            if draw.textlength(reshaped_test, font=font) > max_width:
+                current_line.pop()
+                lines.append(" ".join(current_line))
+                current_line = [word]
+        
+        if current_line:
+            lines.append(" ".join(current_line))
+            
+        # حساب المسافات المركزية
+        line_height = 85 
+        total_text_height = len(lines) * line_height
+        start_y = (height - total_text_height) // 2
+        
+        for i, line in enumerate(lines):
+            reshaped_line = _prepare_arabic_text(line)
+            lw = draw.textlength(reshaped_line, font=font)
+            lx = (width - lw) // 2
+            ly = start_y + (i * line_height)
+            
+            # رسم النص مع إزاحة بسيطة لتجنب قص الحروف التي تنزل عن السطر
+            draw.text((lx, ly), reshaped_line, font=font, fill=text_color)
+            
+        img.save(output_path, quality=100)
+        return output_path
+        
+    except Exception as e:
+        print(f"❌ Error in create_text_page: {e}")
         return None

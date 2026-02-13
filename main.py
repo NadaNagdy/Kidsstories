@@ -190,28 +190,30 @@ def process_story_generation(sender_id, value, is_preview=False):
             page_num = i + 1
             send_text_message(sender_id, f"⏳ جاري رسم الصفحة {page_num} من {total_pages}...")
             
-            # استخدام المسار المحلي المرتجع من دالة FLUX الجديدة
+            # 1. توليد صورة الرسم (الخلفية)
             img_result = generate_storybook_page(char_desc, p["prompt"], gender=gender, age_group=data.get("age_group", "3-4"))
-            if img_result:
-                path = f"/tmp/p_{sender_id}_{i}.png"
-                # overlay_text_on_image تدعم الآن المسار المحلي أو الرابط
-                overlay_text_on_image(img_result, p["text"], path)
-                generated_images.append(path)
-            else:
+            
+            if not img_result:
                 send_text_message(sender_id, f"⚠️ تأخرت الصفحة {page_num}.. أحاول مرة أخرى.")
-                # محاولة ثانية سريعة
                 img_result = generate_storybook_page(char_desc, p["prompt"], gender=gender, age_group=data.get("age_group", "3-4"))
-                if img_result:
-                    path = f"/tmp/p_{sender_id}_{i}.png"
-                    overlay_text_on_image(img_result, p["text"], path)
-                    generated_images.append(path)
+
+            if img_result:
+                # أ. إضافة صفحة الرسم (بدون نص)
+                generated_images.append(img_result)
+                
+                # ب. إنشاء وإضافة صفحة النص البيضاء المقابلة
+                text_page_path = f"/tmp/text_{sender_id}_{i}.png"
+                create_text_page(p["text"], text_page_path)
+                generated_images.append(text_page_path)
+            else:
+                send_text_message(sender_id, f"❌ فشل توليد الصفحة {page_num}. سنكمل القصة بما توفر.")
 
         if len(generated_images) > 1:
             send_text_message(sender_id, "✅ اكتملت الرسومات! جاري تجميع ملف الـ PDF... 📚")
             pdf_path = f"/tmp/story_{sender_id}.pdf"
             create_pdf(generated_images, pdf_path)
             send_file(sender_id, pdf_path)
-            send_text_message(sender_id, f"🎉 قصة {child_name} جاهزة! نتمنى لكم قراءة ممتعة.")
+            send_text_message(sender_id, f"🎉 قصة {child_name} جاهزة! الصفحات الآن موزعة بطريقة احترافية (رسمة ثم نص).")
             user_state[sender_id] = {"step": "start"}
 
     except Exception as e:
