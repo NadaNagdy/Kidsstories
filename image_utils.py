@@ -129,7 +129,7 @@ def overlay_text_on_image(image_url, text, output_path):
         position = _detect_best_position(img)
         draw = ImageDraw.Draw(img)
         
-        font = _get_arabic_font(60, weight="bold")
+        font = _get_arabic_font(45, weight="bold")
         main_fill = (255, 235, 0)
         stroke_color = (0, 0, 0)
         
@@ -140,13 +140,13 @@ def overlay_text_on_image(image_url, text, output_path):
         for word in words:
             current_line.append(word)
             test_line = " ".join(current_line)
-            if draw.textlength(_prepare_arabic_text(test_line), font=font) > 920:
+            if draw.textlength(_prepare_arabic_text(test_line), font=font) > 960:
                 current_line.pop()
                 lines.append(" ".join(current_line))
                 current_line = [word]
         lines.append(" ".join(current_line))
         
-        line_height = 80
+        line_height = 60
         total_height = len(lines) * line_height
         
         # اختيار الإحداثيات بناءً على ذكاء المساحة
