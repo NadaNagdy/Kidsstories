@@ -1,0 +1,230 @@
+"""
+🔍 DEBUG VERSION - Print Full OpenRouter Response
+استخدم هذا لفحص الاستجابة الفعلية من OpenRouter
+"""
+
+import requests
+import json
+import os
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "YOUR_KEY_HERE")
+
+def debug_openrouter_call():
+    """
+    استدعاء تجريبي لـ OpenRouter مع طباعة كل التفاصيل
+    """
+    
+    print("\n" + "="*80)
+    print("🔍 DEBUG: OpenRouter Full Response Inspection")
+    print("="*80 + "\n")
+    
+    # Prompt تجريبي
+    test_prompt = "A cute toddler playing in a garden, soft watercolor style"
+    
+    headers = {
+        "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+        "Content-Type": "application/json",
+    }
+    
+    payload = {
+        "model": "black-forest-labs/flux.2-klein-4b",
+        "messages": [
+            {
+                "role": "user",
+                "content": [{"type": "text", "text": test_prompt}]
+            }
+        ],
+        "modalities": ["image"]
+    }
+    
+    print("📤 Sending request...")
+    print(f"Model: {payload['model']}")
+    print(f"Prompt: {test_prompt}\n")
+    
+    try:
+        response = requests.post(
+            "https://openrouter.ai/api/v1/chat/completions",
+            headers=headers,
+            json=payload,
+            timeout=120
+        )
+        
+        print(f"📥 Response Status: {response.status_code}\n")
+        
+        if response.status_code == 200:
+            data = response.json()
+            
+            # طباعة الاستجابة الكاملة بشكل منظم
+            print("="*80)
+            print("📋 FULL RESPONSE (Pretty Printed):")
+            print("="*80)
+            print(json.dumps(data, indent=2, ensure_ascii=False))
+            print("="*80 + "\n")
+            
+            # تحليل الهيكل
+            print("="*80)
+            print("🔍 STRUCTURE ANALYSIS:")
+            print("="*80)
+            
+            print(f"\n1️⃣ Top-level keys: {list(data.keys())}")
+            
+            if "choices" in data:
+                print(f"\n2️⃣ Number of choices: {len(data['choices'])}")
+                
+                if data["choices"]:
+                    choice = data["choices"][0]
+                    print(f"\n3️⃣ Choice[0] keys: {list(choice.keys())}")
+                    
+                    if "message" in choice:
+                        message = choice["message"]
+                        print(f"\n4️⃣ Message keys: {list(message.keys())}")
+                        
+                        # فحص كل مفتاح في message
+                        for key, value in message.items():
+                            print(f"\n   📌 message.{key}:")
+                            print(f"      Type: {type(value)}")
+                            
+                            if isinstance(value, str):
+                                preview = value[:200] + "..." if len(value) > 200 else value
+                                print(f"      Value: {preview}")
+                            elif isinstance(value, list):
+                                print(f"      Length: {len(value)}")
+                                if value:
+                                    print(f"      First item type: {type(value[0])}")
+                                    print(f"      First item: {value[0]}")
+                            elif isinstance(value, dict):
+                                print(f"      Keys: {list(value.keys())}")
+                            else:
+                                print(f"      Value: {value}")
+            
+            # البحث عن أي شيء يشبه رابط أو base64
+            print("\n" + "="*80)
+            print("🔎 SEARCHING FOR IMAGE DATA:")
+            print("="*80)
+            
+            response_str = json.dumps(data)
+            
+            if "http" in response_str:
+                print("✅ Found 'http' in response")
+                # محاولة استخراج الروابط
+                import re
+                urls = re.findall(r'https?://[^\s"]+', response_str)
+                if urls:
+                    print(f"   URLs found: {len(urls)}")
+                    for url in urls[:3]:  # أول 3 روابط
+                        print(f"   - {url}")
+            else:
+                print("❌ No 'http' found in response")
+            
+            if "base64" in response_str:
+                print("✅ Found 'base64' in response")
+            else:
+                print("❌ No 'base64' found in response")
+            
+            if "image" in response_str.lower():
+                print("✅ Found 'image' keyword in response")
+            else:
+                print("❌ No 'image' keyword in response")
+            
+            print("\n" + "="*80)
+            
+        else:
+            print(f"❌ Error Response:")
+            print(response.text)
+            
+    except Exception as e:
+        print(f"❌ Exception: {e}")
+        import traceback
+        traceback.print_exc()
+
+
+# ============================================================================
+# إضافة: فحص النموذج المتاح
+# ============================================================================
+
+def check_flux_model():
+    """
+    التحقق من توفر نموذج FLUX
+    """
+    print("\n" + "="*80)
+    print("🔍 Checking FLUX Model Availability")
+    print("="*80 + "\n")
+    
+    headers = {
+        "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+    }
+    
+    try:
+        response = requests.get(
+            "https://openrouter.ai/api/v1/models",
+            headers=headers,
+            timeout=10
+        )
+        
+        if response.status_code == 200:
+            models = response.json()
+            
+            # البحث عن FLUX models
+            flux_models = [
+                m for m in models.get("data", []) 
+                if "flux" in m.get("id", "").lower()
+            ]
+            
+            if flux_models:
+                print(f"✅ Found {len(flux_models)} FLUX model(s):\n")
+                for model in flux_models:
+                    print(f"   📌 {model.get('id')}")
+                    print(f"      Name: {model.get('name', 'N/A')}")
+                    print(f"      Context: {model.get('context_length', 'N/A')}")
+                    print()
+            else:
+                print("❌ No FLUX models found")
+                print("\n💡 Available models with 'image' capability:")
+                
+                image_models = [
+                    m for m in models.get("data", [])
+                    if "image" in str(m).lower()
+                ]
+                
+                for model in image_models[:5]:
+                    print(f"   - {model.get('id')}")
+        else:
+            print(f"❌ Error: {response.status_code}")
+            
+    except Exception as e:
+        print(f"❌ Error: {e}")
+
+
+# ============================================================================
+# MAIN
+# ============================================================================
+
+if __name__ == "__main__":
+    print("\n🚀 Starting OpenRouter Debug Session\n")
+    
+    # إذا كان API Key موجود، نفذ الاختبار
+    if OPENROUTER_API_KEY and OPENROUTER_API_KEY != "YOUR_KEY_HERE":
+        print("✅ API Key found\n")
+        
+        # 1. فحص النموذج
+        check_flux_model()
+        
+        print("\n" + "="*80)
+        input("Press Enter to continue with actual API call...")
+        print()
+        
+        # 2. استدعاء تجريبي
+        debug_openrouter_call()
+        
+    else:
+        print("❌ OPENROUTER_API_KEY not set!")
+        print("\nTo use this debug script:")
+        print("1. Set environment variable:")
+        print("   export OPENROUTER_API_KEY='your-key-here'")
+        print("\n2. Or edit this file and replace 'YOUR_KEY_HERE'")
+        print("\n3. Run again:")
+        print("   python debug_openrouter.py")
