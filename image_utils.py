@@ -288,8 +288,8 @@ def create_html_flipbook(image_paths, child_name, output_path):
             with open(img_path, "rb") as image_file:
                 encoded_string = base64.b64encode(image_file.read()).decode('utf-8')
             
-            # الغلاف أول صفحة، ثم الرسم، ثم النص
-            page_type = "cover" if i == 0 else ("art" if i % 2 != 0 else "text")
+            # الغلاف أول صفحة، ثم النص، ثم الرسم (الترتيب العربي الصحيح)
+            page_type = "cover" if i == 0 else ("text" if i % 2 != 0 else "art")
             
             pages_html += f"""
             <div class="page" data-density="{"hard" if page_type == "cover" else "soft"}">

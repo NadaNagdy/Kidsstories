@@ -34,11 +34,11 @@ class CharacterProfile:
         name: str,
         gender: str,  # "girl" or "boy"
         age: str = "3-4",
-        skin_tone: str = "brown",
-        hair_style: str = "curly",
-        hair_color: str = "brown",
-        hair_texture: str = "natural curly texture",
-        eye_color: str = "brown",
+        skin_tone: str = "natural skin tone",
+        hair_style: str = "natural hairstyle",
+        hair_color: str = "natural hair color",
+        hair_texture: str = "natural hair texture",
+        eye_color: str = "natural eye color",
         clothing_style: str = "casual colorful outfit"
     ):
         self.name = name
@@ -67,32 +67,29 @@ class CharacterProfile:
         
         # High emphasis (recommended for consistency)
         if emphasis_level == "high":
-            critical_features = (
-                # Skin tone - FIRST and EMPHASIZED
-                f", with beautiful {self.skin_tone.upper()} skin tone, "
-                f"rich {self.skin_tone} complexion, "
-                
-                # Hair - DETAILED and SPECIFIC
-                f"natural {self.hair_style.upper()} hairstyle, "
-                f"{self.hair_color} {self.hair_style} hair "
-                f"with {self.hair_texture}, "
-                f"full voluminous {self.hair_color} hair with beautiful texture, "
-                
-                # Eyes
-                f"large expressive {self.eye_color} eyes with sparkle highlights, "
-                
-                # Face
-                f"rosy cheeks, sweet joyful smile, "
-                f"cute rounded toddler proportions, "
-                f"wearing {self.clothing_style}"
-            )
+            feats = []
+            if "natural" not in self.skin_tone.lower():
+                feats.append(f"beautiful {self.skin_tone.upper()} skin tone")
+                feats.append(f"rich {self.skin_tone} complexion")
             
-            # Reinforcement for FLUX
-            reinforcement = (
-                f". CRITICAL FEATURES: {self.skin_tone} skin tone, "
-                f"{self.hair_style} {self.hair_color} hair, "
-                f"NO incorrect hair color, NO incorrect skin tone"
-            )
+            if "natural" not in self.hair_style.lower():
+                feats.append(f"natural {self.hair_style.upper()} hairstyle")
+                feats.append(f"{self.hair_color} {self.hair_style} hair")
+            
+            if "natural" not in self.eye_color.lower():
+                feats.append(f"large expressive {self.eye_color} eyes with sparkle highlights")
+
+            # Combiner
+            details = ", ".join(feats) if feats else "natural healthy appearance"
+            critical_features = f", {details}, rosy cheeks, sweet joyful smile, cute rounded toddler proportions, wearing {self.clothing_style}"
+            
+            # Reinforcement
+            ref_parts = []
+            if "natural" not in self.skin_tone.lower(): ref_parts.append(f"{self.skin_tone} skin")
+            if "natural" not in self.hair_style.lower(): ref_parts.append(f"{self.hair_style} hair")
+            
+            reinforcement = f". CRITICAL FEATURES: {', '.join(ref_parts)}" if ref_parts else ""
+            if reinforcement: reinforcement += ", NO variations from this character appearance"
             
         elif emphasis_level == "medium":
             critical_features = (
@@ -336,10 +333,10 @@ def create_character_reference(
     use_ai_analysis: bool = False,
     # NEW: Character profile parameters
     child_name: str = "الطفل",
-    skin_tone: str = "brown",
-    hair_style: str = "curly",
-    hair_color: str = "brown",
-    eye_color: str = "brown",
+    skin_tone: str = "natural skin tone",
+    hair_style: str = "natural hair style",
+    hair_color: str = "natural hair color",
+    eye_color: str = "natural eye color",
     age: str = "3-4"
 ) -> str:
     """
