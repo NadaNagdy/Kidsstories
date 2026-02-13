@@ -143,14 +143,14 @@ def process_story_generation(sender_id, value, is_preview=False):
         
         # تحضير النصوص عبر StoryManager
         manager = StoryManager(child_name)
+      
         manager.character_desc = char_desc  # 🌟 [تم الإصلاح] تمرير وصف ملامح الطفل ليتم دمجها في الصور
-        
-        # 🌟 [تم الإصلاح] توحيد أسماء الملفات لتطابق ما حفظناه
+      # 🌟 [تم الإصلاح] توحيد أسماء الملفات لتطابق ما حفظناه
         value_map = {
             "الشجاعة": "courage.json", 
             "الصدق": "honesty.json", 
             "التعاون": "cooperation.json", 
-            "الاحترام": "politeness.json"
+            "الاحترام": "respect.json"  # 👈 التعديل هنا!
         }
         
         json_filename = value_map.get(value)
