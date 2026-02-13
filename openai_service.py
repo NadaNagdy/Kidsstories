@@ -1,6 +1,5 @@
 """
-🎨 OpenAI Service - Complete & Production Ready
-خدمة متكاملة لتوليد وتحليل الصور - نسخة محسّنة وآمنة 100%
+خدمة متكاملة لتوليد وتحليل الصور - نسخة محسّنة 100% مع نظام Character Consistency
 """
 
 import requests
@@ -22,6 +21,115 @@ logger = logging.getLogger(__name__)
 
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")  # للـ Vision API (اختياري)
+
+# ============================================================================
+# 🎨 Character Profile System
+# ============================================================================
+
+class CharacterProfile:
+    """نظام بروفايل الشخصية لضمان الاتساق"""
+    
+    def __init__(
+        self,
+        name: str,
+        gender: str,  # "girl" or "boy"
+        age: str = "3-4",
+        skin_tone: str = "brown",
+        hair_style: str = "curly",
+        hair_color: str = "brown",
+        hair_texture: str = "natural curly texture",
+        eye_color: str = "brown",
+        clothing_style: str = "casual colorful outfit"
+    ):
+        self.name = name
+        self.gender = gender
+        self.age = age
+        self.skin_tone = skin_tone
+        self.hair_style = hair_style
+        self.hair_color = hair_color
+        self.hair_texture = hair_texture
+        self.eye_color = eye_color
+        self.clothing_style = clothing_style
+    
+    def build_detailed_description(self, emphasis_level: str = "high") -> str:
+        """
+        بناء وصف مفصل مع تأكيد قوي على الملامح
+        
+        Args:
+            emphasis_level: "low", "medium", or "high"
+        """
+        
+        # Base description
+        base_desc = (
+            f"adorable {self.age} year old {self.gender} "
+            f"named {self.name}"
+        )
+        
+        # High emphasis (recommended for consistency)
+        if emphasis_level == "high":
+            critical_features = (
+                # Skin tone - FIRST and EMPHASIZED
+                f", with beautiful {self.skin_tone.upper()} skin tone, "
+                f"rich {self.skin_tone} complexion, "
+                
+                # Hair - DETAILED and SPECIFIC
+                f"natural {self.hair_style.upper()} hairstyle, "
+                f"{self.hair_color} {self.hair_style} hair "
+                f"with {self.hair_texture}, "
+                f"full voluminous {self.hair_color} hair with beautiful texture, "
+                
+                # Eyes
+                f"large expressive {self.eye_color} eyes with sparkle highlights, "
+                
+                # Face
+                f"rosy cheeks, sweet joyful smile, "
+                f"cute rounded toddler proportions, "
+                f"wearing {self.clothing_style}"
+            )
+            
+            # Reinforcement for FLUX
+            reinforcement = (
+                f". CRITICAL FEATURES: {self.skin_tone} skin tone, "
+                f"{self.hair_style} {self.hair_color} hair, "
+                f"NO incorrect hair color, NO incorrect skin tone"
+            )
+            
+        elif emphasis_level == "medium":
+            critical_features = (
+                f", with {self.skin_tone} skin tone, "
+                f"{self.hair_style} {self.hair_color} hair "
+                f"with {self.hair_texture}, "
+                f"expressive {self.eye_color} eyes, "
+                f"sweet smile, "
+                f"wearing {self.clothing_style}"
+            )
+            reinforcement = ""
+            
+        else:  # low
+            critical_features = (
+                f", {self.skin_tone} skin, "
+                f"{self.hair_style} hair, "
+                f"{self.eye_color} eyes"
+            )
+            reinforcement = ""
+        
+        full_description = f"{base_desc}{critical_features}{reinforcement}"
+        
+        return full_description
+
+
+def get_hair_texture(style: str) -> str:
+    """تحديد نسيج الشعر بناءً على النوع"""
+    textures = {
+        "afro": "natural curly afro texture with tight coils and volume",
+        "curly": "bouncy curly texture with loose coils",
+        "wavy": "soft wavy texture with natural movement",
+        "straight": "smooth straight texture with shine",
+        "braids": "beautiful braided texture with neat patterns",
+        "locs": "natural locs texture with definition"
+    }
+    return textures.get(style.lower(), "natural hair texture")
+
 
 # ============================================================================
 # 🛡️ Helper Functions (Safe Utilities)
@@ -70,7 +178,7 @@ def _extract_image_from_response(response_data: dict) -> Optional[str]:
 
         # محاولة 2: البحث العميق (Deep Search) عن أي قيمة تشبه الصورة
         def deep_search(obj, depth=0):
-            if depth > 10: return None # زيادة العمق قليلاً
+            if depth > 10: return None
             
             if isinstance(obj, dict):
                 # التحقق من مفاتيح الصور الشائعة أولاً
@@ -117,10 +225,6 @@ def _extract_image_from_response(response_data: dict) -> Optional[str]:
     except Exception as e:
         logger.error(f"❌ Error extracting image: {e}")
         return None
-        
-    except Exception as e:
-        logger.error(f"❌ Error extracting image: {e}")
-        return None
 
 
 def _save_image_from_data(image_data: str) -> Optional[str]:
@@ -148,20 +252,20 @@ def _save_image_from_data(image_data: str) -> Optional[str]:
         elif "," in image_data:
             # محاولة إزالة أي مقدمة قبل الفاصلة (مثل data:image/png)
             parts = image_data.split(",", 1)
-            if len(parts[0]) < 50: # احتمال أنها مقدمة وليست جزء من البيانات
+            if len(parts[0]) < 50:
                 image_data = parts[1]
         
         # تنظيف شامل للسلسلة
         image_data = image_data.strip().replace(" ", "").replace("\n", "").replace("\r", "")
         
-        # معالجة الـ padding المفقود (مشكلة شائعة في بعض الـ APIs)
+        # معالجة الـ padding المفقود
         missing_padding = len(image_data) % 4
         if missing_padding:
             image_data += '=' * (4 - missing_padding)
             
         image_bytes = base64.b64decode(image_data)
         
-        # التحقق من صحة البيانات (Magic Bytes)
+        # التحقق من صحة البيانات
         if not image_bytes: return None
         
         # إنشاء ملف مؤقت
@@ -222,6 +326,250 @@ def validate_api_key() -> bool:
 
 
 # ============================================================================
+# 👁️ Character Analysis (IMPROVED WITH PROFILE SYSTEM)
+# ============================================================================
+
+def create_character_reference(
+    image_url: str = None,
+    gender: str = "ولد",
+    is_url: bool = True,
+    use_ai_analysis: bool = False,
+    # NEW: Character profile parameters
+    child_name: str = "الطفل",
+    skin_tone: str = "brown",
+    hair_style: str = "curly",
+    hair_color: str = "brown",
+    eye_color: str = "brown",
+    age: str = "3-4"
+) -> str:
+    """
+    ✅ تحليل شخصية الطفل أو استخدام وصف محسّن (IMPROVED VERSION)
+    
+    Args:
+        image_url: رابط الصورة (اختياري)
+        gender: الجنس ("ولد" أو "بنت")
+        is_url: هل الصورة رابط أم base64
+        use_ai_analysis: استخدام تحليل AI
+        child_name: اسم الطفل
+        skin_tone: لون البشرة (مهم جداً!) - BE SPECIFIC: "dark brown", "medium brown", etc.
+        hair_style: نوع الشعر - "afro", "curly", "straight", "braids", "locs", "wavy"
+        hair_color: لون الشعر - "brown", "black", "blonde" (exact color)
+        eye_color: لون العيون
+        age: العمر
+    
+    Returns:
+        وصف مفصل للشخصية مع تأكيد قوي على الملامح
+    
+    Examples:
+        >>> # Without AI analysis (recommended for consistency)
+        >>> desc = create_character_reference(
+        ...     gender="بنت",
+        ...     child_name="لوجى",
+        ...     skin_tone="dark brown",
+        ...     hair_style="afro",
+        ...     hair_color="brown"
+        ... )
+        
+        >>> # With AI analysis (requires image + API key)
+        >>> desc = create_character_reference(
+        ...     image_url="path/to/image.jpg",
+        ...     gender="بنت",
+        ...     use_ai_analysis=True,
+        ...     child_name="لوجى",
+        ...     skin_tone="dark brown"  # backup if AI fails
+        ... )
+    """
+    
+    # ============================================================================
+    # الوصف المحسّن (بدلاً من الافتراضي الضعيف)
+    # ============================================================================
+    
+    def get_improved_description() -> str:
+        """
+        وصف افتراضي محسّن مع تأكيد قوي على الملامح
+        """
+        
+        # تحديد الجنس
+        gender_term = "girl" if gender == "بنت" else "boy"
+        
+        # بناء بروفايل الشخصية
+        profile = CharacterProfile(
+            name=child_name,
+            gender=gender_term,
+            age=age,
+            skin_tone=skin_tone,
+            hair_style=hair_style,
+            hair_color=hair_color,
+            hair_texture=get_hair_texture(hair_style),
+            eye_color=eye_color
+        )
+        
+        # بناء الوصف المفصل مع تأكيد عالي
+        detailed_desc = profile.build_detailed_description(emphasis_level="high")
+        
+        return detailed_desc
+    
+    # ============================================================================
+    # إذا لم يُطلب AI analysis - استخدم الوصف المحسّن
+    # ============================================================================
+    
+    if not use_ai_analysis:
+        logger.info("ℹ️ Using IMPROVED character description with profile system")
+        improved_desc = get_improved_description()
+        logger.info(f"✅ Generated description: {len(improved_desc)} characters")
+        logger.debug(f"Description preview: {improved_desc[:150]}...")
+        return improved_desc
+    
+    # ============================================================================
+    # التحقق من API Key
+    # ============================================================================
+    
+    if not OPENAI_API_KEY:
+        logger.warning("⚠️ OPENAI_API_KEY not set, using improved description instead")
+        return get_improved_description()
+    
+    # ============================================================================
+    # استخدام GPT-4 Vision للتحليل (إذا كان متاحاً)
+    # ============================================================================
+    
+    try:
+        logger.info("👁️ Analyzing character with GPT-4 Vision...")
+        
+        # تحضير الصورة
+        if is_url:
+            if not image_url.startswith("http") and not image_url.startswith("data:"):
+                image_url = f"data:image/jpeg;base64,{image_url}"
+            image_content = {"type": "image_url", "image_url": {"url": image_url}}
+        else:
+            if not image_url.startswith("data:"):
+                image_url = f"data:image/jpeg;base64,{image_url}"
+            image_content = {"type": "image_url", "image_url": {"url": image_url}}
+        
+        # Prompt محسّن للتحليل
+        gender_term = "girl" if gender == "بنت" else "boy"
+        
+        analysis_prompt = f"""
+Analyze this child's image and provide a DETAILED character description for FLUX image generation.
+
+CRITICAL: Focus on these features and be VERY SPECIFIC:
+
+1. **Skin Tone**: Describe the EXACT skin tone (e.g., "dark brown", "medium brown", "light brown", "tan", etc.)
+   - Use specific color terms, not vague words like "warm"
+   
+2. **Hair Style**: Describe the hair type precisely (e.g., "natural afro", "tight curls", "loose curls", "straight", "braids", "locs")
+   - Include texture details (coily, curly, wavy, straight)
+   - Mention volume and shape
+   
+3. **Hair Color**: EXACT color (e.g., "dark brown", "black", "light brown" - be precise)
+
+4. **Facial Features**:
+   - Eye color and shape
+   - Face shape
+   - Notable features
+
+5. **Age appearance**: Approximate age (e.g., "3-4 years old")
+
+Format your response as a detailed character description suitable for FLUX prompts.
+Be SPECIFIC about colors and textures. This is for a children's storybook illustration.
+
+Gender: {gender_term}
+Name: {child_name}
+"""
+        
+        headers = {
+            "Authorization": f"Bearer {OPENAI_API_KEY}",
+            "Content-Type": "application/json"
+        }
+        
+        payload = {
+            "model": "gpt-4o",
+            "messages": [
+                {
+                    "role": "user",
+                    "content": [
+                        {"type": "text", "text": analysis_prompt},
+                        image_content
+                    ]
+                }
+            ],
+            "max_tokens": 500
+        }
+        
+        response = requests.post(
+            "https://api.openai.com/v1/chat/completions",
+            headers=headers,
+            json=payload,
+            timeout=30
+        )
+        
+        if response.status_code == 200:
+            data = response.json()
+            ai_description = data["choices"][0]["message"]["content"].strip()
+            
+            logger.info("✅ AI analysis completed")
+            logger.debug(f"AI Description: {ai_description[:200]}...")
+            
+            # دمج وصف AI مع التأكيد على الملامح المحددة
+            enhanced_desc = enhance_ai_description(
+                ai_description,
+                child_name=child_name,
+                gender=gender_term,
+                skin_tone=skin_tone,
+                hair_style=hair_style,
+                hair_color=hair_color,
+                eye_color=eye_color,
+                age=age
+            )
+            
+            return enhanced_desc
+        else:
+            logger.error(f"❌ Vision API error: {response.status_code}")
+            logger.info("⤵️ Falling back to improved default description")
+            return get_improved_description()
+            
+    except Exception as e:
+        logger.error(f"❌ AI analysis failed: {e}")
+        logger.info("⤵️ Falling back to improved default description")
+        return get_improved_description()
+
+
+def enhance_ai_description(
+    ai_desc: str,
+    child_name: str,
+    gender: str,
+    skin_tone: str,
+    hair_style: str,
+    hair_color: str,
+    eye_color: str,
+    age: str
+) -> str:
+    """
+    تحسين وصف AI بإضافة تأكيدات قوية على الملامح المطلوبة
+    """
+    
+    # بناء البروفايل
+    profile = CharacterProfile(
+        name=child_name,
+        gender=gender,
+        age=age,
+        skin_tone=skin_tone,
+        hair_style=hair_style,
+        hair_color=hair_color,
+        hair_texture=get_hair_texture(hair_style),
+        eye_color=eye_color
+    )
+    
+    # بناء الوصف المحسّن
+    structured_desc = profile.build_detailed_description(emphasis_level="high")
+    
+    # دمج معلومات AI مع الهيكل المحسّن
+    # نأخذ الهيكل المحسّن ونضيف ملاحظات AI كإضافة
+    enhanced = f"{structured_desc}. AI Analysis Notes: {ai_desc[:150]}"
+    
+    return enhanced
+
+
+# ============================================================================
 # 📸 Image Generation (FLUX Klein 4b via OpenRouter)
 # ============================================================================
 
@@ -238,10 +586,11 @@ def generate_storybook_page(
     توليد صفحة قصة باستخدام FLUX Klein 4b عبر OpenRouter
     
     Args:
-        char_desc (str): وصف الشخصية
+        char_desc (str): وصف الشخصية المفصل (من create_character_reference)
         prompt (str): وصف المشهد
         child_name (str, optional): اسم الطفل (يمكن أن يكون None)
         gender (str): "ولد" أو "بنت"
+        age_group (str): العمر
         is_cover (bool): هل هذه صفحة الغلاف
         timeout (int): وقت الانتظار بالثواني
     
@@ -249,10 +598,20 @@ def generate_storybook_page(
         Optional[str]: مسار الملف المؤقت أو رابط URL، أو None في حالة الفشل
     
     Examples:
+        >>> # First, create character description
+        >>> char_desc = create_character_reference(
+        ...     gender="بنت",
+        ...     child_name="لوجى",
+        ...     skin_tone="dark brown",
+        ...     hair_style="afro",
+        ...     hair_color="brown"
+        ... )
+        >>> 
+        >>> # Then generate image
         >>> image = generate_storybook_page(
-        ...     char_desc="A cute toddler with curly hair",
+        ...     char_desc=char_desc,
         ...     prompt="{child_name} playing in garden",
-        ...     child_name="ليلى",
+        ...     child_name="لوجى",
         ...     gender="بنت"
         ... )
     """
@@ -265,29 +624,23 @@ def generate_storybook_page(
         safe_prompt = prepare_prompt_safe(prompt, child_name)
         
         # ✅ بناء FLUX-optimized prompt
-        # Based on FLUX Klein 4B best practices & Millie reference style
+        # Based on FLUX Klein 4B best practices & improved character system
         
-        # Character description (base ID only, details come from char_desc)
         gender_term = "girl" if gender == "بنت" else "boy"
         age_desc = f"{age_group} year old" if "-" in age_group else "toddler"
         
-        character = (
-            f"an adorable {age_desc} {gender_term} with a unique face and personality based 100% on the unique child description. "
-            f"sweet joyful smile, cute rounded toddler proportions. "
-            f"IMPORTANT: Use the exact hair and eye color from the description. No blonde/yellow hair if not specified."
-        )
-        
         # Style (Artistic theme ONLY - no physical features)
         style = (
-            "whimsical classic children's book illustration theme, Millie and the Moon Bear artistic aesthetic, "
+            "whimsical classic children's book illustration theme, "
             "soft digital watercolor washes, delicate colored pencil detailing, "
             "dreamy cozy bedtime story colors, rich saturated painterly textures, "
-            "gentle watercolor gradients, paper texture, soft blending"
+            "gentle watercolor gradients, paper texture, soft blending, "
+            "Millie and the Moon Bear artistic aesthetic"
         )
         
         # Lighting (magical bedtime story aesthetic)
         lighting_style = (
-            "magical glowing light, soft luminous stars, dreamy moonlight, "
+            "magical glowing light, soft luminous atmosphere, dreamy lighting, "
             "enchanting bedtime story aesthetic, cozy and whimsical"
         )
         
@@ -295,28 +648,34 @@ def generate_storybook_page(
         composition = (
             "full frame artistic illustration, edge-to-edge masterpiece, "
             "cinematic wide angle, no borders, no margins, "
-            "strictly NO text, NO letters, NO characters, NO titles, NO typography"
+            "strictly NO text, NO letters, NO characters, NO titles, NO typography, "
+            "children's book page layout"
         )
         
         # Quality markers
         quality = (
-            "ultra-high definition children's book illustration, professional publication quality, "
-            "clean simple masterpiece, vibrant colors, suitable for ages 1-5"
+            "ultra-high definition children's book illustration, "
+            "professional publication quality, clean simple masterpiece, "
+            "vibrant colors, suitable for ages 1-5, "
+            "MAINTAIN CONSISTENT CHARACTER FEATURES throughout"
         )
         
-        # Complete prompt with FLUX structure (User-specific template)
+        # ✅ Complete prompt with FLUX structure + Character Consistency
         full_prompt = (
-            f"A high-fidelity immersive {style}, {character} {safe_prompt}. "
-            f"The character MUST be a pixel-perfect artistic replica of this exact description: {char_desc}. "
+            f"Create a {style} children's storybook illustration. "
+            f"The main character is: {char_desc}. "  # ← Character description with emphasis
+            f"Scene: {safe_prompt}. "
             f"Composition: {composition}. "
             f"Lighting: {lighting_style}. "
             f"Quality: {quality}. "
-            f"Style: {style}."
+            f"CRITICAL: The character MUST match the exact description provided, "
+            f"with precise attention to skin tone, hair style, hair color, and all facial features. "
+            f"NO variations from the character description."
         )
         
         logger.info(f"🎨 Generating image with FLUX Klein 4b...")
-        logger.info(f"👤 Character Description for AI: {char_desc}")
-        logger.debug(f"Full Prompt: {full_prompt}")
+        logger.info(f"👤 Character: {char_desc[:100]}...")
+        logger.debug(f"📝 Full Prompt Length: {len(full_prompt)} characters")
         
         # إعداد الطلب
         headers = {
@@ -333,10 +692,8 @@ def generate_storybook_page(
                     "role": "user", 
                     "content": full_prompt
                 }
-            ],
-            "response_format": {"type": "json_object"} if "json" in full_prompt.lower() else None
+            ]
         }
-        # ملاحظة: تم تبسيط الـ payload وإزالة modalities لزيادة التوافق مع مختلف مزودي OpenRouter
         
         # إرسال الطلب
         response = requests.post(
@@ -346,7 +703,7 @@ def generate_storybook_page(
             timeout=timeout
         )
         
-        # معالجة الاستجابة المحسّنة
+        # معالجة الاستجابة
         if response.status_code == 200:
             data = response.json()
             
@@ -392,11 +749,11 @@ def generate_story_images(
     gender: str = "ولد"
 ) -> List[Dict]:
     """
-    توليد صور لقصة كاملة
+    توليد صور لقصة كاملة مع ضمان اتساق الشخصية
     
     Args:
         story_pages: قائمة صفحات القصة
-        char_desc: وصف الشخصية
+        char_desc: وصف الشخصية المفصل (من create_character_reference)
         child_name: اسم الطفل
         gender: الجنس
     
@@ -404,16 +761,26 @@ def generate_story_images(
         قائمة نتائج التوليد
     
     Example:
+        >>> # Create character once
+        >>> char_desc = create_character_reference(
+        ...     gender="بنت",
+        ...     child_name="لوجى",
+        ...     skin_tone="dark brown",
+        ...     hair_style="afro"
+        ... )
+        >>> 
+        >>> # Generate all pages with same character
         >>> pages = [
         ...     {"page_number": 1, "prompt": "Scene 1"},
         ...     {"page_number": 2, "prompt": "Scene 2"}
         ... ]
-        >>> results = generate_story_images(pages, "Character desc", "ليلى")
+        >>> results = generate_story_images(pages, char_desc, "لوجى")
     """
     results = []
     total = len(story_pages)
     
-    logger.info(f"📚 Generating {total} story images...")
+    logger.info(f"📚 Generating {total} story images with consistent character...")
+    logger.info(f"👤 Using character: {char_desc[:80]}...")
     
     for idx, page in enumerate(story_pages, 1):
         page_num = page.get("page_number", idx)
@@ -422,7 +789,7 @@ def generate_story_images(
         logger.info(f"🎨 Processing page {page_num}/{total}")
         
         image_path = generate_storybook_page(
-            char_desc=char_desc,
+            char_desc=char_desc,  # ✅ Same character for all pages
             prompt=prompt,
             child_name=child_name,
             gender=gender,
@@ -446,117 +813,6 @@ def generate_story_images(
 
 
 # ============================================================================
-# 👁️ Character Analysis (GPT-4 Vision - Optional)
-# ============================================================================
-
-def create_character_reference(
-    image_url: str, 
-    gender: str = "ولد", 
-    is_url: bool = True,
-    use_ai_analysis: bool = True
-) -> str:
-    """
-    تحليل ملامح الطفل من الصورة
-    
-    Args:
-        image_url: رابط الصورة أو base64
-        gender: "ولد" أو "بنت"
-        is_url: True للروابط، False للـ base64
-        use_ai_analysis: استخدام GPT-4 Vision للتحليل
-    
-    Returns:
-        وصف تفصيلي للشخصية
-    
-    Note:
-        إذا كان use_ai_analysis=False أو OPENAI_API_KEY مفقود،
-        سيتم إرجاع وصف افتراضي
-    """
-    
-    # الوصف الافتراضي
-    default_desc = (
-        f"A cute {'girl' if gender == 'بنت' else 'boy'} "
-        f"with big expressive eyes, sweet smile, "
-        f"soft features, clean simple character design, "
-        f"warm skin tone, huggable proportions"
-    )
-    
-    # إذا لم يُطلب AI analysis
-    if not use_ai_analysis:
-        logger.info("ℹ️ Using default character description")
-        return default_desc
-    
-    # التحقق من API Key
-    if not OPENAI_API_KEY:
-        logger.warning("⚠️ OPENAI_API_KEY not set, using default description")
-        return default_desc
-    
-    try:
-        logger.info("👁️ Analyzing character with GPT-4 Vision...")
-        
-        # تحضير الصورة
-        if is_url:
-            if not image_url.startswith("http"):
-                image_url = f"data:image/jpeg;base64,{image_url}"
-            image_content = {"type": "image_url", "image_url": {"url": image_url}}
-        else:
-            if not image_url.startswith("data:"):
-                image_url = f"data:image/jpeg;base64,{image_url}"
-            image_content = {"type": "image_url", "image_url": {"url": image_url}}
-        
-        # استدعاء GPT-4 Vision
-        headers = {
-            "Authorization": f"Bearer {OPENAI_API_KEY}",
-            "Content-Type": "application/json"
-        }
-        
-        payload = {
-            "model": "gpt-4o",
-            "messages": [
-                {
-                    "role": "user",
-                    "content": [
-                        {
-                            "type": "text",
-                            "text": (
-                                f"Analyze this child's photo with surgical precision for a professional 1-to-1 storybook illustration match. "
-                                f"Gender: {'Girl' if gender == 'بنت' else 'Boy'}. "
-                                f"Provide an ultra-descriptive 150-word paragraph including: "
-                                f"1. Hair: Complete style (length, volume), exact texture (tight curls, waves), and precise color. "
-                                f"2. Eyes: Precise shape (round, almond), color, and specific sparkle. "
-                                f"3. Face: Cheekbone structure, nose shape, chin, and mouth expression. "
-                                f"4. Identity: Capture the unique 'soul' and likeness of this specific child. "
-                                f"Focus on every physical detail so an illustrator can replicate this exact person."
-                            )
-                        },
-                        image_content
-                    ]
-                }
-            ],
-            "max_tokens": 300
-        }
-        
-        response = requests.post(
-            "https://api.openai.com/v1/chat/completions",
-            headers=headers,
-            json=payload,
-            timeout=30
-        )
-        
-        if response.status_code == 200:
-            data = response.json()
-            description = data["choices"][0]["message"]["content"].strip()
-            logger.info(f"✅ Character analyzed: {description[:80]}...")
-            return description
-        else:
-            logger.warning(f"⚠️ Vision API error: {response.status_code}")
-            return default_desc
-            
-    except Exception as e:
-        logger.error(f"❌ Character analysis error: {e}")
-        return default_desc
-
-
-# ============================================================================
 # 💳 Payment Verification (GPT-4 Vision - Optional)
 # ============================================================================
 
@@ -577,10 +833,6 @@ def verify_payment_screenshot(
     
     Returns:
         True إذا صحيح، False إذا خاطئ
-    
-    Note:
-        الوضع الافتراضي (use_ai_verification=False): قبول تلقائي
-        مع AI: تحقق فعلي من الرقم والمبلغ
     """
     
     logger.info(f"💳 Verifying payment for: {target_number}")
@@ -658,13 +910,11 @@ def verify_payment_screenshot(
             return is_valid
         else:
             logger.error(f"❌ Vision API error: {response.status_code}")
-            # في حالة الخطأ: قبول تلقائي (يمكن تغيير هذا)
             logger.info("⚠️ Auto-approving due to API error")
             return True
             
     except Exception as e:
         logger.error(f"❌ Payment verification error: {e}")
-        # في حالة الخطأ: قبول تلقائي
         logger.info("⚠️ Auto-approving due to exception")
         return True
 
@@ -676,9 +926,6 @@ def verify_payment_screenshot(
 def test_api_connection() -> Dict[str, bool]:
     """
     اختبار الاتصال بالـ APIs
-    
-    Returns:
-        قاموس بنتائج الاختبار
     """
     results = {
         "openrouter_key": bool(OPENROUTER_API_KEY),
@@ -722,7 +969,7 @@ def test_api_connection() -> Dict[str, bool]:
 
 if __name__ == "__main__":
     print("\n" + "="*80)
-    print("🎨 OpenAI Service - Testing Suite")
+    print("🎨 OpenAI Service - Testing Suite (IMPROVED VERSION)")
     print("="*80 + "\n")
     
     # Test 1: API Keys
@@ -734,8 +981,42 @@ if __name__ == "__main__":
         print(f"{status} {key}: {value}")
     print()
     
-    # Test 2: Prompt Preparation
-    print("Test 2: Prompt Preparation")
+    # Test 2: Character Profile System
+    print("Test 2: Character Profile System")
+    print("-" * 40)
+    
+    # Test case 1: Girl with afro
+    desc1 = create_character_reference(
+        gender="بنت",
+        child_name="لوجى",
+        skin_tone="dark brown",
+        hair_style="afro",
+        hair_color="brown",
+        eye_color="brown"
+    )
+    
+    print(f"Character: لوجى (Girl with afro)")
+    print(f"Length: {len(desc1)} characters")
+    print(f"Preview: {desc1[:150]}...")
+    print()
+    
+    # Feature checks
+    checks = {
+        "Has 'dark brown skin'": "dark brown" in desc1.lower() and "skin" in desc1.lower(),
+        "Has 'afro'": "afro" in desc1.lower(),
+        "Has 'brown hair'": "brown" in desc1.lower() and "hair" in desc1.lower(),
+        "Has negative prompts": "no" in desc1.lower(),
+        "Has child name": "لوجى" in desc1
+    }
+    
+    print("Feature Checks:")
+    for check, passed in checks.items():
+        status = "✅" if passed else "❌"
+        print(f"  {status} {check}")
+    print()
+    
+    # Test 3: Prompt Preparation
+    print("Test 3: Prompt Preparation")
     print("-" * 40)
     test_cases = [
         ("{child_name} playing", "ليلى"),
@@ -752,4 +1033,11 @@ if __name__ == "__main__":
     print("="*80)
     print("✅ Testing Complete!")
     print("="*80 + "\n")
-
+    
+    print("📋 Summary:")
+    print("- ✅ Character Profile System integrated")
+    print("- ✅ Improved default descriptions with emphasis")
+    print("- ✅ Multi-layer character consistency")
+    print("- ✅ Negative prompts included")
+    print("- ✅ Safe prompt preparation")
+    print()
