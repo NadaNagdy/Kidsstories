@@ -230,23 +230,56 @@ def generate_storybook_page(
         # ✅ تحضير آمن للـ prompt
         safe_prompt = prepare_prompt_safe(prompt, child_name)
         
-        # بناء الـ prompt الكامل
+        # ✅ بناء FLUX-optimized prompt
+        # Based on FLUX Klein 4B best practices & Millie reference style
+        
+        # Character description (detailed for FLUX)
+        gender_term = "girl" if gender == "بنت" else "boy"
+        character = (
+            f"adorable 3-4 year old {gender_term} with beautifully detailed "
+            f"voluminous curly brown hair with natural bounce and shine, "
+            f"warm skin tone, large expressive glossy brown eyes with sparkle highlights, "
+            f"rosy airbrushed cheeks, sweet joyful smile, "
+            f"cute rounded toddler proportions"
+        )
+        
+        # Style (matching Millie and the Moon Bear aesthetic)
+        style = (
+            "digital illustration with soft painterly textures, "
+            "children's storybook art, blend of digital painting and watercolor washes, "
+            "rich saturated colors with soft gradients, deep blues, warm golds, creamy whites, "
+            "visible brush strokes, paper texture, gentle blending"
+        )
+        
+        # Lighting (magical bedtime story aesthetic)
+        lighting_style = (
+            "magical glowing light, soft luminous stars, dreamy moonlight, "
+            "enchanting bedtime story aesthetic, cozy and whimsical"
+        )
+        
+        # Composition
         if is_cover:
-            full_prompt = (
-                f"A magical children's book cover illustration. "
-                f"{char_desc}. "
-                f"{safe_prompt}. "
-                f"Title space at top, whimsical watercolor style, "
-                f"enchanting lighting, professional book cover design."
+            composition = (
+                "book cover layout, centered character with space for title at top, "
+                "whimsical border elements, professional children's book cover design"
             )
         else:
-            full_prompt = (
-                f"A whimsical children's book illustration. "
-                f"{char_desc}. "
-                f"Scene: {safe_prompt}. "
-                f"Soft watercolor style, magical lighting, "
-                f"dreamy atmosphere, perfect for ages 1-5."
-            )
+            composition = "centered scene, children's book page layout, space for text at top"
+        
+        # Quality markers
+        quality = (
+            "high definition children's book illustration, professional publication quality, "
+            "sharp detail, vibrant colors, suitable for ages 1-5"
+        )
+        
+        # Complete prompt with FLUX structure
+        full_prompt = (
+            f"{character}, {safe_prompt}. "
+            f"Style: {style}. "
+            f"Lighting: {lighting_style}. "
+            f"Composition: {composition}. "
+            f"Quality: {quality}"
+        )
         
         logger.info(f"🎨 Generating image with FLUX Klein 4b...")
         logger.debug(f"Prompt: {full_prompt[:100]}...")
@@ -287,32 +320,44 @@ def generate_storybook_page(
         if response.status_code == 200:
             data = response.json()
             
-            # 🔍 DEBUG: طباعة الاستجابة الكاملة
-            logger.debug("="*60)
-            logger.debug("🔍 OpenRouter Response:")
-            logger.debug(f"Top keys: {list(data.keys())}")
+            # 🔍 CRITICAL DEBUG LOGGING
+            logger.warning("="*80)
+            logger.warning("🔍 OPENROUTER RESPONSE DEBUG")
+            logger.warning("="*80)
+            
+            try:
+                import json
+                response_preview = json.dumps(data, indent=2, ensure_ascii=False)[:2000]
+                logger.warning(f"Full response (first 2000 chars):\n{response_preview}")
+            except:
+                logger.warning(f"Response: {str(data)[:1000]}")
+            
+            logger.warning(f"\nTop-level keys: {list(data.keys())}")
             
             if "choices" in data and data["choices"]:
                 choice = data["choices"][0]
-                logger.debug(f"Choice keys: {list(choice.keys())}")
-                message = choice.get("message", {})
-                logger.debug(f"Message keys: {list(message.keys())}")
+                logger.warning(f"Choice keys: {list(choice.keys())}")
                 
-                # طباعة محتوى كل مفتاح
+                message = choice.get("message", {})
+                logger.warning(f"Message keys: {list(message.keys())}")
+                
+                # طباعة تفصيلية لكل مفتاح
                 for key, value in message.items():
-                    logger.debug(f"  {key}: {type(value).__name__}")
-                    if isinstance(value, str) and len(value) < 200:
-                        logger.debug(f"    = {value}")
+                    value_type = type(value).__name__
+                    logger.warning(f"\n  message.{key}: {value_type}")
+                    
+                    if isinstance(value, str) and len(value) < 300:
+                        logger.warning(f"    = {value}")
                     elif isinstance(value, list):
-                        logger.debug(f"    length: {len(value)}")
+                        logger.warning(f"    length: {len(value)}")
+                        if value and len(value) > 0:
+                            logger.warning(f"    first: {value[0]}")
+                    elif isinstance(value, dict):
+                        logger.warning(f"    keys: {list(value.keys())}")
             
-            # طباعة أول 500 حرف من الـ response
-            import json
-            response_preview = json.dumps(data, indent=2)[:500]
-            logger.debug(f"Response preview:\n{response_preview}")
-            logger.debug("="*60)
+            logger.warning("="*80)
             
-            # ✅ طريقة محسّنة لاستخراج الصورة
+            # ✅ محاولة الاستخراج
             image_data = _extract_image_from_response(data)
             
             if image_data:
