@@ -287,6 +287,31 @@ def generate_storybook_page(
         if response.status_code == 200:
             data = response.json()
             
+            # 🔍 DEBUG: طباعة الاستجابة الكاملة
+            logger.debug("="*60)
+            logger.debug("🔍 OpenRouter Response:")
+            logger.debug(f"Top keys: {list(data.keys())}")
+            
+            if "choices" in data and data["choices"]:
+                choice = data["choices"][0]
+                logger.debug(f"Choice keys: {list(choice.keys())}")
+                message = choice.get("message", {})
+                logger.debug(f"Message keys: {list(message.keys())}")
+                
+                # طباعة محتوى كل مفتاح
+                for key, value in message.items():
+                    logger.debug(f"  {key}: {type(value).__name__}")
+                    if isinstance(value, str) and len(value) < 200:
+                        logger.debug(f"    = {value}")
+                    elif isinstance(value, list):
+                        logger.debug(f"    length: {len(value)}")
+            
+            # طباعة أول 500 حرف من الـ response
+            import json
+            response_preview = json.dumps(data, indent=2)[:500]
+            logger.debug(f"Response preview:\n{response_preview}")
+            logger.debug("="*60)
+            
             # ✅ طريقة محسّنة لاستخراج الصورة
             image_data = _extract_image_from_response(data)
             
