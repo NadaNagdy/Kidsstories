@@ -16,7 +16,7 @@ class StoryManager:
         self.child_name = child_name
         self.character_desc = ""  # This will be injected from main.py after photo analysis
 
-    def build_full_prompt(self, scene, emotion):
+    def build_full_prompt(self, base_prompt):
         """Combines all elements into the final PRO prompt"""
         char = self.character_desc if self.character_desc else "A cute child character"
         return f"""
@@ -24,10 +24,9 @@ class StoryManager:
 
 MAIN CHARACTER:
 {char}
-Expression: {emotion}
 
 SCENE ACTION:
-{scene}
+{base_prompt}
 
 COMPOSITION:
 Square format, consistent character, plenty of white space for text.
@@ -49,25 +48,26 @@ Square format, consistent character, plenty of white space for text.
             with open(filepath, 'r', encoding='utf-8') as f:
                 data = json.load(f)
             
-            # Navigate to the specific age group
-            age_data = data.get(age_group)
+            # 🛠️ التعديل الأول: الدخول إلى المسار الصحيح "age_groups"
+            age_data = data.get("age_groups", {}).get(age_group)
             if not age_data:
                 logger.error(f"❌ Error: Age group {age_group} not found in {json_filename}")
                 return None
 
             generated_pages = []
             
-            for page in age_data['pages']:
-                full_prompt = self.build_full_prompt(
-                    scene=page['scene_description'],
-                    emotion=page['emotion']
-                )
+            for page in age_data.get('pages', []):
+                # 🛠️ التعديل الثاني: استخدام المفاتيح الصحيحة من الـ JSON الجديد
+                # سيحاول أخذ 'magic_image_prompt' لو موجود، ولو مش موجود هياخد 'prompt' العادي
+                raw_prompt = page.get('magic_image_prompt', page.get('prompt', ''))
+                
+                full_prompt = self.build_full_prompt(base_prompt=raw_prompt)
                 
                 # Format text to include the child's name
-                display_text = page['text'].replace("{child_name}", self.child_name)
+                display_text = page.get('text', '').replace("{child_name}", self.child_name)
                 
                 page_payload = {
-                    "page": page['page_number'],
+                    "page": page.get('page_number'),
                     "text": display_text,
                     "prompt": full_prompt
                 }
