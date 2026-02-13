@@ -69,7 +69,7 @@ def _get_arabic_font(size: int, weight: str = "bold") -> ImageFont.FreeTypeFont:
 # 2. وظائف إنشاء الصور (تأثيرات البروز والوضوح)
 # ---------------------------------------------------------------------------
 
-def create_cover_page(image_url, top_text, bottom_text, output_path):
+def create_cover_page(image_url, value, child_name, gender, output_path):
     """إنشاء الغلاف بخطوط حادة جداً ومساحات نظيفة"""
     try:
         width, height = 1024, 1024
@@ -80,7 +80,9 @@ def create_cover_page(image_url, top_text, bottom_text, output_path):
         title_font = _get_arabic_font(130, weight="bold")
         name_font = _get_arabic_font(115, weight="bold")
 
-        # 1. رسم العنوان (بطل القيمة) مع Stroke لزيادة الحدة
+        # 1. رسم العنوان (بطل/بطلة القيمة)
+        prefix = "بطلة" if gender == "female" else "بطل"
+        top_text = f"{prefix} {value}"
         reshaped_top = _prepare_arabic_text(top_text)
         tw = draw.textbbox((0, 0), reshaped_top, font=title_font)[2]
         tx, ty = (width - tw) // 2, 70
@@ -95,20 +97,21 @@ def create_cover_page(image_url, top_text, bottom_text, output_path):
             art = art_source.convert("RGBA").resize((660, 660), Image.LANCZOS)
             mask = Image.new('L', (660, 660), 0)
             ImageDraw.Draw(mask).ellipse((0, 0, 660, 660), fill=255)
-            img.paste(art, ((width - 660) // 2, 220), mask=mask)
+            img.paste(art, ((width - 660) // 2, 350), mask=mask) # تحريك الدائرة لأسفل قليلاً لترك مساحة للعنوان
 
-        # 3. اسم الطفل مع توهج وحماية خلفية
-        reshaped_name = _prepare_arabic_text(bottom_text)
+        # 3. اسم الطفل
+        reshaped_name = _prepare_arabic_text(child_name)
         nw = draw.textbbox((0, 0), reshaped_name, font=name_font)[2]
-        nx, ny = (width - nw) // 2, 865
+        nx, ny = (width - nw) // 2, 70 # هنا يظهر اسم الطفل تحت العنوان مباشرة؟ لا، نضع ny في الأسفل
+        ny = 865 # القيمة القديمة
         
-        # رسم "هالة" بيضاء خفيفة خلف الاسم لزيادة التباين
         draw.text((nx, ny), reshaped_name, font=name_font, fill=(60, 40, 30),
                   stroke_width=3, stroke_fill=(255, 255, 255))
 
         img.save(output_path, quality=100, subsampling=0) 
         return output_path
     except Exception as e:
+        print(f"❌ Error in create_cover_page: {e}")
         return None
 
 def overlay_text_on_image(image_url, text, output_path):
