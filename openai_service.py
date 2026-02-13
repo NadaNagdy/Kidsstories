@@ -349,17 +349,6 @@ def generate_storybook_page(
         if response.status_code == 200:
             data = response.json()
             
-            # 🔍 CRITICAL DEBUG LOGGING
-            logger.warning("="*80)
-            logger.warning("🔍 OPENROUTER RESPONSE DEBUG")
-            logger.warning("="*80)
-            
-            try:
-                import json
-                response_preview = json.dumps(data, indent=2, ensure_ascii=False)[:2000]
-                logger.warning(f"Full response (first 2000 chars):\n{response_preview}")
-            except:
-                logger.warning(f"Response: {str(data)[:1000]}")
             # ✅ محاولة الاستخراج
             image_data = _extract_image_from_response(data)
             
@@ -760,3 +749,4 @@ if __name__ == "__main__":
     print("="*80)
     print("✅ Testing Complete!")
     print("="*80 + "\n")
+
