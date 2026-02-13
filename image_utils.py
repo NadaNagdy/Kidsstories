@@ -5,7 +5,28 @@ import base64
 from io import BytesIO
 import arabic_reshaper
 from bidi.algorithm import get_display
-
+def get_image_source(source):
+    """
+    دالة ذكية لفتح الصورة سواء كانت رابط URL أو مسار ملف محلي (مثل مخرجات Flux)
+    """
+    try:
+        # إذا كان المدخل رابط يبدأ بـ http
+        if isinstance(source, str) and source.startswith("http"):
+            response = requests.get(source, timeout=15)
+            return Image.open(BytesIO(response.content))
+        
+        # إذا كان مسار ملف موجود على السيرفر (/tmp/...)
+        elif isinstance(source, str) and os.path.exists(source):
+            return Image.open(source)
+            
+        # إذا كانت الصورة مفتوحة بالفعل (Image object)
+        elif isinstance(source, Image.Image):
+            return source
+            
+        return None
+    except Exception as e:
+        print(f"❌ Error in get_image_source: {e}")
+        return None
 # ---------------------------------------------------------------------------
 # 1. محرك النصوص العربية (إصلاح الحروف الناقصة والروابط)
 # ---------------------------------------------------------------------------
