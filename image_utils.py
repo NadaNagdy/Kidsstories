@@ -32,11 +32,18 @@ def get_image_source(source):
 # ---------------------------------------------------------------------------
 
 def _prepare_arabic_text(text: str) -> str:
-    """تحضير النص ليكون مقروءاً وصحيحاً برمجياً"""
+    """تحضير النص ليكون مقروءاً وصحيحاً برمجياً مع دعم كامل للحروف والروابط"""
     if not text: return ""
-    # استخدام الإعدادات الافتراضية الأكثر قوة وتوافقاً مع Pillow
-    # تم تعطيل support_ligatures لأنها قد تسبب مربعات في بعض الخطوط
-    reshaped_text = arabic_reshaper.reshape(text)
+    
+    # إعدادات مخصصة لضمان عدم اختفاء أي حرف ودعم الروابط مثل (لا)
+    configuration = {
+        'delete_harakat': False,
+        'support_ligatures': True,
+        'delete_tatweel': False,
+        'arabic': True
+    }
+    reshaper = arabic_reshaper.ArabicReshaper(configuration=configuration)
+    reshaped_text = reshaper.reshape(text)
     return get_display(reshaped_text)
 
 def _get_arabic_font(size: int, weight: str = "bold") -> ImageFont.FreeTypeFont:
