@@ -29,7 +29,7 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")  # للـ Vision API (اختيار�
 
 def _extract_image_from_response(response_data: dict) -> Optional[str]:
     """
-    استخراج الصورة من استجابة OpenRouter بطرق متعددة وأكثر قوة
+    استخراج الصورة من استجابة OpenRouter بطرق متعددة
     
     Args:
         response_data: البيانات المُرجعة من API
@@ -38,71 +38,67 @@ def _extract_image_from_response(response_data: dict) -> Optional[str]:
         URL أو base64 string، أو None
     """
     try:
-        # محاولة 1: الوصول المباشر للمسارات الشائعة
         choices = response_data.get("choices", [])
-        if choices:
-            message = choices[0].get("message", {})
+        if not choices:
+            return None
+        
+        message = choices[0].get("message", {})
+        
+        # محاولة 1: images كـ list
+        images = message.get("images", [])
+        if images and isinstance(images, list) and len(images) > 0:
+            image_data = images[0]
             
-            # 1.1: images field (OpenRouter standard for some models)
-            images = message.get("images", [])
-            if images and isinstance(images, list) and len(images) > 0:
-                img = images[0]
-                if isinstance(img, str): return img
-                if isinstance(img, dict): return img.get("url") or img.get("data")
-            
-            # 1.2: content field (Directly or as list of blocks)
-            content = message.get("content")
-            if isinstance(content, str) and len(content) > 100:
-                # التحقق إذا كانت السلسلة نفسها هي الصورة (URL أو Base64)
-                if content.strip().startswith(("http", "data:image", "ROkS", "iVBOR", "/9j/")):
-                    return content.strip()
-                # قد تكون base64 بدون مقدمة
-                if len(content.strip()) > 1000 and not " " in content.strip()[:100]:
-                    return content.strip()
-            
-            # 1.3: content as list (Multimodal response)
-            if isinstance(content, list):
-                for block in content:
-                    if isinstance(block, dict):
-                        if block.get("type") == "image_url":
-                            return block.get("image_url", {}).get("url")
-                        if block.get("type") == "image":
-                            return block.get("image") or block.get("data")
-
-        # محاولة 2: البحث العميق (Deep Search) عن أي قيمة تشبه الصورة
-        def deep_search(obj, depth=0):
-            if depth > 7: return None
+            if isinstance(image_data, dict):
+                url = image_data.get("url") or image_data.get("data")
+                if url:
+                    logger.debug("✅ Found in images[0].url/data")
+                    return url
+            elif isinstance(image_data, str):
+                logger.debug("✅ Found as string in images[0]")
+                return image_data
+        
+        # محاولة 2: content
+        content = message.get("content")
+        if content and isinstance(content, str):
+            if content.startswith("http") or "base64" in content or len(content) > 100:
+                logger.debug("✅ Found in message.content")
+                return content
+        
+        # محاولة 3: بحث عميق
+        def search_for_image(obj, depth=0):
+            if depth > 5:
+                return None
             
             if isinstance(obj, dict):
-                # البحث في القيم أولاً
+                for key in ["url", "image", "data", "base64", "content"]:
+                    if key in obj:
+                        value = obj[key]
+                        if isinstance(value, str) and (
+                            value.startswith("http") or 
+                            "base64" in value or 
+                            len(value) > 100
+                        ):
+                            return value
+                
                 for value in obj.values():
-                    if isinstance(value, str):
-                        v = value.strip()
-                        # أنماط شائعة للصور والـ base64
-                        if v.startswith(("http://", "https://", "data:image/")):
-                            return v
-                        # التعرف على base64 خام (طويل وبدون مسافات)
-                        if len(v) > 1000 and not any(c in v[:100] for c in " \n\t\r"):
-                            # التحقق من بدايات base64 المشهورة لـ PNG/JPG/WebP
-                            if v.startswith(("iVBOR", "/9j/", "ROkS", "UklGR")):
-                                return v
-                                
-                    # بحث تعمقي في القواميس والقوائم
-                    if isinstance(value, (dict, list)):
-                        res = deep_search(value, depth + 1)
-                        if res: return res
+                    result = search_for_image(value, depth + 1)
+                    if result:
+                        return result
             
             elif isinstance(obj, list):
                 for item in obj:
-                    res = deep_search(item, depth + 1)
-                    if res: return res
-            return None
-
-        result = deep_search(response_data)
-        if result:
-            logger.debug(f"✅ Image data found via deep search (Type: {result[:10]}...)")
-            return result
+                    result = search_for_image(item, depth + 1)
+                    if result:
+                        return result
             
+            return None
+        
+        image_url = search_for_image(response_data)
+        if image_url:
+            logger.debug("✅ Found via deep search")
+            return image_url
+        
         return None
         
     except Exception as e:
@@ -112,7 +108,7 @@ def _extract_image_from_response(response_data: dict) -> Optional[str]:
 
 def _save_image_from_data(image_data: str) -> Optional[str]:
     """
-    حفظ الصورة من URL أو base64 (مع معالجة متقدمة للأخطاء)
+    حفظ الصورة من URL أو base64
     
     Args:
         image_data: URL أو base64 string
@@ -121,48 +117,56 @@ def _save_image_from_data(image_data: str) -> Optional[str]:
         مسار الملف أو URL
     """
     try:
-        if not image_data: return None
-        
-        # 1. حالة URL مباشر
-        if image_data.startswith("http"):
+        # حالة 1: URL عادي
+        if image_data.startswith("http://") or image_data.startswith("https://"):
             logger.info(f"✅ Direct URL: {image_data[:50]}...")
             return image_data
         
-        # 2. حالة Base64
-        # تنظيف السلسلة من المقدمات الشائعة
-        if "base64," in image_data:
-            image_data = image_data.split("base64,")[1]
-        elif "," in image_data:
-            # محاولة إزالة أي مقدمة قبل الفاصلة (مثل data:image/png)
-            parts = image_data.split(",", 1)
-            if len(parts[0]) < 50: # احتمال أنها مقدمة وليست جزء من البيانات
-                image_data = parts[1]
+        # حالة 2: Data URL (data:image/png;base64,...)
+        if image_data.startswith("data:image"):
+            logger.info("✅ Found data URL, extracting base64...")
+            # استخراج base64 من data URL
+            if ";base64," in image_data:
+                image_data = image_data.split(";base64,")[1]
+            else:
+                logger.error("❌ No base64 marker in data URL")
+                return None
         
-        # تنظيف شامل للسلسلة
+        # حالة 3: Base64 مباشر
+        elif "base64," in image_data:
+            image_data = image_data.split("base64,")[1]
+        elif "," in image_data and not image_data.startswith("http"):
+            image_data = image_data.split(",", 1)[1]
+        
+        # تنظيف البيانات
         image_data = image_data.strip().replace(" ", "").replace("\n", "").replace("\r", "")
         
-        # معالجة الـ padding المفقود (مشكلة شائعة في بعض الـ APIs)
-        missing_padding = len(image_data) % 4
-        if missing_padding:
-            image_data += '=' * (4 - missing_padding)
-            
-        image_bytes = base64.b64decode(image_data)
+        logger.debug(f"Base64 length after cleaning: {len(image_data)}")
         
-        # التحقق من صحة البيانات (Magic Bytes)
-        if not image_bytes: return None
+        # فك التشفير
+        try:
+            image_bytes = base64.b64decode(image_data)
+        except Exception as decode_error:
+            logger.error(f"❌ Base64 decode failed: {decode_error}")
+            logger.error(f"Data preview: {image_data[:100]}")
+            return None
         
-        # إنشاء ملف مؤقت
-        temp_filename = f"/tmp/gen_{uuid.uuid4().hex[:8]}.png"
+        # حفظ الملف
+        temp_filename = f"/tmp/flux_{uuid.uuid4().hex[:8]}.png"
         with open(temp_filename, "wb") as fh:
             fh.write(image_bytes)
         
         file_size = os.path.getsize(temp_filename)
         logger.info(f"✅ Saved: {temp_filename} ({file_size} bytes)")
         
+        if file_size == 0:
+            logger.error("❌ File is empty!")
+            return None
+        
         return temp_filename
         
     except Exception as e:
-        logger.error(f"❌ Save error: {e}")
+        logger.error(f"❌ Save error: {e}", exc_info=True)
         return None
 
 
@@ -317,12 +321,16 @@ def generate_storybook_page(
             "messages": [
                 {
                     "role": "user", 
-                    "content": full_prompt
+                    "content": [
+                        {
+                            "type": "text", 
+                            "text": full_prompt
+                        }
+                    ]
                 }
             ],
-            "response_format": {"type": "json_object"} if "json" in full_prompt.lower() else None
+            "modalities": ["image"]
         }
-        # ملاحظة: تم تبسيط الـ payload وإزالة modalities لزيادة التوافق مع مختلف مزودي OpenRouter
         
         # إرسال الطلب
         response = requests.post(
@@ -336,18 +344,10 @@ def generate_storybook_page(
         if response.status_code == 200:
             data = response.json()
             
-            # 🔍 CRITICAL DEBUG LOGGING
-            logger.warning("="*80)
-            logger.warning("🔍 OPENROUTER RESPONSE DEBUG")
-            logger.warning("="*80)
+            logger.debug(f"✅ Got response from OpenRouter")
+            logger.debug(f"Response has keys: {list(data.keys())}")
             
-            try:
-                import json
-                response_preview = json.dumps(data, indent=2, ensure_ascii=False)[:2000]
-                logger.warning(f"Full response (first 2000 chars):\n{response_preview}")
-            except:
-                logger.warning(f"Response: {str(data)[:1000]}")
-            # ✅ محاولة الاستخراج
+            # ✅ استخراج الصورة
             image_data = _extract_image_from_response(data)
             
             if image_data:
