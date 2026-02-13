@@ -105,7 +105,6 @@ def handle_image_reception(sender_id, url, background_tasks):
 def process_image_ai(sender_id, url):
     try:
         gender = user_state[sender_id].get("gender", "ولد")
-        # استخراج وصف بحد أقصى 100 كلمة يشمل ملامح الوجه والملابس الحقيقية
         char_desc = create_character_reference(url, gender=gender, is_url=True)
         if char_desc:
             user_state[sender_id].update({"char_desc": char_desc, "step": "waiting_for_age"})
@@ -144,10 +143,25 @@ def process_story_generation(sender_id, value, is_preview=False):
         
         # تحضير النصوص عبر StoryManager
         manager = StoryManager(child_name)
-        value_map = {"الشجاعة": "courage.json", "الصدق": "honesty.json", "التعاون": "cooperation.json", "الاحترام": "respect.json"}
-        pages_prompts = manager.generate_story_prompts(value_map.get(value), data.get("age_group"))
-        total_pages = len(pages_prompts)
+        manager.character_desc = char_desc  # 🌟 [تم الإصلاح] تمرير وصف ملامح الطفل ليتم دمجها في الصور
+        
+        # 🌟 [تم الإصلاح] توحيد أسماء الملفات لتطابق ما حفظناه
+        value_map = {
+            "الشجاعة": "courage.json", 
+            "الصدق": "honesty.json", 
+            "التعاون": "cooperation.json", 
+            "الاحترام": "politeness.json"
+        }
+        
+        json_filename = value_map.get(value)
+        pages_prompts = manager.generate_story_prompts(json_filename, data.get("age_group"))
+        
+        # 🌟 [تم الإصلاح] حماية السيرفر من الانهيار إذا لم يجد القصة
+        if not pages_prompts:
+            send_text_message(sender_id, "⚠️ عذراً، محتوى هذه القصة قيد التحديث حالياً. يرجى المحاولة لاحقاً أو اختيار قيمة أخرى.")
+            return
 
+        total_pages = len(pages_prompts)
         cover_path = f"/tmp/cover_{sender_id}.png"
 
         # --- حالة المعاينة: توليد الغلاف فقط ---
