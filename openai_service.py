@@ -515,12 +515,14 @@ def create_character_reference(
                         {
                             "type": "text",
                             "text": (
-                                f"Analyze this child's photo with extreme detail for a professional children's book. "
+                                f"Analyze this child's photo for a high-end storybook. "
                                 f"Gender: {'Girl' if gender == 'بنت' else 'Boy'}. "
-                                f"Provide a ultra-descriptive 100-word paragraph including: "
-                                f"precise hair texture (curly/straight, volume, shine), eye shape and sparkle, "
-                                f"exact skin tone, rosy cheek placement, and any unique facial features or expressions. "
-                                f"This description will be used to maintain 100% character consistency across all pages."
+                                f"Provide a detailed 100-word paragraph describing: "
+                                f"1. Skin tone (precisely, e.g., porcelain, honey, olive, deep brown). "
+                                f"2. Hair style and texture (e.g., tight curls, loose waves, straight bob) and exact color. "
+                                f"3. Eye details (shape, color, sparkle). "
+                                f"4. Any unique features (dimples, rosy cheeks, specific smile). "
+                                f"Focus on visual details that an illustrator can replicate exactly."
                             )
                         },
                         image_content
