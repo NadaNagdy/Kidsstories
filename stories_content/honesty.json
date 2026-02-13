@@ -1,4 +1,67 @@
-"prompt": "{child_name} hiding behind a sofa, giggling with hand over mouth, shouting playfully, living room setting, soft watercolor style."
+{
+  "value": "الصدق",
+  "age_groups": {
+    "1-2": {
+      "story_title": "مين البطل الصادق؟",
+      "pages": [
+        {
+          "page_number": 1,
+          "text": "مين البطل الصادق؟ {child_name} لما ماما قالت 'كفاية تليفزيون'، راح جاب الريموت بنفسه وإداهولها من غير زعل.",
+          "prompt": "{child_name} honestly handing a TV remote control to a mother's hand, cute and compliant expression, warm living room background, soft watercolor style."
+        },
+        {
+          "page_number": 2,
+          "text": "مين البطل الصادق؟ {child_name} دلق الماية من الكوباية من غير قصد. مستخباش! راح لماما وشاور عليها بصراحة.",
+          "prompt": "{child_name} pointing honestly at a spilled cup of water on the floor, looking at an adult off-screen with an innocent and truthful expression, cozy room, soft watercolor style."
+        },
+        {
+          "page_number": 3,
+          "text": "مين البطل الصادق؟ {child_name} وقعت منه اللعبة الخشب. مش استخبى! راح لبابا يوريهوله وهو زعلان شوية بس قال الحقيقة.",
+          "prompt": "{child_name} holding a dropped wooden toy, looking up honestly at dad with a slightly sad but brave face, beautiful nursery background, soft watercolor illustration."
+        },
+        {
+          "page_number": 4,
+          "text": "مين البطل الصادق؟ {child_name} دايماً صريح وبيقول الحقيقة! عشان كده ماما وبابا بيحضنوه ويحبوه قوي قوي.",
+          "prompt": "{child_name} receiving a big, warm, and loving hug from mom and dad, glowing with happiness and honesty, magical and cozy atmosphere, beautiful watercolor finish."
+        }
+      ]
+    },
+    "2-3": {
+      "story_title": "سر الكيكة اللذيذة",
+      "pages": [
+        {
+          "page_number": 1,
+          "text": "ماما عملت كيكة ريحتها جميلة جداً وسابتها تبرد على الترابيزة. {child_name} كان بيلعب في أوضته، لكن شم الريحة الحلوة اللي ملت البيت كله!",
+          "prompt": "A delicious cake on a table, {child_name} peeking from the doorway with big curious eyes, sniffing the sweet air, cozy kitchen, soft watercolor."
+        },
+        {
+          "page_number": 2,
+          "text": "{child_name} مقدرش يقاوم! أخد قطمة صغيرة من غير ما يسأل ماما الأول. 'واو! طعمها لذيذ أوي زي العسل!'",
+          "prompt": "{child_name} eating a small piece of cake, cute crumbs on lips and cheeks, mischievous but innocent smile, bright and warm watercolor."
+        },
+        {
+          "page_number": 3,
+          "text": "لما ماما دخلت المطبخ وشافت الكيكة، سألت بهدوء: 'مين أكل من الكيكة؟' {child_name} حس إن قلبه بيدق بسرعة وخاف شوية من الكلام.",
+          "prompt": "Mom looking gently at the cake, {child_name} standing nearby holding hands together, looking slightly nervous but thinking, soft watercolor style."
+        },
+        {
+          "page_number": 4,
+          "text": "بس {child_name} بطل صادق ما بيخافش من الحقيقة! خد نفس عميق وقال بشجاعة: 'أنا يا ماما، آسف! الريحة كانت حلوة أوي فمقدرتش أستنى.'",
+          "prompt": "{child_name} looking honestly at Mom, pointing to themselves with a truthful expression, warm and soft lighting, beautiful watercolor."
+        },
+        {
+          "page_number": 5,
+          "text": "ماما ابتسمت وحضنته بحب كبير ومسحت الفتافيت من خده. 'أنا فخورة بيك! الصدق هو اللي بيخليك بطل حقيقي يا حبيبي.'",
+          "prompt": "Mom giving {child_name} a warm, loving hug, wiping a crumb from their cheek, glowing with happiness and honesty, magical watercolor finish."
+        }
+      ]
+    },
+    "3-4": {
+      "story_title": "المقلب الخطير",
+      "pages": [
+        {
+          "page_number": 1,
+          "text": "{child_name} قرر يعمل مقلب مضحك في بابا! استخبى ورا الكنبة وصرخ بصوت عالي: 'بابا! الحقني أنا وقع"prompt": "{child_name} hiding behind a sofa, giggling with hand over mouth, shouting playfully, living room setting, soft watercolor style."
         },
         {
           "page_number": 2,
