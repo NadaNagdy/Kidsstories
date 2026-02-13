@@ -277,3 +277,69 @@ def create_text_page(text, output_path):
     except Exception as e:
         print(f"❌ Error in create_text_page: {e}")
         return None
+def create_html_flipbook(image_paths, child_name, output_path):
+    """
+    إنشاء ملف HTML تفاعلي يحتوي على القصة كاملة مع تأثير تقليب الصفحات
+    يتم دمج الصور داخل الملف (Base64) ليعمل بدون إنترنت أو روابط خارجية
+    """
+    try:
+        pages_html = ""
+        for i, img_path in enumerate(image_paths):
+            with open(img_path, "rb") as image_file:
+                encoded_string = base64.b64encode(image_file.read()).decode('utf-8')
+            
+            # الغلاف أول صفحة، ثم الرسم، ثم النص
+            page_type = "cover" if i == 0 else ("art" if i % 2 != 0 else "text")
+            
+            pages_html += f"""
+            <div class="page" data-density="{"hard" if page_type == "cover" else "soft"}">
+                <div class="page-content">
+                    <img src="data:image/png;base64,{encoded_string}" alt="Page {i}">
+                </div>
+            </div>
+            """
+
+        html_template = f"""
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قصة {child_name}</title>
+    <style>
+        body {{ margin: 0; background: #e0e0e0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; font-family: sans-serif; }}
+        .header {{ margin-bottom: 20px; }}
+        #book-container {{ width: 90vw; max-width: 800px; height: 80vh; display: flex; justify-content: center; align-items: center; }}
+        #book {{ width: 100%; height: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }}
+        .page {{ background: white; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 1px solid #ddd; }}
+        .page-content {{ width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }}
+        .page img {{ max-width: 100%; max-height: 100%; object-fit: contain; }}
+        .controls {{ margin-top: 20px; display: flex; gap: 15px; }}
+        button {{ padding: 10px 20px; border-radius: 20px; border: none; background: #00bcd4; color: white; cursor: pointer; }}
+    </style>
+</head>
+<body>
+    <div class="header"><h1>📖 قصة {child_name}</h1></div>
+    <div id="book-container"><div id="book">{pages_html}</div></div>
+    <div class="controls">
+        <button onclick="book.flipPrev()">السابق</button>
+        <button onclick="book.flipNext()">التالي</button>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
+    <script>
+        const bookElement = document.getElementById('book');
+        const book = new St.PageFlip(bookElement, {{
+            width: 800, height: 800, size: "stretch", showCover: true, useMouseOver: false
+        }});
+        book.loadFromHTML(document.querySelectorAll('.page'));
+    </script>
+</body>
+</html>
+"""
+        with open(output_path, "w", encoding="utf-8") as f:
+            f.write(html_template)
+        return output_path
+    
+    except Exception as e:
+        print(f"❌ Error in create_html_flipbook: {e}")
+        return None

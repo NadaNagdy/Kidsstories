@@ -16,26 +16,14 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
-# تأكد من إنشاء مجلدات التخزين
-os.makedirs("static/stories", exist_ok=True)
-app.mount("/static", StaticFiles(directory="static"), name="static")
-
 # متغيرات البيئة (تأكد من ضبطها في Railway)
 VERIFY_TOKEN = os.getenv("VERIFY_TOKEN", "my_verify_token")
 PAYMENT_NUMBER = os.getenv("INSTAPAY_HANDLE", "01060746538")
-BASE_URL = os.getenv("APP_URL", "https://kidsstories-production.up.railway.app") # عدل هذا لرابط تطبيقك
 user_state = {}
 
 @app.get("/")
 def home():
     return {"status": "Story Bot is Active"}
-
-@app.get("/flipbook/{story_id}")
-def flipbook_viewer(story_id: str):
-    """عرض القصة التفاعلية"""
-    with open("static/flipbook.html", "r", encoding="utf-8") as f:
-        html_content = f.read()
-    return HTMLResponse(content=html_content)
 
 @app.get("/webhook")
 def verify_webhook(request: Request):
@@ -222,54 +210,22 @@ def process_story_generation(sender_id, value, is_preview=False):
                 send_text_message(sender_id, f"❌ فشل توليد الصفحة {page_num}. سنكمل القصة بما توفر.")
 
         if len(generated_images) > 1:
-            send_text_message(sender_id, "✅ اكتملت الرسومات! جاري تجميع ملف الـ PDF... 📚")
+            send_text_message(sender_id, "✅ اكتملت الرسومات! جاري تجهيز القصة لك... 📚")
             
-            # --- إنشاء القصة التفاعلية (Flipbook) ---
-            story_id = str(uuid.uuid4())[:8]
-            story_dir = f"static/stories/{story_id}"
-            os.makedirs(story_dir, exist_ok=True)
-            
-            # حفظ الصور وتجهيز المانيفست
-            web_images = []
-            manifest_pages = []
-            
-            # الغلاف
-            shutil.copy(cover_path, f"{story_dir}/cover.png")
-            
-            # الصفحات
-            # نلاحظ أن generated_images تبدأ بالغلاف إذا وجد
-            # ونريد حفظ كل Art و Text
-            for idx, img_path in enumerate(generated_images):
-                filename = f"page_{idx}.png"
-                shutil.copy(img_path, f"{story_dir}/{filename}")
-                web_images.append(f"/static/stories/{story_id}/{filename}")
-
-            # بناء المانيفست للـ HTML
-            manifest = {
-                "child_name": child_name,
-                "cover": f"/static/stories/{story_id}/page_0.png",
-                "pages": []
-            }
-            # interleaving (page_1 is art, page_2 is text, etc.)
-            for j in range(1, len(web_images), 2):
-                if j+1 < len(web_images):
-                    manifest["pages"].append({
-                        "art": web_images[j],
-                        "text": web_images[j+1]
-                    })
-            
-            with open(f"{story_dir}/manifest.json", "w", encoding="utf-8") as f:
-                json.dump(manifest, f)
-
-            flipbook_url = f"{BASE_URL}/flipbook/{story_id}"
-            
-            # إنشاء الـ PDF
+            # 1. إنشاء ملف الـ PDF الأصلي
             pdf_path = f"/tmp/story_{sender_id}.pdf"
             create_pdf(generated_images, pdf_path)
             
-            # إرسال النتائج
+            # 2. إنشاء نسخة تفاعلية (Flipbook) كملف مستقل بذاته (بدون رابط خارجي)
+            html_flipbook_path = f"/tmp/flipbook_{sender_id}.html"
+            from image_utils import create_html_flipbook
+            create_html_flipbook(generated_images, child_name, html_flipbook_path)
+            
+            # 3. إرسال الملفات
             send_file(sender_id, pdf_path)
-            send_text_message(sender_id, f"🎉 قصة {child_name} جاهزة!\n\nيمكنك الآن تصفح القصة ككتاب حقيقي عبر هذا الرابط: {flipbook_url}")
+            send_file(sender_id, html_flipbook_path)
+            
+            send_text_message(sender_id, f"🎉 قصة {child_name} جاهزة!\n\nلقد أرسلت لك ملفين:\n1. ملف PDF (للطباعة)\n2. ملف HTML (كتاب تفاعلي - افتحيه على الهاتف أو الكمبيوتر للاستمتاع بتقليب الصفحات) 📖")
             user_state[sender_id] = {"step": "start"}
 
     except Exception as e:
