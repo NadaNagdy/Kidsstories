@@ -35,11 +35,12 @@ def _prepare_arabic_text(text: str) -> str:
     """تحضير النص ليكون مقروءاً وصحيحاً برمجياً مع دعم كامل للحروف والروابط"""
     if not text: return ""
     
-    # إعدادات مبسطة لضمان التوافق مع معظم الخطوط بدون صناديق (Boxes)
+    # إعدادات فائقة الدقة لضمان بقاء الحركات والروابط (مثل القاف في الصدق)
     configuration = {
-        'delete_harakat': True,  # الحركات أحياناً تسبب صناديق في بعض الخطوط
+        'delete_harakat': False, # تفعيل الحركات - الطفل يحتاج رؤيتها
         'support_ligatures': True,
-        'arabic': True
+        'arabic': True,
+        'delete_tatweel': False
     }
     reshaper = arabic_reshaper.ArabicReshaper(configuration=configuration)
     reshaped_text = reshaper.reshape(text)
@@ -240,8 +241,11 @@ def create_text_page(text, output_path):
             current_line.append(word)
             test_line = " ".join(current_line)
             reshaped_test = _prepare_arabic_text(test_line)
-            # استخدام textlength للحساب الجغرافي الدقيق
-            if draw.textlength(reshaped_test, font=font) > max_width:
+            # استخدام textbbox بدلاً من textlength لضمان الدقة في الحروف العربية المعقدة
+            test_bbox = draw.textbbox((0, 0), reshaped_test, font=font)
+            test_width = test_bbox[2] - test_bbox[0]
+            
+            if test_width > max_width:
                 current_line.pop()
                 lines.append(" ".join(current_line))
                 current_line = [word]
@@ -256,11 +260,15 @@ def create_text_page(text, output_path):
         
         for i, line in enumerate(lines):
             reshaped_line = _prepare_arabic_text(line)
-            lw = draw.textlength(reshaped_line, font=font)
-            lx = (width - lw) // 2
+            # استخدام textbbox للحصول على القياسات الفيزيائية الدقيقة للهوامش
+            bbox = draw.textbbox((0, 0), reshaped_line, font=font)
+            lw = bbox[2] - bbox[0]
+            
+            # حساب الإحداثيات مع مراعاة الإزاحة الجانبية للخطوط العربية
+            lx = (width - lw) // 2 - bbox[0]
             ly = start_y + (i * line_height)
             
-            # رسم النص مع إزاحة بسيطة لتجنب قص الحروف التي تنزل عن السطر
+            # رسم النص
             draw.text((lx, ly), reshaped_line, font=font, fill=text_color)
             
         img.save(output_path, quality=100)

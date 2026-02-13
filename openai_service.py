@@ -544,29 +544,23 @@ def enhance_ai_description(
     age: str
 ) -> str:
     """
-    تحسين وصف AI بإضافة تأكيدات قوية على الملامح المطلوبة
+    تحسين وصف AI بضمان بقاء الملامح متسقة دون فرض قيم افتراضية قاسية
     """
+    # تنظيف وتجهيز وصف الـ AI القادم من GPT-4o Vision
+    clean_ai_desc = ai_desc.strip()
+    if clean_ai_desc.endswith("."): clean_ai_desc = clean_ai_desc[:-1]
     
-    # بناء البروفايل
-    profile = CharacterProfile(
-        name=child_name,
-        gender=gender,
-        age=age,
-        skin_tone=skin_tone,
-        hair_style=hair_style,
-        hair_color=hair_color,
-        hair_texture=get_hair_texture(hair_style),
-        eye_color=eye_color
+    # إضافة بادئة وخاتمة لضمان الاتساق (Consistency Wrapper)
+    # نضع الاسم والعمر والجنس كقالب ثابت، ونترك التفاصيل الجسدية للـ AI الذي حلل الصورة
+    consistency_wrapper = (
+        f"A consistent character named {child_name}, an adorable {age} year old {gender}. "
+        f"Appearance: {clean_ai_desc}. "
+        f"CRITICAL: Maintain this exact facial structure, skin tone, and hair texture in every scene. "
+        f"NO variations from this unique character look."
     )
     
-    # بناء الوصف المحسّن
-    structured_desc = profile.build_detailed_description(emphasis_level="high")
-    
-    # دمج معلومات AI مع الهيكل المحسّن
-    # نأخذ الهيكل المحسّن ونضيف ملاحظات AI كإضافة
-    enhanced = f"{structured_desc}. AI Analysis Notes: {ai_desc[:150]}"
-    
-    return enhanced
+    return consistency_wrapper
+
 
 
 # ============================================================================
