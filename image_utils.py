@@ -231,8 +231,8 @@ def create_text_page(text, output_path):
         font = _get_arabic_font(50, weight="regular")
         text_color = (40, 40, 40) # رمادي غامق جداً أفضل للعين من الأسود الصرف
         
-        # نظام ذكي لتقسيم السطور مع هوامش كبيرة
-        max_width = 850 
+        # نظام ذكي لتقسيم السطور مع هوامش كبيرة جداً لضمان عدم قص أي حرف
+        max_width = 800 # تقليل العرض لزيادة الهوامش الجانبية
         lines = []
         words = text.split()
         current_line = []
@@ -253,8 +253,8 @@ def create_text_page(text, output_path):
         if current_line:
             lines.append(" ".join(current_line))
             
-        # حساب المسافات المركزية
-        line_height = 85 
+        # حساب المسافات المركزية مع زيادة المسافة بين السطور
+        line_height = 95 
         total_text_height = len(lines) * line_height
         start_y = (height - total_text_height) // 2
         
