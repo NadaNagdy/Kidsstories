@@ -1,0 +1,385 @@
+"""
+🎨 FLUX Klein 4B - Optimized Prompt System
+نظام متطور لتوليد prompts محسّنة لـ FLUX بناءً على أفضل الممارسات
+"""
+
+import json
+from typing import Optional, Dict
+
+# ============================================================================
+# 📚 FLUX PROMPT STRUCTURE (Based on Best Practices)
+# ============================================================================
+
+class FluxPromptBuilder:
+    """
+    بناء prompts محسّنة لـ FLUX Klein 4B
+    
+    Based on FLUX documentation:
+    1. Subject - ما هو الموضوع؟
+    2. Style & Medium - كيف يبدو؟
+    3. Lighting & Mood - ما هو الجو؟
+    4. Composition - التكوين والإطار
+    5. Use Case - الاستخدام
+    """
+    
+    # Reference style من الصورة المرفقة (Millie and the Moon Bear)
+    REFERENCE_STYLE = {
+        "medium": "digital illustration with soft painterly textures",
+        "technique": "children's storybook art, blend of digital painting and watercolor washes",
+        "colors": "rich saturated colors with soft gradients, deep blues, warm golds, creamy whites",
+        "texture": "visible brush strokes, paper texture, gentle blending",
+        "character_style": "large expressive eyes, rosy cheeks, detailed curly hair with volume and shine, soft rounded proportions",
+        "lighting": "magical glowing light, soft luminous stars, dreamy moonlight",
+        "atmosphere": "enchanting bedtime story aesthetic, cozy and whimsical",
+        "quality": "high definition children's book illustration, professional publication quality"
+    }
+    
+    def __init__(self):
+        self.style = self.REFERENCE_STYLE
+    
+    def build_character_description(
+        self,
+        name: str,
+        gender: str = "girl",
+        age: str = "3-4",
+        hair_style: str = "curly",
+        hair_color: str = "brown",
+        skin_tone: str = "warm",
+        eye_color: str = "brown",
+        clothing: str = "casual colorful outfit"
+    ) -> str:
+        """
+        بناء وصف الشخصية بأسلوب FLUX
+        """
+        
+        gender_term = "girl" if gender == "بنت" else "boy"
+        
+        # Character with detailed features (FLUX loves details!)
+        character = (
+            f"adorable {age} year old {gender_term} named {name}, "
+            f"with beautifully detailed voluminous {hair_style} {hair_color} hair "
+            f"with natural bounce and shine, "
+            f"{skin_tone} skin tone, "
+            f"large expressive glossy {eye_color} eyes with sparkle highlights, "
+            f"rosy airbrushed cheeks, "
+            f"sweet joyful smile, "
+            f"wearing {clothing}, "
+            f"cute rounded toddler proportions"
+        )
+        
+        return character
+    
+    def build_flux_prompt(
+        self,
+        # Part 1: Subject
+        character_desc: str,
+        action: str,
+        
+        # Part 2: Style & Medium
+        style_override: Optional[str] = None,
+        
+        # Part 3: Lighting & Mood
+        lighting: str = "soft warm magical lighting",
+        mood: str = "enchanting and cozy",
+        
+        # Part 4: Composition
+        composition: str = "centered subject, children's book page layout",
+        
+        # Part 5: Use Case
+        use_case: str = "children's storybook illustration"
+    ) -> str:
+        """
+        بناء prompt كامل بهيكل FLUX الموصى به
+        
+        Args:
+            character_desc: وصف الشخصية
+            action: الفعل/المشهد
+            style_override: تجاوز الأسلوب الافتراضي
+            lighting: الإضاءة
+            mood: المزاج
+            composition: التكوين
+            use_case: حالة الاستخدام
+        """
+        
+        # Part 1: SUBJECT
+        subject = f"{character_desc}, {action}"
+        
+        # Part 2: STYLE & MEDIUM
+        if style_override:
+            style = style_override
+        else:
+            style = (
+                f"{self.style['medium']}, "
+                f"{self.style['technique']}, "
+                f"{self.style['colors']}, "
+                f"{self.style['texture']}"
+            )
+        
+        # Part 3: LIGHTING & MOOD
+        lighting_desc = (
+            f"{lighting}, "
+            f"{self.style['lighting']}, "
+            f"{mood}, "
+            f"{self.style['atmosphere']}"
+        )
+        
+        # Part 4: COMPOSITION
+        composition_desc = (
+            f"{composition}, "
+            f"space for text at top of page, "
+            f"storybook page format"
+        )
+        
+        # Part 5: QUALITY & USE CASE
+        quality = (
+            f"for {use_case}, "
+            f"{self.style['quality']}, "
+            f"sharp detail, vibrant colors, professional children's book art, "
+            f"suitable for ages 1-5"
+        )
+        
+        # Combine all parts
+        full_prompt = (
+            f"{subject}. "
+            f"Style: {style}. "
+            f"Lighting: {lighting_desc}. "
+            f"Composition: {composition_desc}. "
+            f"Quality: {quality}"
+        )
+        
+        return full_prompt
+    
+    def create_story_prompt(
+        self,
+        child_name: str,
+        child_gender: str,
+        scene_description: str,
+        page_number: int = 1,
+        total_pages: int = 5,
+        is_cover: bool = False
+    ) -> str:
+        """
+        إنشاء prompt لصفحة قصة محددة
+        """
+        
+        # Build character (same for all pages)
+        character = self.build_character_description(
+            name=child_name,
+            gender="girl" if child_gender == "بنت" else "boy",
+            hair_style="curly",
+            hair_color="brown",
+            skin_tone="warm",
+            eye_color="brown"
+        )
+        
+        # Progressive lighting based on page
+        lighting_progression = {
+            1: "bright cheerful morning sunlight with golden glow",
+            2: "warm afternoon light with soft shadows",
+            3: "golden hour glow with magical warmth",
+            4: "enchanting sunset light with pink and orange hues",
+            5: "dreamy twilight with glowing stars and soft moonlight"
+        }
+        
+        lighting = lighting_progression.get(
+            page_number,
+            "soft warm magical lighting"
+        )
+        
+        # Cover vs interior page
+        if is_cover:
+            composition = (
+                "book cover layout, centered character with space for title "
+                "at top, whimsical border elements, professional children's "
+                "book cover design"
+            )
+            use_case = "children's storybook cover illustration"
+        else:
+            composition = (
+                f"page {page_number} of {total_pages}, centered scene, "
+                f"children's book interior page layout, space for text"
+            )
+            use_case = "children's storybook page illustration"
+        
+        # Build the complete prompt
+        prompt = self.build_flux_prompt(
+            character_desc=character,
+            action=scene_description,
+            lighting=lighting,
+            mood="magical, cozy, age-appropriate",
+            composition=composition,
+            use_case=use_case
+        )
+        
+        return prompt
+
+
+# ============================================================================
+# 📝 EXAMPLE PROMPTS (Based on Reference Image Style)
+# ============================================================================
+
+def generate_example_prompts():
+    """
+    توليد أمثلة prompts بأسلوب الصورة المرجعية
+    """
+    
+    builder = FluxPromptBuilder()
+    
+    examples = []
+    
+    # مثال 1: Cover (مثل Millie and the Moon Bear)
+    cover_prompt = builder.create_story_prompt(
+        child_name="لوجى",
+        child_gender="بنت",
+        scene_description=(
+            "riding on the back of a magical white fluffy bear with "
+            "soft fur, flying through a starry night sky with glowing "
+            "golden moon and twinkling stars, fluffy white clouds below, "
+            "joyful adventure, child holding onto bear lovingly"
+        ),
+        page_number=1,
+        is_cover=True
+    )
+    
+    examples.append({
+        "type": "cover",
+        "prompt": cover_prompt
+    })
+    
+    # مثال 2: Page 1 - قصة الشجاعة
+    page1_prompt = builder.create_story_prompt(
+        child_name="لوجى",
+        child_gender="بنت",
+        scene_description=(
+            "sitting at a colorful table with fresh fruits and vegetables, "
+            "tasting a new food with curiosity and bravery, happy expression, "
+            "bright cheerful kitchen background with playful elements"
+        ),
+        page_number=1,
+        total_pages=5
+    )
+    
+    examples.append({
+        "type": "page_1_courage",
+        "prompt": page1_prompt
+    })
+    
+    # مثال 3: Page 2 - الصداقة
+    page2_prompt = builder.create_story_prompt(
+        child_name="لوجى",
+        child_gender="بنت",
+        scene_description=(
+            "giving a gentle high-five to a friendly toddler friend, "
+            "both children smiling and playing together, colorful playground "
+            "with swings and flowers in background, warm friendship moment"
+        ),
+        page_number=2,
+        total_pages=5
+    )
+    
+    examples.append({
+        "type": "page_2_friendship",
+        "prompt": page2_prompt
+    })
+    
+    # مثال 4: Page 5 - النوم السحري
+    page5_prompt = builder.create_story_prompt(
+        child_name="لوجى",
+        child_gender="بنت",
+        scene_description=(
+            "sleeping peacefully in cozy bed with magical glowing stars on "
+            "ceiling, soft stuffed toys nearby, dreamy bedroom with moon-shaped "
+            "nightlight casting gentle glow, serene bedtime scene"
+        ),
+        page_number=5,
+        total_pages=5
+    )
+    
+    examples.append({
+        "type": "page_5_bedtime",
+        "prompt": page5_prompt
+    })
+    
+    return examples
+
+
+# ============================================================================
+# 🎯 STORY PROCESSOR WITH FLUX OPTIMIZATION
+# ============================================================================
+
+def process_story_with_flux_prompts(
+    story_json_path: str,
+    child_name: str,
+    child_gender: str,
+    output_path: str
+):
+    """
+    معالجة قصة كاملة بـ FLUX-optimized prompts
+    """
+    
+    # Load story
+    with open(story_json_path, 'r', encoding='utf-8') as f:
+        story_data = json.load(f)
+    
+    builder = FluxPromptBuilder()
+    
+    # Process each page
+    total_pages = len(story_data.get('pages', []))
+    
+    for idx, page in enumerate(story_data.get('pages', []), 1):
+        original_prompt = page.get('prompt', '')
+        
+        # Clean the prompt (remove {child_name} placeholder)
+        scene_desc = original_prompt.replace('{child_name}', '').strip()
+        
+        # Generate FLUX-optimized prompt
+        flux_prompt = builder.create_story_prompt(
+            child_name=child_name,
+            child_gender=child_gender,
+            scene_description=scene_desc,
+            page_number=idx,
+            total_pages=total_pages,
+            is_cover=(idx == 1)
+        )
+        
+        # Add to page data
+        page['flux_optimized_prompt'] = flux_prompt
+        page['original_prompt'] = original_prompt
+    
+    # Save
+    with open(output_path, 'w', encoding='utf-8') as f:
+        json.dump(story_data, f, ensure_ascii=False, indent=2)
+    
+    print(f"✅ Processed {total_pages} pages")
+    print(f"📁 Saved to: {output_path}")
+
+
+# ============================================================================
+# 🧪 TESTING & EXAMPLES
+# ============================================================================
+
+if __name__ == "__main__":
+    print("\n" + "="*80)
+    print("🎨 FLUX Klein 4B - Optimized Prompt Generator")
+    print("Based on Millie and the Moon Bear reference style")
+    print("="*80 + "\n")
+    
+    # Generate example prompts
+    examples = generate_example_prompts()
+    
+    for i, example in enumerate(examples, 1):
+        print(f"\n{'='*80}")
+        print(f"📝 Example {i}: {example['type']}")
+        print(f"{'='*80}")
+        print(f"\nPrompt:\n{example['prompt']}")
+        print(f"\nLength: {len(example['prompt'])} characters")
+    
+    print("\n" + "="*80)
+    print("✅ Example prompts generated!")
+    print("="*80)
+    
+    # Save examples to file
+    with open('flux_prompt_examples.json', 'w', encoding='utf-8') as f:
+        json.dump(examples, f, ensure_ascii=False, indent=2)
+    
+    print("\n💾 Saved to: flux_prompt_examples.json")
