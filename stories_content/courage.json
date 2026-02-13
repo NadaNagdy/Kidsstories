@@ -1,106 +1,119 @@
 {
-  "1-2": {
-    "age_group": "1-2 years",
-    "theme": "الشجاعة الجسدية والثقة",
-    "pages": [
-      {
-        "prompt": "Character looking up at a tall colorful wooden slide in a sunny park, feeling small but curious, soft watercolor style, wide angle.",
-        "text": "شوفوا الزحليقة الكبيرة! {child_name} واقف بيفكر.. يا ترى هيقدر يطلع لوحده؟"
+  "stories": {
+    "Courage": {
+      "Age_1_2": {
+        "title": "مين البطل الشجاع؟",
+        "pages": [
+          {
+            "page_num": 1,
+            "text": "مين البطل الشجاع؟ {child_name} لما النور قطع، فضل هادي ومخافش ومسك إيد ماما.",
+            "prompt": "{child_name} holding mom's hand calmly in a dimly lit room, looking brave, soft shadows, cozy atmosphere, watercolor style."
+          },
+          {
+            "page_num": 2,
+            "text": "مين البطل الشجاع؟ {child_name} لما وقع وهو بيلعب، قام ونفض هدومه ومكمل لعب.",
+            "prompt": "{child_name} standing up after a small fall in a playground, dusting off clothes, not crying, brave expression, sunny day, watercolor style."
+          },
+          {
+            "page_num": 3,
+            "text": "مين البطل الشجاع؟ {child_name} عند الدكتور، فتح بؤه وقال 'آاااه' عشان يكشف وهو شاطر.",
+            "prompt": "{child_name} sitting at a doctor's clinic, opening mouth wide for a checkup, doctor smiling, brave and cooperative, soft watercolor style."
+          },
+          {
+            "page_num": 4,
+            "text": "مين البطل الشجاع؟ {child_name} دايماً قوي ومبيعيطش من الحاجات البسيطة، عشان كده إحنا فخورين بيه!",
+            "prompt": "{child_name} standing in a superhero pose with a makeshift cape, parents clapping in the background, glowing with pride, beautiful watercolor finish."
+          }
+        ]
       },
-      {
-        "prompt": "Character holding a parent's hand, taking the first step on a colorful ladder, determined expression, soft sunlight, watercolor.",
-        "text": "خطوة.. خطوة.. {child_name} بطل شجاع، بدأ يطلع أول سلمة وهو ماسك إيد ماما."
+      "Age_2_3": {
+        "title": "{child_name} وبندق الشجاع",
+        "pages": [
+          {
+            "page_num": 1,
+            "text": "{child_name} كان بيلبس 'طاقية الشجاعة' وهو بيلعب، بس الطاقية ضاعت، فزعل وافتكر إنه مبقاش بطل شجاع خلاص.",
+            "prompt": "{child_name} looking slightly sad and unsure, standing in a cozy playroom, missing a favorite hat, holding a stuffed puppy toy named Bondoq, soft watercolor illustration."
+          },
+          {
+            "page_num": 2,
+            "text": "بالليل، لعبة {child_name} المفضلة 'بندق' وقعت تحت السرير. المكان كان ضلمة شوية، و{child_name} من غير الطاقية خايف يجيبه.",
+            "prompt": "A cute stuffed puppy toy peeking from under the bed, {child_name} looking under the bed with wide eyes, soft moonlight, slightly nervous but caring expression, soft watercolor style."
+          },
+          {
+            "page_num": 3,
+            "text": "بس {child_name} بيحب بندق أوي ومش هيسيبه! قرر يعمل مغامرة.. اتسلق المخدة وعدى خيمة اللعب بشجاعة وهو رايح ينقذه.",
+            "prompt": "{child_name} bravely climbing over a large fluffy pillow, stepping past a cozy play tent with a determined and brave expression, softly lit nursery, watercolor illustration."
+          },
+          {
+            "page_num": 4,
+            "text": "{child_name} مد إيده بالراحة تحت السرير، وشد بندق لحضنه بفرحة.. هو ملقاش الطاقية، بس قدر ينقذ صاحبه!",
+            "prompt": "{child_name} gently reaching under the bed and pulling out the stuffed puppy toy, hugging it closely, looking proud and relieved, soft comforting lighting, watercolor finish."
+          },
+          {
+            "page_num": 5,
+            "text": "بابا شاف اللي حصل وحضن {child_name} وقاله: 'إنت أنقذت بندق! الشجاعة جوه قلبك يا بطل، مش في الطاقية'.",
+            "prompt": "A smiling dad hugging {child_name} who is happily holding the stuffed puppy toy, warm room light, glowing with happiness and true courage, beautiful watercolor style."
+          }
+        ]
       },
-      {
-        "prompt": "Character sitting at the very top of the slide, looking down with a big proud smile, feeling like a king, bright watercolor park.",
-        "text": "ياي! {child_name} وصل فوق خالص.. الدنيا من هنا شكلها جميل والألوان بتلمع!"
+      "Age_3_4": {
+        "title": "{child_name} وصوت الرعد",
+        "pages": [
+          {
+            "page_num": 1,
+            "text": "الدنيا كانت بتمطر جامد، وفجأة سمعوا صوت رعد عالي 'بوووم!'. {child_name} خاف واستخبى تحت البطانية.",
+            "prompt": "{child_name} hiding under a colorful blanket on a sofa, looking scared, rainy window in the background, dark cozy room, watercolor style."
+          },
+          {
+            "page_num": 2,
+            "text": "ماما جات وقالت: 'متخافش يا بطل، ده صوت السما وهي بتسقف عشان هتنزل مطر جميل يسقي الزرع'.",
+            "prompt": "Mom sitting on the sofa lifting the blanket gently, smiling and pointing at the window, {child_name} peeking out with wide eyes, soft comforting light."
+          },
+          {
+            "page_num": 3,
+            "text": "{child_name} قرر يكون شجاع.. خرج من تحت البطانية ومسك إيد ماما وراح يبص من الشباك.",
+            "prompt": "{child_name} holding Mom's hand tightly, standing bravely in front of a window, looking at the rain, brave expression, watercolor."
+          },
+          {
+            "page_num": 4,
+            "text": "لما الرعد عمل صوت تاني، {child_name} مخافش، بالعكس ضحك وقال: 'السما صوتها عالي أوي النهاردة!'.",
+            "prompt": "{child_name} laughing at the window while rain pours down, Mom smiling proudly, atmosphere changing from scary to fun, watercolor."
+          },
+          {
+            "page_num": 5,
+            "text": "{child_name} عرف إن الشجاعة مش إننا منخافش، الشجاعة إننا نفهم الحاجة اللي بتخوفنا ونواجهها بابتسامة.",
+            "prompt": "{child_name} drawing a picture of a smiling cloud and lightning, feeling proud and safe, cozy room, beautiful watercolor finish."
+          }
+        ]
       },
-      {
-        "prompt": "Action shot of character sliding down the slide, hair blowing in the wind, pure joy and laughter, soft watercolor motion.",
-        "text": "واحد.. اتنين.. تلاتة.. وووووووي! {child_name} بيتزحلق وبطولته بتطير في الهوا!"
-      },
-      {
-        "prompt": "Character standing at the bottom of the slide, clapping hands happily, victorious pose, sunny celebratory garden atmosphere.",
-        "text": "أنا شجاع! {child_name} نزل على الأرض بسلام وبيصقف لنفسه وهو فرحان جداً."
-      }
-    ]
-  },
-  "2-3": {
-    "age_group": "2-3 years",
-    "theme": "مساعدة الآخرين رغم الخوف",
-    "pages": [
-      {
-        "prompt": "Character walking through a soft pastel jungle with glowing flowers, ears perked up, listening to a sound, watercolor aesthetic.",
-        "text": "{child_name} ماشي في الغابة السحرية، وفجأة سمع صوت حد بيعيط ورا الشجر!"
-      },
-      {
-        "prompt": "Character meeting a large but gentle lion sitting under a tree, lion looking sad and pointing to a thorn in its paw, watercolor.",
-        "text": "ده الأسد القوي! بس الأسد طلع خايف وحزين عشان فيه شوكة صغيرة تعباه في رجله."
-      },
-      {
-        "prompt": "Character standing bravely in front of the huge lion, reaching out a small hand to help, close-up on brave eyes, warm light.",
-        "text": "{child_name} خاف في الأول، بس قال: 'أنا بطل ولازم أساعد صاحبي الأسد'."
-      },
-      {
-        "prompt": "Character carefully removing the thorn from the lion's paw, lion looking relieved and starting to smile, magical watercolor glow.",
-        "text": "بكل هدوء وشجاعة، {child_name} شال الشوكة.. والأسد بطل يعيط وبدأ يضحك من قلبه."
-      },
-      {
-        "prompt": "Character hugging the lion's golden mane, both laughing together in a lush meadow, sunset lighting, beautiful watercolor finish.",
-        "text": "شكراً يا أشجع بطل! {child_name} والأسد بقوا أصحاب وبيلعبوا سوا في الغابة."
-      }
-    ]
-  },
-  "3-4": {
-    "age_group": "3-4 years",
-    "theme": "اكتشاف المجهول",
-    "pages": [
-      {
-        "prompt": "Character standing at the entrance of a colorful garden play tunnel, looking inside, a bit dark but mysterious, watercolor style.",
-        "text": "{child_name} لقى نفق طويل ومستخبي في الحديقة.. يا ترى فيه إيه جواه؟"
-      },
-      {
-        "prompt": "Character holding a glowing flashlight, beam of light cutting through the tunnel darkness, brave forward step, watercolor.",
-        "text": "معايا كشاف الشجاعة! {child_name} نور النور ودخل أول خطوة جوه النفق."
-      },
-      {
-        "prompt": "Character discovering small kittens with glowing eyes inside the tunnel, kittens looking cute, warm light from flashlight.",
-        "text": "جوه النفق، {child_name} شاف عينين بتلمع.. طلعت قطط صغننة كانت مستخبية!"
-      },
-      {
-        "prompt": "Character emerging from the other side of the tunnel into bright sunlight, arms wide open, victorious explorer, watercolor park.",
-        "text": "{child_name} عدّى النفق كله وطلع من الناحية التانية.. الشمس كانت منورة وجميلة!"
-      },
-      {
-        "prompt": "Character playing with the kittens in the grass, feeling like a brave explorer, soft sunny watercolor background.",
-        "text": "الضلمة مابقتش بتخوف، لأن {child_name} اكتشف فيها أصحاب جدد ومفاجآت حلوة."
-      }
-    ]
-  },
-  "4-5": {
-    "age_group": "4-5 years",
-    "theme": "فهم المخاوف وصداقة الظلام",
-    "pages": [
-      {
-        "prompt": "Character sitting in bed, looking at strange shadows on the wall, soft moonlight, slightly nervous expression, watercolor bedroom.",
-        "text": "وقت النوم جه، و{child_name} شايف خيالات غريبة على الحيطة.. يا ترى ده إيه؟"
-      },
-      {
-        "prompt": "Character standing up and touching the shadow, discovering it is just their teddy bear, relief and a smile, soft lighting.",
-        "text": "{child_name} الشجاع قام يشوف الخيال ده.. وطلع مجرد دبدوبه الصغير بيلعب مع النور!"
-      },
-      {
-        "prompt": "Character looking out of a large window at a beautiful starry night sky, moon smiling, peaceful blue watercolor tones.",
-        "text": "يا ظلام، أنت مش وحش.. {child_name} بدأ يشوف النجوم وهي بتنور في السما بجمال."
-      },
-      {
-        "prompt": "Character lying back in bed, magical dream bubbles floating above, glowing stars, feeling peaceful and brave, watercolor style.",
-        "text": "{child_name} قرر يصاحب الظلام، لأن في الضلمة بس بنقدر نشوف الأحلام الجميلة."
-      },
-      {
-        "prompt": "Character sleeping peacefully with their teddy bear, soft warm blankets, serene starry night background, watercolor masterpiece.",
-        "text": "تصبح على خير يا بطل الحكمة.. {child_name} نايم مطمن لأن قلبه مليان شجاعة."
-      }
-    ]
-  }
+      "Age_4_5": {
+        "title": "{child_name} ومغامرة المدرسة الملونة",
+        "pages": [
+          {
+            "page_num": 1,
+            "text": "الليلة اللي قبل المدرسة، {child_name} كان فرحان وبيجهز شنطته.. حط الكراسة والألوان، وكان بيتخيل الألعاب اللي هيشوفها بكرة.",
+            "prompt": "{child_name} happily packing a school backpack with colorful crayons and a notebook, smiling and imagining fun toys (in a thought bubble), bright and cozy bedroom, watercolor style."
+          },
+          {
+            "page_num": 2,
+            "text": "وقف قدام المراية وضحك وقال لنفسه: 'أنا بطل ومستعد! المدرسة مكان جميل فيه أصحاب وحاجات حلوة كتير'.",
+            "prompt": "{child_name} looking into a mirror with a big confident smile, wearing a favorite outfit, looking excited and ready, bright bedroom background, watercolor style."
+          },
+          {
+            "page_num": 3,
+            "text": "الصبح، {child_name} وصل المدرسة وشاف الألوان والزينة، ومشي بخطوات واسعة وسعيدة ناحية الفصل زي الأبطال.",
+            "prompt": "{child_name} walking confidently towards a colorful school building decorated with flags and drawings, big smile, sunny morning, carrying the backpack, watercolor."
+          },
+          {
+            "page_num": 4,
+            "text": "جوه الفصل، {child_name} شاف الألعاب والمكعبات، وقعد جنب صاحبه الجديد وقال له بابتسامة: 'تعالى نلعب سوا!'.",
+            "prompt": "{child_name} sitting at a colorful table with building blocks, smiling and sharing a toy with another happy child, friendly classroom atmosphere, watercolor style."
+          },
+          {
+            "page_num": 5,
+            "text": "لما رجع البيت، {child_name} حضن ماما وقال بحماس: 'المدرسة حلوة أوي يا ماما! لعبنا وانبسطنا، أنا عايز أروح تاني بكرة!'.",
+            "prompt": "{child_name} hugging mom happily at the door, eyes sparkling with joy, holding a drawing made at school, warm and happy home atmosphere, beautiful watercolor finish."
+          }
+      ]
+   }    
 }
