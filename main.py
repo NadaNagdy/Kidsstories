@@ -169,7 +169,14 @@ def process_story_generation(sender_id, value, is_preview=False):
 
         # تحضير النصوص عبر StoryManager
         manager = StoryManager(child_name)
-        manager.character_desc = char_desc 
+        manager.inject_character_dna(char_desc)
+        
+        # Inject personality based on the chosen value
+        # We add some default positive traits along with the chosen value
+        manager.inject_personality(
+            traits=[value, "curious", "imaginative", "kind"],
+            core_value=value
+        ) 
 
         value_map = {
             "الشجاعة": "courage.json", 
