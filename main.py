@@ -60,9 +60,8 @@ def start_processing(sender_id, messaging_event, background_tasks):
         step = user_state[sender_id].get("step")
         
         if step == "waiting_for_gender":
-            user_state[sender_id].update({"gender": payload, "step": "waiting_for_photo"})
-            suffix = "بطلتنا الجميلة" if payload == "بنت" else "بطلنا الصغير"
-            send_text_message(sender_id, f"عظيم! 📸 أرسلي الآن صورة واضحة لوجه {suffix} لنحولها لشخصية في القصة.")
+            user_state[sender_id].update({"gender": payload, "step": "waiting_for_age"})
+            send_quick_replies(sender_id, "ممتاز! كم عمر طفلك؟", ["1-2", "2-3", "3-4", "4-5"])
         
         elif step == "waiting_for_age":
             handle_age_selection(sender_id, payload)
@@ -96,7 +95,7 @@ def handle_image_reception(sender_id, url, background_tasks):
     if step == "waiting_for_payment":
         send_text_message(sender_id, "🔍 جاري التحقق من التحويل... لحظات!")
         background_tasks.add_task(process_payment_verification, sender_id, url)
-    else:
+    elif step == "waiting_for_photo":
         user_state[sender_id]["photo_url"] = url
         send_text_message(sender_id, "🎨 جاري تحليل الملامح وبناء الشخصية بدقة...")
         background_tasks.add_task(process_image_ai, sender_id, url)
@@ -108,6 +107,7 @@ def process_image_ai(sender_id, url):
     try:
         gender = user_state[sender_id].get("gender", "ولد")
         child_name = user_state[sender_id].get("child_name", "الطفل")
+        age_group = user_state[sender_id].get("age_group", "3-4")
         
         # تحميل الصورة وتحويلها إلى Standard JPEG Base64
         try:
@@ -125,28 +125,37 @@ def process_image_ai(sender_id, url):
                 img.save(buffer, format="JPEG", quality=85)
                 b64_image = base64.b64encode(buffer.getvalue()).decode('utf-8')
                 
-                # إرسال الصورة المعالجة مع تمرير الاسم
-                char_desc = create_character_reference(b64_image, gender=gender, is_url=False, use_ai_analysis=True, child_name=child_name)
+                # إرسال الصورة المعالجة مع تمرير الاسم والعمر
+                char_desc = create_character_reference(b64_image, gender=gender, is_url=False, use_ai_analysis=True, child_name=child_name, age=age_group)
             else:
                 logger.error(f"❌ Failed to download image from URL: {url}")
-                char_desc = create_character_reference(url, gender=gender, is_url=True, use_ai_analysis=True, child_name=child_name)
+                char_desc = create_character_reference(url, gender=gender, is_url=True, use_ai_analysis=True, child_name=child_name, age=age_group)
         except Exception as dl_err:
             logger.error(f"❌ Image processing error: {dl_err}")
-            char_desc = create_character_reference(url, gender=gender, is_url=True, use_ai_analysis=True, child_name=child_name)
+            char_desc = create_character_reference(url, gender=gender, is_url=True, use_ai_analysis=True, child_name=child_name, age=age_group)
 
         if char_desc == "ERROR_REFUSAL":
             send_text_message(sender_id, "بعتذر، مقدرناش نحلل ملامح الصورة دي. ياريت تبعتي صورة تانية واضحة لوش الطفل.")
             return
 
         if char_desc:
-            user_state[sender_id].update({"char_desc": char_desc, "step": "waiting_for_age"})
-            send_quick_replies(sender_id, "تم استلام الصورة بنجاح! ✨ كم عمر طفلك؟", ["1-2", "2-3", "3-4", "4-5"])
+            user_state[sender_id].update({"char_desc": char_desc, "step": "waiting_for_value"})
+            # بعد الصورة، نذهب مباشرة لاختيار القيمة لأن العمر تم اختياره مسبقاً
+            send_quick_replies(sender_id, f"تم تحليل الشخصية بنجاح! ✨ الآن، ما هي القيمة التي تودين تعليمها لـ {child_name}؟", ["الصدق", "التعاون", "الاحترام", "الشجاعة"])
     except Exception as e:
         logger.error(f"AI Error: {e}", exc_info=True)
 
 def handle_age_selection(sender_id, age_group):
-    user_state[sender_id].update({"age_group": age_group, "step": "waiting_for_value"})
-    send_quick_replies(sender_id, f"لعمر {age_group}، ما هي القيمة التي تودين تعليمها لطفلك؟", ["الصدق", "التعاون", "الاحترام", "الشجاعة"])
+    # حفظ العمر ثم الانتقال لطلب الصورة
+    user_state[sender_id].update({"age_group": age_group, "step": "waiting_for_photo"})
+    
+    # رسالة طلب الصورة
+    child_name = user_state[sender_id].get("child_name", "الطفل")
+    gender = user_state[sender_id].get("gender", "ولد")
+    suffix = "بطلتنا الجميلة" if gender == "بنت" else "بطلنا الصغير"
+    
+    send_text_message(sender_id, f"عظيم! 📸 أرسلي الآن صورة واضحة لوجه {suffix} {child_name} لنحولها لشخصية في القصة.")
+
 
 def handle_value_selection(sender_id, value, background_tasks):
     user_state[sender_id]["selected_value"] = value
