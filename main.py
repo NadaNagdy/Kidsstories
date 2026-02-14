@@ -188,6 +188,20 @@ def process_story_generation(sender_id, value, is_preview=False):
         manager = StoryManager(child_name)
         manager.inject_character_dna(char_desc)
         
+        # استخراج وصف الملابس من وصف الشخصية إذا وجد
+        extracted_outfit = None
+        if "Outfit details:" in char_desc:
+            try:
+                # محاولة استخراج الجزء الخاص بالملابس ببساطة
+                parts = char_desc.split("Outfit details:")
+                if len(parts) > 1:
+                    extracted_outfit = parts[1].strip().split(".")[0] # أخذ أول جملة فقط
+            except:
+                pass
+
+        # تعيين الملابس بناءً على العمر أو ما تم استخراجه
+        manager.set_outfit_by_age(data.get("age_group"), extracted_outfit=extracted_outfit)
+        
         # Inject personality based on the chosen value
         # We add some default positive traits along with the chosen value
         manager.inject_personality(

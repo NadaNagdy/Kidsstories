@@ -468,9 +468,10 @@ Describe the artistic physical features of the person in this reference image fo
 Include:
 - Exact skin shade (be specific: "deep brown", "warm tan", "olive", etc.)
 - Hair details (texture like "curly/coily/straight", style, and precise color)
-- Eye shape and face shape.
+- Eye shape, face shape, and notable facial features (like cheeks).
+- Outfit details: Describe the clothing style and colors visible in the image.
 
-Provide a concise descriptive paragraph of these physical traits only. 
+Provide a concise descriptive paragraph of these physical traits and outfit only. 
 This is for artistic reference in a children's book.
 Start directly with the description.
 """
@@ -627,7 +628,7 @@ def generate_storybook_page(
             "soft digital watercolor washes, delicate colored pencil detailing, "
             "dreamy cozy bedtime story colors, rich saturated painterly textures, "
             "gentle watercolor gradients, paper texture, soft blending, "
-            "Millie and the Moon Bear artistic aesthetic"
+            
         )
         
         # Lighting (magical bedtime story aesthetic)

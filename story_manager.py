@@ -76,7 +76,15 @@ Expressions and body language should reflect these traits.
     # Outfit Lock
     # ------------------------------------------------------
 
-    def set_outfit_by_age(self, age_group):
+    def set_outfit_by_age(self, age_group, extracted_outfit=None):
+        """
+        Sets the outfit lock. 
+        If 'extracted_outfit' is provided (from AI analysis), it uses that.
+        Otherwise, it falls back to age-appropriate defaults.
+        """
+        if extracted_outfit:
+            self.outfit_lock = f"Wearing {extracted_outfit}"
+            return
 
         if age_group == "1-2":
             self.outfit_lock = "Soft pastel romper, toddler proportions"
