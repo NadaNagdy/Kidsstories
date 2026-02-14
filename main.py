@@ -98,23 +98,36 @@ def handle_image_reception(sender_id, url, background_tasks):
         send_text_message(sender_id, "🎨 جاري تحليل الملامح وبناء الشخصية بدقة...")
         background_tasks.add_task(process_image_ai, sender_id, url)
 
+from io import BytesIO
+from PIL import Image
+
 def process_image_ai(sender_id, url):
     try:
         gender = user_state[sender_id].get("gender", "ولد")
         
-        # تحميل الصورة وتحويلها إلى base64 لضمان وصولها للذكاء الاصطناعي
-        # هذا يحل مشاكل الروابط التي لا يستطيع OpenRouter الوصول إليها
+        # تحميل الصورة وتحويلها إلى Standard JPEG Base64
         try:
             response = requests.get(url, timeout=20)
             if response.status_code == 200:
-                b64_image = base64.b64encode(response.content).decode('utf-8')
-                # نرسل الصورة كبيانات (is_url=False)
+                # معالجة الصورة باستخدام PIL لضمان التنسيق
+                img = Image.open(BytesIO(response.content))
+                img = img.convert("RGB") # إزالة الشفافية وتحويلها إلى ألوان قياسية
+                
+                # تصغير الصورة إذا كانت ضخمة جداً لتسريع التحليل
+                if img.width > 1024 or img.height > 1024:
+                    img.thumbnail((1024, 1024))
+                
+                buffer = BytesIO()
+                img.save(buffer, format="JPEG", quality=85)
+                b64_image = base64.b64encode(buffer.getvalue()).decode('utf-8')
+                
+                # إرسال الصورة المعالجة
                 char_desc = create_character_reference(b64_image, gender=gender, is_url=False, use_ai_analysis=True)
             else:
                 logger.error(f"❌ Failed to download image from URL: {url}")
                 char_desc = create_character_reference(url, gender=gender, is_url=True, use_ai_analysis=True)
         except Exception as dl_err:
-            logger.error(f"❌ Download error: {dl_err}")
+            logger.error(f"❌ Image processing error: {dl_err}")
             char_desc = create_character_reference(url, gender=gender, is_url=True, use_ai_analysis=True)
 
         if char_desc:
