@@ -62,14 +62,14 @@ def _get_arabic_font(size: int, weight: str = "bold") -> ImageFont.FreeTypeFont:
         fonts_dir = os.path.join(base_dir, "fonts")
         suffix = "-Bold.ttf" if weight.lower() == "bold" else "-Regular.ttf"
         
-        # Cairo أفضل من Almarai في التوافق مع Reshaper
-        cairo_path = os.path.join(fonts_dir, f"Cairo{suffix}")
-        if os.path.exists(cairo_path):
-            return ImageFont.truetype(cairo_path, size)
-            
+        # Almarai أفضل توافقاً من Cairo في بعض الحالات
         almarai_path = os.path.join(fonts_dir, f"Almarai{suffix}")
         if os.path.exists(almarai_path):
             return ImageFont.truetype(almarai_path, size)
+
+        cairo_path = os.path.join(fonts_dir, f"Cairo{suffix}")
+        if os.path.exists(cairo_path):
+            return ImageFont.truetype(cairo_path, size)
     except Exception as e:
         print(f"⚠️ Font loading error: {e}")
 

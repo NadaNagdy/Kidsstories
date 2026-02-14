@@ -101,12 +101,27 @@ def handle_image_reception(sender_id, url, background_tasks):
 def process_image_ai(sender_id, url):
     try:
         gender = user_state[sender_id].get("gender", "ولد")
-        char_desc = create_character_reference(url, gender=gender, is_url=True, use_ai_analysis=True)
+        
+        # تحميل الصورة وتحويلها إلى base64 لضمان وصولها للذكاء الاصطناعي
+        # هذا يحل مشاكل الروابط التي لا يستطيع OpenRouter الوصول إليها
+        try:
+            response = requests.get(url, timeout=20)
+            if response.status_code == 200:
+                b64_image = base64.b64encode(response.content).decode('utf-8')
+                # نرسل الصورة كبيانات (is_url=False)
+                char_desc = create_character_reference(b64_image, gender=gender, is_url=False, use_ai_analysis=True)
+            else:
+                logger.error(f"❌ Failed to download image from URL: {url}")
+                char_desc = create_character_reference(url, gender=gender, is_url=True, use_ai_analysis=True)
+        except Exception as dl_err:
+            logger.error(f"❌ Download error: {dl_err}")
+            char_desc = create_character_reference(url, gender=gender, is_url=True, use_ai_analysis=True)
+
         if char_desc:
             user_state[sender_id].update({"char_desc": char_desc, "step": "waiting_for_age"})
             send_quick_replies(sender_id, "تم استلام الصورة بنجاح! ✨ كم عمر طفلك؟", ["1-2", "2-3", "3-4", "4-5"])
     except Exception as e:
-        logger.error(f"AI Error: {e}")
+        logger.error(f"AI Error: {e}", exc_info=True)
 
 def handle_age_selection(sender_id, age_group):
     user_state[sender_id].update({"age_group": age_group, "step": "waiting_for_value"})

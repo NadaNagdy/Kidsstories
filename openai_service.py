@@ -535,7 +535,7 @@ Name: {child_name}
             return get_improved_description()
             
     except Exception as e:
-        logger.error(f"❌ AI analysis failed: {e}")
+        logger.error(f"❌ AI analysis failed: {e}", exc_info=True)
         logger.info("⤵️ Falling back to improved default description")
         return get_improved_description()
 
