@@ -8,3 +8,4 @@ python-bidi==0.4.2
 openai==1.2.0
 httpx==0.25.0
 Pillow>=10.3.0
+python-dotenv

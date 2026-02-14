@@ -8,10 +8,12 @@ import os
 import uuid
 import logging
 from typing import Optional, Dict, List
+from dotenv import load_dotenv
 
 # ============================================================================
 # 🔧 Logging Configuration
 # ============================================================================
+load_dotenv()
 
 logger = logging.getLogger(__name__)
 

@@ -4,6 +4,9 @@ from fastapi.staticfiles import StaticFiles
 import os, uvicorn, logging, requests, base64, time, json, shutil, uuid
 
 # استيراد الدوال من الملفات المساعدة
+from dotenv import load_dotenv
+load_dotenv() # Load environment variables from .env file early
+
 from messenger_api import send_text_message, send_quick_replies, send_file, send_image
 from pdf_utils import create_pdf
 from openai_service import verify_payment_screenshot, generate_storybook_page, create_character_reference
