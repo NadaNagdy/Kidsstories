@@ -35,15 +35,8 @@ def _prepare_arabic_text(text: str) -> str:
     """تحضير النص ليكون مقروءاً وصحيحاً برمجياً مع دعم كامل للحروف والروابط"""
     if not text: return ""
     
-    # إعدادات فائقة الدقة لضمان بقاء الحركات والروابط (مثل القاف في الصدق)
-    configuration = {
-        'delete_harakat': False, # تفعيل الحركات - الطفل يحتاج رؤيتها
-        'support_ligatures': False, # تعطيل الروابط المعقدة التي قد تسبب اختفاء الحروف مع بعض الخطوط
-        'arabic': True,
-        'delete_tatweel': False
-    }
-    reshaper = arabic_reshaper.ArabicReshaper(configuration=configuration)
-    reshaped_text = reshaper.reshape(text)
+    # استخدام الدالة المباشرة للحصول على أفضل النتائج الافتراضية
+    reshaped_text = arabic_reshaper.reshape(text)
     return get_display(reshaped_text)
 
 def _get_arabic_font(size: int, weight: str = "bold") -> ImageFont.FreeTypeFont:
