@@ -34,11 +34,11 @@ class CharacterProfile:
         name: str,
         gender: str,  # "girl" or "boy"
         age: str = "3-4",
-        skin_tone: str = "natural skin tone",
-        hair_style: str = "natural hairstyle",
-        hair_color: str = "natural hair color",
-        hair_texture: str = "natural hair texture",
-        eye_color: str = "natural eye color",
+        skin_tone: str = "warm tan skin", # Default to tan to avoid unwanted "white" bias if analysis fails
+        hair_style: str = "natural curly hair",
+        hair_color: str = "dark brown",
+        hair_texture: str = "natural curly texture",
+        eye_color: str = "brown",
         clothing_style: str = "casual colorful outfit"
     ):
         self.name = name

@@ -124,8 +124,8 @@ def create_cover_page(image_url, value, child_name, gender, output_path):
         reshaped_top = _prepare_arabic_text(top_text)
         
         # تصغير الخط تلقائياً وتوسيع الهوامش لضمان عدم اختفاء أي حرف (مثل القاف في الصدق)
-        current_title_size = 100 # تقليل الحجم الابتدائي قليلاً
-        max_title_width = 820   # ترك مساحة كافية على الجوانب (100px من كل جهة)
+        current_title_size = 90 # تقليل الحجم الابتدائي قليلاً
+        max_title_width = 700   # ترك مساحة كافية على الجوانب (162px من كل جهة)
         
         while current_title_size > 40:
             title_font = _get_arabic_font(current_title_size, weight="bold")
