@@ -83,7 +83,7 @@ class CharacterProfile:
 
             # Combiner
             details = ", ".join(feats) if feats else "natural healthy appearance"
-            critical_features = f", {details}, rosy cheeks, sweet joyful smile, cute rounded toddler proportions, wearing {self.clothing_style}"
+            critical_features = f", {details}, wearing {self.clothing_style}"
             
             # Reinforcement
             ref_parts = []
