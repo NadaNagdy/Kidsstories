@@ -232,7 +232,10 @@ def create_text_page(text, output_path):
         text_color = (40, 40, 40) # رمادي غامق جداً أفضل للعين من الأسود الصرف
         
         # نظام ذكي لتقسيم السطور مع هوامش كبيرة جداً لضمان عدم قص أي حرف
-        max_width = 800 # تقليل العرض لزيادة الهوامش الجانبية
+        # الهوامش الآمنة (Margin) على الجوانب لمنع القص
+        SAFE_MARGIN = 100 
+        max_width = width - (SAFE_MARGIN * 2) 
+
         lines = []
         words = text.split()
         current_line = []
@@ -241,34 +244,39 @@ def create_text_page(text, output_path):
             current_line.append(word)
             test_line = " ".join(current_line)
             reshaped_test = _prepare_arabic_text(test_line)
-            # استخدام textbbox بدلاً من textlength لضمان الدقة في الحروف العربية المعقدة
-            test_bbox = draw.textbbox((0, 0), reshaped_test, font=font)
-            test_width = test_bbox[2] - test_bbox[0]
+            
+            # قياس دقيق جداً
+            bbox = draw.textbbox((0, 0), reshaped_test, font=font)
+            test_width = bbox[2] - bbox[0]
             
             if test_width > max_width:
+                # إذا تجاوزنا العرض: احذف الكلمة الأخيرة، احفظ السطر، وابدأ سطراً جديداً
                 current_line.pop()
                 lines.append(" ".join(current_line))
                 current_line = [word]
         
+        # إضافة السطر الأخير
         if current_line:
             lines.append(" ".join(current_line))
             
-        # حساب المسافات المركزية مع زيادة المسافة بين السطور
-        line_height = 95 
+        # حساب التمركز العمودي
+        line_height = 100 # مسافة مريحة
         total_text_height = len(lines) * line_height
         start_y = (height - total_text_height) // 2
         
         for i, line in enumerate(lines):
             reshaped_line = _prepare_arabic_text(line)
-            # استخدام textbbox للحصول على القياسات الفيزيائية الدقيقة للهوامش
             bbox = draw.textbbox((0, 0), reshaped_line, font=font)
-            lw = bbox[2] - bbox[0]
+            w_line = bbox[2] - bbox[0]
             
-            # حساب الإحداثيات مع مراعاة الإزاحة الجانبية للخطوط العربية
-            lx = (width - lw) // 2 - bbox[0]
+            # حساب الإحداثي الأفقي للمنتصف
+            lx = (width - w_line) // 2
+            
+            # تصحيح offset الخط (لأن bbox لا يبدأ من 0 دائماً في الخطوط العربية)
+            lx = lx - bbox[0]
+
             ly = start_y + (i * line_height)
             
-            # رسم النص
             draw.text((lx, ly), reshaped_line, font=font, fill=text_color)
             
         img.save(output_path, quality=100)
