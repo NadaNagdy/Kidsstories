@@ -458,6 +458,8 @@ def create_character_reference(
                 image_url = f"data:image/jpeg;base64,{image_url}"
             image_content = {"type": "image_url", "image_url": {"url": image_url}}
         
+        gender_term = "girl" if gender == "بنت" else "boy"
+
         # Prompt محسّن للتحليل - تجنب الكلمات المحفزة للرفض (مثل analyze, child)
         analysis_prompt = f"""
 ACT AS A CHARACTER DESIGNER. 
