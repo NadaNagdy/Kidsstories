@@ -228,8 +228,9 @@ def create_text_page(text, output_path):
         draw = ImageDraw.Draw(img)
         
         # اختيار خط كبير وواضح (Regular لراحة العين)
+        # اختيار خط كبير وواضح (Regular لراحة العين)
         font = _get_arabic_font(50, weight="regular")
-        text_color = (40, 40, 40) # رمادي غامق جداً أفضل للعين من الأسود الصرف
+        text_color = (0, 0, 0) # أسود نقي (Black) للتباين العالي والوضوح التام
         
         # نظام ذكي لتقسيم السطور مع هوامش كبيرة جداً لضمان عدم قص أي حرف
         # الهوامش الآمنة (Margin) على الجوانب لمنع القص
