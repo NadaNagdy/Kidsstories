@@ -150,8 +150,8 @@ Consistent lighting across pages.
                 logger.error(f"❌ Age group {age_group} not found in {json_filename}")
                 return None
 
-            # Ensure outfit matches age
-            self.set_outfit_by_age(age_group)
+            # Ensure we don't overwrite the outfit if it was already set externally
+            # self.set_outfit_by_age(age_group) # Removed to preserve extracted outfit
 
             generated_pages = []
 
