@@ -434,10 +434,9 @@ def create_character_reference(
     if api_key:
         headers["Authorization"] = f"Bearer {api_key}"
     elif OPENROUTER_API_KEY:
-        logger.info("ℹ️ Using OpenRouter for Vision Analysis (gpt-4o)")
         api_key = OPENROUTER_API_KEY
         api_base = "https://openrouter.ai/api/v1/chat/completions"
-        model_name = "openai/gpt-4o"
+        model_name = "google/gemini-2.0-flash-001" # Switching to Gemini 2.0 Flash for better vision analysis
         headers["Authorization"] = f"Bearer {api_key}"
         headers["HTTP-Referer"] = os.getenv("APP_URL", "https://kids-stories.app")
         headers["X-Title"] = "Kids Story Generator"
