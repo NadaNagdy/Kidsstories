@@ -107,6 +107,7 @@ from PIL import Image
 def process_image_ai(sender_id, url):
     try:
         gender = user_state[sender_id].get("gender", "ولد")
+        child_name = user_state[sender_id].get("child_name", "الطفل")
         
         # تحميل الصورة وتحويلها إلى Standard JPEG Base64
         try:
@@ -124,14 +125,14 @@ def process_image_ai(sender_id, url):
                 img.save(buffer, format="JPEG", quality=85)
                 b64_image = base64.b64encode(buffer.getvalue()).decode('utf-8')
                 
-                # إرسال الصورة المعالجة
-                char_desc = create_character_reference(b64_image, gender=gender, is_url=False, use_ai_analysis=True)
+                # إرسال الصورة المعالجة مع تمرير الاسم
+                char_desc = create_character_reference(b64_image, gender=gender, is_url=False, use_ai_analysis=True, child_name=child_name)
             else:
                 logger.error(f"❌ Failed to download image from URL: {url}")
-                char_desc = create_character_reference(url, gender=gender, is_url=True, use_ai_analysis=True)
+                char_desc = create_character_reference(url, gender=gender, is_url=True, use_ai_analysis=True, child_name=child_name)
         except Exception as dl_err:
             logger.error(f"❌ Image processing error: {dl_err}")
-            char_desc = create_character_reference(url, gender=gender, is_url=True, use_ai_analysis=True)
+            char_desc = create_character_reference(url, gender=gender, is_url=True, use_ai_analysis=True, child_name=child_name)
 
         if char_desc:
             user_state[sender_id].update({"char_desc": char_desc, "step": "waiting_for_age"})
