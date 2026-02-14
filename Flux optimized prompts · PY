@@ -137,9 +137,8 @@ class FluxPromptBuilder:
 
 def generate_example_prompts() -> list:
     builder = FluxPromptBuilder()
-    vision_desc = (
-        "adorable toddler girl with curly brown hair, warm skin, large brown eyes, rosy cheeks, smiling joyfully, wearing a colorful casual outfit"
-    )
+    # Empty description to avoid influencing real generations
+    vision_desc = ""
     profile = CharacterProfile(name="لوجى", gender="بنت", vision_description=vision_desc)
 
     examples = []
