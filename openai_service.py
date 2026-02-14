@@ -418,24 +418,39 @@ def create_character_reference(
         return improved_desc
     
     # ============================================================================
-    # التحقق من API Key
+    # استخدام GPT-4 Vision للتحليل (عبر OpenAI المباشر أو OpenRouter)
     # ============================================================================
     
-    if not OPENAI_API_KEY:
-        logger.warning("⚠️ OPENAI_API_KEY not set, using improved description instead")
+    api_key = OPENAI_API_KEY
+    api_base = "https://api.openai.com/v1/chat/completions"
+    model_name = "gpt-4o"
+    headers = {
+        "Content-Type": "application/json"
+    }
+
+    # تحديد المزود (OpenAI vs OpenRouter)
+    if api_key:
+        headers["Authorization"] = f"Bearer {api_key}"
+    elif OPENROUTER_API_KEY:
+        logger.info("ℹ️ Using OpenRouter for Vision Analysis (gpt-4o)")
+        api_key = OPENROUTER_API_KEY
+        api_base = "https://openrouter.ai/api/v1/chat/completions"
+        model_name = "openai/gpt-4o"
+        headers["Authorization"] = f"Bearer {api_key}"
+        headers["HTTP-Referer"] = os.getenv("APP_URL", "https://kids-stories.app")
+        headers["X-Title"] = "Kids Story Generator"
+    else:
+        logger.warning("⚠️ No API Key found (OpenAI or OpenRouter), using improved default description")
         return get_improved_description()
-    
-    # ============================================================================
-    # استخدام GPT-4 Vision للتحليل (إذا كان متاحاً)
-    # ============================================================================
-    
+
     try:
-        logger.info("👁️ Analyzing character with GPT-4 Vision...")
+        logger.info(f"👁️ Analyzing character with {model_name}...")
         
         # تحضير الصورة
         if is_url:
             if not image_url.startswith("http") and not image_url.startswith("data:"):
-                image_url = f"data:image/jpeg;base64,{image_url}"
+                # افتراض أن الرابط صالح أو معالجة الخطأ
+                 pass 
             image_content = {"type": "image_url", "image_url": {"url": image_url}}
         else:
             if not image_url.startswith("data:"):
@@ -473,13 +488,8 @@ Gender: {gender_term}
 Name: {child_name}
 """
         
-        headers = {
-            "Authorization": f"Bearer {OPENAI_API_KEY}",
-            "Content-Type": "application/json"
-        }
-        
         payload = {
-            "model": "gpt-4o",
+            "model": model_name,
             "messages": [
                 {
                     "role": "user",
@@ -493,10 +503,10 @@ Name: {child_name}
         }
         
         response = requests.post(
-            "https://api.openai.com/v1/chat/completions",
+            api_base,
             headers=headers,
             json=payload,
-            timeout=30
+            timeout=45
         )
         
         if response.status_code == 200:
@@ -520,7 +530,7 @@ Name: {child_name}
             
             return enhanced_desc
         else:
-            logger.error(f"❌ Vision API error: {response.status_code}")
+            logger.error(f"❌ Vision API error: {response.status_code} - {response.text}")
             logger.info("⤵️ Falling back to improved default description")
             return get_improved_description()
             

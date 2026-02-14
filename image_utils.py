@@ -38,7 +38,7 @@ def _prepare_arabic_text(text: str) -> str:
     # إعدادات فائقة الدقة لضمان بقاء الحركات والروابط (مثل القاف في الصدق)
     configuration = {
         'delete_harakat': False, # تفعيل الحركات - الطفل يحتاج رؤيتها
-        'support_ligatures': True,
+        'support_ligatures': False, # تعطيل الروابط المعقدة التي قد تسبب اختفاء الحروف مع بعض الخطوط
         'arabic': True,
         'delete_tatweel': False
     }
