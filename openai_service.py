@@ -79,7 +79,7 @@ class CharacterProfile:
                 feats.append(f"{self.hair_color} {self.hair_style} hair")
             
             if "natural" not in self.eye_color.lower():
-                feats.append(f"large expressive {self.eye_color} eyes with sparkle highlights")
+                feats.append(f"{self.eye_color} eyes")
 
             # Combiner
             details = ", ".join(feats) if feats else "natural healthy appearance"
