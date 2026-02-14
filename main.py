@@ -134,6 +134,10 @@ def process_image_ai(sender_id, url):
             logger.error(f"❌ Image processing error: {dl_err}")
             char_desc = create_character_reference(url, gender=gender, is_url=True, use_ai_analysis=True, child_name=child_name)
 
+        if char_desc == "ERROR_REFUSAL":
+            send_text_message(sender_id, "بعتذر، مقدرناش نحلل ملامح الصورة دي. ياريت تبعتي صورة تانية واضحة لوش الطفل.")
+            return
+
         if char_desc:
             user_state[sender_id].update({"char_desc": char_desc, "step": "waiting_for_age"})
             send_quick_replies(sender_id, "تم استلام الصورة بنجاح! ✨ كم عمر طفلك؟", ["1-2", "2-3", "3-4", "4-5"])

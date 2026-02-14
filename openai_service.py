@@ -442,8 +442,8 @@ def create_character_reference(
         headers["HTTP-Referer"] = os.getenv("APP_URL", "https://kids-stories.app")
         headers["X-Title"] = "Kids Story Generator"
     else:
-        logger.warning("⚠️ No API Key found (OpenAI or OpenRouter), using improved default description")
-        return get_improved_description()
+        logger.warning("⚠️ No API Key found for analysis.")
+        return "ERROR_REFUSAL"
 
     try:
         logger.info(f"👁️ Analyzing character with {model_name}...")
@@ -503,8 +503,7 @@ Start directly with the description.
             refusal_keywords = ["sorry", "can't fulfill", "cannot", "policy", "identify", "private"]
             if any(word in ai_description.lower() for word in refusal_keywords):
                 logger.warning(f"⚠️ AI Refused to analyze: {ai_description[:100]}...")
-                logger.info("⤵️ Falling back to improved default description due to refusal")
-                return get_improved_description()
+                return "ERROR_REFUSAL"
 
             logger.info("✅ AI analysis completed")
             logger.debug(f"AI Description: {ai_description[:200]}...")
@@ -524,13 +523,11 @@ Start directly with the description.
             return enhanced_desc
         else:
             logger.error(f"❌ Vision API error: {response.status_code} - {response.text}")
-            logger.info("⤵️ Falling back to improved default description")
-            return get_improved_description()
+            return "ERROR_REFUSAL"
             
     except Exception as e:
         logger.error(f"❌ AI analysis failed: {e}", exc_info=True)
-        logger.info("⤵️ Falling back to improved default description")
-        return get_improved_description()
+        return "ERROR_REFUSAL"
 
 
 def enhance_ai_description(
