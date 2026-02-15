@@ -826,26 +826,35 @@ def verify_payment_screenshot(
         logger.info("✅ Payment checking bypassed (Optimization Mode)")
         return True, "Payment auto-approved (AI verification disabled)"
     
-    # التحقق من API Key
-    if not OPENAI_API_KEY:
-        logger.warning("⚠️ OPENAI_API_KEY not set, skipping verification")
+    # التحقق من API Key (OpenRouter or OpenAI)
+    api_key = OPENROUTER_API_KEY or OPENAI_API_KEY
+    if not api_key:
+        logger.warning("⚠️ No API Key found, skipping verification")
         return True, "Auto-approved (No API Key)"
     
+    is_openrouter = bool(OPENROUTER_API_KEY)
+    api_url = "https://openrouter.ai/api/v1/chat/completions" if is_openrouter else "https://api.openai.com/v1/chat/completions"
+    model_name = "google/gemini-2.0-flash-001" if is_openrouter else "gpt-4o"
+    
     try:
-        logger.info("👁️ Analyzing payment screenshot with GPT-4 Vision...")
+        logger.info(f"👁️ Analyzing payment screenshot with {model_name}...")
         
         # تحضير الصورة
         if not image_b64.startswith("data:"):
             image_b64 = f"data:image/jpeg;base64,{image_b64}"
         
         headers = {
-            "Authorization": f"Bearer {OPENAI_API_KEY}",
+            "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json"
         }
         
+        if is_openrouter:
+            headers["HTTP-Referer"] = os.getenv("APP_URL", "https://kids-stories.app")
+            headers["X-Title"] = "Kids Story Payment Verification"
+        
         # طلب JSON محدد لاستخراج رقم المعاملة
         payload = {
-            "model": "gpt-4o",
+            "model": model_name,
             "messages": [
                 {
                     "role": "user",
@@ -878,7 +887,7 @@ def verify_payment_screenshot(
         }
         
         response = requests.post(
-            "https://api.openai.com/v1/chat/completions",
+            api_url,
             headers=headers,
             json=payload,
             timeout=30
