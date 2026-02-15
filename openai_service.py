@@ -460,19 +460,19 @@ def create_character_reference(
         
         gender_term = "girl" if gender == "بنت" else "boy"
 
-        # Prompt محسّن للتحليل - تجنب الكلمات المحفزة للرفض (مثل analyze, child)
+        # Prompt محسّن للتحليل - استخراج ملامح مناسبة لنمذجة 3D
         analysis_prompt = f"""
-ACT AS A CHARACTER DESIGNER. 
-Describe the artistic physical features of the person in this reference image for a 3D character model.
+ACT AS A 3D CHARACTER ARTIST.
+Analyze the person in this image to create a high-end 3D CGI animated character model (Pixar/Disney style).
 
-Include:
-- Exact skin shade (be specific: "deep brown", "warm tan", "olive", etc.)
-- Hair details (texture like "curly/coily/straight", style, and precise color)
-- Eye shape, face shape, and notable facial features (like cheeks).
-- Outfit details: Describe the clothing style and colors visible in the image.
+Extract these precise details for the 3D model:
+- Skin Texture & Tone: Exact shade (e.g., "warm honey", "deep cocoa", "pale ivory") and skin finish.
+- Hair Geometry: Texture type for 3D rendering (e.g., "tight coils", "soft waves", "straight silk") and exact color.
+- Facial Topology: Face shape, eye shape/color, nose structure, and distinctive features (dimples, freckles).
+- Outfit Materials: Describe the clothing fabrics and colors suitable for physically based rendering.
 
-Provide a concise descriptive paragraph of these physical traits and outfit only. 
-This is for artistic reference in a children's book.
+Provide a concise, descriptive paragraph focusing ONLY on these visual traits. 
+Do NOT describe the background or style of the photo.
 Start directly with the description.
 """
         
@@ -622,30 +622,27 @@ def generate_storybook_page(
         gender_term = "girl" if gender == "بنت" else "boy"
         age_desc = f"{age_group} year old" if "-" in age_group else "toddler"
         
-        # Style (Artistic theme ONLY - no physical features)
+        # Style (Pixar-style 3D Animation)
         style = (
-            "whimsical classic children's book illustration theme, "
-            "soft digital watercolor washes, delicate colored pencil detailing, "
-            "dreamy cozy bedtime story colors, rich saturated painterly textures, "
-            "gentle watercolor gradients, paper texture, soft blending, "
-            
+            "Cinematic 3D animated children's movie style illustration, "
+            "high-end Pixar-inspired quality, ultra-detailed textures, "
+            "expressive faces, rounded child proportions, vibrant yet natural color palette, "
+            "wholesome heartwarming mood"
         )
         
-        # Lighting (magical bedtime story aesthetic)
+        # Lighting (Cinematic Volumetric)
         lighting_style = (
-            "magical glowing light, soft luminous atmosphere, dreamy lighting, "
-            "enchanting bedtime story aesthetic, cozy and whimsical"
+            "Soft natural lighting with golden highlights, beautiful depth of field, "
+            "soft rim light around characters, volumetric light rays, gentle shadows, "
+            "cinematic composition, dynamic camera angle"
         )
         
         # Composition
         composition = (
-            "full frame artistic illustration, edge-to-edge masterpiece, "
-            "cinematic wide angle, no borders, no margins, "
-            "strictly NO text, NO letters, NO characters, NO titles, NO typography, "
-            "children's book page layout"
+            "full frame cinematic shot, shallow depth of field, edge-to-edge masterpiece, "
+            "no borders, no margins, "
+            "strictly NO text, NO letters, NO characters, NO titles, NO typography"
         )
-        
-        # Quality markers
         quality = (
             "ultra-high definition children's book illustration, "
             "professional publication quality, clean simple masterpiece, "

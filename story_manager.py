@@ -9,14 +9,13 @@ logger = logging.getLogger(__name__)
 # ==========================================================
 
 MASTER_STYLE = """
-Soft watercolor and colored pencil illustration style,
-classic premium children's book aesthetic,
-gentle hand-drawn texture,
-warm pastel color palette,
-clean white background,
-professional publishing quality,
-consistent character proportions,
-no realism, no photographic style.
+High-end 3D CGI Animated Movie Style (Pixar/Disney inspired),
+Octane Render, 8k resolution, volumetric lighting,
+Subsurface scattering on skin, detailed hair strands,
+Cinematic composition, depth of field,
+Vibrant and warm color palette,
+Expressive character animation style,
+No 2D, no drawing, no watercolor, no sketch style.
 """
 
 ANTI_DRIFT_RULES = """
@@ -37,11 +36,87 @@ CRITICAL CHARACTER CONSISTENCY RULES:
 
 class StoryManager:
 
-    def __init__(self, child_name):
+    def __init__(self, child_name, gender="ولد"):
         self.child_name = child_name
+        self.gender = gender
         self.character_desc = ""
         self.personality_block = ""
         self.outfit_lock = ""
+
+    # ------------------------------------------------------
+    # Gender Adaptation Logic
+    # ------------------------------------------------------
+    
+    def _apply_gender_replacements(self, text):
+        """
+        Adapts Arabic text from masculine (default) to feminine if the child is a girl.
+        Covers common verbs, adjectives, and pronouns used in the stories.
+        """
+        if self.gender == "ولد":
+            return text
+            
+        # Dictionary of Masculine -> Feminine replacements
+        # Sorted by length (descending) to avoid partial replacements (e.g. replacing 'هو' inside 'هواية')
+        replacements = {
+            "بطل": "بطلة",
+            "صديقه": "صديقتها",
+            "هو": "هي",
+            "بنفسه": "بنفسها",
+            "مستخباش": "مستخبتش",
+            "راح": "راحت",
+            "شاور": "شاورت",
+            "زعلان": "زعلانه",
+            "بيحضنوه": "بيحضنوها",
+            "يحبوه": "يحبوها",
+            "شاطر": "شاطرة",
+            "صغير": "صغيرة",
+            "جميل": "جميلة",
+            "كبير": "كبيرة",
+            "قال": "قالت",
+            "كان": "كانت",
+            "قرر": "قررت",
+            "استخبى": "استخبت",
+            "صرخ": "صرخت",
+            "يضحك": "تضحك",
+            "واقف": "واقفة",
+            "خايف": "خايفة",
+            "مخضوض": "مخضوضة",
+            "ماجاش": "ماجاتش",
+            "شافه": "شافها",
+            "عرف": "عرفت",
+            "ساعده": "ساعدها",
+            "بيصرخ": "بتصرخ",
+            "نفسه": "نفسها",
+            "لوحده": "لوحدها",
+            "شعره": "شعرها",
+            "إيده": "إيدها",
+            "رجله": "رجلها",
+            "وجعته": "وجعتها",
+            "افتكره": "افتكرها",
+            "بيعيط": "بتعيط",
+            "كدب": "كدبت",
+            "سألت": "سألت", # Already feminine/neutral or correct context
+            "يا حبيبي": "يا حبيبتي",
+            "ابني": "بنتي",
+            "ولد": "بنت"
+        }
+        
+        # Simple word boundary replacement to avoid messing up substrings
+        # Note: This is a basic implementation. For complex Arabic NLP, a library would be needed.
+        words = text.split()
+        new_words = []
+        for word in words:
+            # Check for exact matches first (ignoring simple punctuation attached)
+            clean_word = word.strip(".,!؟")
+            if clean_word in replacements:
+                # Replace the core word but keep punctuation
+                replacement = replacements[clean_word]
+                new_word = word.replace(clean_word, replacement)
+                new_words.append(new_word)
+            else:
+                new_words.append(word)
+                
+        return " ".join(new_words)
 
     # ------------------------------------------------------
     # Inject Character DNA (from Vision)
@@ -161,7 +236,11 @@ Consistent lighting across pages.
 
                 full_prompt = self.build_full_prompt(base_prompt=raw_prompt)
 
+                # 1. Replace name first
                 display_text = page.get('text', '').replace("{child_name}", self.child_name)
+                
+                # 2. Apply gender adaptation (if girl)
+                display_text = self._apply_gender_replacements(display_text)
 
                 page_payload = {
                     "page": page.get('page_number'),
