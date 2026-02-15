@@ -8,6 +8,7 @@ import os
 import uuid
 import logging
 from typing import Optional, Dict, List
+from datetime import datetime
 from dotenv import load_dotenv
 
 # ============================================================================
@@ -860,13 +861,14 @@ def verify_payment_screenshot(
                             "type": "text",
                             "text": (
                                 f"Verify this InstaPay/Vodafone Cash payment screenshot.\n\n"
-                                f"Target number: {target_number}\n"
-                                f"Minimum amount: {min_amount} EGP\n\n"
-                                f"Check:\n"
-                                f"1. Valid InstaPay/Vodafone Cash screenshot?\n"
-                                f"2. Recipient matches {target_number}?\n"
-                                f"3. Amount >= {min_amount} EGP?\n"
-                                f"4. Recent transaction?\n\n"
+                                f"Target number (MUST MATCH EXACTLY): {target_number}\n"
+                                f"Minimum amount: {min_amount} EGP\n"
+                                f"Current Date: {datetime.now().strftime('%Y-%m-%d')}\n\n"
+                                f"CRITICAL CHECKS:\n"
+                                f"1. Is this a valid payment receipt?\n"
+                                f"2. Is the money SENT TO {target_number}? (Look for 'Sent to', 'To', 'Raqam al-mursaal ilayh', 'Ila')\n"
+                                f"3. Is the date TODAY or YESTERDAY? (Compare with {datetime.now().strftime('%Y-%m-%d')})\n"
+                                f"4. Is the amount >= {min_amount} EGP?\n\n"
                                 f"Reply ONLY: VALID or INVALID"
                             )
                         },
