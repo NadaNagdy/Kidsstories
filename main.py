@@ -117,6 +117,20 @@ def start_processing(sender_id, messaging_event, background_tasks):
 
     text = message.get("text", "")
     if text:
+        # --- 1. طلب الباقة (Story Pack) ---
+        if "باقة" in text or "baqa" in text.lower():
+            user_state[sender_id]["step"] = "waiting_for_pack_payment"
+            child_name = user_state[sender_id].get("child_name", "الطفل")
+            msg = (
+                f"🎉 اختيار ممتاز! باقة الـ 3 مغامرات لـ {child_name} 📚\n"
+                f"السعر: ٦٠ جنيه فقط (بدل ١٢٠!)\n\n"
+                f"من فضلك حولي المبلغ الآن على:\n"
+                f"📍 {PAYMENT_NUMBER}\n"
+                f"وابعتي صورة التحويل هنا عشان نبدأ فوراً! 🚀"
+            )
+            send_text_message(sender_id, msg)
+            return
+
         if text.lower() == "start":
             user_state[sender_id] = {"step": "waiting_for_name"}
             send_text_message(sender_id, "👋 أهلاً بك في عالم القصص الذكية!")
@@ -197,6 +211,30 @@ def handle_value_selection(sender_id, value, background_tasks):
     send_text_message(sender_id, f"📖 جاري رسم غلاف القصة المخصص... انتظروني!")
     background_tasks.add_task(process_story_generation, sender_id, value, is_preview=True)
 
+def process_pack_generation(sender_id):
+    """Generates the remaining 3 stories for the user."""
+    logger.info(f"📚 Starting Pack Generation for {sender_id}")
+    
+    # 1. Identify remaining values
+    all_values = ["الشجاعة", "الصدق", "التعاون", "الاحترام"] 
+    current_value = user_state[sender_id].get("selected_value")
+    
+    # Filter out current value if it exists in list
+    remaining_values = [v for v in all_values if v != current_value]
+    
+    # If for some reason current_value is not in list (e.g. error), take first 3
+    if len(remaining_values) == 4:
+        remaining_values = remaining_values[:3]
+        
+    send_text_message(sender_id, f"جاري تحضير قصص: {', '.join(remaining_values)}... ⏳")
+    
+    # 2. Iterate and generate
+    for val in remaining_values:
+        process_story_generation(sender_id, val, is_preview=False, is_pack=True)
+        
+    # 3. Final Success Message
+    send_text_message(sender_id, "🎁 كل القصص وصلت! استمتعوا بـ 'باقة المغامرات' معاً! 🥰")
+
 def process_payment_verification(sender_id, image_url):
     try:
         response = requests.get(image_url)
@@ -206,9 +244,18 @@ def process_payment_verification(sender_id, image_url):
         is_valid, reason = verify_payment_screenshot(base64_img, PAYMENT_NUMBER, use_ai_verification=True)
         
         if is_valid:
-            send_text_message(sender_id, "✅ تم تأكيد الدفع بنجاح! نبدأ الآن رسم القصة كاملة... (سيستغرق عدة دقائق)")
-            value = user_state[sender_id].get("selected_value")
-            process_story_generation(sender_id, value, is_preview=False)
+            step = user_state[sender_id].get("step")
+            
+            # CASE A: Pack Payment (60 EGP)
+            if step == "waiting_for_pack_payment":
+                send_text_message(sender_id, "✅ تم استلام دفع الباقة! جاري تجهيز الـ 3 قصص حالاً... 📚✨")
+                process_pack_generation(sender_id)
+                
+            # CASE B: Single Story Payment
+            else:
+                send_text_message(sender_id, "✅ تم تأكيد الدفع بنجاح! نبدأ الآن رسم القصة كاملة... (سيستغرق عدة دقائق)")
+                value = user_state[sender_id].get("selected_value")
+                process_story_generation(sender_id, value, is_preview=False, is_pack=False)
         else:
             # Send detailed reason for rejection
             send_text_message(sender_id, f"❌ عذراً، لم نتمكن من قبول الدفع.\nالسبب: {reason}\nيرجى التأكد من إرسال إيصال صحيح وحديث.")
@@ -217,7 +264,7 @@ def process_payment_verification(sender_id, image_url):
         logger.error(f"Payment Error: {e}")
         send_text_message(sender_id, "❌ حدث خطأ غير متوقع أثناء التحقق. يرجى المحاولة لاحقاً.")
 
-def process_story_generation(sender_id, value, is_preview=False):
+def process_story_generation(sender_id, value, is_preview=False, is_pack=False):
     try:
         data = user_state[sender_id]
         child_name = data.get("child_name", "")
@@ -331,21 +378,25 @@ def process_story_generation(sender_id, value, is_preview=False):
             thanks_msg = f"🎉 قصة {child_name} جاهزة!\n\nلقد أرسلت لك ملف القصة الذكية (PDF). استمتعي بقراءتها مع طفلك! 📖✨"
             send_text_message(sender_id, thanks_msg)
             
-            # 5. عرض الترقية / باقات إضافية (الفيلم والباقة)
-            upsell_msg = (
-                f"🎁 تحبي تكملي المفاجأة لـ {child_name}؟ عندنا ليكي عرضين مميزين جداً! 👇\n\n"
-                f"1️⃣ *فيديو القصة السحري* (The Hero Movie) 🎬\n"
-                f"هنحول القصة دي لفيلم كرتون قصير بالموسيقى والمؤثرات، يتفرج عليه {child_name} ويشوف نفسه بطل الحكاية، وينبهر بصوته وصورته!\n"
-                f"⏱️ *الاستلام:* خلال ٢٤ ساعة\n"
-                f"💰 *السعر:* ١٠٠ جنيه بس (بدل ٢٠٠)\n\n"
-                f"2️⃣ *باقة الـ ٣ مغامرات* (The Story Pack) 📚\n"
-                f"لو {child_name} حب القصة دي، أكيد هيحب يكمل المغامرة! تقدري تحجزي ٣ قصص تانية بمواضيع مختلفة (زي: الشجاعة، حب النفس، الأمانة) كلهم باسمه وصورته، يسلوا وقته ويعلموه حاجات مفيدة طول الشهر.\n"
-                f"⚡ *الاستلام:* فوراً (في نفس الوقت!)\n"
-                f"💰 *السعر:* ٦٠ جنيه بس (عرض خاص للأبطال!)\n\n"
-                f"👇 للاشتراك، ردي بكلمة *فيديو* أو *باقة* وهنبدأ فوراً!"
-            )
-            send_text_message(sender_id, upsell_msg)
-            user_state[sender_id] = {"step": "start"}
+            # 5. عرض الترقية / باقات إضافية (فقط إذا لم يكن جزءاً من الباقة)
+            if not is_pack:
+                upsell_msg = (
+                    f"🎁 تحبي تكملي المفاجأة لـ {child_name}؟ عندنا ليكي عرضين مميزين جداً! 👇\n\n"
+                    f"1️⃣ *فيديو القصة السحري* (The Hero Movie) 🎬\n"
+                    f"هنحول القصة دي لفيلم كرتون قصير بالموسيقى والمؤثرات، يتفرج عليه {child_name} ويشوف نفسه بطل الحكاية، وينبهر بصوته وصورته!\n"
+                    f"⏱️ *الاستلام:* خلال ٢٤ ساعة\n"
+                    f"💰 *السعر:* ١٠٠ جنيه بس (بدل ٢٠٠)\n\n"
+                    f"2️⃣ *باقة الـ ٣ مغامرات* (The Story Pack) 📚\n"
+                    f"لو {child_name} حب القصة دي، أكيد هيحب يكمل المغامرة! تقدري تحجزي ٣ قصص تانية بمواضيع مختلفة (زي: الشجاعة، حب النفس، الأمانة) كلهم باسمه وصورته، يسلوا وقته ويعلموه حاجات مفيدة طول الشهر.\n"
+                    f"⚡ *الاستلام:* فوراً (في نفس الوقت!)\n"
+                    f"💰 *السعر:* ٦٠ جنيه بس (عرض خاص للأبطال!)\n\n"
+                    f"👇 للاشتراك، ردي بكلمة *فيديو* أو *باقة* وهنبدأ فوراً!"
+                )
+                send_text_message(sender_id, upsell_msg)
+            
+            # إعادة تعيين الحالة فقط إذا انتهت الباقة أو كانت قصة مفردة - في حالة الباقة، يتم التحكم بالحالة من الخارج أو لا يهم
+            if not is_pack:
+                user_state[sender_id] = {"step": "start"}
 
     except Exception as e:
         logger.error(f"Story Gen Error: {e}")
