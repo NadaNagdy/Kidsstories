@@ -8,7 +8,7 @@ import json
 import os
 import uuid
 import logging
-from typing import Optional, Dict, List
+from typing import Optional, Dict, List, Tuple
 from datetime import datetime
 from dotenv import load_dotenv
 
