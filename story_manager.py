@@ -51,68 +51,195 @@ class StoryManager:
         """
         Adapts Arabic text from masculine (default) to feminine if the child is a girl.
         Covers common verbs, adjectives, and pronouns used in the stories.
+        Now includes prefix handling (waw, fa) for better matching.
         """
+        import re # Import locally to avoid messing up global imports if not needed elsewhere
+        
         if self.gender == "ولد":
             return text
             
         # Dictionary of Masculine -> Feminine replacements
-        # Sorted by length (descending) to avoid partial replacements (e.g. replacing 'هو' inside 'هواية')
+        # Sorted roughly by specificity/length to ensure correct matching
         replacements = {
+            # Nouns/Titles
             "بطل": "بطلة",
-            "صديقه": "صديقتها",
+            "ولد": "بنت",
+            "صديق": "صديقة",
+            "ابني": "بنتي",
+            "يا حبيبي": "يا حبيبتي",
+            "حبيبي": "حبيبتي",
+            
+            # Pronouns/Suffixes (Contextual)
             "هو": "هي",
+            "هم": "هن",
             "بنفسه": "بنفسها",
-            "مستخباش": "مستخبتش",
-            "راح": "راحت",
-            "شاور": "شاورت",
-            "زعلان": "زعلانه",
-            "بيحضنوه": "بيحضنوها",
-            "يحبوه": "يحبوها",
+            "نفسه": "نفسها",
+            "لوحده": "لوحدها",
+            "صاحبه": "صاحبتها",
+            "أخوه": "أخوها",
+            "جده": "جدها",
+            "إيده": "إيدها",
+            "رجله": "رجلها",
+            "بؤه": "بؤها",
+            "قلبه": "قلبها",
+            "حواليه": "حواليها",
+            "وراه": "وراها",
+            "مكانه": "مكانها",
+            "بيته": "بيتها",
+            "أصحابه": "أصحابها",
+            
+            # Adjectives / States (Masculine -> Feminine)
+            "شجاع": "شجاعة",
+            "ذكي": "ذكية",
+            "متعاون": "متعاونة",
+            "مؤدب": "مؤدبة",
+            "محترم": "محترمة",
+            "لطيف": "لطيفة",
+            "حنين": "حنينة",
+            "مبسوط": "مبسوطة",
+            "فرحان": "فرحانة",
+            "زعلان": "زعلانة",
+            "خايف": "خايفة",
+            "تعبان": "تعبانة",
+            "وحيد": "وحيدة",
+            "جديد": "جديدة",
+            "طيب": "طيبة",
+            "واقف": "واقفة",
+            "قاعد": "قاعدة",
+            "ماسك": "ماسكة",
+            "نايم": "نايمة",
+            "جاهز": "جاهزة",
+            "مستعد": "مستعدة",
             "شاطر": "شاطرة",
             "صغير": "صغيرة",
             "جميل": "جميلة",
             "كبير": "كبيرة",
+            "مخضوض": "مخضوضة",
+            
+            # Verbs (Past)
             "قال": "قالت",
             "كان": "كانت",
+            "حب": "حبت",
+            "حس": "حست",
+            "افتكر": "افتكرت",
+            "وقع": "وقعت",
             "قرر": "قررت",
-            "استخبى": "استخبت",
+            "طلع": "طلعت",
+            "عدى": "عدت",
+            "مد": "مدت",
+            "شد": "شدت",
+            "قدر": "قدرت",
+            "شاف": "شافت",
+            "أنقذ": "أنقذت",
+            "قام": "قامت",
+            "فتح": "فتحت",
+            "ضحك": "ضحكت",
+            "وقف": "وقفت",
+            "لبس": "لبست",
+            "ابتسم": "ابتسمت",
+            "وصل": "وصلت",
+            "لقاها": "لقتها",
+            "مشي": "مشيت",
+            "قعد": "قعدت",
+            "رجع": "رجعت",
+            "خلص": "خلصت",
+            "جاب": "جابت",
+            "بدأ": "بدأت",
+            "فكر": "فكرت",
+            "وسع": "وسعت",
+            "نزل": "نزلت",
             "صرخ": "صرخت",
-            "يضحك": "تضحك",
-            "واقف": "واقفة",
-            "خايف": "خايفة",
-            "مخضوض": "مخضوضة",
+            "اتعلم": "اتعلمت",
+            "ساب": "سابت",
+            "راح": "راحت",
+            "لف": "لفت",
+            "قسم": "قسمت",
+            "عمل": "عملت",
+            "همس": "همست",
+            "قرب": "قربت",
+            "خطف": "خطفت",
+            "استأذن": "استأذنت",
+            "انتبه": "انتبهت",
+            "استخبى": "استخبت",
+            "شاور": "شاورت",
+            "دلق": "دلقت",
+            "مستخباش": "مستخبتش",
             "ماجاش": "ماجاتش",
-            "شافه": "شافها",
             "عرف": "عرفت",
             "ساعده": "ساعدها",
-            "بيصرخ": "بتصرخ",
-            "نفسه": "نفسها",
-            "لوحده": "لوحدها",
-            "شعره": "شعرها",
-            "إيده": "إيدها",
-            "رجله": "رجلها",
-            "وجعته": "وجعتها",
-            "افتكره": "افتكرها",
-            "بيعيط": "بتعيط",
             "كدب": "كدبت",
-            "سألت": "سألت", # Already feminine/neutral or correct context
-            "يا حبيبي": "يا حبيبتي",
-            "ابني": "بنتي",
-            "ولد": "بنت"
+            
+            # Verbs (Present - B-prefix)
+            "بيحب": "بتحب",
+            "بيلعب": "بتلعب",
+            "بيسلم": "بتسلم",
+            "بيستخبى": "بتستخبى",
+            "بيمد": "بتمد",
+            "بيقف": "بتقف",
+            "بيمشي": "بتمشي",
+            "بيتوازن": "بتتوازن",
+            "بيدور": "بتدور",
+            "بيفتش": "بتفتش",
+            "بيبعد": "بتبعد",
+            "بيجري": "بتجري",
+            "بيقول": "بتقول",
+            "بيصرخ": "بتصرخ",
+            "بيعيط": "بتعيط",
+            "بيحضنوه": "بيحضنوها",
+            "يحبوه": "يحبوها",
+            "بيشارك": "بتشارك",
+            "بيديها": "بتديها",
+            "بيرتبهم": "بترتبهم",
+            
+            # Verbs (Present - Y-prefix)
+            "يضحك": "تضحك",
+            "يبتسم": "تبتسم",
+            "يقول": "تقول",
+            "يروح": "تروح",
+            "يسيبه": "تسيبها", # Contextual
+            "يعمل": "تعمل",
+            "ينقذ": "تنقذ",
+            "يكون": "تكون",
+            "يصحى": "تصحى",
+            "يزعل": "تزعل",
+            "يقدر": "تقدر",
+            "يرتاح": "ترتاح",
+            "يعوز": "تعوز",
+            "يطلبها": "تطلبها",
+            "يضرب": "تضرب",
+            "يطبطب": "تطبطب",
+            "يشدها": "تشدها",
+            "يأذيها": "تأذيها",
+            "ياخد": "تاخد",
+            "يشده": "تشده",
+            "يخطفه": "تخطفه",
+            "يجيب": "تجيب"
         }
         
-        # Simple word boundary replacement to avoid messing up substrings
-        # Note: This is a basic implementation. For complex Arabic NLP, a library would be needed.
         words = text.split()
         new_words = []
+        
         for word in words:
-            # Check for exact matches first (ignoring simple punctuation attached)
-            clean_word = word.strip(".,!؟")
-            if clean_word in replacements:
-                # Replace the core word but keep punctuation
-                replacement = replacements[clean_word]
-                new_word = word.replace(clean_word, replacement)
-                new_words.append(new_word)
+            # Clean punctuation for matching
+            # Keep punctuation separate to re-attach later
+            match = re.match(r"^([وفب]?)(.+?)([\.,!؟:\"]*)$", word)
+            
+            if match:
+                prefix, core, suffix = match.groups()
+                
+                # Check for direct match
+                if core in replacements:
+                    new_word = prefix + replacements[core] + suffix
+                    new_words.append(new_word)
+                    continue
+                    
+                # Try handling Al- (definite article)
+                if core.startswith("ال") and core[2:] in replacements:
+                     new_word = prefix + "ال" + replacements[core[2:]] + suffix
+                     new_words.append(new_word)
+                     continue
+                     
+                new_words.append(word)
             else:
                 new_words.append(word)
                 
