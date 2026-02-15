@@ -185,7 +185,7 @@ def process_story_generation(sender_id, value, is_preview=False):
         logger.info(f"🚀 Generating story for {child_name} - Value: {value} - Preview: {is_preview}")
 
         # تحضير النصوص عبر StoryManager
-        manager = StoryManager(child_name)
+        manager = StoryManager(child_name, gender)
         manager.inject_character_dna(char_desc)
         
         # استخراج وصف الملابس من وصف الشخصية إذا وجد
@@ -282,16 +282,10 @@ def process_story_generation(sender_id, value, is_preview=False):
             pdf_path = f"/tmp/story_{sender_id}.pdf"
             create_pdf(generated_images, pdf_path)
             
-            # 2. إنشاء نسخة تفاعلية (Flipbook) كملف مستقل بذاته (بدون رابط خارجي)
-            html_flipbook_path = f"/tmp/flipbook_{sender_id}.html"
-            from image_utils import create_html_flipbook
-            create_html_flipbook(generated_images, child_name, html_flipbook_path)
-            
             # 3. إرسال الملفات
             send_file(sender_id, pdf_path)
-            send_file(sender_id, html_flipbook_path)
             
-            send_text_message(sender_id, f"🎉 قصة {child_name} جاهزة!\n\nلقد أرسلت لك ملفين:\n1. ملف PDF (للطباعة)\n2. ملف HTML (كتاب تفاعلي - افتحيه على الهاتف أو الكمبيوتر للاستمتاع بتقليب الصفحات) 📖")
+            send_text_message(sender_id, f"🎉 قصة {child_name} جاهزة!\n\nلقد أرسلت لك ملف القصة الذكية (PDF). استمتعي بقراءتها مع طفلك! 📖✨")
             user_state[sender_id] = {"step": "start"}
 
     except Exception as e:
