@@ -40,40 +40,36 @@ def _prepare_arabic_text(text: str) -> str:
     return get_display(reshaped_text)
 
 def _get_arabic_font(size: int, weight: str = "bold") -> ImageFont.FreeTypeFont:
-    """تحميل الخطوط مع ضمان الدقة - تفضيل خطوط النظام على Mac للوضوح التام"""
-    try:
-        # المحاولة 1: خط Geeza Pro (الأفضل للغة العربية على Mac)
-        if os.path.exists("/System/Library/Fonts/GeezaPro.ttc"):
-            return ImageFont.truetype("/System/Library/Fonts/GeezaPro.ttc", size)
-        
-        # المحاولة 2: خط Arial (الاختيار البديل الأكثر أماناً)
-        if os.path.exists("/System/Library/Fonts/Supplemental/Arial.ttf"):
-            return ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial.ttf", size)
+    """تحميل الخطوط مع ضمان دعم كامل للحروف العربية - NotoSansArabic أولاً (أفضل توافق)"""
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    fonts_dir = os.path.join(base_dir, "fonts")
+    suffix = "-Bold.ttf" if weight.lower() == "bold" else "-Regular.ttf"
 
-        # المحاولة 3: الخطوط المرفقة بالمشروع
-        base_dir = os.path.dirname(os.path.abspath(__file__))
-        fonts_dir = os.path.join(base_dir, "fonts")
-        suffix = "-Bold.ttf" if weight.lower() == "bold" else "-Regular.ttf"
-        
-        # Almarai أفضل توافقاً من Cairo في بعض الحالات
-        almarai_path = os.path.join(fonts_dir, f"Almarai{suffix}")
-        if os.path.exists(almarai_path):
-            return ImageFont.truetype(almarai_path, size)
+    # قائمة الخطوط بترتيب الأفضلية (NotoSansArabic يدعم كل الحروف العربية بدون نقص)
+    font_candidates = [
+        # المحاولة 1: NotoSansArabic (يدعم جميع Arabic Presentation Forms بدون استثناء)
+        os.path.join(fonts_dir, f"NotoSansArabic{suffix}"),
+        # المحاولة 2: خط Geeza Pro (ممتاز على Mac فقط)
+        "/System/Library/Fonts/GeezaPro.ttc",
+        # المحاولة 3: Almarai و Cairo (قد تكون فيهما حروف ناقصة)
+        os.path.join(fonts_dir, f"Almarai{suffix}"),
+        os.path.join(fonts_dir, f"Cairo{suffix}"),
+        # المحاولة 4: خط Arial (احتياطي)
+        "/System/Library/Fonts/Supplemental/Arial.ttf",
+    ]
 
-        cairo_path = os.path.join(fonts_dir, f"Cairo{suffix}")
-        if os.path.exists(cairo_path):
-            return ImageFont.truetype(cairo_path, size)
-    except Exception as e:
-        print(f"⚠️ Font loading error: {e}")
+    for font_path in font_candidates:
+        try:
+            if os.path.exists(font_path):
+                font = ImageFont.truetype(font_path, size)
+                print(f"✅ Loaded Arabic font: {os.path.basename(font_path)}")
+                return font
+        except Exception as e:
+            print(f"⚠️ Failed to load {font_path}: {e}")
+            continue
 
-    # Fallback to a system font that might support Arabic if possible
-    try:
-        print("⚠️ Falling back to Arial system font")
-        return ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial.ttf", size)
-    except Exception as e2:
-        print(f"⚠️ Arial fallback failed: {e2}")
-        print("⚠️ Using default PIL font (NO ARABIC SUPPORT)")
-        return ImageFont.load_default()
+    print("⚠️ Using default PIL font (NO ARABIC SUPPORT)")
+    return ImageFont.load_default()
 
 def _detect_best_position(img):
     """تحليل الصورة للعثور على أفضل مساحة (أغمق مساحة) للنص الأصفر"""
