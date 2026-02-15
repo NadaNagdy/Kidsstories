@@ -166,33 +166,53 @@ def start_processing(sender_id, messaging_event, background_tasks):
     if text:
         # --- 1. طلب الباقة (Story Pack) ---
         if "باقة" in text or "baqa" in text.lower():
-            user_state[sender_id]["step"] = "waiting_for_pack_payment"
-            child_name = user_state[sender_id].get("child_name", "الطفل")
-            msg = (
-                f"🎉 اختيار ممتاز! باقة الـ 3 مغامرات لـ {child_name} 📚\n"
-                f"السعر: ٦٠ جنيه فقط (بدل ١٢٠!)\n\n"
-                f"من فضلك حولي المبلغ الآن على:\n"
-                f"📍 {PAYMENT_NUMBER}\n"
-                f"وابعتي صورة التحويل هنا عشان نبدأ فوراً! 🚀"
-            )
-            send_text_message(sender_id, msg)
+            # BYPASS PAYMENT (FREE MODE)
+            send_text_message(sender_id, "✨ تفعيل الباقة مجاناً (وضع التجربة)! جاري التحضير... 📚")
+            process_pack_generation(sender_id)
             return
+
+            # user_state[sender_id]["step"] = "waiting_for_pack_payment"
+            # child_name = user_state[sender_id].get("child_name", "الطفل")
+            # msg = (
+            #     f"🎉 اختيار ممتاز! باقة الـ 3 مغامرات لـ {child_name} 📚\n"
+            #     f"السعر: ٦٠ جنيه فقط (بدل ١٢٠!)\n\n"
+            #     f"من فضلك حولي المبلغ الآن على:\n"
+            #     f"📍 {PAYMENT_NUMBER}\n"
+            #     f"وابعتي صورة التحويل هنا عشان نبدأ فوراً! 🚀"
+            # )
+            # send_text_message(sender_id, msg)
+            # return
 
         # --- 2. طلب الفيديو (Hero Movie) ---
         if "فيديو" in text or "video" in text.lower():
-            user_state[sender_id]["step"] = "waiting_for_video_payment"
+            # BYPASS PAYMENT (FREE MODE)
             child_name = user_state[sender_id].get("child_name", "الطفل")
-            msg = (
-                f"🎬 اختيار رائع! {child_name} هيكون بطل فيلمه الخاص! ✨\n"
-                f"فيديو احترافي بصوره واسمه ومؤثرات صوتية.\n"
-                f"السعر: ١٠٠ جنيه فقط (بدل ٢٠٠)\n"
-                f"⏱️ الاستلام: خلال ٢٤ ساعة\n\n"
-                f"من فضلك حولي المبلغ الآن على:\n"
-                f"📍 {PAYMENT_NUMBER}\n"
-                f"وابعتي صورة التحويل هنا لتأكيد الحجز! 🎟️"
-            )
-            send_text_message(sender_id, msg)
+            send_text_message(sender_id, f"✨ تم حجز الفيديو لـ {child_name} مجاناً (وضع التجربة)! (24 ساعة) 🎬")
+            
+            # Send Admin Notification (Manually since we skip payment verification)
+            admin_msg = f"🔔 NEW ORDER: Video Request (FREE MODE) 🎥\nUser: {child_name} ({sender_id})"
+            logger.critical(admin_msg)
+            admin_id = os.getenv("ADMIN_ID")
+            if admin_id:
+                try:
+                    send_text_message(admin_id, admin_msg)
+                except:
+                    pass
             return
+
+            # user_state[sender_id]["step"] = "waiting_for_video_payment"
+            # child_name = user_state[sender_id].get("child_name", "الطفل")
+            # msg = (
+            #     f"🎬 اختيار رائع! {child_name} هيكون بطل فيلمه الخاص! ✨\n"
+            #     f"فيديو احترافي بصوره واسمه ومؤثرات صوتية.\n"
+            #     f"السعر: ١٠٠ جنيه فقط (بدل ٢٠٠)\n"
+            #     f"⏱️ الاستلام: خلال ٢٤ ساعة\n\n"
+            #     f"من فضلك حولي المبلغ الآن على:\n"
+            #     f"📍 {PAYMENT_NUMBER}\n"
+            #     f"وابعتي صورة التحويل هنا لتأكيد الحجز! 🎟️"
+            # )
+            # send_text_message(sender_id, msg)
+            # return
 
         if text.lower() == "start":
             user_state[sender_id] = {"step": "waiting_for_name"}
@@ -428,8 +448,12 @@ def process_story_generation(sender_id, value, is_preview=False, is_pack=False):
                     msg = (f"💰 لإكمال قصة {child_name}، يرجى تحويل 25 جنيه عبر:\n"
                            f"📍 فودافون كاش أو إنستا باي: {PAYMENT_NUMBER}\n"
                            f"📸 ثم أرسلي صورة التحويل هنا فوراً!")
-                    user_state[sender_id]["step"] = "waiting_for_payment"
-                    send_text_message(sender_id, msg)
+                    # user_state[sender_id]["step"] = "waiting_for_payment"
+                    # send_text_message(sender_id, msg)
+                    
+                    # BYPASS PAYMENT (FREE MODE)
+                    send_text_message(sender_id, "✨ جاري تكملة القصة كاملة فوراً (تجربة مجانية)! 🚀")
+                    process_story_generation(sender_id, value, is_preview=False, is_pack=False)
                 else:
                     send_text_message(sender_id, "⚠️ حدث خطأ أثناء تجهيز الغلاف، جاري المحاولة مرة أخرى.")
             else:
