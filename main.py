@@ -110,6 +110,51 @@ def privacy_policy():
     </html>
     """
 
+@app.get("/data-deletion", response_class=HTMLResponse)
+def data_deletion():
+    return """
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Data Deletion Instructions - Kids Story Bot</title>
+        <style>
+            body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; padding: 40px; line-height: 1.6; max-width: 800px; margin: 0 auto; color: #333; }
+            h1 { color: #c0392b; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+            h2 { color: #34495e; margin-top: 30px; }
+            .section { background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #eee; margin-bottom: 20px; }
+            strong { color: #2c3e50; }
+        </style>
+    </head>
+    <body>
+        <h1>Data Deletion Instructions</h1>
+        <p><strong>Kids Story Bot (عالم الروبوت)</strong> cares about your privacy.</p>
+
+        <div class="section">
+            <h2>Data Policy Statement</h2>
+            <p>We do not store user data or generated stories on our servers; all data is deleted immediately after the session ends. However, if you wish to formally request data deletion, please contact us via our Facebook Page message inbox.</p>
+        </div>
+
+        <div class="section">
+            <h2>How to Remove App Data via Facebook</h2>
+            <p>If you wish to remove the app's access to your data entirely:</p>
+            <ol>
+                <li>Go to your Facebook profile and navigate to <strong>Settings & Privacy > Settings</strong>.</li>
+                <li>Look for <strong>Apps and Websites</strong> and find <strong>Kids Story Bot</strong>.</li>
+                <li>Click the <strong>Remove</strong> button.</li>
+            </ol>
+        </div>
+
+        <div class="section">
+            <h2>Contact for Deletion Requests</h2>
+            <p>If you wish to verify deletion, please contact us directly via our Facebook Page: <strong>عالم الروبوت: قصص أطفال ذكية</strong></p>
+            <p>We will process your request and delete all associated data within 48 hours.</p>
+        </div>
+    </body>
+    </html>
+    """
+
 @app.get("/webhook")
 def verify_webhook(request: Request):
     params = request.query_params
