@@ -28,6 +28,41 @@ user_state = {}
 def home():
     return {"status": "Story Bot is Active"}
 
+@app.get("/privacy-policy", response_class=HTMLResponse)
+def privacy_policy():
+    return """
+    <html>
+        <head>
+            <title>Privacy Policy - Kids Story Bot</title>
+            <style>body { font-family: sans-serif; padding: 20px; line-height: 1.6; } h1 { color: #2c3e50; }</style>
+        </head>
+        <body>
+            <h1>Privacy Policy</h1>
+            <p><strong>Effective Date:</strong> February 15, 2026</p>
+            <p>This Privacy Policy explains how <strong>Kids Story Bot</strong> collects, uses, and protects your information.</p>
+            
+            <h2>1. Information We Collect</h2>
+            <ul>
+                <li><strong>User Content:</strong> Names, photos, and preferences provided by you for story generation.</li>
+                <li><strong>Contact Info:</strong> Facebook User ID to send you the completed stories.</li>
+            </ul>
+
+            <h2>2. How We Use Your Information</h2>
+            <p>We use your data solely to:</p>
+            <ul>
+                <li>Generate personalized stories and illustrations using AI services (OpenAI).</li>
+                <li>Deliver the final PDF story to you via Messenger.</li>
+            </ul>
+
+            <h2>3. Data Sharing</h2>
+            <p>We do not sell or share your personal data with third parties, except as necessary to provide the service (e.g., sending prompts to OpenAI APIs).</p>
+
+            <h2>4. Contact Us</h2>
+            <p>If you have questions, please contact us via the Facebook Page.</p>
+        </body>
+    </html>
+    """
+
 @app.get("/webhook")
 def verify_webhook(request: Request):
     params = request.query_params
