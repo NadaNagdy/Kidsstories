@@ -651,10 +651,11 @@ def generate_storybook_page(
         )
         
         # ✅ Complete prompt with FLUX structure + Character Consistency
+        # REORDERED: Action/Scene comes FIRST to ensure the story event is the main focus
         full_prompt = (
             f"Create a {style} children's storybook illustration. "
-            f"The main character is: {char_desc}. "  # ← Character description with emphasis
-            f"Scene: {safe_prompt}. "
+            f"ACTION SHOT: {safe_prompt}. "  # ← Action/Scene is now PRIORITY #1
+            f"The main character is: {char_desc}. " 
             f"Composition: {composition}. "
             f"Lighting: {lighting_style}. "
             f"Quality: {quality}. "
