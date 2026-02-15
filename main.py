@@ -265,9 +265,9 @@ def process_story_generation(sender_id, value, is_preview=False):
                 img_result = generate_storybook_page(char_desc, p["prompt"], gender=gender, age_group=data.get("age_group", "3-4"))
 
             if img_result:
-                # أ. إنشاء وإضافة صفحة النص (لتكون على اليمين في الكتب العربية)
+                # أ. إنشاء وإضافة صفحة النص (مع استخدام الرسمة كخلفية مموهة لضمان التلوين الكامل)
                 text_page_path = f"/tmp/text_{sender_id}_{i}.png"
-                create_text_page(p["text"], text_page_path)
+                create_text_page(p["text"], text_page_path, background_source=img_result)
                 generated_images.append(text_page_path)
 
                 # ب. إضافة صفحة الرسم (لتكون على اليسار مقابلة للنص)

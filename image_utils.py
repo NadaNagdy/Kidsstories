@@ -205,25 +205,37 @@ def overlay_text_on_image(image_url, text, output_path):
         print(f"❌ Error in overlay_text_on_image: {e}")
         return None
 
-def create_text_page(text, output_path):
+def create_text_page(text, output_path, background_source=None):
     """
-    إنشاء صفحة بيضاء تحتوي على نص القصة بشكل أنيق وواضح جداً
-    تزيل مشكلة الحروف الناقصة وتوفر راحة في القراءة
+    إنشاء صفحة نصية بجمالية عالية - تستخدم نسخة مموهة ومفتحة من الرسمة كخلفية
+    لضمان "التلوين الكامل" وأن كل صفحة تحتوي على الصورة بشكل كامل
     """
     try:
         width, height = 1024, 1024
-        # إنشاء صفحة بيضاء نقية
-        img = Image.new("RGB", (width, height), color=(255, 255, 255))
+        
+        # 1. إنشاء الخلفية (إما مموهة من الصورة الأصلية أو ملونة بشكل ناعم)
+        if background_source:
+            bg_img = get_image_source(background_source)
+            if bg_img:
+                img = bg_img.convert("RGB").resize((width, height), Image.LANCZOS)
+                # تطبيق تمويه قوي جداً لجعل النص مقروءاً ولإعطاء شعور فني
+                img = img.filter(ImageFilter.GaussianBlur(radius=30))
+                # تفتيح الصورة لجعلها خلفية هادئة (Overlay white at 60% opacity)
+                overlay = Image.new('RGB', (width, height), (255, 255, 255))
+                img = Image.blend(img, overlay, 0.6)
+            else:
+                img = Image.new("RGB", (width, height), color=(245, 245, 245))
+        else:
+            # افتراضي: لون كريمي ناعم بدلاً من الأبيض الصريح
+            img = Image.new("RGB", (width, height), color=(250, 248, 240))
+            
         draw = ImageDraw.Draw(img)
         
-        # اختيار خط كبير وواضح (Regular لراحة العين)
-        # اختيار خط كبير وواضح (Regular لراحة العين)
-        font = _get_arabic_font(50, weight="regular")
-        text_color = (0, 0, 0) # أسود نقي (Black) للتباين العالي والوضوح التام
+        # اختيار خط كبير وجميل
+        font = _get_arabic_font(52, weight="regular")
+        text_color = (40, 40, 40) # رمادي غامق جداً أريح للعين من الأسود الصريح
         
-        # نظام ذكي لتقسيم السطور مع هوامش كبيرة جداً لضمان عدم قص أي حرف
-        # الهوامش الآمنة (Margin) على الجوانب لمنع القص
-        SAFE_MARGIN = 100 
+        SAFE_MARGIN = 120 
         max_width = width - (SAFE_MARGIN * 2) 
 
         lines = []
@@ -235,22 +247,18 @@ def create_text_page(text, output_path):
             test_line = " ".join(current_line)
             reshaped_test = _prepare_arabic_text(test_line)
             
-            # قياس دقيق جداً
             bbox = draw.textbbox((0, 0), reshaped_test, font=font)
             test_width = bbox[2] - bbox[0]
             
             if test_width > max_width:
-                # إذا تجاوزنا العرض: احذف الكلمة الأخيرة، احفظ السطر، وابدأ سطراً جديداً
                 current_line.pop()
                 lines.append(" ".join(current_line))
                 current_line = [word]
         
-        # إضافة السطر الأخير
         if current_line:
             lines.append(" ".join(current_line))
             
-        # حساب التمركز العمودي
-        line_height = 100 # مسافة مريحة
+        line_height = 100
         total_text_height = len(lines) * line_height
         start_y = (height - total_text_height) // 2
         
@@ -259,14 +267,11 @@ def create_text_page(text, output_path):
             bbox = draw.textbbox((0, 0), reshaped_line, font=font)
             w_line = bbox[2] - bbox[0]
             
-            # حساب الإحداثي الأفقي للمنتصف
-            lx = (width - w_line) // 2
-            
-            # تصحيح offset الخط (لأن bbox لا يبدأ من 0 دائماً في الخطوط العربية)
-            lx = lx - bbox[0]
-
+            lx = (width - w_line) // 2 - bbox[0]
             ly = start_y + (i * line_height)
             
+            # رسم ظل خفيف جداً للنص لزيادة الفخامة والوضوح
+            # draw.text((lx+1, ly+1), reshaped_line, font=font, fill=(200, 200, 200))
             draw.text((lx, ly), reshaped_line, font=font, fill=text_color)
             
         img.save(output_path, quality=100)
@@ -305,15 +310,18 @@ def create_html_flipbook(image_paths, child_name, output_path):
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>قصة {child_name}</title>
     <style>
-        body {{ margin: 0; background: #e0e0e0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; font-family: sans-serif; }}
-        .header {{ margin-bottom: 20px; }}
-        #book-container {{ width: 90vw; max-width: 800px; height: 80vh; display: flex; justify-content: center; align-items: center; }}
-        #book {{ width: 100%; height: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }}
-        .page {{ background: white; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 1px solid #ddd; }}
-        .page-content {{ width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }}
-        .page img {{ max-width: 100%; max-height: 100%; object-fit: contain; }}
-        .controls {{ margin-top: 20px; display: flex; gap: 15px; }}
-        button {{ padding: 10px 20px; border-radius: 20px; border: none; background: #00bcd4; color: white; cursor: pointer; }}
+        body { margin: 0; background: #1a1a1a; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: white; }
+        .header { margin-bottom: 20px; }
+        .header h1 { font-weight: 300; letter-spacing: 1px; }
+        #book-container { width: 95vw; max-width: 1000px; height: 85vh; display: flex; justify-content: center; align-items: center; }
+        #book { width: 100%; height: 100%; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        .page { background: #222; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .page-content { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+        .page img { width: 100%; height: 100%; object-fit: cover; }
+        .controls { margin-top: 30px; display: flex; gap: 20px; }
+        button { padding: 12px 30px; border-radius: 25px; border: none; background: #00bcd4; color: white; cursor: pointer; font-weight: bold; transition: transform 0.2s, background 0.2s; box-shadow: 0 4px 15px rgba(0,188,212,0.3); }
+        button:hover { background: #00acc1; transform: scale(1.05); }
+        button:active { transform: scale(0.95); }
     </style>
 </head>
 <body>
