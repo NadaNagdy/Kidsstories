@@ -465,7 +465,7 @@ def create_character_reference(
         # Prompt محسّن للتحليل - استخراج ملامح مناسبة لنمذجة ألوان مائية
         analysis_prompt = f"""
 ACT AS A CHILDREN'S BOOK ILLUSTRATOR.
-Analyze the child in this image to create a charming character for a storybook (soft watercolor style).
+Analyze the child in this image to create a charming character for a storybook (classic soft watercolor & pencil style).
 
 Extract these key features for the illustration:
 - **Appearance**: Precise skin tone (e.g., "warm olive", "fair peach"), hair color and texture (soft/messy/curly), eye color.
@@ -624,31 +624,28 @@ def generate_storybook_page(
         gender_term = "girl" if gender == "بنت" else "boy"
         age_desc = f"{age_group} year old" if "-" in age_group else "toddler"
         
-        # Style (Soft Watercolor Storybook)
+        # Style (Classic Watercolor & Pencil)
         style = (
-            "soft watercolor children's book illustration, "
-            "delicate painterly textures, warm and inviting atmosphere, "
-            "expressive emotive faces, friendly rounded proportions, "
-            "whimsical heartwarming aesthetic"
+            "Classic children's book illustration in traditional soft watercolor and pencil style, "
+            "flat painterly aesthetic with delicate pencil outlines, "
+            "visible paper grain textures, hand-drawn details"
         )
         
         # Lighting (Gentle & Diffused)
         lighting_style = (
-            "gentle diffused natural lighting, soft shadows, warm ambient glow, "
-            "cozy and safe atmosphere, no harsh contrasts"
+            "Warm and inviting atmosphere with gentle, diffused lighting, "
+            "no cinematic lighting, no intense glowing highlights"
         )
         
         # Composition
         composition = (
-            "environmental storytelling, detailed but approachable backgrounds, "
-            "balanced framing, clear focus on action within the scene, "
-            "soft edges and dreamy depth, varied perspectives"
+            "Whimsical heartwarming mood, detailed storytelling layouts, "
+            "friendly rounded shapes, cozy traditional storybook feel"
         )
         
         quality = (
-            "high-quality storybook art, hand-painted feel, "
-            "harmonious pastel color palette, detailed textures, "
-            "suitable for bedtime stories, consistent character consistency"
+            "High quality traditional art style, limited pastel color palette, "
+            "low contrast, no 3D effects, clean paper grain texture"
         )
         
         # ✅ Complete prompt with FLUX structure + Character Consistency
@@ -813,19 +810,13 @@ def verify_payment_screenshot(
     target_number: str,
     use_ai_verification: bool = False,
     min_amount: float = 50.0
-) -> bool:
+) -> Tuple[bool, str]:
     """
     التحقق من لقطة شاشة الدفع (InstaPay / Vodafone Cash)
     مع التحقق من عدم تكرار رقم المعاملة (Transaction ID)
     
-    Args:
-        image_b64: الصورة بصيغة base64
-        target_number: رقم المحفظة المستهدف
-        use_ai_verification: استخدام AI للتحقق
-        min_amount: الحد الأدنى للمبلغ
-    
     Returns:
-        True إذا صحيح، False إذا خاطئ أو مكرر
+        (is_valid, reason_message)
     """
     
     logger.info(f"💳 Verifying payment for: {target_number}")
@@ -833,12 +824,12 @@ def verify_payment_screenshot(
     # الوضع الافتراضي: قبول تلقائي للسهولة (يمكن تغييره لاحقاً)
     if not use_ai_verification:
         logger.info("✅ Payment checking bypassed (Optimization Mode)")
-        return True
+        return True, "Payment auto-approved (AI verification disabled)"
     
     # التحقق من API Key
     if not OPENAI_API_KEY:
         logger.warning("⚠️ OPENAI_API_KEY not set, skipping verification")
-        return True
+        return True, "Auto-approved (No API Key)"
     
     try:
         logger.info("👁️ Analyzing payment screenshot with GPT-4 Vision...")
@@ -868,11 +859,11 @@ def verify_payment_screenshot(
                                 f"2. Is the recipient number EXACTLY {target_number}?\n"
                                 f"3. Is the date TODAY ({datetime.now().strftime('%Y-%m-%d')}) or YESTERDAY?\n"
                                 f"4. Is the amount >= {min_amount} EGP?\n\n"
-                                f"Extract the unique Transaction ID (Reference Number / Ragam al-3amaleya).\n\n"
+                                f"Extract the unique Transaction ID (Reference Number / Ragam al-mursaal ilayh).\n\n"
                                 f"Return ONLY valid JSON format like this:\n"
                                 f'{{"status": "VALID", "transaction_id": "123456789"}}\n'
                                 f'OR\n'
-                                f'{{"status": "INVALID", "reason": "Reason for rejection"}}\n'
+                                f'{{"status": "INVALID", "reason": "Detailed reason for rejection (e.g. Wrong Number, Old Date, Duplicate)"}}\n'
                             )
                         },
                         {
@@ -905,23 +896,26 @@ def verify_payment_screenshot(
                 
                 # Check for duplicate transaction ID
                 if is_duplicate_transaction(tx_id):
-                    logger.warning(f"❌ Duplicate Transaction detected: {tx_id}")
-                    return False
+                    reason = f"Duplicate Transaction ID detected: {tx_id}"
+                    logger.warning(f"❌ {reason}")
+                    return False, reason
                 
                 # Save transaction ID
                 save_transaction_id(tx_id)
-                logger.info(f"✅ Payment verified and recorded: {tx_id}")
-                return True
+                msg = f"Payment verified and recorded: {tx_id}"
+                logger.info(f"✅ {msg}")
+                return True, msg
             else:
-                logger.warning(f"❌ Payment rejected by AI: {result_json.get('reason')}")
-                return False
+                reason = result_json.get('reason', 'Unknown reason')
+                logger.warning(f"❌ Payment rejected by AI: {reason}")
+                return False, reason
         else:
             logger.error(f"❌ Vision API error: {response.status_code}")
-            return True # Fallback to allow if API fails
+            return True, "Auto-approved due to API error"
             
     except Exception as e:
         logger.error(f"❌ Payment verification error: {e}")
-        return True # Fallback
+        return True, f"Auto-approved due to exception: {str(e)}"
 
 # --- Helper Functions for Transaction Tracking ---
 

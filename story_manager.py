@@ -9,15 +9,12 @@ logger = logging.getLogger(__name__)
 # ==========================================================
 
 MASTER_STYLE = """
-Children's book illustration in soft watercolor style,
+Classic children's book illustration in traditional soft watercolor and pencil style,
+Limited pastel color palette with low contrast and visible paper grain textures,
+Focus on a flat, painterly aesthetic with delicate pencil outlines and hand-drawn details,
 Warm and inviting atmosphere with gentle, diffused lighting,
-Character design features: large expressive eyes, rounded friendly proportions,
-Cozy domestic or natural settings with detailed but approachable backgrounds,
-Soft pastel color palette with harmonious tones,
-Painterly textures with watercolor effects,
-Emotional storytelling focus showing clear feelings through facial expressions and body language,
-Storybook quality with whimsical, heartwarming aesthetic,
-Safe, comforting visual tone suitable for bedtime stories or learning moments.
+Whimsical, heartwarming mood,
+No cinematic lighting, no 3D effects, no intense glowing highlights.
 """
 
 ANTI_DRIFT_RULES = """
