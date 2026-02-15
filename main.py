@@ -26,40 +26,81 @@ user_state = {}
 
 @app.get("/")
 def home():
-    return {"status": "Story Bot is Active"}
+    return HTMLResponse("""
+    <html>
+        <head>
+            <title>Kids Story Bot</title>
+            <style>body { font-family: sans-serif; text-align: center; padding: 50px; } a { color: #3498db; }</style>
+        </head>
+        <body>
+            <h1>🤖 Kids Story Bot is Active!</h1>
+            <p>We create personalized stories for children.</p>
+            <p><a href="/privacy-policy">Privacy Policy</a></p>
+        </body>
+    </html>
+    """)
 
 @app.get("/privacy-policy", response_class=HTMLResponse)
 def privacy_policy():
     return """
-    <html>
-        <head>
-            <title>Privacy Policy - Kids Story Bot</title>
-            <style>body { font-family: sans-serif; padding: 20px; line-height: 1.6; } h1 { color: #2c3e50; }</style>
-        </head>
-        <body>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Privacy Policy - Kids Story Bot</title>
+        <style>
+            body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; padding: 40px; line-height: 1.6; max-width: 800px; margin: 0 auto; color: #333; }
+            h1 { color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+            h2 { color: #34495e; margin-top: 30px; }
+            .ar { direction: rtl; text-align: right; background: #f9f9f9; padding: 20px; border-radius: 8px; margin-top: 40px; }
+            .en { margin-bottom: 40px; }
+            ul { margin-bottom: 20px; }
+        </style>
+    </head>
+    <body>
+        <div class="en">
             <h1>Privacy Policy</h1>
             <p><strong>Effective Date:</strong> February 15, 2026</p>
-            <p>This Privacy Policy explains how <strong>Kids Story Bot</strong> collects, uses, and protects your information.</p>
+            <p>This Privacy Policy explains how <strong>Kids Story Bot</strong> ("we", "us") collects, uses, and protects your information when you use our Messenger service.</p>
             
             <h2>1. Information We Collect</h2>
             <ul>
-                <li><strong>User Content:</strong> Names, photos, and preferences provided by you for story generation.</li>
-                <li><strong>Contact Info:</strong> Facebook User ID to send you the completed stories.</li>
+                <li><strong>Photos:</strong> We collect photos of your child ONLY for the purpose of generating a stylized story character. These images are processed temporarily and are not used for training public AI models.</li>
+                <li><strong>Names & Ages:</strong> Used solely to personalize the story text.</li>
+                <li><strong>Facebook User ID:</strong> To send you the completed story PDF.</li>
             </ul>
 
             <h2>2. How We Use Your Information</h2>
-            <p>We use your data solely to:</p>
+            <p>Your data is used strictly to:</p>
             <ul>
-                <li>Generate personalized stories and illustrations using AI services (OpenAI).</li>
-                <li>Deliver the final PDF story to you via Messenger.</li>
+                <li>Generate the requested story and illustrations via OpenAI APIs.</li>
+                <li>Deliver the final PDF file to you.</li>
+            </ul>
+            <p>WE DO NOT sell your data or photos to third parties.</p>
+
+            <h2>3. Contact Us</h2>
+            <p>If you have questions or wish to delete your data, please contact us via our Facebook Page.</p>
+        </div>
+        
+        <div class="ar">
+            <h1>سياسة الخصوصية</h1>
+            <p><strong>تاريخ التحديث:</strong> ١٥ فبراير ٢٠٢٦</p>
+            <p>توضح سياسة الخصوصية هذه كيفية تعاملنا مع بياناتك عند استخدامك لخدمة "Kids Story Bot".</p>
+            
+            <h2>١. البيانات التي نجمعها</h2>
+            <ul>
+                <li><strong>الصور:</strong> نطلب صور الطفل فقط لتحويلها لشخصية كرتونية داخل القصة. نحن نحترم خصوصية أطفالكم ولا نستخدم هذه الصور في أي أغراض أخرى ولا نشاركها مع العامة.</li>
+                <li><strong>الاسم والعمر:</strong> لتخصيص محتوى القصة.</li>
             </ul>
 
-            <h2>3. Data Sharing</h2>
-            <p>We do not sell or share your personal data with third parties, except as necessary to provide the service (e.g., sending prompts to OpenAI APIs).</p>
+            <h2>٢. كيف نستخدم بياناتك</h2>
+            <p>تستخدم البيانات حصرياً لغرض واحد: إنشاء القصة وإرسالها لك. لا نقوم ببيع أو مشاركة بياناتك مع أي طرف ثالث.</p>
 
-            <h2>4. Contact Us</h2>
-            <p>If you have questions, please contact us via the Facebook Page.</p>
-        </body>
+            <h2>٣. تواصل معنا</h2>
+            <p>إذا كان لديك أي استفسار أو رغبة في حذف بياناتك، يرجى مراسلتنا فوراً عبر صفحة الفيسبوك.</p>
+        </div>
+    </body>
     </html>
     """
 
