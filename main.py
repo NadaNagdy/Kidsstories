@@ -80,7 +80,10 @@ def privacy_policy():
             <p>WE DO NOT sell your data or photos to third parties.</p>
 
             <h2>3. Contact Us</h2>
-            <p>If you have questions or wish to delete your data, please contact us via our Facebook Page.</p>
+            <p>If you have questions, please contact us via our Facebook Page.</p>
+
+            <h2>4. Data Deletion</h2>
+            <p>To request deletion of your data, simply message our page with the word "Delete" or contact the admin directly.</p>
         </div>
         
         <div class="ar">
@@ -98,7 +101,10 @@ def privacy_policy():
             <p>تستخدم البيانات حصرياً لغرض واحد: إنشاء القصة وإرسالها لك. لا نقوم ببيع أو مشاركة بياناتك مع أي طرف ثالث.</p>
 
             <h2>٣. تواصل معنا</h2>
-            <p>إذا كان لديك أي استفسار أو رغبة في حذف بياناتك، يرجى مراسلتنا فوراً عبر صفحة الفيسبوك.</p>
+            <p>إذا كان لديك أي استفسار، يرجى مراسلتنا فوراً عبر صفحة الفيسبوك.</p>
+
+            <h2>٤. حذف البيانات</h2>
+            <p>لطلب حذف بياناتك، يمكنك ببساطة إرسال كلمة "حذف" أو "Delete" في رسالة للصفحة، أو التواصل مع الأدمن مباشرة.</p>
         </div>
     </body>
     </html>
