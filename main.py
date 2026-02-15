@@ -166,14 +166,21 @@ def process_payment_verification(sender_id, image_url):
     try:
         response = requests.get(image_url)
         base64_img = base64.b64encode(response.content).decode("utf-8")
-        if verify_payment_screenshot(base64_img, PAYMENT_NUMBER):
-            send_text_message(sender_id, "✅ تم تأكيد الدفع بنجاح! نبدأ الآن رسم القصة كاملة...")
+        
+        # Enforce AI Verification
+        is_valid, reason = verify_payment_screenshot(base64_img, PAYMENT_NUMBER, use_ai_verification=True)
+        
+        if is_valid:
+            send_text_message(sender_id, "✅ تم تأكيد الدفع بنجاح! نبدأ الآن رسم القصة كاملة... (سيستغرق عدة دقائق)")
             value = user_state[sender_id].get("selected_value")
             process_story_generation(sender_id, value, is_preview=False)
         else:
-            send_text_message(sender_id, "❌ لم نتمكن من التحقق من الصورة. يرجى إرسال لقطة شاشة واضحة للتحويل.")
+            # Send detailed reason for rejection
+            send_text_message(sender_id, f"❌ عذراً، لم نتمكن من قبول الدفع.\nالسبب: {reason}\nيرجى التأكد من إرسال إيصال صحيح وحديث.")
+            
     except Exception as e:
         logger.error(f"Payment Error: {e}")
+        send_text_message(sender_id, "❌ حدث خطأ غير متوقع أثناء التحقق. يرجى المحاولة لاحقاً.")
 
 def process_story_generation(sender_id, value, is_preview=False):
     try:
