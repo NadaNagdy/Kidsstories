@@ -52,13 +52,12 @@ class StoryManager:
         Covers common verbs, adjectives, and pronouns used in the stories.
         Now includes prefix handling (waw, fa) for better matching.
         """
-        import re # Import locally to avoid messing up global imports if not needed elsewhere
+        import re 
         
         if self.gender == "ولد":
             return text
             
         # Dictionary of Masculine -> Feminine replacements
-        # Sorted roughly by specificity/length to ensure correct matching
         replacements = {
             # Nouns/Titles
             "بطل": "بطلة",
@@ -67,12 +66,23 @@ class StoryManager:
             "ابني": "بنتي",
             "يا حبيبي": "يا حبيبتي",
             "حبيبي": "حبيبتي",
-            
-            # Pronouns/Suffixes (Contextual)
+            "مستكشف": "مستكشفة",
+            "شاطر": "شاطرة",
+            "صغير": "صغيرة",
+            "جميل": "جميلة",
+            "كبير": "كبيرة",
+            "مخضوض": "مخضوضة",
+            "آسف": "آسفة",
+            "غلطان": "غلطانة",
+
+            # Pronouns/Suffixes
             "هو": "هي",
             "هم": "هن",
+            "أنت": "أنتي",
+            "لك": "ليكي",
             "بنفسه": "بنفسها",
             "نفسه": "نفسها",
+            "لنفسه": "لنفسها",
             "لوحده": "لوحدها",
             "صاحبه": "صاحبتها",
             "أخوه": "أخوها",
@@ -85,9 +95,18 @@ class StoryManager:
             "وراه": "وراها",
             "مكانه": "مكانها",
             "بيته": "بيتها",
-            "أصحابه": "أصحابها",
-            
-            # Adjectives / States (Masculine -> Feminine)
+            "أصحابه": " أصحابها",
+            "سريره": "سريرها",
+            "شنطته": "شنطتها",
+            "لعبته": "لعبتها",
+            "هدومه": "هدومها",
+            "إنه": "إنها",
+            "له": "لها",
+            "عنده": "عندها",
+            "منه": "منها",
+            "شجاعته": "شجاعتها",
+
+            # Adjectives / States
             "شجاع": "شجاعة",
             "ذكي": "ذكية",
             "متعاون": "متعاونة",
@@ -109,12 +128,11 @@ class StoryManager:
             "نايم": "نايمة",
             "جاهز": "جاهزة",
             "مستعد": "مستعدة",
-            "شاطر": "شاطرة",
-            "صغير": "صغيرة",
-            "جميل": "جميلة",
-            "كبير": "كبيرة",
-            "مخضوض": "مخضوضة",
-            
+            "عايز": "عايزة",
+            "واثقة": "واثقة", # Already fem usually but good to have
+            "سعيد": "سعيدة",
+            "رايح": "رايحة",
+
             # Verbs (Past)
             "قال": "قالت",
             "كان": "كانت",
@@ -162,13 +180,15 @@ class StoryManager:
             "استخبى": "استخبت",
             "شاور": "شاورت",
             "دلق": "دلقت",
-            "مستخباش": "مستخبتش",
-            "ماجاش": "ماجاتش",
             "عرف": "عرفت",
             "ساعده": "ساعدها",
             "كدب": "كدبت",
+            "حط": "حطت",
+            "حضنه": "حضنته",
+            "زعل": "زعلت", 
+            "عاش": "عاشت",
             
-            # Verbs (Present - B-prefix)
+            # Verbs (Present)
             "بيحب": "بتحب",
             "بيلعب": "بتلعب",
             "بيسلم": "بتسلم",
@@ -184,18 +204,25 @@ class StoryManager:
             "بيقول": "بتقول",
             "بيصرخ": "بتصرخ",
             "بيعيط": "بتعيط",
-            "بيحضنوه": "بيحضنوها",
-            "يحبوه": "يحبوها",
             "بيشارك": "بتشارك",
             "بيديها": "بتديها",
             "بيرتبهم": "بترتبهم",
+            "بيتخيل": "بتتخيل",
+            "بيحضر": "بتحضر",
             
-            # Verbs (Present - Y-prefix)
+            # Imperative / Future
+            "تعالى": "تعالي",
+            "هيقابلهم": "هتقابلهم",
+            "مبقاش": "مبقتش",
+            "ماجاش": "ماجاتش",
+            "مستخباش": "مستخبتش",
+
+            # Verbs (Y-prefix -> T-prefix)
             "يضحك": "تضحك",
             "يبتسم": "تبتسم",
             "يقول": "تقول",
             "يروح": "تروح",
-            "يسيبه": "تسيبها", # Contextual
+            "يسيبه": "تسيبه", 
             "يعمل": "تعمل",
             "ينقذ": "تنقذ",
             "يكون": "تكون",
@@ -212,45 +239,59 @@ class StoryManager:
             "ياخد": "تاخد",
             "يشده": "تشده",
             "يخطفه": "تخطفه",
-            "يجيب": "تجيب"
+            "يجيب": "تجيب",
+            "يحس": "تحس",
+            "يخاف": "تخاف",
+            "يجيبه": "تجيبه",
+            "يحضر": "تحضر",
+            "يساعد": "تساعد",
+            "يشيل": "تشيل",
+            "يرتب": "ترتب",
+            "يكلم": "تكلم",
+            "يسمع": "تسمع",
+            "يحترم": "تحترم"
         }
         
         words = text.split()
         new_words = []
         
+        # Tashkeel removal regex
+        tashkeel_pattern = re.compile(r'[\u0617-\u061A\u064B-\u0652]')
+        
         for word in words:
             # Clean punctuation for matching using Regex
-            # Group 1: Prefix (waw/fa/ba) - Optional
-            # Group 2: Body - Non-greedy
-            # Group 3: Suffix (Punctuation) - Optional
             match = re.match(r"^([وفب]?)(.*?)([\.,!؟:\"]*)$", word)
             
             if match:
                 prefix, body, suffix = match.groups()
-                full_core = prefix + body
                 
-                # Strategy 1: Check FULL word (e.g. "بيحب" -> match directly)
-                if full_core in replacements:
-                    replacement = replacements[full_core]
+                # Remove tashkeel from body for lookup
+                clean_body = tashkeel_pattern.sub("", body)
+                clean_full_core = prefix + clean_body
+                
+                # Normalization (Alef)
+                clean_body = clean_body.replace("أ", "ا").replace("إ", "ا").replace("آ", "ا")
+                clean_full_core = clean_full_core.replace("أ", "ا").replace("إ", "ا").replace("آ", "ا")
+
+                # Strategy 1: Check FULL word 
+                if clean_full_core in replacements:
+                    replacement = replacements[clean_full_core]
                     new_word = replacement + suffix
                     new_words.append(new_word)
-                    logger.info(f"🔄 Gender Swap (Full): {word} -> {new_word}")
-                    continue
-                    
-                # Strategy 2: Check BODY only (e.g. "ووقف" -> prefix="و", body="وقف" -> match "وقف")
-                if body in replacements:
-                    replacement = replacements[body]
-                    new_word = prefix + replacement + suffix
-                    new_words.append(new_word)
-                    logger.info(f"🔄 Gender Swap (Body): {word} -> {new_word}")
                     continue
                 
-                # Strategy 3: Check "Al-" + body (e.g. "البطل")
-                if body.startswith("ال") and body[2:] in replacements:
-                    replacement = replacements[body[2:]]
+                # Strategy 2: Check BODY only
+                if clean_body in replacements:
+                    replacement = replacements[clean_body]
+                    new_word = prefix + replacement + suffix
+                    new_words.append(new_word)
+                    continue
+                
+                # Strategy 3: Check "Al-" + body
+                if clean_body.startswith("ال") and clean_body[2:] in replacements:
+                    replacement = replacements[clean_body[2:]]
                     new_word = prefix + "ال" + replacement + suffix
                     new_words.append(new_word)
-                    logger.info(f"🔄 Gender Swap (Al-): {word} -> {new_word}")
                     continue
 
                 new_words.append(word)
