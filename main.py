@@ -313,6 +313,19 @@ def process_payment_verification(sender_id, image_url):
             # CASE A: Pack Payment (60 EGP)
             if step == "waiting_for_pack_payment":
                 send_text_message(sender_id, "✅ تم استلام دفع الباقة! جاري تجهيز الـ 3 قصص حالاً... 📚✨")
+                
+                # Admin Notification (Pack)
+                child_name = user_state[sender_id].get("child_name", "الطفل")
+                admin_msg = f"🔔 NEW ORDER: Story Pack (3 Stories) 📚\nUser: {child_name} ({sender_id})\nStatus: PAID 60 EGP\nAction: Auto-generating stories..."
+                logger.critical(admin_msg)
+                
+                admin_id = os.getenv("ADMIN_ID")
+                if admin_id:
+                    try:
+                        send_text_message(admin_id, admin_msg)
+                    except:
+                        pass
+
                 process_pack_generation(sender_id)
             
             # CASE B: Video Payment (100 EGP)
