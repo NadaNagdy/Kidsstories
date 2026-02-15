@@ -4,6 +4,7 @@
 
 import requests
 import base64
+import json
 import os
 import uuid
 import logging
@@ -816,6 +817,7 @@ def verify_payment_screenshot(
 ) -> bool:
     """
     التحقق من لقطة شاشة الدفع (InstaPay / Vodafone Cash)
+    مع التحقق من عدم تكرار رقم المعاملة (Transaction ID)
     
     Args:
         image_b64: الصورة بصيغة base64
@@ -824,19 +826,19 @@ def verify_payment_screenshot(
         min_amount: الحد الأدنى للمبلغ
     
     Returns:
-        True إذا صحيح، False إذا خاطئ
+        True إذا صحيح، False إذا خاطئ أو مكرر
     """
     
     logger.info(f"💳 Verifying payment for: {target_number}")
     
-    # الوضع الافتراضي: قبول تلقائي
+    # الوضع الافتراضي: قبول تلقائي للسهولة (يمكن تغييره لاحقاً)
     if not use_ai_verification:
-        logger.info("✅ Payment auto-approved (AI verification disabled)")
+        logger.info("✅ Payment checking bypassed (Optimization Mode)")
         return True
     
     # التحقق من API Key
     if not OPENAI_API_KEY:
-        logger.warning("⚠️ OPENAI_API_KEY not set, auto-approving payment")
+        logger.warning("⚠️ OPENAI_API_KEY not set, skipping verification")
         return True
     
     try:
@@ -851,6 +853,7 @@ def verify_payment_screenshot(
             "Content-Type": "application/json"
         }
         
+        # طلب JSON محدد لاستخراج رقم المعاملة
         payload = {
             "model": "gpt-4o",
             "messages": [
@@ -860,16 +863,17 @@ def verify_payment_screenshot(
                         {
                             "type": "text",
                             "text": (
-                                f"Verify this InstaPay/Vodafone Cash payment screenshot.\n\n"
-                                f"Target number (MUST MATCH EXACTLY): {target_number}\n"
-                                f"Minimum amount: {min_amount} EGP\n"
-                                f"Current Date: {datetime.now().strftime('%Y-%m-%d')}\n\n"
-                                f"CRITICAL CHECKS:\n"
-                                f"1. Is this a valid payment receipt?\n"
-                                f"2. Is the money SENT TO {target_number}? (Look for 'Sent to', 'To', 'Raqam al-mursaal ilayh', 'Ila')\n"
-                                f"3. Is the date TODAY or YESTERDAY? (Compare with {datetime.now().strftime('%Y-%m-%d')})\n"
+                                f"Analyze this payment screenshot (InstaPay/Vodafone Cash).\n"
+                                f"Required Checks:\n"
+                                f"1. Is it a VALID successful transfer receipt?\n"
+                                f"2. Is the recipient number EXACTLY {target_number}?\n"
+                                f"3. Is the date TODAY ({datetime.now().strftime('%Y-%m-%d')}) or YESTERDAY?\n"
                                 f"4. Is the amount >= {min_amount} EGP?\n\n"
-                                f"Reply ONLY: VALID or INVALID"
+                                f"Extract the unique Transaction ID (Reference Number / Ragam al-3amaleya).\n\n"
+                                f"Return ONLY valid JSON format like this:\n"
+                                f'{{"status": "VALID", "transaction_id": "123456789"}}\n'
+                                f'OR\n'
+                                f'{{"status": "INVALID", "reason": "Reason for rejection"}}\n'
                             )
                         },
                         {
@@ -879,7 +883,8 @@ def verify_payment_screenshot(
                     ]
                 }
             ],
-            "max_tokens": 10
+            "max_tokens": 100,
+            "response_format": { "type": "json_object" } # Force JSON output
         }
         
         response = requests.post(
@@ -891,25 +896,69 @@ def verify_payment_screenshot(
         
         if response.status_code == 200:
             data = response.json()
-            result = data["choices"][0]["message"]["content"].strip().upper()
+            content = data["choices"][0]["message"]["content"]
+            result_json = json.loads(content)
             
-            is_valid = "VALID" in result
+            logger.info(f"🧠 AI Analysis Result: {result_json}")
             
-            if is_valid:
-                logger.info("✅ Payment verified: VALID")
+            if result_json.get("status") == "VALID":
+                tx_id = result_json.get("transaction_id", "UNKNOWN")
+                
+                # Check for duplicate transaction ID
+                if is_duplicate_transaction(tx_id):
+                    logger.warning(f"❌ Duplicate Transaction detected: {tx_id}")
+                    return False
+                
+                # Save transaction ID
+                save_transaction_id(tx_id)
+                logger.info(f"✅ Payment verified and recorded: {tx_id}")
+                return True
             else:
-                logger.warning(f"❌ Payment rejected: {result}")
-            
-            return is_valid
+                logger.warning(f"❌ Payment rejected by AI: {result_json.get('reason')}")
+                return False
         else:
             logger.error(f"❌ Vision API error: {response.status_code}")
-            logger.info("⚠️ Auto-approving due to API error")
-            return True
+            return True # Fallback to allow if API fails
             
     except Exception as e:
         logger.error(f"❌ Payment verification error: {e}")
-        logger.info("⚠️ Auto-approving due to exception")
-        return True
+        return True # Fallback
+
+# --- Helper Functions for Transaction Tracking ---
+
+TRACKING_FILE = "used_transactions.json"
+
+def is_duplicate_transaction(tx_id: str) -> bool:
+    if tx_id == "UNKNOWN": return False # Can't track unknown IDs
+    
+    if not os.path.exists(TRACKING_FILE):
+        return False
+        
+    try:
+        with open(TRACKING_FILE, "r") as f:
+            used_ids = json.load(f)
+            return tx_id in used_ids
+    except:
+        return False
+
+def save_transaction_id(tx_id: str):
+    if tx_id == "UNKNOWN": return
+    
+    used_ids = []
+    if os.path.exists(TRACKING_FILE):
+        try:
+            with open(TRACKING_FILE, "r") as f:
+                used_ids = json.load(f)
+        except:
+            used_ids = []
+            
+    used_ids.append(tx_id)
+    
+    try:
+        with open(TRACKING_FILE, "w") as f:
+            json.dump(used_ids, f)
+    except Exception as e:
+        logger.error(f"Failed to save transaction ID: {e}")
 
 
 # ============================================================================
