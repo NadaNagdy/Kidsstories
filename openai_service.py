@@ -632,16 +632,16 @@ def generate_storybook_page(
         
         # Lighting (Cinematic Volumetric)
         lighting_style = (
-            "Soft natural lighting with golden highlights, beautiful depth of field, "
-            "soft rim light around characters, volumetric light rays, gentle shadows, "
-            "cinematic composition, dynamic camera angle"
+            "Cinematic lighting, volumetric atmosphere, "
+            "distinct and varied lighting based on the scene (e.g., sunny day, cozy indoor lamp, moonlight), "
+            "rich contrast, global illumination"
         )
         
         # Composition
         composition = (
-            "full frame cinematic shot, shallow depth of field, edge-to-edge masterpiece, "
-            "no borders, no margins, "
-            "strictly NO text, NO letters, NO characters, NO titles, NO typography"
+            "Wide angle shot showing the environment, detailed background elements, "
+            "environmental storytelling, rule of thirds, dynamic perspective, "
+            "avoid simple portraits, show full scene context"
         )
         quality = (
             "ultra-high definition children's book illustration, "

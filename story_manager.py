@@ -196,11 +196,12 @@ SCENE ACTION:
 {base_prompt}
 
 COMPOSITION:
-Square format,
-Plenty of white space for Arabic text,
-Child centered,
+Wide environmental shots,
+Detailed background setting visible,
+Dynamic camera angles (low angle, side view, etc.),
+Rule of thirds,
 Balanced framing,
-Consistent lighting across pages.
+Rich scene details.
 """
 
     # ------------------------------------------------------
