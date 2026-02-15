@@ -462,18 +462,18 @@ def create_character_reference(
         
         gender_term = "girl" if gender == "بنت" else "boy"
 
-        # Prompt محسّن للتحليل - استخراج ملامح مناسبة لنمذجة 3D
+        # Prompt محسّن للتحليل - استخراج ملامح مناسبة لنمذجة ألوان مائية
         analysis_prompt = f"""
-ACT AS A 3D CHARACTER ARTIST.
-Analyze the person in this image to create a high-end 3D CGI animated character model (Pixar/Disney style).
+ACT AS A CHILDREN'S BOOK ILLUSTRATOR.
+Analyze the child in this image to create a charming character for a storybook (soft watercolor style).
 
-Extract these precise details for the 3D model:
-- Skin Texture & Tone: Exact shade (e.g., "warm honey", "deep cocoa", "pale ivory") and skin finish.
-- Hair Geometry: Texture type for 3D rendering (e.g., "tight coils", "soft waves", "straight silk") and exact color.
-- Facial Topology: Face shape, eye shape/color, nose structure, and distinctive features (dimples, freckles).
-- Outfit Materials: Describe the clothing fabrics and colors suitable for physically based rendering.
+Extract these key features for the illustration:
+- **Appearance**: Precise skin tone (e.g., "warm olive", "fair peach"), hair color and texture (soft/messy/curly), eye color.
+- **Expression**: Friendly, curious, or gentle expression suitable for a heartwarming story.
+- **Outfit**: Colors and style (comfortable/playful).
+- **Vibe**: Describe the overall feeling (sweet/energetic/calm).
 
-Provide a concise, descriptive paragraph focusing ONLY on these visual traits. 
+Provide a concise, descriptive paragraph focusing ONLY on these visual traits suitable for a hand-painted illustration.
 Do NOT describe the background or style of the photo.
 Start directly with the description.
 """
@@ -624,32 +624,31 @@ def generate_storybook_page(
         gender_term = "girl" if gender == "بنت" else "boy"
         age_desc = f"{age_group} year old" if "-" in age_group else "toddler"
         
-        # Style (Pixar-style 3D Animation)
+        # Style (Soft Watercolor Storybook)
         style = (
-            "Cinematic 3D animated children's movie style illustration, "
-            "high-end Pixar-inspired quality, ultra-detailed textures, "
-            "expressive faces, rounded child proportions, vibrant yet natural color palette, "
-            "wholesome heartwarming mood"
+            "soft watercolor children's book illustration, "
+            "delicate painterly textures, warm and inviting atmosphere, "
+            "expressive emotive faces, friendly rounded proportions, "
+            "whimsical heartwarming aesthetic"
         )
         
-        # Lighting (Cinematic Volumetric)
+        # Lighting (Gentle & Diffused)
         lighting_style = (
-            "Cinematic lighting, volumetric atmosphere, "
-            "distinct and varied lighting based on the scene (e.g., sunny day, cozy indoor lamp, moonlight), "
-            "rich contrast, global illumination"
+            "gentle diffused natural lighting, soft shadows, warm ambient glow, "
+            "cozy and safe atmosphere, no harsh contrasts"
         )
         
         # Composition
         composition = (
-            "Wide angle shot showing the environment, detailed background elements, "
-            "environmental storytelling, rule of thirds, dynamic perspective, "
-            "avoid simple portraits, show full scene context"
+            "environmental storytelling, detailed but approachable backgrounds, "
+            "balanced framing, clear focus on action within the scene, "
+            "soft edges and dreamy depth, varied perspectives"
         )
+        
         quality = (
-            "ultra-high definition children's book illustration, "
-            "professional publication quality, clean simple masterpiece, "
-            "vibrant colors, suitable for ages 1-5, "
-            "MAINTAIN CONSISTENT CHARACTER FEATURES throughout"
+            "high-quality storybook art, hand-painted feel, "
+            "harmonious pastel color palette, detailed textures, "
+            "suitable for bedtime stories, consistent character consistency"
         )
         
         # ✅ Complete prompt with FLUX structure + Character Consistency

@@ -9,13 +9,15 @@ logger = logging.getLogger(__name__)
 # ==========================================================
 
 MASTER_STYLE = """
-High-end 3D CGI Animated Movie Style (Pixar/Disney inspired),
-Octane Render, 8k resolution, volumetric lighting,
-Subsurface scattering on skin, detailed hair strands,
-Cinematic composition, depth of field,
-Vibrant and warm color palette,
-Expressive character animation style,
-No 2D, no drawing, no watercolor, no sketch style.
+Children's book illustration in soft watercolor style,
+Warm and inviting atmosphere with gentle, diffused lighting,
+Character design features: large expressive eyes, rounded friendly proportions,
+Cozy domestic or natural settings with detailed but approachable backgrounds,
+Soft pastel color palette with harmonious tones,
+Painterly textures with watercolor effects,
+Emotional storytelling focus showing clear feelings through facial expressions and body language,
+Storybook quality with whimsical, heartwarming aesthetic,
+Safe, comforting visual tone suitable for bedtime stories or learning moments.
 """
 
 ANTI_DRIFT_RULES = """
