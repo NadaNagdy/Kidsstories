@@ -220,25 +220,40 @@ class StoryManager:
         new_words = []
         
         for word in words:
-            # Clean punctuation for matching
-            # Keep punctuation separate to re-attach later
-            match = re.match(r"^([وفب]?)(.+?)([\.,!؟:\"]*)$", word)
+            # Clean punctuation for matching using Regex
+            # Group 1: Prefix (waw/fa/ba) - Optional
+            # Group 2: Body - Non-greedy
+            # Group 3: Suffix (Punctuation) - Optional
+            match = re.match(r"^([وفب]?)(.*?)([\.,!؟:\"]*)$", word)
             
             if match:
-                prefix, core, suffix = match.groups()
+                prefix, body, suffix = match.groups()
+                full_core = prefix + body
                 
-                # Check for direct match
-                if core in replacements:
-                    new_word = prefix + replacements[core] + suffix
+                # Strategy 1: Check FULL word (e.g. "بيحب" -> match directly)
+                if full_core in replacements:
+                    replacement = replacements[full_core]
+                    new_word = replacement + suffix
                     new_words.append(new_word)
+                    logger.info(f"🔄 Gender Swap (Full): {word} -> {new_word}")
                     continue
                     
-                # Try handling Al- (definite article)
-                if core.startswith("ال") and core[2:] in replacements:
-                     new_word = prefix + "ال" + replacements[core[2:]] + suffix
-                     new_words.append(new_word)
-                     continue
-                     
+                # Strategy 2: Check BODY only (e.g. "ووقف" -> prefix="و", body="وقف" -> match "وقف")
+                if body in replacements:
+                    replacement = replacements[body]
+                    new_word = prefix + replacement + suffix
+                    new_words.append(new_word)
+                    logger.info(f"🔄 Gender Swap (Body): {word} -> {new_word}")
+                    continue
+                
+                # Strategy 3: Check "Al-" + body (e.g. "البطل")
+                if body.startswith("ال") and body[2:] in replacements:
+                    replacement = replacements[body[2:]]
+                    new_word = prefix + "ال" + replacement + suffix
+                    new_words.append(new_word)
+                    logger.info(f"🔄 Gender Swap (Al-): {word} -> {new_word}")
+                    continue
+
                 new_words.append(word)
             else:
                 new_words.append(word)
