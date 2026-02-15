@@ -131,6 +131,22 @@ def start_processing(sender_id, messaging_event, background_tasks):
             send_text_message(sender_id, msg)
             return
 
+        # --- 2. طلب الفيديو (Hero Movie) ---
+        if "فيديو" in text or "video" in text.lower():
+            user_state[sender_id]["step"] = "waiting_for_video_payment"
+            child_name = user_state[sender_id].get("child_name", "الطفل")
+            msg = (
+                f"🎬 اختيار رائع! {child_name} هيكون بطل فيلمه الخاص! ✨\n"
+                f"فيديو احترافي بصوره واسمه ومؤثرات صوتية.\n"
+                f"السعر: ١٠٠ جنيه فقط (بدل ٢٠٠)\n"
+                f"⏱️ الاستلام: خلال ٢٤ ساعة\n\n"
+                f"من فضلك حولي المبلغ الآن على:\n"
+                f"📍 {PAYMENT_NUMBER}\n"
+                f"وابعتي صورة التحويل هنا لتأكيد الحجز! 🎟️"
+            )
+            send_text_message(sender_id, msg)
+            return
+
         if text.lower() == "start":
             user_state[sender_id] = {"step": "waiting_for_name"}
             send_text_message(sender_id, "👋 أهلاً بك في عالم القصص الذكية!")
@@ -250,8 +266,28 @@ def process_payment_verification(sender_id, image_url):
             if step == "waiting_for_pack_payment":
                 send_text_message(sender_id, "✅ تم استلام دفع الباقة! جاري تجهيز الـ 3 قصص حالاً... 📚✨")
                 process_pack_generation(sender_id)
+            
+            # CASE B: Video Payment (100 EGP)
+            elif step == "waiting_for_video_payment":
+                child_name = user_state[sender_id].get("child_name", "الطفل")
+                success_msg = (
+                    f"✅ تم تأكيد حجز الفيديو لـ {child_name}! 🎬\n"
+                    f"جاري العمل على المونتاج والمؤثرات...\n"
+                    f"سيصلك الفيديو خلال 24 ساعة على هذا الشات. شكراً لثقتك! ❤️"
+                )
+                send_text_message(sender_id, success_msg)
                 
-            # CASE B: Single Story Payment
+                # Admin Notification
+                admin_msg = f"🔔 NEW ORDER: Video Request 🎥\nUser: {child_name} ({sender_id})\nStatus: PAID 100 EGP\nAction: Create Video manually."
+                logger.critical(admin_msg)
+                admin_id = os.getenv("ADMIN_ID")
+                if admin_id:
+                    try:
+                        send_text_message(admin_id, admin_msg)
+                    except:
+                        pass
+
+            # CASE C: Single Story Payment
             else:
                 send_text_message(sender_id, "✅ تم تأكيد الدفع بنجاح! نبدأ الآن رسم القصة كاملة... (سيستغرق عدة دقائق)")
                 value = user_state[sender_id].get("selected_value")
